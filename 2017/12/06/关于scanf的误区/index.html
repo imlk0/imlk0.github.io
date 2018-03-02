@@ -5,18 +5,18 @@
   
 
   
-  <title>两大LCS问题 | Hexo</title>
+  <title>关于scanf的误区 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="相同子序：（不要求连续）` #include  #include  #include  #include  // // #define DEBUG// #ifdef DEBUG// #define SHOW// #else// #define SHOW /##/// #endif// 不可行，注释先于预处理指令被处理 using namespace std; // LCS共同子序不要求连续 int">
+  <meta name="description" content="1234567891011#include &amp;lt;stdio.h&amp;gt;int main()&amp;#123;	int a, b;	while(scanf(&amp;quot;%d%d&amp;quot;,&amp;amp;a,&amp;amp;b) == EOF)&amp;#123;		printf(&amp;quot;%d\n&amp;quot;, a + b);		&amp;#125;	return 0;	&amp;#125; scanf() 遇到文件末尾时，如果什">
 <meta property="og:type" content="article">
-<meta property="og:title" content="两大LCS问题">
-<meta property="og:url" content="http://yoursite.com/2018/02/01/e4-b8-a4-e5-a4-a7lcs-e9-97-ae-e9-a2-98/index.html">
+<meta property="og:title" content="关于scanf的误区">
+<meta property="og:url" content="http://yoursite.com/2017/12/06/关于scanf的误区/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="相同子序：（不要求连续）` #include  #include  #include  #include  // // #define DEBUG// #ifdef DEBUG// #define SHOW// #else// #define SHOW /##/// #endif// 不可行，注释先于预处理指令被处理 using namespace std; // LCS共同子序不要求连续 int">
-<meta property="og:updated_time" content="2018-03-02T10:34:14.514Z">
+<meta property="og:description" content="1234567891011#include &amp;lt;stdio.h&amp;gt;int main()&amp;#123;	int a, b;	while(scanf(&amp;quot;%d%d&amp;quot;,&amp;amp;a,&amp;amp;b) == EOF)&amp;#123;		printf(&amp;quot;%d\n&amp;quot;, a + b);		&amp;#125;	return 0;	&amp;#125; scanf() 遇到文件末尾时，如果什">
+<meta property="og:updated_time" content="2018-03-02T14:41:46.317Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="两大LCS问题">
-<meta name="twitter:description" content="相同子序：（不要求连续）` #include  #include  #include  #include  // // #define DEBUG// #ifdef DEBUG// #define SHOW// #else// #define SHOW /##/// #endif// 不可行，注释先于预处理指令被处理 using namespace std; // LCS共同子序不要求连续 int">
+<meta name="twitter:title" content="关于scanf的误区">
+<meta name="twitter:description" content="1234567891011#include &amp;lt;stdio.h&amp;gt;int main()&amp;#123;	int a, b;	while(scanf(&amp;quot;%d%d&amp;quot;,&amp;amp;a,&amp;amp;b) == EOF)&amp;#123;		printf(&amp;quot;%d\n&amp;quot;, a + b);		&amp;#125;	return 0;	&amp;#125; scanf() 遇到文件末尾时，如果什">
   
     <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -63,14 +63,14 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main"><article id="post-e4-b8-a4-e5-a4-a7lcs-e9-97-ae-e9-a2-98" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-关于scanf的误区" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2018/02/01/e4-b8-a4-e5-a4-a7lcs-e9-97-ae-e9-a2-98/" class="article-date">
-  <time datetime="2018-02-01T04:09:09.000Z" itemprop="datePublished">2018-02-01</time>
+    <a href="/2017/12/06/关于scanf的误区/" class="article-date">
+  <time datetime="2017-12-06T10:43:21.000Z" itemprop="datePublished">2017-12-06</time>
 </a>
     
   <div class="article-category">
-    <a class="article-category-link" href="/categories/算法/">算法</a>
+    <a class="article-category-link" href="/categories/C-C/">C/C++</a>
   </div>
 
   </div>
@@ -81,7 +81,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      两大LCS问题
+      关于scanf的误区
     </h1>
   
 
@@ -89,140 +89,13 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="相同子序：（不要求连续）"><a href="#相同子序：（不要求连续）" class="headerlink" title="相同子序：（不要求连续）"></a>相同子序：（不要求连续）</h2><p>`</p>
-<p>#include <iostream></iostream></p>
-<p>#include <algorithm></algorithm></p>
-<p>#include <string></string></p>
-<p>#include <cstdio></cstdio></p>
-<p>// // #define DEBUG<br>// #ifdef DEBUG<br>// #define SHOW<br>// #else<br>// #define SHOW /##/<br>// #endif<br>// 不可行，注释先于预处理指令被处理</p>
-<p>using namespace std;</p>
-<p>// LCS共同子序不要求连续</p>
-<p>int main(int argc, char const *argv[])<br>{<br>    string s1, s2;<br>    while (cin &gt;&gt; s1 &gt;&gt; s2) {<br>        int len1 = s1.length();//不包括末尾的’\0’<br>        int len2 = s2.length();<br>        int ans = 0;<br>        int dp[len1 + 5][len2 + 5] = {};//初始化为0避免边界讨论</p>
-<pre><code>    // printf(&quot;\t\t&quot;);
-    // for (int y = 0; y &lt; len2; y++) {
-    //     printf(&quot;%c\t&quot;, s2[y]);
-    // }
-    // printf(&quot;\n\t&quot;);
-
-    // for (int y = 0; y &lt;= len2; y++) {
-    //     printf(&quot;%d\t&quot;, dp[0][y]);
-
-    // }
-    // printf(&quot;\n&quot;);
-
-    for (int x = 1; x &lt;= len1; x++) {
-        // printf(&quot;%c\t&quot;, s1[x - 1]);
-        // printf(&quot;%d\t&quot;, dp[x][0]);
-        for (int y = 1; y &lt;= len2; y++) {
-            if (s1[x - 1] == s2[y - 1]) {//之所以减一是由于循环变量从1开始
-                dp[x][y] = dp[x - 1][y - 1] + 1;// 等于左上方格子加一
-                // printf(&quot;&amp;#x2196;%d\t&quot;, dp[x][y]);
-            } else {
-                dp[x][y] = max(dp[x - 1][y], dp[x][y - 1]);// 向左上方的所有格子取最大值(实际上只需要从左边和上边选取最大值)
-                // if (dp[x][y] == dp[x - 1][y]) {
-                //     printf(&quot;↑%d\t&quot;, dp[x][y]);
-                // } else {
-                //     printf(&quot;←%d\t&quot;, dp[x][y]);
-            }
-        }
-
-        // printf(&quot;\n&quot;);
-    }
-
-    /**
-    *    abcfbc abfcab
-    *    dp数组:
-    *
-    *            a    b    f    c    a    b
-    *        0    0    0    0    0    0    0
-    *    a    0    &amp;#x2196;1    ←1    ←1    ←1    &amp;#x2196;1    ←1
-    *    b    0    ↑1    &amp;#x2196;2    ←2    ←2    ←2    &amp;#x2196;2
-    *    c    0    ↑1    ↑2    ↑2    &amp;#x2196;3    ←3    ←3
-    *    f    0    ↑1    ↑2    &amp;#x2196;3    ↑3    ↑3    ↑3
-    *    b    0    ↑1    &amp;#x2196;2    ↑3    ↑3    ↑3    &amp;#x2196;4
-    *    c    0    ↑1    ↑2    ↑3    &amp;#x2196;4    ←4    ↑4
-    *    
-    *    out:4
-    */
-
-    for (int x = 1; x &lt;= len1; x++) {
-        for (int y = 1; y &lt;= len2; y++) {
-            ans = max(ans, dp[x][y]);
-        }
-    }
-    printf(&quot;%d\n&quot;, ans);
-
-}
-return 0;
-</code></pre><p>}<br>`</p>
-<h2 id="相同子列（连续）"><a href="#相同子列（连续）" class="headerlink" title="相同子列（连续）"></a>相同子列（连续）</h2><p>`</p>
-<p>#include <iostream></iostream></p>
-<p>#include <algorithm></algorithm></p>
-<p>#include <string></string></p>
-<p>#include <cstdio></cstdio></p>
-<p>using namespace std;</p>
-<p>// LCS共同连续子列</p>
-<p>int main(int argc, char const *argv[])<br>{<br>    string s1, s2;<br>    while (cin &gt;&gt; s1 &gt;&gt; s2) {<br>        int len1 = s1.length();//不包括末尾的’\0’<br>        int len2 = s2.length();<br>        int ans = 0;<br>        int dp[len1 + 5][len2 + 5] = {};//初始化为0避免边界讨论</p>
-<pre><code>    // printf(&quot;\t\t&quot;);
-    // for (int y = 0; y &lt; len2; y++) {
-    //     printf(&quot;%c\t&quot;, s2[y]);
-    // }
-    // printf(&quot;\n\t&quot;);
-
-    // for (int y = 0; y &lt;= len2; y++) {
-    //     printf(&quot;%d\t&quot;, dp[0][y]);
-
-    // }
-    // printf(&quot;\n&quot;);
-
-    for (int x = 1; x &lt;= len1; x++) {
-        // printf(&quot;%c\t&quot;, s1[x - 1]);
-        // printf(&quot;%d\t&quot;, dp[x][0]);
-        for (int y = 1; y &lt;= len2; y++) {
-            if (s1[x - 1] == s2[y - 1]) {//之所以减一是由于循环变量从1开始
-                dp[x][y] = dp[x - 1][y - 1] + 1;// 等于左上方格子加一
-                // printf(&quot;&amp;#x2196;%d\t&quot;, dp[x][y]);
-            }//不相等则无需处理
-            // else {
-            //     printf(&quot;%d\t&quot;, dp[x][y]);
-            // }
-        }
-
-        // printf(&quot;\n&quot;);
-    }
-
-    /**
-    *    abcfbc abfcab
-    *    dp数组:
-    *
-    *            a    b    f    c    a    b
-    *        0    0    0    0    0    0    0
-    *    a    0    &amp;#x2196;1    0    0    0    &amp;#x2196;1    0
-    *    b    0    0    &amp;#x2196;2    0    0    0    &amp;#x2196;2
-    *    c    0    0    0    0    &amp;#x2196;1    0    0
-    *    f    0    0    0    &amp;#x2196;1    0    0    0
-    *    b    0    0    &amp;#x2196;1    0    0    0    &amp;#x2196;1
-    *    c    0    0    0    0    &amp;#x2196;1    0    0
-    *
-    *    out:2
-    */
-
-    for (int x = 1; x &lt;= len1; x++) {
-        for (int y = 1; y &lt;= len2; y++) {
-            ans = max(ans, dp[x][y]);
-        }
-    }
-    printf(&quot;%d\n&quot;, ans);
-
-}
-return 0;
-</code></pre><p>}</p>
-<p>`</p>
+        <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;stdio.h&gt;</span><br><span class="line"></span><br><span class="line">int main()&#123;</span><br><span class="line"></span><br><span class="line">	int a, b;</span><br><span class="line">	while(scanf(&quot;%d%d&quot;,&amp;a,&amp;b) == EOF)&#123;</span><br><span class="line">		printf(&quot;%d\n&quot;, a + b);	</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	return 0;	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>scanf()</code> 遇到文件末尾时，如果什么都没有读取到，就返回EOF(-1)，<br>如果有变量已经赋值那就返回赋值了的变量个数，而不会是EOF。</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/02/01/e4-b8-a4-e5-a4-a7lcs-e9-97-ae-e9-a2-98/" data-id="cjea1u6f1000n5lw5gte93qlm" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/12/06/关于scanf的误区/" data-id="cjea1u6fq001k5lw5eh16luy4" class="article-share-link">Share</a>
       
       
     </footer>
@@ -231,19 +104,19 @@ return 0;
     
 <nav id="article-nav">
   
-    <a href="/2018/02/01/hdu-2577-how-to-type/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2017/12/06/e5-88-86-e6-b2-bb-e6-b3-95-e7-9a-84-e5-ba-94-e7-94-a8-hdu-1003-max-sum/" id="article-nav-newer" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Newer</strong>
       <div class="article-nav-title">
         
-          HDU 2577 How To Type 动态规划
+          HDU 1003 Max sum——分治法的应用，动态规划，前缀数组
         
       </div>
     </a>
   
   
-    <a href="/2018/01/28/hdu-2089-e7-9a-84-e7-b1-bb-e4-bc-bc-e9-a2-98-ef-bc-8862-e6-8d-a2-e6-88-90-e4-ba-8638-ef-bc-89-e6-95-b0-e4-bd-8ddp-e8-a7-a3-e9-87-8a/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2017/11/29/正在阅读/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">HDU 2089的类似题（62换成了38） 数位dp解释</div>
+      <div class="article-nav-title">正在阅读</div>
     </a>
   
 </nav>
