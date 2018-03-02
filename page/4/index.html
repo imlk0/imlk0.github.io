@@ -61,285 +61,6 @@
       <div class="outer">
         <section id="main">
   
-    <article id="post-e5-88-86-e6-b2-bb-e6-b3-95-e7-9a-84-e5-ba-94-e7-94-a8-hdu-1003-max-sum" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2017/12/06/e5-88-86-e6-b2-bb-e6-b3-95-e7-9a-84-e5-ba-94-e7-94-a8-hdu-1003-max-sum/" class="article-date">
-  <time datetime="2017-12-06T15:10:33.000Z" itemprop="datePublished">2017-12-06</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/HDU/">HDU</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/12/06/e5-88-86-e6-b2-bb-e6-b3-95-e7-9a-84-e5-ba-94-e7-94-a8-hdu-1003-max-sum/">HDU 1003 Max sum——分治法的应用，动态规划，前缀数组</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>原题： <a href="http://acm.hdu.edu.cn/showproblem.php?pid=1003" target="_blank" rel="noopener">http://acm.hdu.edu.cn/showproblem.php?pid=1003</a></p>
-<p>看到这题的时候一脸懵逼，网上寻找解答，发现都讲的不详细，变量声明也很短，根本看不出是什么用途，这里给出了我的解答，参考了网上各位大神的方法，加上了注释，方便学习。</p>
-<p>1.分治法解题<br>`</p>
-<p>#include &lt;stdio.h&gt;</p>
-<p>struct Sequence<br>{<br>    //表示一个数组</p>
-<pre><code>int sum;//数组元素之和
-int leftPosition;//数组左边界位置
-int rightPosition;//数组右边界位置
-</code></pre><p>};</p>
-<p>/*<br>    求最大子列：</p>
-<pre><code>首先明确：
-    给定一个数列
-    其最大子列的范围，要么包括正中间的位置，要么全在最中间位置的左边，要么全在最中间位置的右边
-    这三种情况在迭代函数中分别处理
-</code></pre><p>*/</p>
-<p>struct Sequence getMaxSequence(int * sourceSequence, int leftPosition, int rightPosition) {</p>
-<pre><code>// printf(&quot;into： %d, %d\n&quot;,leftPosition,rightPosition);
-int mediumPosition;
-
-//范围：[leftPosition, rightPosition]
-if (leftPosition == rightPosition) {
-    //给定范围内的子数列只有一个元素,构造一个struct sequence来描述;
-    struct Sequence sequence;
-    sequence.leftPosition = leftPosition;
-
-    sequence.rightPosition = rightPosition;
-    sequence.sum = sourceSequence[leftPosition];
-    // printf(&quot;return: %d, %d\n&quot;,sequence.leftPosition,sequence.rightPosition);
-
-    return sequence;
-        //将这个元素返回
-}
-
-//取得中间位置
-mediumPosition = (leftPosition + rightPosition) / 2;
-
-//构造三种struct来保存三种情况的返回值；
-struct Sequence leftSequence;
-struct Sequence rightSequence;
-struct Sequence aroundSequence;
-
-leftSequence = getMaxSequence(sourceSequence, leftPosition, mediumPosition);
-
-rightSequence = getMaxSequence(sourceSequence, mediumPosition + 1, rightPosition);
-
-//第三种情况下，先从中间向左边查找找出最大的和，再从中间向右边查找找出最大的和，相加得到横跨中间位置的最大值及范围
-//先是左边
-//先保存向左边出发遇到的第一个值
-int leftMaxSumTmp = sourceSequence[mediumPosition];
-//并保存该值的位置
-aroundSequence.leftPosition = mediumPosition;
-
-int leftSumTmp = 0;
-for (int index = mediumPosition; index &gt;= leftPosition; index--) {
-    leftSumTmp = leftSumTmp + sourceSequence[index];
-    if (leftSumTmp &gt;= leftMaxSumTmp) {
-        //如果发现从中间到左边某一项的所有值之和比leftMaxSumTmp更大了,就更新leftMaxSumTmp
-        //并记录此位置到aroundSequence的leftPosition字段
-        leftMaxSumTmp = leftSumTmp;
-        aroundSequence.leftPosition = index;
-    }
-
-}
-//再是右边
-//先保存向右边出发遇到的第一个值(因为到这里leftPosition和rightPosition不相等所以meiumPosition + 1（一定小于等于rightPosition）一定没有超过范围：[leftPosition, rightPosition])，不加if
-int rightMaxSumTmp = sourceSequence[mediumPosition + 1];
-//保存该值的位置
-aroundSequence.rightPosition = mediumPosition + 1;
-
-int rightSumTmp = 0;
-for (int index = mediumPosition + 1; index &lt;= rightPosition; index++) {
-    rightSumTmp = rightSumTmp + sourceSequence[index];
-    if (rightSumTmp &gt;= rightMaxSumTmp) {
-        //如果发现从中间到右边某一项的所有值之和比rightMaxSumTmp更大了,就更新rightMaxSumTmp
-        //并记录此位置到aroundSequence的rightPosition字段
-        rightMaxSumTmp = rightSumTmp;
-        aroundSequence.rightPosition = index;
-    }
-
-}
-
-aroundSequence.sum = leftMaxSumTmp + rightMaxSumTmp;
-
-//三选一返回，选sum最长的那个返回
-
-// printf(&quot;return: %d, %d\n&quot;,finalSequence.leftPosition,finalSequence.rightPosition);
-return (leftSequence.sum &gt; rightSequence.sum) ? ((leftSequence.sum &gt; aroundSequence.sum) ? leftSequence : aroundSequence) : ((rightSequence.sum &gt; aroundSequence.sum) ? rightSequence : aroundSequence);
-</code></pre><p>}<br>int main() {<br>    int numOfCase , indexOfCase = 1,lengthOfSquence;<br>    scanf(“%d”, &amp;numOfCase);<br>    while (indexOfCase &lt;= numOfCase) {<br>        scanf(“%d”,&amp;lengthOfSquence);<br>        int sourceSequence[100000];<br>        for(int index = 0;index &lt;lengthOfSquence;index++){<br>            scanf(“%d”,sourceSequence + index);<br>        }<br>        struct Sequence aimSequence =  getMaxSequence(sourceSequence,0,lengthOfSquence - 1);<br>        printf(“Case %d:\n%d %d %d\n”, indexOfCase ,aimSequence.sum,aimSequence.leftPosition + 1,aimSequence.rightPosition + 1);<br>        if(indexOfCase != numOfCase){<br>            printf(“\n”);<br>        }<br>        indexOfCase++;<br>    }</p>
-<pre><code>return 0;
-</code></pre><p>}<br>`</p>
-<p>寒假看到这样一篇文章，讲的很详细<br><a href="http://conw.net/archives/9/#comment-25" target="_blank" rel="noopener">http://conw.net/archives/9/#comment-25</a></p>
-<p>2.动态规划<br>`</p>
-<p>#include <iostream></iostream></p>
-<p>#include <cstdio></cstdio></p>
-<p>#include <cstring></cstring></p>
-<p>#define iinf 1e9</p>
-<p>using namespace std;</p>
-<p>// O(n)AC</p>
-<p>// 动态规划<br>// 原先维护一个dp数组，dp[i]保存以第i个位子结尾的所有子列的最大和<br>// dp[i] = list[i] + max(dp[i - 1], 0);<br>// 自处省略这个数组，用两个变量来实现</p>
-<p>int main(int argc, char const *argv[])<br>{</p>
-<pre><code>int T, N, last, now, ans, startpos, l, r;
-scanf(&quot;%d&quot;, &amp;T);
-for (int j = 1; j &lt;= T; j++) {
-    last = -1;
-    ans = -iinf;
-    l = 1;
-    r = 1;
-    scanf(&quot;%d&quot;, &amp;N);
-
-    for (int i = 1; i &lt;= N; i++) {
-        scanf(&quot;%d&quot;, &amp;now);
-        if (last &gt;= 0) {
-            last = now + last;
-
-        } else {
-            last = now;
-            startpos = i;
-
-        }
-
-        if (last &gt; ans) {
-            ans = last;
-            l = startpos;
-            r = i;
-        }
-
-    }
-
-    if (j == 1) {
-        printf(&quot;Case 1:\n&quot;);
-    } else {
-        printf(&quot;\nCase %d:\n&quot;, j);
-    }
-
-    printf(&quot;%d %d %d\n&quot;, ans, l, r);
-
-}
-
-return 0;
-</code></pre><p>}</p>
-<p>`</p>
-<p>3.结合优化后的前缀数组<br>用这种用法的人似乎更多</p>
-<p>`</p>
-<p>#include <iostream></iostream></p>
-<p>#include <cstdio></cstdio></p>
-<p>#include <cstring></cstring></p>
-<p>#include <algorithm></algorithm></p>
-<p>#define iinf 1e9</p>
-<p>using namespace std;</p>
-<p>// O(n)AC</p>
-<p>// 另一种结合前缀数组的方法<br>// data[i] = list[0…(i - 1)];<br>// data数组从1开始避免对边界的判断<br>// 则list[x…y] = data[y + 1] - data[x];<br>// i作为循环变量<br>// 维护data[i]的最小值mi，更新ans的最大值<br>// mi = min(mi, data[i])<br>// ans = max(data[i] - mi, ans)<br>// 可知若以第y个元素结尾的所有子列中list[x…y]为最优解，那么data[x]一定是data[1],data[2],data[3]…data<a href="注意这里没有data[y+1],因为至少要有一个元素">y</a>中的最小值</p>
-<p>int main(int argc, char const *argv[])<br>{</p>
-<pre><code>int T, N, sum, now, ans, min, minpos, l, r;
-scanf(&quot;%d&quot;, &amp;T);
-for (int j = 1; j &lt;= T; j++) {
-    sum = 0;
-    ans = -iinf;
-    min = 0;
-    minpos = 0;
-    l = 1;
-    r = 1;
-    scanf(&quot;%d&quot;, &amp;N);
-
-    for (int i = 1; i &lt;= N; i++) {
-        scanf(&quot;%d&quot;, &amp;now);
-        sum += now;
-        if (sum - min &gt; ans) {//更新答案，这里使用的是上一次循环的min值
-            r = i;
-            l = minpos + 1;
-            ans = sum - min;
-        }
-        if (sum &lt; min) {//该判断语句不可和上一句调换，否则将可能出现最优解的数列长度为0；
-            min = sum;//更新本次循环的min，为在下一循环中使用到
-            minpos = i;
-        }
-    }
-
-    if (j == 1) {
-        printf(&quot;Case 1:\n&quot;);
-    } else {
-        printf(&quot;\nCase %d:\n&quot;, j);
-    }
-
-    printf(&quot;%d %d %d\n&quot;, ans, l, r);
-
-}
-
-return 0;
-</code></pre><p>}<br>`</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/12/06/e5-88-86-e6-b2-bb-e6-b3-95-e7-9a-84-e5-ba-94-e7-94-a8-hdu-1003-max-sum/" data-id="cje9syoz6000s23w5n0e67wy1" class="article-share-link">Teilen</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-52" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2017/12/06/52/" class="article-date">
-  <time datetime="2017-12-06T10:43:21.000Z" itemprop="datePublished">2017-12-06</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/C-C/">C/C++</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/12/06/52/">关于scanf的误区</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>`</p>
-<p>#include &lt;stdio.h&gt;</p>
-<p>int main(){</p>
-<pre><code>int a, b;
-while(scanf(&quot;%d%d&quot;,&amp;a,&amp;b) == EOF){
-    printf(&quot;%d\n&quot;, a + b);    
-}
-
-return 0;    
-</code></pre><p>}<br>`<br>scanf() 遇到文件末尾时，如果什么都没有读取到，就返回EOF(-1)，<br>如果有变量已经赋值那就返回赋值了的变量个数，而不会是EOF。</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/12/06/52/" data-id="cje9syoy3000123w5kqpr0c1t" class="article-share-link">Teilen</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
     <article id="post-50" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2017/11/29/50/" class="article-date">
@@ -379,7 +100,7 @@ return 0;
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/11/29/50/" data-id="cje9syp06002923w5whyb6tme" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2017/11/29/50/" data-id="cje9t7klp001v2zw54yzdzhpn" class="article-share-link">Teilen</a>
       
       
     </footer>
@@ -434,7 +155,7 @@ return 0;
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/11/21/37/" data-id="cje9syp05002823w57kym7gbt" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2017/11/21/37/" data-id="cje9t7kln001t2zw5vavyk1gs" class="article-share-link">Teilen</a>
       
       
     </footer>
@@ -514,7 +235,7 @@ return 0;
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/11/18/e8-bd-ac-e5-90-84-e7-a7-8d-e6-96-87-e4-bb-b6-e5-a4-b4-e4-bf-a1-e6-81-af/" data-id="cje9syozc001023w5w55hk829" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2017/11/18/e8-bd-ac-e5-90-84-e7-a7-8d-e6-96-87-e4-bb-b6-e5-a4-b4-e4-bf-a1-e6-81-af/" data-id="cje9t7kl100152zw5fmkmv4xy" class="article-share-link">Teilen</a>
       
       
     </footer>
@@ -567,14 +288,6 @@ return 0;
       <ul>
         
           <li>
-            <a href="/2018/03/02/HelloWorld/">HelloWorld</a>
-          </li>
-        
-          <li>
-            <a href="/2018/03/02/hello-world/">Hello World</a>
-          </li>
-        
-          <li>
             <a href="/2018/03/02/hdu-2586-how-far-away-ef-bc-9f-e6-a0-91-e4-b8-8a-e8-8a-82-e7-82-b9-e6-9c-80-e7-9f-ad-e8-b7-9d-e7-a6-bb-ef-bc-8clca-ef-bc-8c-e5-8f-8c-e4-ba-b2-e8-a1-a8-e7-a4-ba-e6-b3-95-e6-9a-b4/">HDU 2586 How far away ？——树上节点最短距离，LCA， 双亲表示法+暴力从下至上追溯，孩子链表示法+（Tarjan 或 欧拉环游RMQ+（ST 或 SegmentTree））</a>
           </li>
         
@@ -584,6 +297,14 @@ return 0;
         
           <li>
             <a href="/2018/02/26/hdu-1080-poj-1080-human-gene-functions-e5-8a-a8-e6-80-81-e8-a7-84-e5-88-92/">HDU 1080 POJ 1080 Human Gene Functions——动态规划</a>
+          </li>
+        
+          <li>
+            <a href="/2018/02/25/fragment-fragment-xposed-e5-bc-80-e5-8f-91-e6-97-b6-e9-81-87-e5-88-b0-e7-9a-84-e5-85-b3-e4-ba-8eclassloader-e7-9a-84-e9-97-ae-e9-a2-98/">Fragment != Fragment ? —— Xposed开发时遇到的关于ClassLoader的问题</a>
+          </li>
+        
+          <li>
+            <a href="/2018/02/09/hdu-1325-1272-e5-b9-b6-e6-9f-a5-e9-9b-86-e5-88-a4-e6-96-ad-e6-9c-89-e5-90-91-e5-9b-be-e5-92-8c-e6-97-a0-e5-90-91-e5-9b-be-e6-98-af-e5-90-a6-e6-9e-84-e6-88-90-e4-b8-80-e6-a3-b5-e6-a0-91-e5-9e-8b/">HDU 1325 1272 并查集判断有向图和无向图是否构成一棵树型</a>
           </li>
         
       </ul>
