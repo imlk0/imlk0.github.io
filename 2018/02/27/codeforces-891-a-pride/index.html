@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>CodeForces 891 A. Pride | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="http://codeforces.com/problemset/problem/891/A ` #include  #include  #include  #include  using namespace std; long long dp[2005][2005]; // dp[x][y]表示gcd(x…(x + y))/x是起始点位置,y是距离a1, a2, a3, a4, a5, a6,">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CodeForces 891 A. Pride">
+<meta property="og:url" content="http://yoursite.com/2018/02/27/codeforces-891-a-pride/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="http://codeforces.com/problemset/problem/891/A ` #include  #include  #include  #include  using namespace std; long long dp[2005][2005]; // dp[x][y]表示gcd(x…(x + y))/x是起始点位置,y是距离a1, a2, a3, a4, a5, a6,">
+<meta property="og:updated_time" content="2018-03-02T10:34:14.518Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="CodeForces 891 A. Pride">
+<meta name="twitter:description" content="http://codeforces.com/problemset/problem/891/A ` #include  #include  #include  #include  using namespace std; long long dp[2005][2005]; // dp[x][y]表示gcd(x…(x + y))/x是起始点位置,y是距离a1, a2, a3, a4, a5, a6,">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Suche"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-codeforces-891-a-pride" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/02/27/codeforces-891-a-pride/" class="article-date">
+  <time datetime="2018-02-27T02:30:47.000Z" itemprop="datePublished">2018-02-27</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/CodeForces/">CodeForces</a>►<a class="article-category-link" href="/categories/CodeForces/动态规划/">动态规划</a>►<a class="article-category-link" href="/categories/CodeForces/动态规划/算法/">算法</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      CodeForces 891 A. Pride
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><a href="http://codeforces.com/problemset/problem/891/A" target="_blank" rel="noopener">http://codeforces.com/problemset/problem/891/A</a></p>
+<p>`</p>
+<p>#include <iostream></iostream></p>
+<p>#include <cstdio></cstdio></p>
+<p>#include <cstring></cstring></p>
+<p>#include <cmath></cmath></p>
+<p>using namespace std;</p>
+<p>long long dp[2005][2005]; // dp[x][y]表示gcd(x…(x + y))<br>/<em><br>x是起始点位置,y是距离<br>a1, a2, a3, a4, a5, a6, a7, a8<br>    ↑    ←    y    →    ↑<br>    x                x + y
+</em>/</p>
+<p>// gcd(a1, a2, a3) = gcd(gcd(a1, a2), a3) = gcd(gcd(a1, a2), gcd(a2, a3))<br>// 所以</p>
+<p>// 状态方程<br>// dp[x][y] = gcd(dp[x][y - 1], dp[x + 1][y - 1])</p>
+<p>long long gcd(long long a, long long b) {<br>    while (1) {<br>        a = a % b;<br>        if (!a) {<br>            return b;<br>        }<br>        b = b % a;<br>        if (!b) {<br>            return a;<br>        }<br>    }<br>}</p>
+<p>int main(int argc, char const *argv[])<br>{<br>    int n;<br>    int ones = 0;<br>    scanf(“%d”, &amp;n);</p>
+<pre><code>for (int x = 0; x &lt; n; x++) {
+    scanf(&quot;%lld&quot;, dp[x]);
+    if (dp[x][0] == 1) {
+        ones++;
+    }
+
+    // printf(&quot;%lld\t&quot;, dp[x][0]);
+}
+
+// printf(&quot;\n&quot;);
+
+if (ones) {
+    printf(&quot;%d\n&quot;, n - ones);
+    return 0;
+}
+
+for (int y = 1; y &lt; n; y++) {//跨度距离从1开始
+    for (int x = 0; x + y &lt; n; x++) {//起始位置从x开始
+
+        dp[x][y] = gcd(dp[x][y - 1], dp[x + 1][y - 1]);
+
+        // printf(&quot;%lld\t&quot;, dp[x][y]);
+
+        if (dp[x][y] == 1) {
+            // printf(&quot;\n&quot;);
+            printf(&quot;%d\n&quot;, n + y - 1);
+            return 0;
+        }
+
+    }
+}
+
+printf(&quot;-1\n&quot;);
+return 0;
+</code></pre><p>/**</p>
+<ul>
+<li></li>
+<li>in:</li>
+<li></li>
+<li>5</li>
+<li>2 2 3 4 6</li>
+<li></li>
+<li>out:</li>
+<li></li>
+<li>2        2        3        4        6</li>
+<li>↑&#x2197;        ↑&#x2197;</li>
+<li>2        1</li>
+<li></li>
+<li>result：</li>
+<li></li>
+<li>5</li>
+<li></li>
+<li>*/</li>
+</ul>
+<p>}</p>
+<p>`</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/02/27/codeforces-891-a-pride/" data-id="cje9syp01002023w571mk3071" class="article-share-link">Teilen</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/03/02/hdu-2586-how-far-away-ef-bc-9f-e6-a0-91-e4-b8-8a-e8-8a-82-e7-82-b9-e6-9c-80-e7-9f-ad-e8-b7-9d-e7-a6-bb-ef-bc-8clca-ef-bc-8c-e5-8f-8c-e4-ba-b2-e8-a1-a8-e7-a4-ba-e6-b3-95-e6-9a-b4/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Neuer</strong>
+      <div class="article-nav-title">
+        
+          HDU 2586 How far away ？——树上节点最短距离，LCA， 双亲表示法+暴力从下至上追溯，孩子链表示法+（Tarjan 或 欧拉环游RMQ+（ST 或 SegmentTree））
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/02/26/hdu-1080-poj-1080-human-gene-functions-e5-8a-a8-e6-80-81-e8-a7-84-e5-88-92/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Älter</strong>
+      <div class="article-nav-title">HDU 1080 POJ 1080 Human Gene Functions——动态规划</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Kategorien</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/C-C/">C/C++</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/C-C/Java/">Java</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/CodeForces/">CodeForces</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/CodeForces/动态规划/">动态规划</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/CodeForces/动态规划/算法/">算法</a></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/HDU/">HDU</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/HDU/POJ/">POJ</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/HDU/POJ/动态规划/">动态规划</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/HDU/POJ/动态规划/算法/">算法</a></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/HDU/动态规划/">动态规划</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/HDU/动态规划/未分类/">未分类</a></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Xposed/">Xposed</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/raspberry-pi/">raspberry pi</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/未分类/">未分类</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/算法/">算法</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/闲时研究/">闲时研究</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archiv</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">letzter Beitrag</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2018/03/02/HelloWorld/">HelloWorld</a>
+          </li>
+        
+          <li>
+            <a href="/2018/03/02/hello-world/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/2018/03/02/hdu-2586-how-far-away-ef-bc-9f-e6-a0-91-e4-b8-8a-e8-8a-82-e7-82-b9-e6-9c-80-e7-9f-ad-e8-b7-9d-e7-a6-bb-ef-bc-8clca-ef-bc-8c-e5-8f-8c-e4-ba-b2-e8-a1-a8-e7-a4-ba-e6-b3-95-e6-9a-b4/">HDU 2586 How far away ？——树上节点最短距离，LCA， 双亲表示法+暴力从下至上追溯，孩子链表示法+（Tarjan 或 欧拉环游RMQ+（ST 或 SegmentTree））</a>
+          </li>
+        
+          <li>
+            <a href="/2018/02/27/codeforces-891-a-pride/">CodeForces 891 A. Pride</a>
+          </li>
+        
+          <li>
+            <a href="/2018/02/26/hdu-1080-poj-1080-human-gene-functions-e5-8a-a8-e6-80-81-e8-a7-84-e5-88-92/">HDU 1080 POJ 1080 Human Gene Functions——动态规划</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

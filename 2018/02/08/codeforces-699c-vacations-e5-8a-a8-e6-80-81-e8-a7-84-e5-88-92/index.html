@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>CodeForces 699C Vacations——动态规划 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="原题链接   C. Vacations time limit per test 1 second memory limit per test 256 megabytes input standard input output standard output  Vasya has n days of vacations! So he decided to improve his IT skills">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CodeForces 699C Vacations——动态规划">
+<meta property="og:url" content="http://yoursite.com/2018/02/08/codeforces-699c-vacations-e5-8a-a8-e6-80-81-e8-a7-84-e5-88-92/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="原题链接   C. Vacations time limit per test 1 second memory limit per test 256 megabytes input standard input output standard output  Vasya has n days of vacations! So he decided to improve his IT skills">
+<meta property="og:updated_time" content="2018-03-02T10:34:14.518Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="CodeForces 699C Vacations——动态规划">
+<meta name="twitter:description" content="原题链接   C. Vacations time limit per test 1 second memory limit per test 256 megabytes input standard input output standard output  Vasya has n days of vacations! So he decided to improve his IT skills">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Suche"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-codeforces-699c-vacations-e5-8a-a8-e6-80-81-e8-a7-84-e5-88-92" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/02/08/codeforces-699c-vacations-e5-8a-a8-e6-80-81-e8-a7-84-e5-88-92/" class="article-date">
+  <time datetime="2018-02-08T03:49:53.000Z" itemprop="datePublished">2018-02-08</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/算法/">算法</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      CodeForces 699C Vacations——动态规划
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><a href="http://codeforces.com/problemset/problem/699/C" target="_blank" rel="noopener">原题链接</a></p>
+<pre>
+
+C. Vacations
+time limit per test
+1 second
+memory limit per test
+256 megabytes
+input
+standard input
+output
+standard output
+
+Vasya has n days of vacations! So he decided to improve his IT skills and do sport. Vasya knows the following information about each of this n days: whether that gym opened and whether a contest was carried out in the Internet on that day. For the i-th day there are four options:
+
+    on this day the gym is closed and the contest is not carried out;
+    on this day the gym is closed and the contest is carried out;
+    on this day the gym is open and the contest is not carried out;
+    on this day the gym is open and the contest is carried out. 
+
+On each of days Vasya can either have a rest or write the contest (if it is carried out on this day), or do sport (if the gym is open on this day).
+
+Find the minimum number of days on which Vasya will have a rest (it means, he will not do sport and write the contest at the same time). The only limitation that Vasya has — he does not want to do the same activity on two consecutive days: it means, he will not do sport on two consecutive days, and write the contest on two consecutive days.
+Input
+
+The first line contains a positive integer n (1 ≤ n ≤ 100) — the number of days of Vasya's vacations.
+
+The second line contains the sequence of integers a1, a2, ..., an (0 ≤ ai ≤ 3) separated by space, where:
+
+    ai equals 0, if on the i-th day of vacations the gym is closed and the contest is not carried out;
+    ai equals 1, if on the i-th day of vacations the gym is closed, but the contest is carried out;
+    ai equals 2, if on the i-th day of vacations the gym is open and the contest is not carried out;
+    ai equals 3, if on the i-th day of vacations the gym is open and the contest is carried out.
+
+Output
+
+Print the minimum possible number of days on which Vasya will have a rest. Remember that Vasya refuses:
+
+    to do sport on any two consecutive days,
+    to write the contest on any two consecutive days. 
+
+Examples
+Input
+
+4
+1 3 2 0
+
+Output
+
+2
+
+Input
+
+7
+1 3 3 2 1 2 3
+
+Output
+
+0
+
+Input
+
+2
+2 2
+
+Output
+
+1
+
+Note
+
+In the first test Vasya can write the contest on the day number 1 and do sport on the day number 3\. Thus, he will have a rest for only 2 days.
+
+In the second test Vasya should write contests on days number 1, 3, 5 and 7, in other days do sport. Thus, he will not have a rest for a single day.
+
+In the third test Vasya can do sport either on a day number 1 or number 2\. He can not do sport in two days, because it will be contrary to the his limitation. Thus, he will have a rest for only one day.
+
+</pre>
+
+<p>`</p>
+<p>#include <iostream></iostream></p>
+<p>#include <cstdio></cstdio></p>
+<p>using namespace std;</p>
+<p>int max(int x, int y) {<br>    return x &gt; y ? x : y;<br>}<br>int max(int x, int y, int z) {<br>    return x &gt; y ? (x &gt; z ? x : z) : (y &gt; z ? y : z);<br>}</p>
+<p>int main(int argc, char const *argv[])<br>{<br>    int t;<br>    scanf(“%d”, &amp;t);<br>    int g_date[t] = {0};//g_date<a href="i从0开始">i</a>表示第i天体育场是否开放<br>    int c_date[t] = {0};//c_date<a href="i从0开始">i</a>表示第i天是否有比赛</p>
+<pre><code>int dp[t][3] = {0};
+// dp[i][x],i从0开始，储存截止到第i天结束工作的天数，工作天数越多，说明休息天数越少
+// [i][0]表示第i天啥都不做，[i][1]表示第i天去体育馆，[i][2]表示第i天打比赛，
+int c_dp[t][2] = {0};
+
+int temp;
+
+for (int i = 0; i &lt; t; i++) {
+    scanf(&quot;%d&quot;, &amp;temp);
+    switch (temp) {
+    case 0:
+        break;
+    case 1:
+        c_date[i] = 1;
+        break;
+    case 2:
+        g_date[i] = 1;
+        break;
+    case 3:
+        c_date[i] = 1;
+        g_date[i] = 1;
+        break;
+    }
+}
+
+for (int i = 0; i &lt; t ; i++) {
+    if (i == 0) {//第一天的情况
+        dp[i][0] = 0;
+
+        if (g_date[i]) {//若第i天体育馆开放
+            dp[i][1] = 1;//选择去体育馆
+        }
+
+        if (c_date[i]) {//若第i天有比赛可打
+            dp[i][2] = 1;//选择去打比赛
+        }
+
+    } else {//若不是第一天
+
+        dp[i][0] = max(dp[i - 1][1], dp[i - 1][0], dp[i - 1][2]);//选择什么也不做，那么最大工作天数等于昨天的三种情况里最大的那个
+        if (g_date[i]) {//若今天体育馆开门
+            dp[i][1] = 1 + max(dp[i - 1][0], dp[i - 1][2]);//从昨天啥都不做和昨天去打比赛中选一个最大的
+        }//若今天体育馆不开门，显然今天dp[i][1]的状态是不存在的，不能被使用，如何防止以后用到这种不存在的状态呢？这里就和max函数有关系了，只要把不存在的状态的值设置的足够小，那么max函数就肯定不会选取这个比别的数都小的值作为返回值，也就是max函数恰好筛选掉了不合法的状态，而dp[i][1]为默认值0，我们知道工作天数的最小值就是0，所以我们可以大胆地不对dp[i][1]赋值，当然如果你怕出问题的话，你可以赋值为-1或者-inf
+
+        if (c_date[i]) {//若今天有比赛可打
+            dp[i][2] = 1 + max(dp[i - 1][1], dp[i - 1][0]);
+        }//若今天无比赛，情况和上面的描述类似，可以不赋值(就用默认值0)
+    }
+}
+// 最小休息天数 = 总天数 - 最大工作天数
+printf(&quot;%d\n&quot;, t - max(dp[t - 1][0], dp[t - 1][1], dp[t - 1][2]));
+return 0;
+</code></pre><p>}<br>`</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/02/08/codeforces-699c-vacations-e5-8a-a8-e6-80-81-e8-a7-84-e5-88-92/" data-id="cje9syoz4000q23w550d2ut1z" class="article-share-link">Teilen</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/02/08/codeforces-699d-fix-a-tree-e5-b9-b6-e6-9f-a5-e9-9b-86-e4-bc-98-e5-8c-96-e7-bb-99-e5-87-ba-e6-89-80-e6-9c-89-e8-8a-82-e7-82-b9-e7-9a-84-e7-88-b6-e8-8a-82-e7-82-b9-ef-bc-8c-e7-94-a8/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Neuer</strong>
+      <div class="article-nav-title">
+        
+          CodeForces 699D Fix a Tree——并查集优化 给出所有节点的父节点（有向图），用最少的修改生成一颗合法的树（环的判断，去环）
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/02/07/hysbz-1216-hnoi2003-e6-93-8d-e4-bd-9c-e7-b3-bb-e7-bb-9f/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Älter</strong>
+      <div class="article-nav-title">HYSBZ 1216: [HNOI2003]操作系统</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Kategorien</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/C-C/">C/C++</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/C-C/Java/">Java</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/CodeForces/">CodeForces</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/CodeForces/动态规划/">动态规划</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/CodeForces/动态规划/算法/">算法</a></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/HDU/">HDU</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/HDU/POJ/">POJ</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/HDU/POJ/动态规划/">动态规划</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/HDU/POJ/动态规划/算法/">算法</a></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/HDU/动态规划/">动态规划</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/HDU/动态规划/未分类/">未分类</a></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Xposed/">Xposed</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/raspberry-pi/">raspberry pi</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/未分类/">未分类</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/算法/">算法</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/闲时研究/">闲时研究</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archiv</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">letzter Beitrag</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2018/03/02/HelloWorld/">HelloWorld</a>
+          </li>
+        
+          <li>
+            <a href="/2018/03/02/hello-world/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/2018/03/02/hdu-2586-how-far-away-ef-bc-9f-e6-a0-91-e4-b8-8a-e8-8a-82-e7-82-b9-e6-9c-80-e7-9f-ad-e8-b7-9d-e7-a6-bb-ef-bc-8clca-ef-bc-8c-e5-8f-8c-e4-ba-b2-e8-a1-a8-e7-a4-ba-e6-b3-95-e6-9a-b4/">HDU 2586 How far away ？——树上节点最短距离，LCA， 双亲表示法+暴力从下至上追溯，孩子链表示法+（Tarjan 或 欧拉环游RMQ+（ST 或 SegmentTree））</a>
+          </li>
+        
+          <li>
+            <a href="/2018/02/27/codeforces-891-a-pride/">CodeForces 891 A. Pride</a>
+          </li>
+        
+          <li>
+            <a href="/2018/02/26/hdu-1080-poj-1080-human-gene-functions-e5-8a-a8-e6-80-81-e8-a7-84-e5-88-92/">HDU 1080 POJ 1080 Human Gene Functions——动态规划</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

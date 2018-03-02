@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>Codeforces 429B B.Working out | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="http://codeforces.com/problemset/problem/429/B 对于题中刁钻的要求，仔细分析所给条件的等价条件，有时候，所给条件符合的情形只有很少的几种。 http://blog.csdn.net/cc_again/article/details/25691925 题目意思：给n*m的矩阵，每个格子有个数，A从(1,1)出发只能向下或右走，终点为(n,m)，B从(n,">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Codeforces 429B B.Working out">
+<meta property="og:url" content="http://yoursite.com/2018/01/09/codeforces-429b-b-working-out/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="http://codeforces.com/problemset/problem/429/B 对于题中刁钻的要求，仔细分析所给条件的等价条件，有时候，所给条件符合的情形只有很少的几种。 http://blog.csdn.net/cc_again/article/details/25691925 题目意思：给n*m的矩阵，每个格子有个数，A从(1,1)出发只能向下或右走，终点为(n,m)，B从(n,">
+<meta property="og:updated_time" content="2018-03-02T10:34:14.514Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Codeforces 429B B.Working out">
+<meta name="twitter:description" content="http://codeforces.com/problemset/problem/429/B 对于题中刁钻的要求，仔细分析所给条件的等价条件，有时候，所给条件符合的情形只有很少的几种。 http://blog.csdn.net/cc_again/article/details/25691925 题目意思：给n*m的矩阵，每个格子有个数，A从(1,1)出发只能向下或右走，终点为(n,m)，B从(n,">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Suche"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-codeforces-429b-b-working-out" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/01/09/codeforces-429b-b-working-out/" class="article-date">
+  <time datetime="2018-01-09T12:47:19.000Z" itemprop="datePublished">2018-01-09</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/算法/">算法</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Codeforces 429B B.Working out
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><a href="http://codeforces.com/problemset/problem/429/B" target="_blank" rel="noopener">http://codeforces.com/problemset/problem/429/B</a></p>
+<p>对于题中刁钻的要求，仔细分析所给条件的等价条件，有时候，所给条件符合的情形只有很少的几种。</p>
+<p><a href="http://blog.csdn.net/cc_again/article/details/25691925" target="_blank" rel="noopener">http://blog.csdn.net/cc_again/article/details/25691925</a></p>
+<p>题目意思：<br>给n*m的矩阵，每个格子有个数，A从(1,1)出发只能向下或右走，终点为(n,m)，B从(n,1)出发只能向上或右走，终点为(1,m)。两个人的速度不一样，走到的格子可以获的该格子的数，两人相遇的格子上的数两个人都不能拿。求A和B能拿到的数的总和的最大值。<br>n,m&lt;=1000<br>解题思路：<br>dp.<br>先预处理出每个格子到四个角落格子的路径最大数值，然后枚举两个人相遇的交点格子，枚举A、B的进来和出去方式，求最大值即可。<br>注意边界情况。</p>
+<p>`</p>
+<p>#include <cstdio></cstdio></p>
+<p>#include <algorithm></algorithm></p>
+<p>using namespace std;</p>
+<p>#define MAX 1005</p>
+<p>long data[MAX][MAX];<br>long dp0[MAX][MAX];<br>long dp1[MAX][MAX];<br>long dp2[MAX][MAX];<br>long dp3[MAX][MAX];</p>
+<p>int main() {</p>
+<pre><code>int n, m;
+
+scanf(&quot;%d%d&quot;, &amp;n, &amp;m);
+
+for (int x = 1; x &lt;= n; x++) {
+
+    for (int y = 1; y &lt;= m; y++) {
+
+        scanf(&quot;%ld&quot;, data[x] + y);
+    }
+}
+
+for (int x = 1; x &lt;= n; x++) {
+    for (int y = 1; y &lt;= m; y++) {
+        dp0[x][y] = data[x][y] + max(dp0[x - 1][y] , dp0[x][y - 1]);
+    }
+}
+for (int x = n; x &gt;= 1; x--) {
+    for (int y = m; y &gt;= 1; y--) {
+        dp1[x][y] = data[x][y] + max(dp1[x + 1][y] , dp1[x][y + 1]);
+    }
+}
+
+for (int x = n; x &gt;= 1; x--) {
+    for (int y = 1; y &lt;= m; y++) {
+        dp2[x][y] = data[x][y] + max(dp2[x + 1][y] , dp2[x][y - 1]);
+    }
+}
+for (int x = 1; x &lt;= n; x++) {
+    for (int y = m; y &gt;= 1; y--) {
+        dp3[x][y] = data[x][y] + max(dp3[x - 1][y] , dp3[x][y + 1]);
+    }
+}
+
+long largest = 0;
+for (int x = 2; x &lt; n; x++) {
+    for (int y = 2; y &lt; m; y++ ) {
+
+        /**
+        * 由于路径只允许重叠一次，根据两人的行动方向可知，重叠时
+        * 要么是第一个人从上向下通过，第二个人从左向右通过
+        * 要么是第一个人从左向右通过，第二个人从下向上通过
+        */
+        largest = max(largest, dp0[x - 1][y] + dp1[x + 1][y] + dp2[x][y - 1] + dp3[x][y + 1]);
+        largest = max(largest, dp0[x][y - 1] + dp1[x][y + 1] + dp2[x + 1][y] + dp3[x - 1][y]);
+
+    }
+}
+
+printf(&quot;%ld\n&quot;, largest);
+
+return 0;
+</code></pre><p>}<br>`</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/01/09/codeforces-429b-b-working-out/" data-id="cje9syoyx000h23w5977jnjpa" class="article-share-link">Teilen</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/01/19/c-e6-8b-b7-e8-b4-9d-e5-87-bd-e6-95-b0/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Neuer</strong>
+      <div class="article-nav-title">
+        
+          C++拷贝函数
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/01/09/c-e6-9e-9a-e4-b8-be/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Älter</strong>
+      <div class="article-nav-title">C++枚举enum</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Kategorien</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/C-C/">C/C++</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/C-C/Java/">Java</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/CodeForces/">CodeForces</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/CodeForces/动态规划/">动态规划</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/CodeForces/动态规划/算法/">算法</a></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/HDU/">HDU</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/HDU/POJ/">POJ</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/HDU/POJ/动态规划/">动态规划</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/HDU/POJ/动态规划/算法/">算法</a></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/HDU/动态规划/">动态规划</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/HDU/动态规划/未分类/">未分类</a></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Xposed/">Xposed</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/raspberry-pi/">raspberry pi</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/未分类/">未分类</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/算法/">算法</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/闲时研究/">闲时研究</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archiv</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">letzter Beitrag</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2018/03/02/HelloWorld/">HelloWorld</a>
+          </li>
+        
+          <li>
+            <a href="/2018/03/02/hello-world/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/2018/03/02/hdu-2586-how-far-away-ef-bc-9f-e6-a0-91-e4-b8-8a-e8-8a-82-e7-82-b9-e6-9c-80-e7-9f-ad-e8-b7-9d-e7-a6-bb-ef-bc-8clca-ef-bc-8c-e5-8f-8c-e4-ba-b2-e8-a1-a8-e7-a4-ba-e6-b3-95-e6-9a-b4/">HDU 2586 How far away ？——树上节点最短距离，LCA， 双亲表示法+暴力从下至上追溯，孩子链表示法+（Tarjan 或 欧拉环游RMQ+（ST 或 SegmentTree））</a>
+          </li>
+        
+          <li>
+            <a href="/2018/02/27/codeforces-891-a-pride/">CodeForces 891 A. Pride</a>
+          </li>
+        
+          <li>
+            <a href="/2018/02/26/hdu-1080-poj-1080-human-gene-functions-e5-8a-a8-e6-80-81-e8-a7-84-e5-88-92/">HDU 1080 POJ 1080 Human Gene Functions——动态规划</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

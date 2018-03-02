@@ -1,0 +1,1229 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta property="og:type" content="website">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="http://yoursite.com/page/2/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Hexo">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Suche"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main">
+  
+    <article id="post-e6-9c-80-e9-95-bf-e9-80-92-e5-a2-9e-e5-ad-90-e5-88-97-e7-9a-84-e5-8f-a6-e4-b8-80-e7-a7-8d-e6-80-9d-e8-b7-af-ef-bc-88-e8-bd-ac-e5-8c-96-e4-b8-balcs-e9-97-ae-e9-a2-98-ef-bc-89" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/02/06/e6-9c-80-e9-95-bf-e9-80-92-e5-a2-9e-e5-ad-90-e5-88-97-e7-9a-84-e5-8f-a6-e4-b8-80-e7-a7-8d-e6-80-9d-e8-b7-af-ef-bc-88-e8-bd-ac-e5-8c-96-e4-b8-balcs-e9-97-ae-e9-a2-98-ef-bc-89/" class="article-date">
+  <time datetime="2018-02-06T13:11:32.000Z" itemprop="datePublished">2018-02-06</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/算法/">算法</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/02/06/e6-9c-80-e9-95-bf-e9-80-92-e5-a2-9e-e5-ad-90-e5-88-97-e7-9a-84-e5-8f-a6-e4-b8-80-e7-a7-8d-e6-80-9d-e8-b7-af-ef-bc-88-e8-bd-ac-e5-8c-96-e4-b8-balcs-e9-97-ae-e9-a2-98-ef-bc-89/">最长递增子列的另一种思路（转化为LCS问题）</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>利用LCS的解题思路可以解决最长递增子列的问题顺便求出该递增序列</p>
+<p>例如<br>list1 = [1, 2, 3, 1, -1, 0, 4, 5]<br>将其排序得<br>list2 = [-1, 0, 1, 1, 2, 3, 4, 5]<br>则问题转化为<br>求list1和list2的最长的不要求连续的公共子列及其长度</p>
+<p>资料：<br><a href="http://blog.csdn.net/u013178472/article/details/54926531" target="_blank" rel="noopener">http://blog.csdn.net/u013178472/article/details/54926531</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/02/06/e6-9c-80-e9-95-bf-e9-80-92-e5-a2-9e-e5-ad-90-e5-88-97-e7-9a-84-e5-8f-a6-e4-b8-80-e7-a7-8d-e6-80-9d-e8-b7-af-ef-bc-88-e8-bd-ac-e5-8c-96-e4-b8-balcs-e9-97-ae-e9-a2-98-ef-bc-89/" data-id="cje9syozk001c23w5ax17hvgc" class="article-share-link">Teilen</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-hdu-1166-e6-95-8c-e5-85-b5-e5-b8-83-e9-98-b5-e7-ba-bf-e6-ae-b5-e6-a0-91" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/02/06/hdu-1166-e6-95-8c-e5-85-b5-e5-b8-83-e9-98-b5-e7-ba-bf-e6-ae-b5-e6-a0-91/" class="article-date">
+  <time datetime="2018-02-06T09:33:38.000Z" itemprop="datePublished">2018-02-06</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/算法/">算法</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/02/06/hdu-1166-e6-95-8c-e5-85-b5-e5-b8-83-e9-98-b5-e7-ba-bf-e6-ae-b5-e6-a0-91/">HDU 1166 敌兵布阵——线段树，树状数组</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>这题本来我打算用前缀数组实现源数据的处理，并把更变用map<int ,int="">实现，发现后来还是超时了；</int></p>
+<p>借机学习了一下线段树，虽然没怎么看懂，但大概还是理解了一点；<br>这题用 指针构成的线段树 和 数组构成的线段树 分别来实现了一下<br>资料：<br>线段树从零开始 - CSDN博客<br><a href="http://blog.csdn.net/zearot/article/details/52280189" target="_blank" rel="noopener">http://blog.csdn.net/zearot/article/details/52280189</a><br>线段树详解 （原理，实现与应用） - CSDN博客<br><a href="http://blog.csdn.net/zearot/article/details/48299459" target="_blank" rel="noopener">http://blog.csdn.net/zearot/article/details/48299459</a></p>
+<p>看到有人用树状数组实现，学习了一下树状数组，代码贴在最后：<br>资料：<br>树状数组入门<br><a href="https://www.cnblogs.com/hsd-/p/6139376.html" target="_blank" rel="noopener">https://www.cnblogs.com/hsd-/p/6139376.html</a></p>
+<p>题目来源：<a href="http://acm.hdu.edu.cn/showproblem.php?pid=1166" target="_blank" rel="noopener">http://acm.hdu.edu.cn/showproblem.php?pid=1166</a></p>
+<pre>
+敌兵布阵
+Time Limit: 2000/1000 MS (Java/Others)    Memory Limit: 65536/32768 K (Java/Others)
+Total Submission(s): 106625    Accepted Submission(s): 44789
+
+Problem Description
+C国的死对头A国这段时间正在进行军事演习，所以C国间谍头子Derek和他手下Tidy又开始忙乎了。A国在海岸线沿直线布置了N个工兵营地,Derek和Tidy的任务就是要监视这些工兵营地的活动情况。由于采取了某种先进的监测手段，所以每个工兵营地的人数C国都掌握的一清二楚,每个工兵营地的人数都有可能发生变动，可能增加或减少若干人手,但这些都逃不过C国的监视。
+中央情报局要研究敌人究竟演习什么战术,所以Tidy要随时向Derek汇报某一段连续的工兵营地一共有多少人,例如Derek问:“Tidy,马上汇报第3个营地到第10个营地共有多少人!”Tidy就要马上开始计算这一段的总人数并汇报。但敌兵营地的人数经常变动，而Derek每次询问的段都不一样，所以Tidy不得不每次都一个一个营地的去数，很快就精疲力尽了，Derek对Tidy的计算速度越来越不满:"你个死肥仔，算得这么慢，我炒你鱿鱼!”Tidy想：“你自己来算算看，这可真是一项累人的工作!我恨不得你炒我鱿鱼呢!”无奈之下，Tidy只好打电话向计算机专家Windbreaker求救,Windbreaker说：“死肥仔，叫你平时做多点acm题和看多点算法书，现在尝到苦果了吧!”Tidy说："我知错了。。。"但Windbreaker已经挂掉电话了。Tidy很苦恼，这么算他真的会崩溃的，聪明的读者，你能写个程序帮他完成这项工作吗？不过如果你的程序效率不够高的话，Tidy还是会受到Derek的责骂的.
+
+Input
+第一行一个整数T，表示有T组数据。
+每组数据第一行一个正整数N（N<=50000）,表示敌人有n个工兵营地，接下来有n个正整数,第i个正整数ai代表第i个工兵营地里开始时有ai个人（1<=ai<=50）。 1="" 2="" 3="" 4="" 5="" 6="" 7="" 8="" 9="" 10="" 33="" 59="" 1394="" 1540="" 1542="" 1698="" 1754="" 接下来每行有一条命令，命令有4种形式：="" (1)="" add="" i="" j,i和j为正整数,表示第i个营地增加j个人（j不超过30）="" (2)sub="" j="" ,i和j为正整数,表示第i个营地减少j个人（j不超过30）;="" (3)query="" ,i和j为正整数,i<="j，表示询问第i到第j个营地的总人数;" (4)end="" 表示结束，这条命令在每组数据最后出现;="" 每组数据最多有40000条命令="" output="" 对第i组数据,首先输出“case="" i:”和回车,="" 对于每个query询问，输出一个整数并回车,表示询问的段中的总人数,这个数保持在int以内。="" sample="" input="" query="" sub="" end="" case="" 1:="" author="" windbreaker="" recommend="" eddy="" |="" we="" have="" carefully="" selected several="" similar="" problems="" for="" you:="" <="" pre="">
+
+<p>指针线段树：<br>`</p>
+<p>#include <iostream></iostream></p>
+<p>#include <cstdio></cstdio></p>
+<p>#include <cstring></cstring></p>
+<p>using namespace std;</p>
+<p>// 线段树</p>
+<p>struct Node {<br>    int lp;<br>    int rp;<br>    int mid;<br>    int sum;<br>    Node<em> left;<br>    Node</em> right;<br>    Node(int l, int r): lp(l), rp(r), mid((l + r) / 2), left(NULL), right(NULL) {}//new初始化的内存不一定自动填0<br>};</p>
+<p>int list[50005];//从1开始</p>
+<p>int T, N, a, b;</p>
+<p>Node<em> buildTree(int l, int r) {<br>    Node</em> p = new Node(l, r);<br>    if (l == r) {<br>        p-&gt;sum = list[l];<br>        return p;<br>    }<br>    p-&gt;left = buildTree(l, p-&gt;mid);<br>    p-&gt;right = buildTree(p-&gt;mid + 1, r);</p>
+<pre><code>p-&gt;sum = p-&gt;left-&gt;sum + p-&gt;right-&gt;sum;
+return p;
+</code></pre><p>}</p>
+<p>void treeAdd(Node *which, int where, int what) {</p>
+<pre><code>if (which-&gt;left != NULL &amp;&amp; which-&gt;right != NULL) {
+    treeAdd((where &lt;= which-&gt;mid) ? which-&gt;left : which-&gt;right, where, what);
+}
+which-&gt;sum += what;
+</code></pre><p>}</p>
+<p>int calSum(Node * which, int from, int to) {</p>
+<pre><code>if (from == which-&gt;lp &amp;&amp; to == which-&gt;rp) {
+    return which-&gt;sum;
+}
+
+if (from &lt;= which-&gt;mid) {
+    if (to &gt; which-&gt;mid) {//横跨
+        return calSum(which-&gt;left, from, which-&gt;mid) + calSum(which-&gt;right, which-&gt;mid + 1, to);
+    } else {//全在左边
+        return calSum(which-&gt;left, from, to);
+    }
+} else {//全在右边
+    return calSum(which-&gt;right, from, to);
+}
+
+return 0;
+</code></pre><p>}</p>
+<p>void del(Node * which) {<br>    if (which-&gt;left) {<br>        del(which-&gt;left);<br>    }<br>    if (which-&gt;right) {<br>        del(which-&gt;right);<br>    }</p>
+<pre><code>delete which;
+</code></pre><p>}</p>
+<p>int main(int argc, char const *argv[])<br>{</p>
+<pre><code>char cmd[10];
+scanf(&quot;%d&quot;, &amp;T);
+
+for (int t = 1; t &lt;= T; t++) {
+
+    memset(list, 0, sizeof(list));
+
+    scanf(&quot;%d&quot;, &amp;N);
+
+    for (int i = 0; i &lt; N; i++) {
+        scanf(&quot;%d&quot;, list + i);
+    }
+
+    Node* root = buildTree(0, N - 1);
+
+    printf(&quot;Case %d:\n&quot;, t);
+    while (1) {
+        scanf(&quot;%s&quot;, cmd);
+        if (&apos;E&apos; == cmd[0]) {
+            break;
+        }
+        scanf(&quot;%d%d&quot;, &amp;a, &amp;b);
+        switch (cmd[0]) {
+        case &apos;Q&apos;:
+            printf(&quot;%d\n&quot;, calSum(root, a - 1, b - 1));
+            break;
+        case &apos;A&apos;:
+            list[a - 1] += b;
+            treeAdd(root, a - 1, b);
+            break;
+        case &apos;S&apos;:
+            list[a - 1] -= b;
+            treeAdd(root, a - 1, -b);
+            break;
+        }
+    }
+
+    del(root);
+    root = NULL;
+
+}
+
+return 0;
+</code></pre><p>}<br><code>自定义结构体组成的数组实现线段树：</code></p>
+<p>#include <iostream></iostream></p>
+<p>#include <cstdio></cstdio></p>
+<p>#include <cstring></cstring></p>
+<p>using namespace std;</p>
+<p>// 线段树</p>
+<p>struct Node {<br>    int lp;<br>    int rp;<br>    int mid;<br>    int sum;<br>} nodes[50005 &lt;&lt; 2];//空间为原数组的四倍长，1储存根元素，对于第k个节点，K&lt;&lt;1表示左支，(k&lt;&lt;1)|1表示右支</p>
+<p>int list[50005];//从0开始</p>
+<p>int T, N, a, b;</p>
+<p>int buildTree(int which, int l, int r) {</p>
+<pre><code>nodes[which].lp = l;
+nodes[which].rp = r;
+nodes[which].mid = ((l + r) &gt;&gt; 1);
+
+if (l == r) {
+    nodes[which].sum = list[l];
+
+} else {
+    nodes[which].sum += buildTree(which &lt;&lt; 1, l, (l + r) &gt;&gt; 1);
+    nodes[which].sum += buildTree((which &lt;&lt; 1) | 1, ((l + r) &gt;&gt; 1) + 1, r);
+}
+
+return nodes[which].sum;
+</code></pre><p>}</p>
+<p>void treeAdd(int which, int where, int what) {</p>
+<pre><code>if (nodes[which].lp != nodes[which].rp) {
+    treeAdd((where &lt;= nodes[which].mid) ? which &lt;&lt; 1 : (which &lt;&lt; 1) | 1, where, what);
+}
+nodes[which].sum += what;
+</code></pre><p>}</p>
+<p>int calSum(int which, int from, int to) {</p>
+<pre><code>// printf(&quot;from_%d,to_%d,and_now_is_%d,%d\n&quot;, from, to, nodes[which].lp, nodes[which].rp);
+if (from == nodes[which].lp &amp;&amp; to == nodes[which].rp) {
+    return nodes[which].sum;
+}
+
+if (from &lt;= nodes[which].mid) {
+    if (to &gt; nodes[which].mid) {//横跨
+        return calSum(which &lt;&lt; 1, from, nodes[which].mid) + calSum((which &lt;&lt; 1) | 1, nodes[which].mid + 1, to);
+    } else {//全在左边
+        return calSum(which &lt;&lt; 1, from, to);
+    }
+} else {//全在右边
+    return calSum((which &lt;&lt; 1) | 1, from, to);
+}
+
+return 0;
+</code></pre><p>}</p>
+<p>int main(int argc, char const *argv[])<br>{</p>
+<pre><code>char cmd[10];
+scanf(&quot;%d&quot;, &amp;T);
+
+for (int t = 1; t &lt;= T; t++) {
+
+    memset(list, 0, sizeof(list));
+    memset(nodes, 0, sizeof(nodes));
+
+    scanf(&quot;%d&quot;, &amp;N);
+
+    for (int i = 0; i &lt; N; i++) {
+        scanf(&quot;%d&quot;, list + i);
+    }
+
+    buildTree(1, 0, N - 1);
+
+    printf(&quot;Case %d:\n&quot;, t);
+    while (1) {
+        scanf(&quot;%s&quot;, cmd);
+        if (&apos;E&apos; == cmd[0]) {
+            break;
+        }
+        scanf(&quot;%d%d&quot;, &amp;a, &amp;b);
+        switch (cmd[0]) {
+        case &apos;Q&apos;:
+            printf(&quot;%d\n&quot;, calSum(1, a - 1, b - 1));
+            break;
+        case &apos;A&apos;:
+            list[a - 1] += b;
+            treeAdd(1, a - 1, b);
+            break;
+        case &apos;S&apos;:
+            list[a - 1] -= b;
+            treeAdd(1, a - 1, -b);
+            break;
+        }
+    }
+
+}
+
+return 0;
+</code></pre><p>}<br>`</p>
+<p>树状数组实现：代码量超少！！！<br>`</p>
+<p>#include <iostream></iostream></p>
+<p>#include <cstdio></cstdio></p>
+<p>#include <cstring></cstring></p>
+<p>//Accept</p>
+<p>#define lowbit(x) (x&amp;(-x))</p>
+<p>//lowbit(x) 其实代表了第x号节点最底层代表的区间长度</p>
+<p>using namespace std;</p>
+<p>/**</p>
+<ul>
+<li>c[x]</li>
+<li>1000</li>
+<li>/————————————————————————————[8]</li>
+<li>/                                 |</li>
+<li>100                                 |</li>
+<li>/————————————[4]                   /————————————[ ]</li>
+<li>/                 |                  /                 |</li>
+<li>010                 |                110                 |</li>
+<li>/————[2]           /————[ ]           /————[6]           /————[ ]</li>
+<li>/         |          /         |          /         |          /         |</li>
+<li>001         |        011         |        101         |        111         |</li>
+<li>[1]        [ ]        [3]        [ ]        [5]        [ ]        [7]        [ ]<br>*/<br>int c[50005];//树状数组,从1开始<br>// c[i] = data[i - 2 ^ k + 1 … i];</li>
+</ul>
+<p>int data[50005];//存储原始数据,从1开始</p>
+<p>int s[50005];//前缀数组,在init时用到,从1开始</p>
+<p>int T, N, a, b;</p>
+<p>int calSum(int where) {//返回从data[1…where]<br>    int su = 0;<br>    while (where) {<br>        su += c[where];<br>        where -= lowbit(where);<br>    }<br>    return su;<br>}</p>
+<p>void add(int where, int what) {<br>    while (where &lt;= N) {<br>        c[where] += what;<br>        where += lowbit(where);<br>    }<br>}</p>
+<p>int init() {<br>    int sum = 0;<br>    // for (int i = 1; i &lt;= N; i++) {<br>    //     for (int x = i - lowbit(i) + 1; x &lt;= i; x++) {<br>    //         c[i] += data[x];<br>    //     }<br>    // }<br>    // 用前缀数组来进行优化：<br>    for (int i = 1; i &lt;= N; i++) {<br>        c[i] = s[i] - s[i - lowbit(i)];<br>    }</p>
+<p>}</p>
+<p>int main(int argc, char const *argv[])<br>{</p>
+<pre><code>char cmd[10];
+scanf(&quot;%d&quot;, &amp;T);
+
+for (int t = 1; t &lt;= T; t++) {
+
+    memset(c, 0, sizeof(c));
+    memset(data, 0, sizeof(data));
+    memset(s, 0, sizeof(s));
+
+    scanf(&quot;%d&quot;, &amp;N);
+
+    for (int i = 1; i &lt;= N; i++) {
+        scanf(&quot;%d&quot;, data + i);
+        s[i] = s[i - 1] + data[i];
+    }
+
+    init();
+
+    printf(&quot;Case %d:\n&quot;, t);
+    for (;;) {
+        scanf(&quot;%s&quot;, cmd);
+        if (&apos;E&apos; == cmd[0]) {
+            break;
+        }
+        scanf(&quot;%d%d&quot;, &amp;a, &amp;b);
+        switch (cmd[0]) {
+        case &apos;Q&apos;:
+            printf(&quot;%d\n&quot;, calSum(b) - calSum(a - 1));
+            break;
+        case &apos;A&apos;:
+            add(a, b);
+            break;
+        case &apos;S&apos;:
+            add(a, -b);
+            break;
+        }
+    }
+}
+
+return 0;
+</code></pre><p>}<br>`</p>
+</=50000）,表示敌人有n个工兵营地，接下来有n个正整数,第i个正整数ai代表第i个工兵营地里开始时有ai个人（1<=ai<=50）。></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/02/06/hdu-1166-e6-95-8c-e5-85-b5-e5-b8-83-e9-98-b5-e7-ba-bf-e6-ae-b5-e6-a0-91/" data-id="cje9syozt001o23w54p6pbgx5" class="article-share-link">Teilen</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-e7-ae-97-e6-b3-95-e8-af-8d-e6-b1-87" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/02/02/e7-ae-97-e6-b3-95-e8-af-8d-e6-b1-87/" class="article-date">
+  <time datetime="2018-02-02T15:41:28.000Z" itemprop="datePublished">2018-02-02</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/算法/">算法</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/02/02/e7-ae-97-e6-b3-95-e8-af-8d-e6-b1-87/">算法词汇</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <hr>
+<p><code>https://segmentfault.com/a/1190000002641054</code></p>
+<blockquote>
+<p><strong>LCS</strong><br><em>Longest Common Subsequence</em><br>最长公共子列</p>
+</blockquote>
+<blockquote>
+<p><strong>LIS</strong><br><em>Longest Increasing Subsequence</em><br>最长上升子列</p>
+</blockquote>
+<hr>
+<p><code>https://segmentfault.com/a/1190000002646526</code></p>
+<blockquote>
+<p><strong>LRS</strong><br><em>Longest Repeated Substring</em><br>重复子串</p>
+</blockquote>
+<hr>
+<p><code>https://www.cnblogs.com/JVxie/p/4854719.html</code></p>
+<blockquote>
+<p><strong>LCA</strong><br><em>Least Common Ancestors</em><br>最近的公共祖先</p>
+</blockquote>
+<hr>
+<p><code>http://blog.csdn.net/ywcpig/article/details/52336496</code></p>
+<blockquote>
+<p><strong>RMQ</strong><br><em>Range Maximum/Minimm Query</em><br>区间最值查询</p>
+</blockquote>
+<hr>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/02/02/e7-ae-97-e6-b3-95-e8-af-8d-e6-b1-87/" data-id="cje9syozf001423w51f8e8kp9" class="article-share-link">Teilen</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-codeforces-697d-e6-a0-91-e6-a6-82-e7-8e-87" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/02/01/codeforces-697d-e6-a0-91-e6-a6-82-e7-8e-87/" class="article-date">
+  <time datetime="2018-02-01T15:34:57.000Z" itemprop="datePublished">2018-02-01</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/算法/">算法</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/02/01/codeforces-697d-e6-a0-91-e6-a6-82-e7-8e-87/">CodeForces 697D 树+概率</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><a href="http://codeforces.com/problemset/problem/697/D" target="_blank" rel="noopener">原题链接</a></p>
+<pre>
+D. Puzzles
+time limit per test
+1 second
+memory limit per test
+256 megabytes
+input
+standard input
+output
+standard output
+
+Barney lives in country USC (United States of Charzeh). USC has n cities numbered from 1 through n and n - 1 roads between them. Cities and roads of USC form a rooted tree (Barney's not sure why it is rooted). Root of the tree is the city number 1\. Thus if one will start his journey from city 1, he can visit any city he wants by following roads.
+
+Some girl has stolen Barney's heart, and Barney wants to find her. He starts looking for in the root of the tree and (since he is Barney Stinson not a random guy), he uses a random DFS to search in the cities. A pseudo code of this algorithm is as follows:
+
+let starting_time be an array of length n
+current_time = 0
+dfs(v):
+    current_time = current_time + 1
+    starting_time[v] = current_time
+    shuffle children[v] randomly (each permutation with equal possibility)
+    // children[v] is vector of children cities of city v
+    for u in children[v]:
+        dfs(u)
+
+As told before, Barney will start his journey in the root of the tree (equivalent to call dfs(1)).
+
+Now Barney needs to pack a backpack and so he wants to know more about his upcoming journey: for every city i, Barney wants to know the expected value of starting_time[i]. He's a friend of Jon Snow and knows nothing, that's why he asked for your help.
+Input
+
+The first line of input contains a single integer n (1 ≤ n ≤ 105) — the number of cities in USC.
+
+The second line contains n - 1 integers p2, p3, ..., pn (1 ≤ pi < i), 1="" 2="" 3="" 4="" 7="" 8="" 10="" 12="" where="" pi="" is="" the="" number="" of="" parent="" city="" i="" in="" tree,="" meaning="" there="" a="" road="" between="" cities="" numbered="" and="" usc.="" output="" first="" only="" line="" print="" n="" numbers,="" i-th="" expected="" value="" starting_time[i].="" your="" answer="" for="" each="" will="" be="" considered="" correct="" if="" its="" absolute="" or="" relative="" error="" does="" not="" exceed="" 10 - 6.="" examples="" input="" 1.0="" 4.0="" 5.0="" 3.5="" 4.5="" 5.5="" 6.5="" 7.5="" 8.0="" 7.0="" <="" pre="">
+
+<p>`</p>
+<p>#include <iostream></iostream></p>
+<p>#include <cstdio></cstdio></p>
+<p>#include <set><br>//multiset的定义在set头文件中</set></p>
+<p>using namespace std;</p>
+<p>int data[100005][2];//[0]自身以及子节点的数量[1]父节点<br>double ans[100005];</p>
+<p>struct Node {<br>    int x;//父节点<br>    int y;//子节点</p>
+<pre><code>Node(int x, int y): x(x), y(y) {
+}
+int operator &lt; (Node const &amp; n) const {//倒序
+    return x &gt; n.x;
+}
+</code></pre><p>};</p>
+<p>multiset<node> ms;</node></p>
+<p>int main(int argc, char const *argv[])<br>{</p>
+<pre><code>int n, temp;
+scanf(&quot;%d&quot;, &amp;n);
+data[1][0] = 1;
+for (int i = 2; i &lt;= n; i++) {
+    scanf(&quot;%d&quot;, &amp;temp);
+    data[i][0] = 1;
+    data[i][1] = temp;
+    Node n(temp, i);
+    ms.insert(n);
+}
+
+// 从树的最底开始上升
+int cou = 0;
+for (multiset&lt;Node&gt;::iterator i = ms.begin(); i != ms.end(); ++i) {
+    data[i-&gt;x][0] += data[i-&gt;y][0];
+}
+
+ans[1] = 1.0;
+printf(&quot;1.0&quot;);
+for (int i = 2; i &lt;= n; i++) {
+    /**
+    * 第i个节点的期望 == 它的父节点的期望 + 在它自身的耗时(1) + 第i个节点的兄弟节点及它拓展的子节点耗时的期望(即兄弟节点及它拓展的子节点数 * 0.5)
+    * (兄弟节点及它拓展的子节点数 == i 的父节点 - i 节点拓展的树的所有节点(包括i) - 1(父节点自身))，
+    * 这些节点每一个要么在i之前被遍历，要么在i之后，于是期望值乘以0.5
+    */
+    ans[i] = ans[data[i][1]] + 1 + (data[data[i][1]][0] - 1 - data[i][0]) * 0.5;
+    printf(&quot; %.1f&quot;, ans[i]);
+}
+
+return 0;
+</code></pre><p>}</p>
+<p>`</p>
+</ i),></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/02/01/codeforces-697d-e6-a0-91-e6-a6-82-e7-8e-87/" data-id="cje9syoyq000d23w5espzxs6t" class="article-share-link">Teilen</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-trashed" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/02/01/trashed/" class="article-date">
+  <time datetime="2018-02-01T13:37:52.000Z" itemprop="datePublished">2018-02-01</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/未分类/">未分类</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/02/01/trashed/">__trashed</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>‘’’<br>what happen?<br>‘’’</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/02/01/trashed/" data-id="cje9syp02002323w5bg1wp1e8" class="article-share-link">Teilen</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-hdu-2577-how-to-type" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/02/01/hdu-2577-how-to-type/" class="article-date">
+  <time datetime="2018-02-01T09:59:56.000Z" itemprop="datePublished">2018-02-01</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/算法/">算法</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/02/01/hdu-2577-how-to-type/">HDU 2577 How To Type 动态规划</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>How to Type</p>
+<p>  Time Limit: 2000/1000 MS (Java/Others)    Memory Limit: 32768/32768 K (Java/Others)</p>
+<p>  Total Submission(s): 7448    Accepted Submission(s): 3374</p>
+<p>  Problem Description</p>
+<p>  Pirates have finished developing the typing software. He called Cathy to test his typing software. She is good at thinking. After testing for several days, she finds that if she types a string by some ways, she will type the key at least. But she has a bad habit that if the caps lock is on, she must turn off it, after she finishes typing. Now she wants to know the smallest times of typing the key to finish typing a string.</p>
+<p>  Input</p>
+<p>  The first line is an integer t (t&lt;=100), which is the number of test case in the input file. For each test case, there is only one string which consists of lowercase letter and upper case letter. The length of the string is at most 100.</p>
+<p>  Output</p>
+<p>  For each test case, you must output the smallest times of typing the key to finish typing this string.</p>
+<p>  Sample Input</p>
+<p>  3</p>
+<p>  Pirates</p>
+<p>  HDUacm</p>
+<p>  HDUACM</p>
+<p>  Sample Output</p>
+<p>  8</p>
+<p>  8</p>
+<p>  8</p>
+<p>  Hint</p>
+<p>  The string “Pirates”, can type this way, Shift, p, i, r, a, t, e, s, the answer is 8.</p>
+<p>  The string “HDUacm”, can type this way, Caps lock, h, d, u, Caps lock, a, c, m, the answer is 8</p>
+<p>  The string “HDUACM”, can type this way Caps lock h, d, u, a, c, m, Caps lock, the answer is 8</p>
+<p>  Author</p>
+<p>  Dellenge</p>
+<p>  Source</p>
+<p>  HDU 2009-5 Programming Contest</p>
+<p>  Recommend</p>
+<p>  lcy</p>
+</blockquote>
+<p><strong>输入每个字符前的状态是：</strong><br><strong>大小写锁开启on或者关闭off</strong></p>
+<p><strong><em>注意开启锁时按shift可以输入小写</em></strong></p>
+<p>`</p>
+<p>#include <iostream></iostream></p>
+<p>#include <cstdio></cstdio></p>
+<p>int isup(char a) {<br>    return (a &gt;= ‘A’ &amp;&amp; a &lt;= ‘Z’);<br>}<br>int main(int argc, char const *argv[])<br>{<br>    int t;<br>    char data[105];<br>    int off[105];<br>    int on[105];<br>    scanf(“%d”, &amp;t);</p>
+<pre><code>while (t--) {
+    int capsLock = 0;
+    int ans = 0;
+    scanf(&quot;%s&quot;, data);
+    int i;
+    // 每次输入之前锁有两种状态
+    off[0] = 0;//表示输入第i个字符前状态为off/on的按键最少次数
+    on[0] = 1;
+    for (i = 0; data[i] != &apos;\0&apos;; i++) {
+        if (isup(data[i])) {
+            // 输入大写字母以后锁：on
+            // 直接输入，按下caps再输入（原先锁off）
+            on[i + 1] = min(on[i] + 1, off[i] + 2);
+            // 输入大写字母以后锁：off
+            // 按下caps再输入（原先锁on）,按shift输入
+            off[i + 1] = min(on[i] + 2, off[i] + 2);
+        } else {
+
+            on[i + 1] = min(on[i] + 2, off[i] + 2);
+            off[i + 1] = min(on[i] + 2, off[i] + 1);
+
+        }
+    }
+
+    printf(&quot;%d\n&quot;, min(on[i] + 1, off[i]));
+}
+return 0;
+</code></pre><p>}</p>
+<p>`</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/02/01/hdu-2577-how-to-type/" data-id="cje9syozr001m23w5am4zloqu" class="article-share-link">Teilen</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-e4-b8-a4-e5-a4-a7lcs-e9-97-ae-e9-a2-98" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/02/01/e4-b8-a4-e5-a4-a7lcs-e9-97-ae-e9-a2-98/" class="article-date">
+  <time datetime="2018-02-01T04:09:09.000Z" itemprop="datePublished">2018-02-01</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/算法/">算法</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/02/01/e4-b8-a4-e5-a4-a7lcs-e9-97-ae-e9-a2-98/">两大LCS问题</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="相同子序：（不要求连续）"><a href="#相同子序：（不要求连续）" class="headerlink" title="相同子序：（不要求连续）"></a>相同子序：（不要求连续）</h2><p>`</p>
+<p>#include <iostream></iostream></p>
+<p>#include <algorithm></algorithm></p>
+<p>#include <string></string></p>
+<p>#include <cstdio></cstdio></p>
+<p>// // #define DEBUG<br>// #ifdef DEBUG<br>// #define SHOW<br>// #else<br>// #define SHOW /##/<br>// #endif<br>// 不可行，注释先于预处理指令被处理</p>
+<p>using namespace std;</p>
+<p>// LCS共同子序不要求连续</p>
+<p>int main(int argc, char const *argv[])<br>{<br>    string s1, s2;<br>    while (cin &gt;&gt; s1 &gt;&gt; s2) {<br>        int len1 = s1.length();//不包括末尾的’\0’<br>        int len2 = s2.length();<br>        int ans = 0;<br>        int dp[len1 + 5][len2 + 5] = {};//初始化为0避免边界讨论</p>
+<pre><code>    // printf(&quot;\t\t&quot;);
+    // for (int y = 0; y &lt; len2; y++) {
+    //     printf(&quot;%c\t&quot;, s2[y]);
+    // }
+    // printf(&quot;\n\t&quot;);
+
+    // for (int y = 0; y &lt;= len2; y++) {
+    //     printf(&quot;%d\t&quot;, dp[0][y]);
+
+    // }
+    // printf(&quot;\n&quot;);
+
+    for (int x = 1; x &lt;= len1; x++) {
+        // printf(&quot;%c\t&quot;, s1[x - 1]);
+        // printf(&quot;%d\t&quot;, dp[x][0]);
+        for (int y = 1; y &lt;= len2; y++) {
+            if (s1[x - 1] == s2[y - 1]) {//之所以减一是由于循环变量从1开始
+                dp[x][y] = dp[x - 1][y - 1] + 1;// 等于左上方格子加一
+                // printf(&quot;&amp;#x2196;%d\t&quot;, dp[x][y]);
+            } else {
+                dp[x][y] = max(dp[x - 1][y], dp[x][y - 1]);// 向左上方的所有格子取最大值(实际上只需要从左边和上边选取最大值)
+                // if (dp[x][y] == dp[x - 1][y]) {
+                //     printf(&quot;↑%d\t&quot;, dp[x][y]);
+                // } else {
+                //     printf(&quot;←%d\t&quot;, dp[x][y]);
+            }
+        }
+
+        // printf(&quot;\n&quot;);
+    }
+
+    /**
+    *    abcfbc abfcab
+    *    dp数组:
+    *
+    *            a    b    f    c    a    b
+    *        0    0    0    0    0    0    0
+    *    a    0    &amp;#x2196;1    ←1    ←1    ←1    &amp;#x2196;1    ←1
+    *    b    0    ↑1    &amp;#x2196;2    ←2    ←2    ←2    &amp;#x2196;2
+    *    c    0    ↑1    ↑2    ↑2    &amp;#x2196;3    ←3    ←3
+    *    f    0    ↑1    ↑2    &amp;#x2196;3    ↑3    ↑3    ↑3
+    *    b    0    ↑1    &amp;#x2196;2    ↑3    ↑3    ↑3    &amp;#x2196;4
+    *    c    0    ↑1    ↑2    ↑3    &amp;#x2196;4    ←4    ↑4
+    *    
+    *    out:4
+    */
+
+    for (int x = 1; x &lt;= len1; x++) {
+        for (int y = 1; y &lt;= len2; y++) {
+            ans = max(ans, dp[x][y]);
+        }
+    }
+    printf(&quot;%d\n&quot;, ans);
+
+}
+return 0;
+</code></pre><p>}<br>`</p>
+<h2 id="相同子列（连续）"><a href="#相同子列（连续）" class="headerlink" title="相同子列（连续）"></a>相同子列（连续）</h2><p>`</p>
+<p>#include <iostream></iostream></p>
+<p>#include <algorithm></algorithm></p>
+<p>#include <string></string></p>
+<p>#include <cstdio></cstdio></p>
+<p>using namespace std;</p>
+<p>// LCS共同连续子列</p>
+<p>int main(int argc, char const *argv[])<br>{<br>    string s1, s2;<br>    while (cin &gt;&gt; s1 &gt;&gt; s2) {<br>        int len1 = s1.length();//不包括末尾的’\0’<br>        int len2 = s2.length();<br>        int ans = 0;<br>        int dp[len1 + 5][len2 + 5] = {};//初始化为0避免边界讨论</p>
+<pre><code>    // printf(&quot;\t\t&quot;);
+    // for (int y = 0; y &lt; len2; y++) {
+    //     printf(&quot;%c\t&quot;, s2[y]);
+    // }
+    // printf(&quot;\n\t&quot;);
+
+    // for (int y = 0; y &lt;= len2; y++) {
+    //     printf(&quot;%d\t&quot;, dp[0][y]);
+
+    // }
+    // printf(&quot;\n&quot;);
+
+    for (int x = 1; x &lt;= len1; x++) {
+        // printf(&quot;%c\t&quot;, s1[x - 1]);
+        // printf(&quot;%d\t&quot;, dp[x][0]);
+        for (int y = 1; y &lt;= len2; y++) {
+            if (s1[x - 1] == s2[y - 1]) {//之所以减一是由于循环变量从1开始
+                dp[x][y] = dp[x - 1][y - 1] + 1;// 等于左上方格子加一
+                // printf(&quot;&amp;#x2196;%d\t&quot;, dp[x][y]);
+            }//不相等则无需处理
+            // else {
+            //     printf(&quot;%d\t&quot;, dp[x][y]);
+            // }
+        }
+
+        // printf(&quot;\n&quot;);
+    }
+
+    /**
+    *    abcfbc abfcab
+    *    dp数组:
+    *
+    *            a    b    f    c    a    b
+    *        0    0    0    0    0    0    0
+    *    a    0    &amp;#x2196;1    0    0    0    &amp;#x2196;1    0
+    *    b    0    0    &amp;#x2196;2    0    0    0    &amp;#x2196;2
+    *    c    0    0    0    0    &amp;#x2196;1    0    0
+    *    f    0    0    0    &amp;#x2196;1    0    0    0
+    *    b    0    0    &amp;#x2196;1    0    0    0    &amp;#x2196;1
+    *    c    0    0    0    0    &amp;#x2196;1    0    0
+    *
+    *    out:2
+    */
+
+    for (int x = 1; x &lt;= len1; x++) {
+        for (int y = 1; y &lt;= len2; y++) {
+            ans = max(ans, dp[x][y]);
+        }
+    }
+    printf(&quot;%d\n&quot;, ans);
+
+}
+return 0;
+</code></pre><p>}</p>
+<p>`</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/02/01/e4-b8-a4-e5-a4-a7lcs-e9-97-ae-e9-a2-98/" data-id="cje9syoz1000m23w5elcju9lq" class="article-share-link">Teilen</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-hdu-2089-e7-9a-84-e7-b1-bb-e4-bc-bc-e9-a2-98-ef-bc-8862-e6-8d-a2-e6-88-90-e4-ba-8638-ef-bc-89-e6-95-b0-e4-bd-8ddp-e8-a7-a3-e9-87-8a" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/01/28/hdu-2089-e7-9a-84-e7-b1-bb-e4-bc-bc-e9-a2-98-ef-bc-8862-e6-8d-a2-e6-88-90-e4-ba-8638-ef-bc-89-e6-95-b0-e4-bd-8ddp-e8-a7-a3-e9-87-8a/" class="article-date">
+  <time datetime="2018-01-28T15:41:21.000Z" itemprop="datePublished">2018-01-28</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/算法/">算法</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/01/28/hdu-2089-e7-9a-84-e7-b1-bb-e4-bc-bc-e9-a2-98-ef-bc-8862-e6-8d-a2-e6-88-90-e4-ba-8638-ef-bc-89-e6-95-b0-e4-bd-8ddp-e8-a7-a3-e9-87-8a/">HDU 2089的类似题（62换成了38） 数位dp解释</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <pre>
+链接：https://www.nowcoder.com/acm/contest/74/G
+来源：牛客网
+
+杭州人称傻乎乎的人为62，而嘟嘟家这里没有这样的习俗。
+
+相比62，他那里的人更加讨厌数字38，当然啦，还有4这个
+
+数字！所以啊，嘟嘟不点都不想见到包含38或者4的数字。
+
+每次给出一个区间[n，m],你能找到所有令人讨厌的数字吗？
+
+输入描述:
+
+多组输入输出；
+输入的都是整数对n、m（0<n≤m<1000000）， 0="" 1="" 20="" 100="" 如果遇到都是0的整数对，则输入结束。="" 输出描述:="" 对于每次的输入="" 输出全部令人讨厌的数的个数="" 示例1="" 输入="" 输出="" <="" pre="">
+
+<p>`</p>
+<p>#include <iostream></iostream></p>
+<p>#include <cstring><br>using namespace std ;<br>const int len = 7 ;<br>int dp[8][10] , bit[8] ;//全局变量初始为0，dp[x][y]数组表示长为x的以y打头的所有数中“合法”数的个数，<br>// 注意首位为0的数也看作x位，例如0123看作4位数，<br>// 原因：如果不考虑以0开头的数那么dp[3][3] = dp[2][9] + dp[2][8] + …+ dp[2][2] + dp [2][1] + dp[1][9] + dp[1][8] + … + dp[1][2] + dp[1][1]<br>// 若把所有一位数看作以0开头的2位数则实际上dp[3][3] = dp[2][9] + dp[2][8] + …+ dp[2][2] + dp [2][1] + dp[2][0]<br>// 所以认为dp[x][0] = dp[x-1][0…9]<br>// 我们只需要把dp[2][0…9]这些加起来就好了<br>int n , m ;</cstring></p>
+<p>void Get_dp() {<br>    dp[0][0] = 1 ;<br>    for ( int i = 1 ; i &lt;= len ; ++i )//长度i从1到7<br>        for ( int j = 0 ; j &lt;= 9 ; ++j )//数值j从0到9<br>            if ( j != 4 )//排除j等于4的情况<br>                for ( int k = 0 ; k &lt;= 9 ; ++k )//第二个数值k从0到9<br>                    if ( !( j == 3 &amp;&amp; k == 8 ) )//排除j，k为3，8的情况<br>                        dp[i][j] += dp[i - 1][k] ;//i从1开始所以i-1不会越界且由于是全局变量默认值为0，所以免去了对i-1是否越界的讨论</p>
+<pre><code>/**
+* 从长为1位的数，开头的数从0到9，填表
+* 状态转移方程：
+* dp[x][y] = 0;    若y==4
+*             dp[x-1][0...9];    若y!=3（相当于在所有x-1位的合法数前面加了个不是3的数，肯定也是合法数）
+*             dp[x-1][0...9] - dp[x-1][8];    若y==3则要排除掉第二位为8的情况
+*/
+</code></pre><p>}</p>
+<p>int solve( int n ) {//根据表来得出从1到n（实际上没有包括n，因为下面有一句for ( int j = 0 ; j &lt; bit[i] ; ++j )用的小于号，我们先不考虑这细节）的所有合法数的个数<br>    memset( bit , 0 , sizeof( bit ) ) ;//将n分解放入bit数组中<br>    int top = 0 ;//（从n的底位到高位倒序放入）<br>    while ( n ) {<br>        bit[++top] = n % 10 ;<br>        n /= 10 ;<br>    }</p>
+<pre><code>int ans = 0 ;//保存所有合法数个数
+for ( int i = len ; i &gt;= 1 ; --i ) {//i从数的最高位开始向下
+    for ( int j = 0 ; j &lt; bit[i] ; ++j )
+        if ( !( bit[i + 1] == 3 &amp;&amp; j == 8 ) )
+            ans += dp[i][j] ;//排除上一位是3且这一位以8开头的情况
+    if ( bit[i] == 4 || ( bit[i + 1] == 3 &amp;&amp; bit[i] == 8 ) )
+        break ;//若这一位是4则跳出循环
+}
+/**
+* 这里举个例子解释一下：
+* 假设输入n为243
+* 那么我们应该将1...243分解成        000...199        200...239         240...242                243
+* 对应一下其实就是                dp[3][0...1]    dp[2][0...3]    dp[1][0...2]            dp[0][]恒为0（所以代码中不管数字n是否合法都没有考虑到，最终返回值其实是1...n-1的所有合法数个数）
+* 注解                            (1)                (2)                (3)不合法，之后的也是        (4)不合法
+* 
+* (1)从最高位开始
+* (2)00...39中的所有合法数前面加一个2还是合法数
+* (3)0...2的前面加上一个4出问题了！！，所有的0...2中的合法数变得不合法,应该排除,接下来所以位的分解前面也会加上4，所以直接跳出循环
+*    if ( bit[i] == 4 || ( bit[i + 1] == 3 &amp;&amp; bit[i] == 8 ) )
+*         break ;//若这一位是4则跳出循环
+* (4)这里为什么单独分开来？提示：“小于”号“&lt;”
+* 
+* 其实这些分法都是受到了上面的：
+* for ( int j = 0 ; j &lt; bit[i] ; ++j )
+* 的影响（注意小于号），也就是按照这条语句来分的
+* 需要仔细想想
+*/
+return ans ;
+</code></pre><p>}</p>
+<p>int main() {<br>    Get_dp() ;//打表<br>    while ( cin &gt;&gt; n &gt;&gt; m &amp;&amp; ( n || m ) )<br>        cout &lt;&lt; m - n + 1 - ( solve( m + 1 ) - solve( n ) ) &lt;&lt; endl ;<br>    return 0 ;<br>}</p>
+<p>`</p>
+</n≤m<1000000），></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/01/28/hdu-2089-e7-9a-84-e7-b1-bb-e4-bc-bc-e9-a2-98-ef-bc-8862-e6-8d-a2-e6-88-90-e4-ba-8638-ef-bc-89-e6-95-b0-e4-bd-8ddp-e8-a7-a3-e9-87-8a/" data-id="cje9syozn001h23w5shd5ebw8" class="article-share-link">Teilen</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-e6-8c-87-e4-bb-a4-e9-9b-86-e5-90-88" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/01/27/e6-8c-87-e4-bb-a4-e9-9b-86-e5-90-88/" class="article-date">
+  <time datetime="2018-01-27T14:08:59.000Z" itemprop="datePublished">2018-01-27</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/raspberry-pi/">raspberry pi</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/01/27/e6-8c-87-e4-bb-a4-e9-9b-86-e5-90-88/">指令集合</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="获取温度："><a href="#获取温度：" class="headerlink" title="获取温度："></a>获取温度：</h1><p>cat /sys/class/thermal/thermal_zone0/temp</p>
+<h1 id="温度要除以1000"><a href="#温度要除以1000" class="headerlink" title="温度要除以1000"></a>温度要除以1000</h1>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/01/27/e6-8c-87-e4-bb-a4-e9-9b-86-e5-90-88/" data-id="cje9syoz8000v23w5vnu7rhkz" class="article-share-link">Teilen</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-java-e7-bb-a7-e6-89-bf-e7-9a-84-e8-a6-86-e7-9b-96-e4-b8-8e-e9-9a-90-e8-97-8f" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/01/21/java-e7-bb-a7-e6-89-bf-e7-9a-84-e8-a6-86-e7-9b-96-e4-b8-8e-e9-9a-90-e8-97-8f/" class="article-date">
+  <time datetime="2018-01-21T14:39:20.000Z" itemprop="datePublished">2018-01-21</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Java/">Java</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/01/21/java-e7-bb-a7-e6-89-bf-e7-9a-84-e8-a6-86-e7-9b-96-e4-b8-8e-e9-9a-90-e8-97-8f/">Java继承的覆盖与隐藏</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>参考：<br><a href="https://www.cnblogs.com/it12345/p/5221673.html" target="_blank" rel="noopener">https://www.cnblogs.com/it12345/p/5221673.html</a></p>
+<h3 id="隐藏和覆盖的区别"><a href="#隐藏和覆盖的区别" class="headerlink" title="隐藏和覆盖的区别"></a>隐藏和覆盖的区别</h3><p>隐藏：将类型转换为父类的类型 即可解除 隐藏<br>覆盖：将类型转换为父类的类型也 不能 解除覆盖</p>
+<h3 id="成员变量"><a href="#成员变量" class="headerlink" title="成员变量"></a>成员变量</h3><p><strong>只可能被隐藏，不存在覆盖一说</strong></p>
+<p>父类的成员变量静态或非静态都可能被子类中同名的成员变量 隐藏 （不一定要匹配类型，同名即可隐藏）</p>
+<h4 id="处理"><a href="#处理" class="headerlink" title="处理"></a>处理</h4><p><strong>直接用圆点运算符父类中的成员变量的办法：将类型转换为父类的类型。</strong><br><strong> 在子类的方法中调用父类中被隐藏的成员变量的办法：在子类方法中使用super关键字配合圆点运算符取父类中的成员变量</strong></p>
+<h3 id="成员方法"><a href="#成员方法" class="headerlink" title="成员方法"></a>成员方法</h3><p>可以被隐藏，也可以被覆盖<br>同名的实例方法被覆盖 ，同名的静态方法被隐藏</p>
+<h4 id="补充：继承规则"><a href="#补充：继承规则" class="headerlink" title="补充：继承规则"></a>补充：继承规则</h4><p>子类中与父类同名同参的方法才会发生重写，<br>重写时：<br>1.要求重写的方法的静态与非静态属性相同，<br>2.要求重写的方法的返回值类型相同，<br>3.重写后方法的可访问性必须更开放或不变，例如：private-&gt;public<br>不满足这三条的程序将报错无法通过编译</p>
+<p><strong>若重写了实例方法，则发生覆盖</strong><br><strong> 若重写了静态方法，则发生隐藏</strong></p>
+<h4 id="处理-1"><a href="#处理-1" class="headerlink" title="处理"></a>处理</h4><p><strong>通过反射能直接调用被“覆盖”的父类的方法的目的</strong><br><br><strong>无法在外部调用被“覆盖”的父类方法，只能在子类的内部使用super关键字配合圆点运算符调用父类的方法</strong><br><br><strong>无法通过转换类型达到调用被“覆盖”的父类的方法的目的</strong><br></p>
+<p>&nbsp;</p>
+<h3 id="关于方法中使用到成员变量的问题"><a href="#关于方法中使用到成员变量的问题" class="headerlink" title="关于方法中使用到成员变量的问题"></a>关于方法中使用到成员变量的问题</h3><p><strong>所取用的成员变量是子类中的还是父类中的取决于实际被调用的方法是在父类中还是子类中，以实际被调用的方法所在位置来观察可以判断出使用的是哪里的成员变量。</strong></p>
+<p>例如：</p>
+<p>`<br>public class Main {<br>    public static void main(String[] args) {</p>
+<pre><code>    Ch ch = new Ch();
+    ch.show();
+}
+</code></pre><p>}</p>
+<p>class Su{<br>    int a = 3;//被隐藏<br>    String b =”what”;//被隐藏<br>    void show() {//被覆盖<br>        System.out.println(a);<br>        System.out.println(b);<br>    }<br>}<br>class Ch extends Su{<br>    float a = 1.23f;//发生隐藏<br>    boolean b = false;//发生隐藏</p>
+<pre><code>void show() {//发生覆盖
+    System.out.println(a);
+    System.out.println(b);
+    super.show();
+}
+</code></pre><p>}</p>
+<p>/**</p>
+<ul>
+<li>输出：</li>
+<li>1.23</li>
+<li>false</li>
+<li>3</li>
+<li>what</li>
+<li>*/</li>
+</ul>
+<p>`</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/01/21/java-e7-bb-a7-e6-89-bf-e7-9a-84-e8-a6-86-e7-9b-96-e4-b8-8e-e9-9a-90-e8-97-8f/" data-id="cje9syp00001y23w5s9vn3qjy" class="article-share-link">Teilen</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+
+
+  <nav id="page-nav">
+    
+    <a class="extend prev" rel="prev" href="/">&laquo; zurück</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/3/">weiter &raquo;</a>
+  </nav>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Kategorien</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/C-C/">C/C++</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/C-C/Java/">Java</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/CodeForces/">CodeForces</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/CodeForces/动态规划/">动态规划</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/CodeForces/动态规划/算法/">算法</a></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/HDU/">HDU</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/HDU/POJ/">POJ</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/HDU/POJ/动态规划/">动态规划</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/HDU/POJ/动态规划/算法/">算法</a></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/HDU/动态规划/">动态规划</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/HDU/动态规划/未分类/">未分类</a></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Xposed/">Xposed</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/raspberry-pi/">raspberry pi</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/未分类/">未分类</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/算法/">算法</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/闲时研究/">闲时研究</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archiv</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">letzter Beitrag</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2018/03/02/HelloWorld/">HelloWorld</a>
+          </li>
+        
+          <li>
+            <a href="/2018/03/02/hello-world/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/2018/03/02/hdu-2586-how-far-away-ef-bc-9f-e6-a0-91-e4-b8-8a-e8-8a-82-e7-82-b9-e6-9c-80-e7-9f-ad-e8-b7-9d-e7-a6-bb-ef-bc-8clca-ef-bc-8c-e5-8f-8c-e4-ba-b2-e8-a1-a8-e7-a4-ba-e6-b3-95-e6-9a-b4/">HDU 2586 How far away ？——树上节点最短距离，LCA， 双亲表示法+暴力从下至上追溯，孩子链表示法+（Tarjan 或 欧拉环游RMQ+（ST 或 SegmentTree））</a>
+          </li>
+        
+          <li>
+            <a href="/2018/02/27/codeforces-891-a-pride/">CodeForces 891 A. Pride</a>
+          </li>
+        
+          <li>
+            <a href="/2018/02/26/hdu-1080-poj-1080-human-gene-functions-e5-8a-a8-e6-80-81-e8-a7-84-e5-88-92/">HDU 1080 POJ 1080 Human Gene Functions——动态规划</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

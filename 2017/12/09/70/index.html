@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>Java Thread的一些误区 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Threadinterrupt()1.这个方法只会给线程设置一个为true的中断标志。 2.该方法可在需要中断的线程内自己调用，也可在其他线程中调用需要中断的线程对象的这个方法。  Java doc:  public void interrupt()Interrupts this thread.  Unless the current thread is interrupting itself,">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java Thread的一些误区">
+<meta property="og:url" content="http://yoursite.com/2017/12/09/70/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="Threadinterrupt()1.这个方法只会给线程设置一个为true的中断标志。 2.该方法可在需要中断的线程内自己调用，也可在其他线程中调用需要中断的线程对象的这个方法。  Java doc:  public void interrupt()Interrupts this thread.  Unless the current thread is interrupting itself,">
+<meta property="og:updated_time" content="2018-03-02T10:34:14.514Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Java Thread的一些误区">
+<meta name="twitter:description" content="Threadinterrupt()1.这个方法只会给线程设置一个为true的中断标志。 2.该方法可在需要中断的线程内自己调用，也可在其他线程中调用需要中断的线程对象的这个方法。  Java doc:  public void interrupt()Interrupts this thread.  Unless the current thread is interrupting itself,">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Suche"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-70" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/12/09/70/" class="article-date">
+  <time datetime="2017-12-09T08:56:54.000Z" itemprop="datePublished">2017-12-09</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Java/">Java</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Java Thread的一些误区
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="Thread"><a href="#Thread" class="headerlink" title="Thread"></a>Thread</h2><h3 id="interrupt"><a href="#interrupt" class="headerlink" title="interrupt()"></a>interrupt()</h3><pre><span style="display: inline !important; float: none; background-color: transparent; color: #454545; font-family: 'PingFang SC','Microsoft YaHei',SimHei,Arial,SimSun; font-size: 16px; font-style: normal; font-variant: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-decoration: none; text-indent: 0px; text-transform: none; -webkit-text-stroke-width: 0px; white-space: normal; word-break: normal; word-spacing: 0px; word-wrap: break-word;">1.这个方法只会给线程设置一个为true的中断标志。
+2.该方法可在需要中断的线程内自己调用，也可在其他线程中调用需要中断的线程对象的这个方法。
+</span></pre>
+<pre>Java doc:
+
+public void interrupt()Interrupts this thread. 
+Unless the current thread is interrupting itself, which is always permitted, the checkAccess method of this thread is invoked, which may cause a SecurityException to be thrown. 
+
+If this thread is blocked in an invocation of the wait(), wait(long), or wait(long, int) methods of the Object class, or of the join(), join(long), join(long, int), sleep(long), or sleep(long, int), methods of this class, then its interrupt status will be cleared and it will receive an InterruptedException. 
+
+If this thread is blocked in an I/O operation upon an InterruptibleChannel then the channel will be closed, the thread's interrupt status will be set, and the thread will receive a ClosedByInterruptException. 
+
+If this thread is blocked in a Selector then the thread's interrupt status will be set and it will return immediately from the selection operation, possibly with a non-zero value, just as if the selector's wakeup method were invoked. 
+
+If none of the previous conditions hold then this thread's interrupt status will be set. 
+
+Interrupting a thread that is not alive need not have any effect.
+
+Throws: 
+SecurityException - if the current thread cannot modify this thread 
+</pre>
+
+<h3 id="join"><a href="#join" class="headerlink" title="join()"></a>join()</h3><pre><span style="display: inline !important; float: none; background-color: transparent; color: #454545; font-family: 'PingFang SC','Microsoft YaHei',SimHei,Arial,SimSun; font-size: 16px; font-style: normal; font-variant: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-decoration: none; text-indent: 0px; text-transform: none; -webkit-text-stroke-width: 0px; white-space: normal; word-break: normal; word-spacing: 0px; word-wrap: break-word;">调用“目标Thread对象”的join方法，把当前线程加入到该对象对应的线程中，等该对象对应的线程执行完毕再执行后加入的线程。</span></pre>
+<pre>public final void join()
+                throws InterruptedExceptionWaits for this thread to die. 
+An invocation of this method behaves in exactly the same way as the invocation 
+
+join(0) 
+Throws: 
+InterruptedException - if any thread has interrupted the current thread. The interrupted status of the current thread is cleared when this exception is thrown. 
+</pre>
+
+<h3 id="static-sleep"><a href="#static-sleep" class="headerlink" title="static sleep()"></a>static sleep()</h3><pre><span style="display: inline !important; float: none; background-color: transparent; color: #454545; font-family: 'PingFang SC','Microsoft YaHei',SimHei,Arial,SimSun; font-size: 16px; font-style: normal; font-variant: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: left; text-decoration: none; text-indent: 0px; text-transform: none; -webkit-text-stroke-width: 0px; white-space: normal; word-break: normal; word-spacing: 0px; word-wrap: break-word;">此方法的“调用者”所在线程进入休眠，谁调用谁睡觉。 
+
+与wait()的区别：
+1.sleep来自Thread类，和wait来自Object类。
+2.sleep方法没有释放锁，而wait方法释放了锁，使得其他线程可以使用同步控制块或者方法。
+3.wait，notify和notifyAll只能在同步控制方法或者同步控制块里面使用，而sleep可以在任何地方使用。
+</span></pre>
+<pre>public static void sleep(long millis)
+                  throws InterruptedExceptionCauses the currently executing thread to sleep (temporarily cease execution) for the specified number of milliseconds, subject to the precision and accuracy of system timers and schedulers. The thread does not lose ownership of any monitors.
+Parameters: 
+millis - the length of time to sleep in milliseconds 
+Throws: 
+IllegalArgumentException - if the value of millis is negative 
+InterruptedException - if any thread has interrupted the current thread. The interrupted status of the current thread is cleared when this exception is thrown. 
+</pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/12/09/70/" data-id="cje9syoya000323w594li5mzg" class="article-share-link">Teilen</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/12/16/c-printf-e6-a0-bc-e5-bc-8f-e5-8c-96-e5-8a-a8-e6-80-81-e9-95-bf-e5-ba-a6/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Neuer</strong>
+      <div class="article-nav-title">
+        
+          C--printf格式化动态长度
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/12/09/e4-b8-80-e9-81-93-e6-8a-93-e5-b0-8f-e5-81-b7-e7-9a-84oj-e9-a2-98-ef-bc-8c-e4-b8-8d-e7-94-a8-e6-95-b0-e7-bb-84-e5-ae-9e-e7-8e-b0-ef-bc-8c-e9-81-97-e6-86-be-e4-bd-8d-e7-a7-bb-e4-bb-a5-e5-90-8e-e6-b2-a1/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Älter</strong>
+      <div class="article-nav-title">一道抓小偷的OJ题，不用数组实现，遗憾位移以后没有赋值，在此记下</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Kategorien</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/C-C/">C/C++</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/C-C/Java/">Java</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/CodeForces/">CodeForces</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/CodeForces/动态规划/">动态规划</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/CodeForces/动态规划/算法/">算法</a></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/HDU/">HDU</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/HDU/POJ/">POJ</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/HDU/POJ/动态规划/">动态规划</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/HDU/POJ/动态规划/算法/">算法</a></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/HDU/动态规划/">动态规划</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/HDU/动态规划/未分类/">未分类</a></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Xposed/">Xposed</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/raspberry-pi/">raspberry pi</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/未分类/">未分类</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/算法/">算法</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/闲时研究/">闲时研究</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archiv</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">letzter Beitrag</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2018/03/02/HelloWorld/">HelloWorld</a>
+          </li>
+        
+          <li>
+            <a href="/2018/03/02/hello-world/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/2018/03/02/hdu-2586-how-far-away-ef-bc-9f-e6-a0-91-e4-b8-8a-e8-8a-82-e7-82-b9-e6-9c-80-e7-9f-ad-e8-b7-9d-e7-a6-bb-ef-bc-8clca-ef-bc-8c-e5-8f-8c-e4-ba-b2-e8-a1-a8-e7-a4-ba-e6-b3-95-e6-9a-b4/">HDU 2586 How far away ？——树上节点最短距离，LCA， 双亲表示法+暴力从下至上追溯，孩子链表示法+（Tarjan 或 欧拉环游RMQ+（ST 或 SegmentTree））</a>
+          </li>
+        
+          <li>
+            <a href="/2018/02/27/codeforces-891-a-pride/">CodeForces 891 A. Pride</a>
+          </li>
+        
+          <li>
+            <a href="/2018/02/26/hdu-1080-poj-1080-human-gene-functions-e5-8a-a8-e6-80-81-e8-a7-84-e5-88-92/">HDU 1080 POJ 1080 Human Gene Functions——动态规划</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

@@ -48,9 +48,9 @@
       </nav>
       <nav id="sub-nav">
         
-          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="Flux RSS"></a>
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Rechercher"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Suche"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
@@ -87,7 +87,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/02/HelloWorld/" data-id="cje9sobi80000zdw56t6xw9rn" class="article-share-link">Partager</a>
+      <a data-url="http://yoursite.com/2018/03/02/HelloWorld/" data-id="cje9syoyk000823w5oqo9ck01" class="article-share-link">Teilen</a>
       
       
     </footer>
@@ -132,7 +132,1779 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/02/hello-world/" data-id="cje9sobie0001zdw5kyd2cjwb" class="article-share-link">Partager</a>
+      <a data-url="http://yoursite.com/2018/03/02/hello-world/" data-id="cje9syozw001t23w55yrp6i82" class="article-share-link">Teilen</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-hdu-2586-how-far-away-ef-bc-9f-e6-a0-91-e4-b8-8a-e8-8a-82-e7-82-b9-e6-9c-80-e7-9f-ad-e8-b7-9d-e7-a6-bb-ef-bc-8clca-ef-bc-8c-e5-8f-8c-e4-ba-b2-e8-a1-a8-e7-a4-ba-e6-b3-95-e6-9a-b4" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/03/02/hdu-2586-how-far-away-ef-bc-9f-e6-a0-91-e4-b8-8a-e8-8a-82-e7-82-b9-e6-9c-80-e7-9f-ad-e8-b7-9d-e7-a6-bb-ef-bc-8clca-ef-bc-8c-e5-8f-8c-e4-ba-b2-e8-a1-a8-e7-a4-ba-e6-b3-95-e6-9a-b4/" class="article-date">
+  <time datetime="2018-03-02T07:58:51.000Z" itemprop="datePublished">2018-03-02</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/HDU/">HDU</a>►<a class="article-category-link" href="/categories/HDU/动态规划/">动态规划</a>►<a class="article-category-link" href="/categories/HDU/动态规划/未分类/">未分类</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/03/02/hdu-2586-how-far-away-ef-bc-9f-e6-a0-91-e4-b8-8a-e8-8a-82-e7-82-b9-e6-9c-80-e7-9f-ad-e8-b7-9d-e7-a6-bb-ef-bc-8clca-ef-bc-8c-e5-8f-8c-e4-ba-b2-e8-a1-a8-e7-a4-ba-e6-b3-95-e6-9a-b4/">HDU 2586 How far away ？——树上节点最短距离，LCA， 双亲表示法+暴力从下至上追溯，孩子链表示法+（Tarjan 或 欧拉环游RMQ+（ST 或 SegmentTree））</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>标题真长。。。</p>
+<p>HDU 2586 How far away ？——树上节点最短距离，LCA， 双亲表示法+暴力从下至上追溯，孩子链表示法+（Tarjan 或 欧拉环游RMQ+（ST 或 SegmentTree））</p>
+<p><a herf="http://acm.hdu.edu.cn/showproblem.php?pid=2586">http://acm.hdu.edu.cn/showproblem.php?pid=2586</a></p>
+<p>四种解法：<br>双亲表示法+暴力从下至上追溯<br>孩子链表示法+Tarjan<br>孩子链表示法+欧拉环游RMQ+ST<br>孩子链表示法+欧拉环游RMQ+SegmentTree</p>
+<p>对于建树的问题，要解决父节点和子节点的问题：<br>第一种解法中，双亲表示法，用一个一维数组houses来储存所有节点，houses[x].fa表示该节点的父节点，当两个子树被合并造成冲突时，将其中一棵树倒置</p>
+<p>如：<br>1    2<br>↑    ↑<br>3    4<br>↑    ↑<br>5    6</p>
+<p>此时要连接3和4，必定会造成冲突，因为，若将3作为4的父节点（3 → 4），4就会有两个父节点，于是把4 ← 6这一支倒置成 4 → 6<br>于是：<br>1    2<br>↑    ↑<br>3  → 4<br>↑    ↓<br>5    6<br>（5成为合并以后的根元素）</p>
+<p>剩下三种解法则利用孩子链表示法，记录所有与目标节点相连接的节点（包括一个父节点和一个子节点），然后随便选取一个节点作为父节点，用dfs遍历这些连接的节点，同时用visited数组来跳过其中的父节点</p>
+<p>解法1：<br>`</p>
+<p>#include <iostream></iostream></p>
+<p>#include <algorithm></algorithm></p>
+<p>#include <cstring></cstring></p>
+<p>#include <string></string></p>
+<p>#include <cstdio></cstdio></p>
+<p>#include <cmath></cmath></p>
+<p>using namespace std;</p>
+<p>//31ms</p>
+<p>//双亲表示法</p>
+<p>//当建树遇到冲突时，将冲突的一支树倒置</p>
+<p>struct Node<br>{<br>    int disToFa;<br>    int fa;<br>};</p>
+<p>Node houses[40005];<br>int visited[40005];</p>
+<p>void add(int x, int y, int z) {<br>    if (!houses[x].fa) {//若x还没有父元素<br>        //把x挂在y下<br>        houses[x].fa = y;<br>        houses[x].disToFa = z;</p>
+<pre><code>} else {
+
+    if (!houses[y].fa) { //若y还没有父元素
+        //把y挂在x下
+        houses[y].fa = x;
+        houses[y].disToFa = z;
+    } else {
+        //x和y都有父元素了
+
+        //将x的父元素向上追溯全部变成子元素（将这一支箭头全部倒置）
+
+        //修改前的副本
+        Node temp_x = houses[x];
+        Node temp_x_fa = houses[temp_x.fa];
+
+        //把x挂在y下
+        houses[x].fa = y;
+        houses[x].disToFa = z;
+
+        while (temp_x_fa.fa) {
+
+            houses[temp_x.fa].disToFa = temp_x.disToFa;
+            houses[temp_x.fa].fa = x;
+
+            x = temp_x.fa;
+            temp_x = houses[x];
+            temp_x_fa = houses[temp_x.fa];
+
+        }
+
+    }
+
+}
+</code></pre><p>}</p>
+<p>int cal(int x, int y) {<br>//先从x开始一直追溯到根节点，沿途标记所有经过的节点（visited数组两个作用，一是用来标记是否访问过，二是用来记录从x节点出发以后走过的距离）<br>    int sum_x = 0;<br>    visited[x] = -1;</p>
+<pre><code>sum_x += houses[x].disToFa;
+x = houses[x].fa;
+
+while (houses[x].fa) {//当未到树顶时
+    visited[x] = sum_x;
+    sum_x += houses[x].disToFa;
+    x = houses[x].fa;
+}
+
+//此时x是树顶
+if (visited[x] != -1) {
+    visited[x] = sum_x;
+}
+
+//接下来从y开始向上追溯
+int sum_y = 0;
+while (!visited[y]) {
+    sum_y += houses[y].disToFa;
+    y = houses[y].fa;
+}
+
+//根据之前留下的-1判断原始的x是否为y的父元素
+if (visited[y] == -1) {//这种情况表明y向上追溯的过程中遇到了x
+    return sum_y;//直接返回y向上追溯到x的距离
+} else {//这种情况表明y追溯到了x的某一个祖先元素
+    return sum_y + visited[y];//返回y向上追溯到x的距离 + 从x到这个祖先元素的距离
+}
+</code></pre><p>}</p>
+<p>int main(int argc, char const *argv[])<br>{<br>    int T, n, m, cp_n, a1, a2, a3;<br>    scanf(“%d”, &amp;T);<br>    while (T–) {<br>        scanf(“%d%d”, &amp;n, &amp;m);</p>
+<pre><code>    cp_n = n;
+
+    memset(houses, 0, sizeof(Node) * (n + 1));
+
+    while (--n) {
+        scanf(&quot;%d%d%d&quot;, &amp;a1, &amp;a2, &amp;a3);
+
+        add(a1, a2, a3);
+
+    }
+
+    while (m--) {
+        scanf(&quot;%d%d&quot;, &amp;a1, &amp;a2);
+
+        memset(visited, 0, sizeof(int) * (cp_n + 1));//每处理一个问题前刷新一次
+
+        printf(&quot;%d\n&quot;, cal(a1, a2));
+
+    }
+
+}
+
+return 0;
+</code></pre><p>}<br>`</p>
+<p>解法2：<br>`</p>
+<p>#include <iostream></iostream></p>
+<p>#include <algorithm></algorithm></p>
+<p>#include <cstring></cstring></p>
+<p>#include <string></string></p>
+<p>#include <cstdio></cstdio></p>
+<p>#include <cmath></cmath></p>
+<p>using namespace std;</p>
+<p>//31ms<br>//Tarjan</p>
+<p>//孩子链表示法(链表)<br>//这里的孩子不一定是子节点，可能还有一个父节点，但是可以用visited数组来区别<br>//随便选取一个hand作为根节点，就可以建成一棵树</p>
+<p>int hand[40005];//保存第x号房子的所有孩子节点链表的起始节点编号</p>
+<p>struct Node//链表节点<br>{<br>    int distance;//权值<br>    int to;<br>    int next;//保存下一个Node的位置（并非指房子的编号，是节点的编号），即孩子组成的链表中的下一个节点的位置<br>};</p>
+<p>Node nodes[40005 &lt;&lt; 1];//需要两倍空间<br>int pos;//pos为nodes的当前可用的Node的位置编号<br>int disToRoot[40005];//代表到根节点的距离<br>// 结果 = disToRoot[x] + disToRoot[y] - 2 * disToRoot[LCA(x, y)]</p>
+<p>//Tarjan<br>int fa[40005];<br>int visited[40005];<br>int qhand[40005];<br>Node ques[40005 &lt;&lt; 1];<br>int qpos;</p>
+<p>void addToTree(int x, int y, int z) {//表示为x号房子添加一个子节点 y ,距离为z<br>    //为pos号节点写入数据<br>    nodes[pos].to = y;<br>    nodes[pos].distance = z;<br>    nodes[pos].next = hand[x];<br>    hand[x] = pos;</p>
+<pre><code>pos++;//当前可用的节点编号+1
+</code></pre><p>}</p>
+<p>void addToQue(int x, int y) {<br>    ques[qpos].to = y;<br>    ques[qpos].distance = 0;<br>    ques[qpos].next = qhand[x];<br>    qhand[x] = qpos;</p>
+<pre><code>qpos++;
+</code></pre><p>}</p>
+<p>int tarjanFind(int x) {//并查集查找（非递归压缩路径）<br>    int cp_x = x;<br>    while (fa[x] != x) {<br>        x = fa[x];<br>    }</p>
+<pre><code>while (fa[cp_x] != cp_x) {
+    cp_x = fa[cp_x];
+    fa[cp_x] = x;
+}
+
+return x;
+</code></pre><p>}</p>
+<p>void tarjan(int which) {</p>
+<pre><code>visited[which] = 1;
+
+fa[which] = which;
+
+int childPos = hand[which];
+
+while (childPos) {
+
+    if (visited[nodes[childPos].to]) {//跳过父元素
+        childPos = nodes[childPos].next;
+        continue;
+    }
+
+    disToRoot[nodes[childPos].to] = disToRoot[which] + nodes[childPos].distance;//写入到根节点的距离
+    tarjan(nodes[childPos].to);
+
+    fa[nodes[childPos].to] = which;
+
+    childPos = nodes[childPos].next;
+
+}
+</code></pre><p>//处理询问<br>    int quesPos = qhand[which];</p>
+<pre><code>while (quesPos) {
+
+    if (visited[ques[quesPos].to]) {
+        ques[quesPos].distance = disToRoot[which] + disToRoot[ques[quesPos].to] - 2 * disToRoot[tarjanFind(ques[quesPos].to)];
+    }
+
+    quesPos = ques[quesPos].next;
+}
+</code></pre><p>}</p>
+<p>int main(int argc, char const *argv[])<br>{<br>    int T, n, m, a1, a2, a3;<br>    scanf(“%d”, &amp;T);<br>    while (T–) {<br>        scanf(“%d%d”, &amp;n, &amp;m);</p>
+<pre><code>    memset(hand, 0, sizeof(int) * (n + 1));
+    memset(qhand, 0, sizeof(int) * (n + 1));
+    memset(visited, 0, sizeof(int) * (n + 1));
+
+    pos = 1;
+
+    while (--n) {
+        scanf(&quot;%d%d%d&quot;, &amp;a1, &amp;a2, &amp;a3);
+
+        addToTree(a1, a2, a3);
+        addToTree(a2, a1, a3);
+
+    }
+
+    qpos = 1;
+
+    //离线算法（先收集所有问题，然后统一遍历）
+    while (m--) {
+
+        scanf(&quot;%d%d&quot;, &amp;a1, &amp;a2);
+
+        //建立链表的方法和上面建树的方法类似
+        addToQue(a1, a2);
+        addToQue(a2, a1);
+
+    }
+
+    disToRoot[1] = 0;
+    tarjan(1);
+
+    for (int i = 1; i &lt; qpos; i += 2) {
+        printf(&quot;%d\n&quot;, ques[i].distance ? ques[i].distance : ques[i + 1].distance);
+    }
+
+}
+
+return 0;
+</code></pre><p>}<br>`</p>
+<p>解法3：<br>`#include <iostream></iostream></p>
+<p>#include <algorithm></algorithm></p>
+<p>#include <cstring></cstring></p>
+<p>#include <string></string></p>
+<p>#include <cstdio></cstdio></p>
+<p>#include <cmath></cmath></p>
+<p>using namespace std;</p>
+<p>//46ms<br>//转化为RMQ问题_ST<br>//在线算法</p>
+<p>//孩子链表示法(链表)<br>//这里的孩子不一定是子节点，可能还有一个父节点，但是可以用visited数组来区别<br>//随便选取一个hand作为根节点，就可以建成一棵树</p>
+<p>int hand[40005];//保存第x号房子的所有孩子节点链表的起始节点编号</p>
+<p>struct Node//链表节点<br>{<br>    int distance;//权值<br>    int to;<br>    int next;//保存下一个Node的位置（并非指房子的编号，是节点的编号），即孩子组成的链表中的下一个节点的位置<br>};</p>
+<p>Node nodes[40005 &lt;&lt; 1];//需要两倍空间</p>
+<p>int pos;//pos为nodes的当前可用的Node的位置编号<br>int disToRoot[40005];//代表到根节点的距离<br>// 结果 = disToRoot[x] + disToRoot[y] - 2 * disToRoot[LCA(x, y)]</p>
+<p>//RMQ<br>int rmq_which[40005 &lt;&lt; 1];//RMQ数组长度约为节点数的两倍（实际上是2n-1），储存欧拉环游经过的所有节点号<br>int rmq_deep[40005 &lt;&lt; 1];//储存环游中节点的深度<br>int rmq_first[40005];//储存循环中 x 号节点（房子）第一次出现的位置<br>int rmq_pos;</p>
+<p>int visited[40005];//排除父节点</p>
+<p>//ST<br>int st[40005 &lt;&lt; 1][18]; //2的17次方大于 40005<br>// st[x][y] = 代表rmq_deep数组中从x开始持续长为（2的y次方）长的区间范围内的最小deep 的位置</p>
+<p>void addToTree(int x, int y, int z) {//表示为x号房子添加一个子节点 y ,距离为z<br>    //为pos号节点写入数据<br>    nodes[pos].to = y;<br>    nodes[pos].distance = z;<br>    nodes[pos].next = hand[x];<br>    hand[x] = pos;</p>
+<pre><code>pos++;//当前可用的节点编号+1
+</code></pre><p>}</p>
+<p>/**</p>
+<ul>
+<li><p>rmq函数用欧拉环游生成了rmq_which 和 rmq_deep 和 rmq_first 和 disToRoot 四个数组<br>*/<br>void rmq(int which, int deep) {<br>  visited[which] = 1;</p>
+<p>  rmq_which[rmq_pos] = which;<br>  rmq_deep[rmq_pos] = deep;<br>  rmq_first[which] = rmq_pos;<br>  rmq_pos++;</p>
+<p>  int childPos = hand[which];</p>
+<p>  while (childPos) {</p>
+<pre><code>if (visited[nodes[childPos].to]) {
+    childPos = nodes[childPos].next;
+    continue;
+}
+
+disToRoot[nodes[childPos].to] = disToRoot[which] + nodes[childPos].distance;
+
+rmq(nodes[childPos].to, deep + 1);
+
+rmq_which[rmq_pos] = which;
+rmq_deep[rmq_pos] = deep;
+rmq_pos++;
+
+childPos = nodes[childPos].next;
+</code></pre><p>  }</p>
+</li>
+</ul>
+<p>}</p>
+<p>//初始化st数组<br>void init_st() {<br>    for (int i = 0; i &lt; rmq_pos; ++i) {//根据st的定义，y为0时，st[i][0] = i;<br>        st[i][0] = i;<br>    }</p>
+<pre><code>for (int y = 1 ; y &lt; 18; ++y) {
+    for (int i = 0; i + (1 &lt;&lt; y) - 1 &lt; rmq_pos; ++i) {
+        st[i][y] =    rmq_deep[st[i][y - 1]] &lt; rmq_deep[st[i + (1 &lt;&lt; (y - 1))][y - 1]] ? st[i][y - 1] : st[i + (1 &lt;&lt; (y - 1))][y - 1];
+    }
+}
+</code></pre><p>}</p>
+<p>// 返回rmq_deep数组区间[x, y]之间的最小元素的位置<br>int min_st(int x, int y) {</p>
+<pre><code>if (x &gt; y) {//保证输入的x &lt;= y;若不满足，则反过来
+    return min_st(y, x);
+}
+
+for (int i = 17; i &gt;= 0; --i) {
+    if (x + (1 &lt;&lt; i) - 1 &gt; y) {
+        continue;
+    }
+
+    if (x + (1 &lt;&lt; i) - 1 == y) {
+        return st[x][i];
+    } else {
+        int temp = min_st(x + (1 &lt;&lt; i), y);
+        return rmq_deep[st[x][i]] &lt; rmq_deep[temp] ? st[x][i] : temp;
+    }
+}
+
+return 0;
+</code></pre><p>}</p>
+<p>int main(int argc, char const *argv[])<br>{<br>    int T, n, m, a1, a2, a3, first = 1;<br>    scanf(“%d”, &amp;T);<br>    while (T–) {<br>        scanf(“%d%d”, &amp;n, &amp;m);</p>
+<pre><code>    memset(hand, 0, sizeof(int) * (n + 1));
+    memset(visited, 0, sizeof(int) * (n + 1));
+
+    pos = 1;
+
+    while (--n) {
+        scanf(&quot;%d%d%d&quot;, &amp;a1, &amp;a2, &amp;a3);
+
+        addToTree(a1, a2, a3);
+        addToTree(a2, a1, a3);
+
+    }
+
+    disToRoot[1] = 0;
+
+    //在线算法（逐个回答问题）
+
+    rmq_pos = 0;
+
+    rmq(1, 1);
+
+    init_st();
+
+    if (first) {
+        first = 0;
+    } else {
+        printf(&quot;\n&quot;);
+    }
+
+    // for (int i = 0; i &lt; rmq_pos; i++) {
+    //     printf(&quot;%d &quot;, rmq_which[i]);
+    // }
+    // printf(&quot;\n&quot;);
+    // for (int i = 0; i &lt; rmq_pos; i++) {
+    //     printf(&quot;%d &quot;, rmq_deep[i]);
+    // }
+    // printf(&quot;\n&quot;);
+    // for (int i = 1; i &lt;= 6; i++) {
+    //     printf(&quot;%d &quot;, rmq_first[i]);
+    // }
+    // printf(&quot;\n&quot;);
+
+    // for (int x = 0; x &lt; 18; x++) {
+    //     for (int i = 0; i &lt; rmq_pos; i++) {
+    //         printf(&quot;%d &quot;, st[i][x]);
+    //     }
+    //     printf(&quot;\n&quot;);
+    // }
+
+    while (m--) {
+
+        scanf(&quot;%d%d&quot;, &amp;a1, &amp;a2);
+
+        printf(&quot;%d\n&quot;, disToRoot[a1] + disToRoot[a2] - 2 * disToRoot[rmq_which[min_st(rmq_first[a1], rmq_first[a2])]]);
+
+    }
+
+}
+
+return 0;
+</code></pre><p>}<br>`</p>
+<p>解法4：<br>`</p>
+<p>#include <iostream></iostream></p>
+<p>#include <algorithm></algorithm></p>
+<p>#include <cstring></cstring></p>
+<p>#include <string></string></p>
+<p>#include <cstdio></cstdio></p>
+<p>#include <cmath></cmath></p>
+<p>using namespace std;</p>
+<p>//31ms<br>//转化为RMQ问题_Segment_Tree</p>
+<p>/**</p>
+<ul>
+<li>注意线段树需要4倍空间</li>
+<li>注意线段树需要4倍空间</li>
+<li>注意线段树需要4倍空间<br>*/</li>
+</ul>
+<p>//在线算法</p>
+<p>//孩子链表示法(链表)<br>//这里的孩子不一定是子节点，可能还有一个父节点，但是可以用visited数组来区别<br>//随便选取一个hand作为根节点，就可以建成一棵树</p>
+<p>int hand[40005];//保存第x号房子的所有孩子节点链表的起始节点编号</p>
+<p>struct Node//链表节点<br>{<br>    int distance;//权值<br>    int to;<br>    int next;//保存下一个Node的位置（并非指房子的编号，是节点的编号），即孩子组成的链表中的下一个节点的位置<br>};</p>
+<p>Node nodes[40005 &lt;&lt; 1];//需要两倍空间</p>
+<p>int pos;//pos为nodes的当前可用的Node的位置编号<br>int disToRoot[40005];//代表到根节点的距离<br>// 结果 = disToRoot[x] + disToRoot[y] - 2 * disToRoot[LCA(x, y)]</p>
+<p>//RMQ<br>int rmq_which[40005 &lt;&lt; 1];//RMQ数组长度约为节点数的两倍（实际上是2n-1），储存欧拉环游经过的所有节点号<br>int rmq_deep[40005 &lt;&lt; 1];//储存环游中节点的深度<br>int rmq_first[40005];//储存循环中 x 号节点（房子）第一次出现的位置<br>int rmq_pos;</p>
+<p>int visited[40005];//排除父节点</p>
+<p>//Segment_Tree<br>struct SegNode<br>{<br>    int left;<br>    int right;<br>    int minPos;//储存[left, right]区间内deep最小值所处的位置<br>};</p>
+<p>//线段树需要原基础数组长度四倍的空间<br>SegNode segs[40005 &lt;&lt; 3];//从1开始</p>
+<p>void addToTree(int x, int y, int z) {//表示为x号房子添加一个子节点 y ,距离为z<br>    //为pos号节点写入数据<br>    nodes[pos].to = y;<br>    nodes[pos].distance = z;<br>    nodes[pos].next = hand[x];<br>    hand[x] = pos;</p>
+<pre><code>pos++;//当前可用的节点编号+1
+</code></pre><p>}</p>
+<p>/**</p>
+<ul>
+<li><p>rmq函数用欧拉环游生成了rmq_which 和 rmq_deep 和 rmq_first 和 disToRoot 四个数组<br>*/<br>void rmq(int which, int deep) {<br>  visited[which] = 1;</p>
+<p>  rmq_which[rmq_pos] = which;<br>  rmq_deep[rmq_pos] = deep;<br>  rmq_first[which] = rmq_pos;<br>  rmq_pos++;</p>
+<p>  int childPos = hand[which];</p>
+<p>  while (childPos) {</p>
+<pre><code>if (visited[nodes[childPos].to]) {
+    childPos = nodes[childPos].next;
+    continue;
+}
+
+disToRoot[nodes[childPos].to] = disToRoot[which] + nodes[childPos].distance;
+
+rmq(nodes[childPos].to, deep + 1);
+
+rmq_which[rmq_pos] = which;
+rmq_deep[rmq_pos] = deep;
+rmq_pos++;
+
+childPos = nodes[childPos].next;
+</code></pre><p>  }</p>
+</li>
+</ul>
+<p>}</p>
+<p>//初始化segment数组<br>void build_seg(int spos, int left, int right) {<br>    // printf(“spos -&gt; %d\n”, spos);<br>    segs[spos].left = left;<br>    segs[spos].right = right;</p>
+<pre><code>if (left == right) {
+    segs[spos].minPos = left;
+    return;
+}
+
+build_seg(spos &lt;&lt; 1, left, (left + right) / 2);
+build_seg((spos &lt;&lt; 1) | 1, ((left + right) / 2) + 1, right);
+
+segs[spos].minPos = rmq_deep[segs[spos &lt;&lt; 1].minPos] &lt; rmq_deep[segs[(spos &lt;&lt; 1) | 1].minPos] ? segs[spos &lt;&lt; 1].minPos : segs[(spos &lt;&lt; 1) | 1].minPos;
+</code></pre><p>}</p>
+<p>// 返回rmq_deep数组区间[x, y]之间的最小元素的位置<br>int min_seg(int pos, int x, int y) {<br>    if (x == segs[pos].left &amp;&amp; y == segs[pos].right) {<br>        return segs[pos].minPos;<br>    } else if (y &lt;= ((segs[pos].left + segs[pos].right) / 2)) {<br>        return min_seg(pos &lt;&lt; 1, x, y);<br>    } else if (x &gt; ((segs[pos].left + segs[pos].right) / 2)) {<br>        return min_seg((pos &lt;&lt; 1) | 1, x, y);<br>    } else {<br>        int temp1, temp2;<br>        temp1 = min_seg(pos &lt;&lt; 1, x, (segs[pos].left + segs[pos].right) / 2);<br>        temp2 = min_seg((pos &lt;&lt; 1) | 1, ((segs[pos].left + segs[pos].right) / 2) + 1, y);</p>
+<pre><code>    return rmq_deep[temp1] &lt; rmq_deep[temp2] ? temp1 : temp2;
+}
+</code></pre><p>}</p>
+<p>int main(int argc, char const *argv[])<br>{<br>    int T, n, m, a1, a2, a3, first = 1;<br>    scanf(“%d”, &amp;T);<br>    while (T–) {<br>        scanf(“%d%d”, &amp;n, &amp;m);</p>
+<pre><code>    memset(hand, 0, sizeof(int) * (n + 1));
+    memset(visited, 0, sizeof(int) * (n + 1));
+
+    pos = 1;
+
+    while (--n) {
+        scanf(&quot;%d%d%d&quot;, &amp;a1, &amp;a2, &amp;a3);
+
+        addToTree(a1, a2, a3);
+        addToTree(a2, a1, a3);
+
+    }
+
+    disToRoot[1] = 0;
+
+    //在线算法（逐个回答问题）
+
+    rmq_pos = 0;
+
+    rmq(1, 1);
+
+    // printf(&quot;rmq_pos -&gt; %d\n&quot;, rmq_pos);
+
+    build_seg(1, 0, rmq_pos - 1);
+
+    if (first) {//好像没有空行也能过
+        first = 0;
+    } else {
+        printf(&quot;\n&quot;);
+    }
+
+    // for (int i = 0; i &lt; rmq_pos; i++) {
+    //     printf(&quot;%d &quot;, rmq_which[i]);
+    // }
+    // printf(&quot;\n&quot;);
+    // for (int i = 0; i &lt; rmq_pos; i++) {
+    //     printf(&quot;%d &quot;, rmq_deep[i]);
+    // }
+    // printf(&quot;\n&quot;);
+    // for (int i = 1; i &lt;= 6; i++) {
+    //     printf(&quot;%d &quot;, rmq_first[i]);
+    // }
+    // printf(&quot;\n&quot;);
+
+    while (m--) {
+
+        scanf(&quot;%d%d&quot;, &amp;a1, &amp;a2);
+
+        if (rmq_first[a1] &lt; rmq_first[a2]) {
+
+            printf(&quot;%d\n&quot;, disToRoot[a1] + disToRoot[a2] - 2 * disToRoot[rmq_which[min_seg(1, rmq_first[a1], rmq_first[a2])]]);
+        } else {
+            printf(&quot;%d\n&quot;, disToRoot[a1] + disToRoot[a2] - 2 * disToRoot[rmq_which[min_seg(1, rmq_first[a2], rmq_first[a1])]]);
+        }
+
+    }
+
+}
+
+return 0;
+</code></pre><p>}<br>`</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/03/02/hdu-2586-how-far-away-ef-bc-9f-e6-a0-91-e4-b8-8a-e8-8a-82-e7-82-b9-e6-9c-80-e7-9f-ad-e8-b7-9d-e7-a6-bb-ef-bc-8clca-ef-bc-8c-e5-8f-8c-e4-ba-b2-e8-a1-a8-e7-a4-ba-e6-b3-95-e6-9a-b4/" data-id="cje9syozy001v23w5bcmnvy2a" class="article-share-link">Teilen</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-codeforces-891-a-pride" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/02/27/codeforces-891-a-pride/" class="article-date">
+  <time datetime="2018-02-27T02:30:47.000Z" itemprop="datePublished">2018-02-27</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/CodeForces/">CodeForces</a>►<a class="article-category-link" href="/categories/CodeForces/动态规划/">动态规划</a>►<a class="article-category-link" href="/categories/CodeForces/动态规划/算法/">算法</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/02/27/codeforces-891-a-pride/">CodeForces 891 A. Pride</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><a href="http://codeforces.com/problemset/problem/891/A" target="_blank" rel="noopener">http://codeforces.com/problemset/problem/891/A</a></p>
+<p>`</p>
+<p>#include <iostream></iostream></p>
+<p>#include <cstdio></cstdio></p>
+<p>#include <cstring></cstring></p>
+<p>#include <cmath></cmath></p>
+<p>using namespace std;</p>
+<p>long long dp[2005][2005]; // dp[x][y]表示gcd(x…(x + y))<br>/<em><br>x是起始点位置,y是距离<br>a1, a2, a3, a4, a5, a6, a7, a8<br>    ↑    ←    y    →    ↑<br>    x                x + y
+</em>/</p>
+<p>// gcd(a1, a2, a3) = gcd(gcd(a1, a2), a3) = gcd(gcd(a1, a2), gcd(a2, a3))<br>// 所以</p>
+<p>// 状态方程<br>// dp[x][y] = gcd(dp[x][y - 1], dp[x + 1][y - 1])</p>
+<p>long long gcd(long long a, long long b) {<br>    while (1) {<br>        a = a % b;<br>        if (!a) {<br>            return b;<br>        }<br>        b = b % a;<br>        if (!b) {<br>            return a;<br>        }<br>    }<br>}</p>
+<p>int main(int argc, char const *argv[])<br>{<br>    int n;<br>    int ones = 0;<br>    scanf(“%d”, &amp;n);</p>
+<pre><code>for (int x = 0; x &lt; n; x++) {
+    scanf(&quot;%lld&quot;, dp[x]);
+    if (dp[x][0] == 1) {
+        ones++;
+    }
+
+    // printf(&quot;%lld\t&quot;, dp[x][0]);
+}
+
+// printf(&quot;\n&quot;);
+
+if (ones) {
+    printf(&quot;%d\n&quot;, n - ones);
+    return 0;
+}
+
+for (int y = 1; y &lt; n; y++) {//跨度距离从1开始
+    for (int x = 0; x + y &lt; n; x++) {//起始位置从x开始
+
+        dp[x][y] = gcd(dp[x][y - 1], dp[x + 1][y - 1]);
+
+        // printf(&quot;%lld\t&quot;, dp[x][y]);
+
+        if (dp[x][y] == 1) {
+            // printf(&quot;\n&quot;);
+            printf(&quot;%d\n&quot;, n + y - 1);
+            return 0;
+        }
+
+    }
+}
+
+printf(&quot;-1\n&quot;);
+return 0;
+</code></pre><p>/**</p>
+<ul>
+<li></li>
+<li>in:</li>
+<li></li>
+<li>5</li>
+<li>2 2 3 4 6</li>
+<li></li>
+<li>out:</li>
+<li></li>
+<li>2        2        3        4        6</li>
+<li>↑&#x2197;        ↑&#x2197;</li>
+<li>2        1</li>
+<li></li>
+<li>result：</li>
+<li></li>
+<li>5</li>
+<li></li>
+<li>*/</li>
+</ul>
+<p>}</p>
+<p>`</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/02/27/codeforces-891-a-pride/" data-id="cje9syp01002023w571mk3071" class="article-share-link">Teilen</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-hdu-1080-poj-1080-human-gene-functions-e5-8a-a8-e6-80-81-e8-a7-84-e5-88-92" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/02/26/hdu-1080-poj-1080-human-gene-functions-e5-8a-a8-e6-80-81-e8-a7-84-e5-88-92/" class="article-date">
+  <time datetime="2018-02-26T13:53:24.000Z" itemprop="datePublished">2018-02-26</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/HDU/">HDU</a>►<a class="article-category-link" href="/categories/HDU/POJ/">POJ</a>►<a class="article-category-link" href="/categories/HDU/POJ/动态规划/">动态规划</a>►<a class="article-category-link" href="/categories/HDU/POJ/动态规划/算法/">算法</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/02/26/hdu-1080-poj-1080-human-gene-functions-e5-8a-a8-e6-80-81-e8-a7-84-e5-88-92/">HDU 1080 POJ 1080 Human Gene Functions——动态规划</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><a href="http://poj.org/problem?id=1080" target="_blank" rel="noopener">http://poj.org/problem?id=1080</a><br><a href="http://acm.hdu.edu.cn/showproblem.php?pid=1080" target="_blank" rel="noopener">http://acm.hdu.edu.cn/showproblem.php?pid=1080</a></p>
+<p>`</p>
+<p>#include <iostream></iostream></p>
+<p>#include <cstdio></cstdio></p>
+<p>#include <map></map></p>
+<p>#include <cstring></cstring></p>
+<p>#define MAX(x,y,z) ((x)&gt;(y)?((x)&gt;(z)?(x):(z)):((y)&gt;(z)?(y):(z)))</p>
+<p>using namespace std;</p>
+<p>char str1[105];<br>char str2[105];<br>int list[6][6] = {<br>//              { \0,  A,  C,  G,  T,  -}<br>    /<em>\0</em>/    {  0,  0,  0,  0,  0,  0},<br>    /<em>A</em>/    {  0,  5, -1, -2, -1, -3},<br>    /<em>C</em>/    {  0, -1,  5, -3, -2, -4},<br>    /<em>G</em>/    {  0, -2, -3,  5, -2, -2},<br>    /<em>T</em>/    {  0, -1, -2, -2,  5, -1},<br>    /<em>-</em>/    {  0, -3, -4, -2, -1,  0},<br>};<br>map&lt;char, int&gt;m;</p>
+<p>int dp[105][105];//dp[x][y]表示str1中1…x-1个字符和str2中第1…y-1之间匹配的最优解</p>
+<p>int main(int argc, char const *argv[])<br>{<br>    int T, len1, len2;<br>    scanf(“%d”, &amp;T);</p>
+<pre><code>m[&apos;\0&apos;] = 0;
+m[&apos;A&apos;] = 1;
+m[&apos;C&apos;] = 2;
+m[&apos;G&apos;] = 3;
+m[&apos;T&apos;] = 4;
+m[&apos;-&apos;] = 5;
+
+while (T--) {
+    memset(dp, 0, sizeof(dp));
+    scanf(&quot;%d%s&quot;, &amp;len1, str1 + 1);
+    scanf(&quot;%d%s&quot;, &amp;len2, str2 + 1);
+
+    // printf(&quot;\t\t&quot;);
+    // for (int y = 0; y &lt; len2; y++) {
+    //     printf(&quot;%c\t&quot;, s2[y]);
+    // }
+    // printf(&quot;\n\t&quot;);
+
+    // for (int y = 0; y &lt;= len2; y++) {
+    //     printf(&quot;%d\t&quot;, dp[0][y]);
+
+    // }
+    // printf(&quot;\n&quot;);
+
+    for (int x = 1; x &lt;= len1 + 1; x++) {
+        dp[x][0] = -1e9;
+    }
+
+    for (int y = 1; y &lt;= len2 + 1; y++) {
+        dp[0][y] = -1e9;
+    }
+
+    for (int x = 1; x &lt;= len1 + 1; x++) {
+
+        for (int y = 1; y &lt;= len2 + 1; y++) {
+            dp[x][y] = MAX(
+                           dp[x - 1][y - 1] + list[m[str1[x - 1]]][m[str2[y - 1]]],
+                           dp[x - 1][y] + list[m[str1[x - 1]]][m[&apos;-&apos;]],
+                           dp[x][y - 1] + list[m[&apos;-&apos;]][m[str2[y - 1]]]
+                       );
+</code></pre><p>//取消注釋打印流程</p>
+<p>/*                if (dp[x - 1][y - 1] + list[m[str1[x - 1]]][m[str2[y - 1]]]<br>                        &gt;= dp[x - 1][y] + list[m[str1[x - 1]]][m[‘-‘]]) {<br>                    if (dp[x - 1][y - 1] + list[m[str1[x - 1]]][m[str2[y - 1]]]<br>                            &gt;=<br>                            dp[x][y - 1] + list[m[‘-‘]][m[str2[y - 1]]]) {<br>                        printf(“&#x2196;%d\t”, dp[x][y]);<br>                    } else {<br>                        printf(“←%d\t”, dp[x][y]);<br>                    }<br>                } else {<br>                    if (dp[x - 1][y] + list[m[str1[x - 1]]][m[‘-‘]]<br>                            &gt;=<br>                            dp[x][y - 1] + list[m[‘-‘]][m[str2[y - 1]]]) {<br>                        printf(“↑%d\t”, dp[x][y]);<br>                    } else {<br>                        printf(“←%d\t”, dp[x][y]);</p>
+<pre><code>    }
+}
+</code></pre><p>*/</p>
+<pre><code>}
+</code></pre><p>/<em><br>            printf(“\n”);
+</em>/</p>
+<pre><code>    }
+    printf(&quot;%d\n&quot;, dp[len1 + 1][len2 + 1]);
+
+    /**
+    *
+    *    in:
+    *    
+    *    2
+    *    7 AGTGATG
+    *    5 GTTAG
+    *    7 AGCTATT
+    *    9 AGCTTTAAA
+    *    
+    *    out:
+    *    
+    *    &amp;#x2196;0        ←-2        ←-3        ←-4        ←-7        ←-9
+    *    ↑-3        &amp;#x2196;-2        &amp;#x2196;-3        &amp;#x2196;-4        &amp;#x2196;1        ←-1
+    *    ↑-5        &amp;#x2196;2        ←1        ←0        ↑-1        &amp;#x2196;6
+    *    ↑-6        ↑1        &amp;#x2196;7        &amp;#x2196;6        ←3        ↑5
+    *    ↑-8        &amp;#x2196;-1        ↑5        &amp;#x2196;5        &amp;#x2196;4        &amp;#x2196;8
+    *    ↑-11    ↑-4        ↑2        &amp;#x2196;4        &amp;#x2196;10        ←8
+    *    ↑-12    ↑-5        &amp;#x2196;1        &amp;#x2196;7        ↑9        &amp;#x2196;8
+    *    ↑-14    &amp;#x2196;-7        ↑-1        ↑5        ↑7        &amp;#x2196;14
+    *    
+    *    14
+    *    
+    *    &amp;#x2196;0        ←-3        ←-5        ←-9        ←-10    ←-11    ←-12    ←-15    ←-18    ←-21
+    *    ↑-3        &amp;#x2196;5        ←3        ←-1        ←-2        ←-3        ←-4        &amp;#x2196;-7        &amp;#x2196;-10    &amp;#x2196;-13
+    *    ↑-5        ↑3        &amp;#x2196;10        ←6        ←5        ←4        ←3        ←0        ←-3        ←-6
+    *    ↑-9        ↑-1        ↑6        &amp;#x2196;15        ←14        ←13        ←12        ←9        ←6        ←3
+    *    ↑-10    ↑-2        ↑5        ↑14        &amp;#x2196;20        &amp;#x2196;19        &amp;#x2196;18        ←15        ←12        ←9
+    *    ↑-13    &amp;#x2196;-5        ↑2        ↑11        ↑17        &amp;#x2196;19        &amp;#x2196;18        &amp;#x2196;23        &amp;#x2196;20        &amp;#x2196;17
+    *    ↑-14    ↑-6        ↑1        ↑10        &amp;#x2196;16        &amp;#x2196;22        &amp;#x2196;24        ↑22        &amp;#x2196;22        &amp;#x2196;19
+    *    ↑-15    ↑-7        ↑0        ↑9        &amp;#x2196;15        &amp;#x2196;21        &amp;#x2196;27        ←24        &amp;#x2196;21        &amp;#x2196;21
+    *    
+    *    
+    *    21
+    *    
+    *    
+    *    
+    */
+
+}
+return 0;
+</code></pre><p>}</p>
+<p>`</p>
+<p>后来发现是自己想得太多了，这个题的“状态”不一定非要理解成原先那样，<br>其实完全可以也像最大公共子列那样的，<br>dp[x][y]表示str1的前x个字符和str2的前y个字符之间的匹配结果的最优解<br>这样也便于理解，便于思考</p>
+<p>这样的话dp[x][y]就是最终答案，不过要注意边界的预处理<br>代码如下</p>
+<p>`</p>
+<p>#include <iostream></iostream></p>
+<p>#include <cstdio></cstdio></p>
+<p>#include <map></map></p>
+<p>#include <cstring></cstring></p>
+<p>#define MAX(x,y,z) ((x)&gt;(y)?((x)&gt;(z)?(x):(z)):((y)&gt;(z)?(y):(z)))</p>
+<p>using namespace std;</p>
+<p>char str1[105];<br>char str2[105];<br>int list[6][6] = {<br>//              {  A,  C,  G,  T,  -}<br>    /<em>A</em>/    {  5, -1, -2, -1, -3},<br>    /<em>C</em>/    { -1,  5, -3, -2, -4},<br>    /<em>G</em>/    { -2, -3,  5, -2, -2},<br>    /<em>T</em>/    { -1, -2, -2,  5, -1},<br>    /<em>-</em>/    { -3, -4, -2, -1,  0},<br>};</p>
+<p>map&lt;char, int&gt;m;</p>
+<p>int dp[105][105];//dp[x][y]表示str1中1…x个字符和str2中第1…y这两个子串之间的所有匹配方式的最大利益</p>
+<p>int main(int argc, char const *argv[])<br>{<br>    int T, len1, len2;<br>    scanf(“%d”, &amp;T);</p>
+<pre><code>m[&apos;A&apos;] = 0;
+m[&apos;C&apos;] = 1;
+m[&apos;G&apos;] = 2;
+m[&apos;T&apos;] = 3;
+m[&apos;-&apos;] = 4;
+
+while (T--) {
+    memset(dp, 0, sizeof(dp));
+    scanf(&quot;%d%s&quot;, &amp;len1, str1 + 1);
+    scanf(&quot;%d%s&quot;, &amp;len2, str2 + 1);
+
+    // printf(&quot;\t\t&quot;);
+    // for (int y = 0; y &lt; len2; y++) {
+    //     printf(&quot;%c\t&quot;, s2[y]);
+    // }
+    // printf(&quot;\n\t&quot;);
+
+    // for (int y = 0; y &lt;= len2; y++) {
+    //     printf(&quot;%d\t&quot;, dp[0][y]);
+
+    // }
+    // printf(&quot;\n&quot;);
+
+    for (int x = 1; x &lt;= len1; x++) {
+        dp[x][0] = dp[x - 1][0] + list[m[str1[x]]][m[&apos;-&apos;]];
+    }
+
+    // printf(&quot;&amp;#x2196;0\t&quot;);
+    for (int y = 1; y &lt;= len2; y++) {
+        dp[0][y] = dp[0][y - 1] + list[m[str2[y]]][m[&apos;-&apos;]];
+        // printf(&quot;←%d\t&quot;, dp[0][y]);
+    }
+    // printf(&quot;\n&quot;);
+
+    for (int x = 1; x &lt;= len1; x++) {
+
+        // printf(&quot;↑%d\t&quot;, dp[x][0]);
+
+        for (int y = 1; y &lt;= len2; y++) {
+            dp[x][y] = MAX(
+                           dp[x - 1][y - 1] + list[m[str1[x]]][m[str2[y]]],
+                           dp[x - 1][y] + list[m[str1[x]]][m[&apos;-&apos;]],
+                           dp[x][y - 1] + list[m[&apos;-&apos;]][m[str2[y]]]
+                       );
+</code></pre><p>//取消所有额外注释可打印流程<br>                /*<br>                                if (dp[x - 1][y - 1] + list[m[str1[x]]][m[str2[y]]]<br>                                        &gt;= dp[x - 1][y] + list[m[str1[x]]][m[‘-‘]]) {<br>                                    if (dp[x - 1][y - 1] + list[m[str1[x]]][m[str2[y]]]<br>                                            &gt;=<br>                                            dp[x][y - 1] + list[m[‘-‘]][m[str2[y]]]) {<br>                                        printf(“&#x2196;%d\t”, dp[x][y]);<br>                                    } else {<br>                                        printf(“←%d\t”, dp[x][y]);<br>                                    }<br>                                } else {<br>                                    if (dp[x - 1][y] + list[m[str1[x]]][m[‘-‘]]<br>                                            &gt;=<br>                                            dp[x][y - 1] + list[m[‘-‘]][m[str2[y]]]) {<br>                                        printf(“↑%d\t”, dp[x][y]);<br>                                    } else {<br>                                        printf(“←%d\t”, dp[x][y]);</p>
+<pre><code>                                }
+                            }
+            */
+
+        }
+
+        /*
+                    printf(&quot;\n&quot;);
+        */
+
+    }
+    printf(&quot;%d\n&quot;, dp[len1][len2]);
+
+    /**
+    *
+    *    in:
+    *
+    *    2
+    *    7 AGTGATG
+    *    5 GTTAG
+    *    7 AGCTATT
+    *    9 AGCTTTAAA
+    *
+    *    out:
+    *
+    *    &amp;#x2196;0        ←-2        ←-3        ←-4        ←-7        ←-9
+    *    ↑-3        &amp;#x2196;-2        &amp;#x2196;-3        &amp;#x2196;-4        &amp;#x2196;1        ←-1
+    *    ↑-5        &amp;#x2196;2        ←1        ←0        ↑-1        &amp;#x2196;6
+    *    ↑-6        ↑1        &amp;#x2196;7        &amp;#x2196;6        ←3        ↑5
+    *    ↑-8        &amp;#x2196;-1        ↑5        &amp;#x2196;5        &amp;#x2196;4        &amp;#x2196;8
+    *    ↑-11    ↑-4        ↑2        &amp;#x2196;4        &amp;#x2196;10        ←8
+    *    ↑-12    ↑-5        &amp;#x2196;1        &amp;#x2196;7        ↑9        &amp;#x2196;8
+    *    ↑-14    &amp;#x2196;-7        ↑-1        ↑5        ↑7        &amp;#x2196;14
+    *
+    *    14
+    *
+    *    &amp;#x2196;0        ←-3        ←-5        ←-9        ←-10    ←-11    ←-12    ←-15    ←-18    ←-21
+    *    ↑-3        &amp;#x2196;5        ←3        ←-1        ←-2        ←-3        ←-4        &amp;#x2196;-7        &amp;#x2196;-10    &amp;#x2196;-13
+    *    ↑-5        ↑3        &amp;#x2196;10        ←6        ←5        ←4        ←3        ←0        ←-3        ←-6
+    *    ↑-9        ↑-1        ↑6        &amp;#x2196;15        ←14        ←13        ←12        ←9        ←6        ←3
+    *    ↑-10    ↑-2        ↑5        ↑14        &amp;#x2196;20        &amp;#x2196;19        &amp;#x2196;18        ←15        ←12        ←9
+    *    ↑-13    &amp;#x2196;-5        ↑2        ↑11        ↑17        &amp;#x2196;19        &amp;#x2196;18        &amp;#x2196;23        &amp;#x2196;20        &amp;#x2196;17
+    *    ↑-14    ↑-6        ↑1        ↑10        &amp;#x2196;16        &amp;#x2196;22        &amp;#x2196;24        ↑22        &amp;#x2196;22        &amp;#x2196;19
+    *    ↑-15    ↑-7        ↑0        ↑9        &amp;#x2196;15        &amp;#x2196;21        &amp;#x2196;27        ←24        &amp;#x2196;21        &amp;#x2196;21
+    *
+    *
+    *    21
+    *
+    *
+    *
+    */
+
+}
+return 0;
+</code></pre><p>}</p>
+<p>`</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/02/26/hdu-1080-poj-1080-human-gene-functions-e5-8a-a8-e6-80-81-e8-a7-84-e5-88-92/" data-id="cje9syozj001923w51ke1ffxw" class="article-share-link">Teilen</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-fragment-fragment-xposed-e5-bc-80-e5-8f-91-e6-97-b6-e9-81-87-e5-88-b0-e7-9a-84-e5-85-b3-e4-ba-8eclassloader-e7-9a-84-e9-97-ae-e9-a2-98" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/02/25/fragment-fragment-xposed-e5-bc-80-e5-8f-91-e6-97-b6-e9-81-87-e5-88-b0-e7-9a-84-e5-85-b3-e4-ba-8eclassloader-e7-9a-84-e9-97-ae-e9-a2-98/" class="article-date">
+  <time datetime="2018-02-25T10:02:56.000Z" itemprop="datePublished">2018-02-25</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Xposed/">Xposed</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/02/25/fragment-fragment-xposed-e5-bc-80-e5-8f-91-e6-97-b6-e9-81-87-e5-88-b0-e7-9a-84-e5-85-b3-e4-ba-8eclassloader-e7-9a-84-e9-97-ae-e9-a2-98/">Fragment != Fragment ? —— Xposed开发时遇到的关于ClassLoader的问题</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>今天在写Xposed模块的过程中，为了找到某个Field，需要判断Filed的某个祖先的类型是是Fragment类型</p>
+<p>但在做比较的时候出现了问题，发生了Fragment != Fragment的问题：</p>
+<p>注：这里的 Fragment 是 android.support.v4.app.Fragment 而不是 android.app.Fragment</p>
+<p>我们知道v4包是要额外导入的，<br><img src="http://imlk.top/wp-content/uploads/2018/02/M9K1OOS5CIH2SJI3II-300x25.png" alt=""></p>
+<p>所以说，一共出现了两份v4包，一份打包在宿主app里，一份打包在自己的模块里面，在加载的时候会出现因为ClassLoader不一致而导致两个class不同的情况</p>
+<p>如图：<br><img src="http://imlk.top/wp-content/uploads/2018/02/BAKUOWNSKS_8271NN-300x23.png" alt=""></p>
+<p>在debug添加查看发现，两个Class虽然都是android.support.v4.app.Fragment但由于ClassLoader不一样，导致两个Class不相等；</p>
+<p>查看其它的Class发现，系统自带的那些jar里面的Class都是由BootClassLoader加载的，<br><img src="http://imlk.top/wp-content/uploads/2018/02/EDV@UKB9H6VA5UD2W@J-300x19.png" alt=""><br>而BootClassLoader的实例在虚拟机中只有一个，所以模块中的Context.class和宿主app里的Context.class是一样的</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/02/25/fragment-fragment-xposed-e5-bc-80-e5-8f-91-e6-97-b6-e9-81-87-e5-88-b0-e7-9a-84-e5-85-b3-e4-ba-8eclassloader-e7-9a-84-e9-97-ae-e9-a2-98/" data-id="cje9syozh001723w5f5afu1s4" class="article-share-link">Teilen</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-hdu-1325-1272-e5-b9-b6-e6-9f-a5-e9-9b-86-e5-88-a4-e6-96-ad-e6-9c-89-e5-90-91-e5-9b-be-e5-92-8c-e6-97-a0-e5-90-91-e5-9b-be-e6-98-af-e5-90-a6-e6-9e-84-e6-88-90-e4-b8-80-e6-a3-b5-e6-a0-91-e5-9e-8b" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/02/09/hdu-1325-1272-e5-b9-b6-e6-9f-a5-e9-9b-86-e5-88-a4-e6-96-ad-e6-9c-89-e5-90-91-e5-9b-be-e5-92-8c-e6-97-a0-e5-90-91-e5-9b-be-e6-98-af-e5-90-a6-e6-9e-84-e6-88-90-e4-b8-80-e6-a3-b5-e6-a0-91-e5-9e-8b/" class="article-date">
+  <time datetime="2018-02-09T08:49:34.000Z" itemprop="datePublished">2018-02-09</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/未分类/">未分类</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/02/09/hdu-1325-1272-e5-b9-b6-e6-9f-a5-e9-9b-86-e5-88-a4-e6-96-ad-e6-9c-89-e5-90-91-e5-9b-be-e5-92-8c-e6-97-a0-e5-90-91-e5-9b-be-e6-98-af-e5-90-a6-e6-9e-84-e6-88-90-e4-b8-80-e6-a3-b5-e6-a0-91-e5-9e-8b/">HDU 1325 1272 并查集判断有向图和无向图是否构成一棵树型</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><a href="http://acm.hdu.edu.cn/showproblem.php?pid=1325" target="_blank" rel="noopener">HDU 1325</a><br><a href="http://acm.hdu.edu.cn/showproblem.php?pid=1272" target="_blank" rel="noopener">HDU 1272</a></p>
+<p>HDU 1325是有向图，给定某个节点是另一个元素的父节点<br>HDU 1272是无向图，将两个节点连接起来</p>
+<p>共同点：判断是否成环，判断是树木还是森林</p>
+<p>区别：有向图可能出现多个箭头指向同一个节点的情况（即一个节点多个父节点）<br>例如<br>[caption width=”176” align=”aligncenter”]<img src="http://acm.hdu.edu.cn/data/images/1325-3.gif" alt=""> 多节点指向同一节点[/caption]</p>
+<p>另外，关于HDU 1272</p>
+<p>评论区看到一种利用离散数学结论的解法<br>（对于无向图）<br>如果m个节点被连成环，那么边的条数就是 m<br>如果m个节点形成了n个树，那么边的条数就是 m - n<br>（这个动动笔画画就能明白）<br><a href="http://acm.hdu.edu.cn/discuss/problem/post/reply.php?postid=28804&#038;messageid=1&#038;deep=0" target="_blank" rel="noopener">链接：这题目干嘛都用并查集做啊</a><br>那么按照题目要求：Yes的条件就是<br>1.边的条数 = 所有节点数 - 1<br>或<br>2.节点数为0</p>
+<p>上代码：<br>HDU 1325<br>`</p>
+<p>#include <iostream></iostream></p>
+<p>#include <cstdio></cstdio></p>
+<p>#include <cstring></cstring></p>
+<p>#include <cmath></cmath></p>
+<p>#define maxlen 200005</p>
+<p>using namespace std;</p>
+<p>//并查集实现</p>
+<p>int roots, ok;</p>
+<p>int fa[maxlen];</p>
+<p>// 这个栈和栈顶指针只是用来记录出现过的元素，用来清空fa数组用的，<br>// 记录fa数组的哪些地方被用过了，<br>// 完成一个示例以后就根据这个栈里面记录的位置来把fa数组里面对应的位置恢复成0<br>// 之所以不用memset，是因为fa数组很大，不是所有部分都用上了，每次都把整个数组写0太浪费时间了<br>int stack[maxlen];<br>int top = -1;</p>
+<p>int find(int i) {//非递归实现<br>    int icopy = i;<br>    while (i != fa[i]) {//找到根元素<br>        i = fa[i];<br>    }</p>
+<pre><code>while (icopy != fa[icopy]) {
+    icopy = fa[icopy];//获取父节点
+    fa[icopy] = i;//挂到根节点下
+}
+
+return i;
+</code></pre><p>}</p>
+<p>int main(int argc, char const *argv[]) {</p>
+<pre><code>int a, b, t = 1;
+
+int count = 0;
+while (1) {
+
+    ok = 1;
+    count = 0;
+
+    // memset(fa, 0, sizeof(fa));//每次都全部写0，耗时长，改为用栈记录修改过的位置
+
+    while (scanf(&quot;%d%d&quot;, &amp;a, &amp;b) &amp;&amp; a &gt; 0 &amp;&amp; b &gt; 0) {
+
+        // a --&gt; b
+        // a是b的父节点
+
+        if (ok) {
+            if (!fa[a]) { //若a没有出现过,就初始化为自己
+                fa[a] = a;
+                count++;
+
+                top++;
+                stack[top] = a;
+                // printf(&quot;add\n&quot;);
+            }
+            if (!fa[b]) {
+                fa[b] = b;
+
+                top++;
+                stack[top] = b;
+
+            } else {
+                if (fa[b] == b) {
+                    count--;
+                    // printf(&quot;sub\n&quot;);
+                }
+            }
+
+            if (fa[b] != b &amp;&amp; fa[b] != a) {//若出现多指一,则不ok
+                ok = 0;
+                // printf(&quot;die 1\n&quot;);
+                continue;
+            } else {
+                a = find(a);//把a换为a的根节点
+                if (b == a) {//环
+                    ok = 0;
+                    // printf(&quot;die 2\n&quot;);
+                    continue;
+                } else {
+                    fa[b] = a;//直接挂在根节点
+                }
+            }
+        }
+    }
+
+    if (a &lt; 0 &amp;&amp; b &lt; 0) {
+        break;
+    }
+    if (ok) {
+        if (count != 1) {
+            ok = 0;
+            // printf(&quot;die 3\n&quot;);
+        }
+    }
+
+    printf(&quot;Case %d is %sa tree.\n&quot;, t, ok ? &quot;&quot; : &quot;not &quot;);
+
+    while (top != -1) {
+        fa[stack[top]] = 0;
+        top--;
+    }
+
+    t++;
+}
+
+return 0;
+</code></pre><p>}<br>`</p>
+<p>HDU 1272</p>
+<p>`</p>
+<p>#include <iostream></iostream></p>
+<p>#include <cstdio></cstdio></p>
+<p>#include <cstring></cstring></p>
+<p>#include <cmath></cmath></p>
+<p>#define maxlen 200005</p>
+<p>using namespace std;</p>
+<p>//并查集实现<br>//虽然给的输入似乎是无向的，但最终我们构造的依然是一个有向的树，我们只要考虑是否会出现环和森林，所以这题和hdu1325性质相同</p>
+<p>int ok;</p>
+<p>int fa[maxlen];</p>
+<p>// 这个栈和栈顶指针只是用来记录出现过的元素，用来清空fa数组用的，<br>// 记录fa数组的哪些地方被用过了，<br>// 完成一个示例以后就根据这个栈里面记录的位置来把fa数组里面对应的位置恢复成0<br>// 之所以不用memset，是因为fa数组很大，不是所有部分都用上了，每次都把整个数组写0太浪费时间了<br>int stack[maxlen];<br>int top = -1;</p>
+<p>int find(int i) {//非递归实现<br>    int icopy = i;<br>    while (i != fa[i]) {//找到根元素<br>        i = fa[i];<br>    }</p>
+<pre><code>while (icopy != fa[icopy]) {
+    icopy = fa[icopy];//获取父节点
+    fa[icopy] = i;//挂到根节点下
+}
+
+return i;
+</code></pre><p>}</p>
+<p>int main(int argc, char const *argv[]) {</p>
+<pre><code>int a, b;
+
+int countOfRoots = 0;
+while (1) {
+
+    ok = 1;
+    countOfRoots = 0;
+
+    // memset(fa, 0, sizeof(fa));//每次都全部写0，耗时长，改为用栈记录修改过的位置
+
+    while (scanf(&quot;%d%d&quot;, &amp;a, &amp;b) &amp;&amp; a &gt; 0 &amp;&amp; b &gt; 0) {
+
+        if (ok) {
+
+            if (!fa[a]) { //若a没有出现过,就初始化为自己
+
+                top++;
+                stack[top] = a;//所有出现过的节点都记录在stack中
+
+                if (!fa[b]) {//若b也没有出现过
+
+                    top++;
+                    stack[top] = b;
+
+                    //指定a为b的父节点,a为独立的根节点
+
+                    fa[a] = a;
+                    fa[b] = a;
+                    countOfRoots++;//根节点数量+1
+
+                } else {//若b出现过
+
+                    fa[a] = find(b);//把a直接挂到b的根节点下
+
+                }
+
+            } else {//若a出现过
+
+                if (!fa[b]) {//而b没出现过
+
+                    top++;
+                    stack[top] = b;
+
+                    fa[b] = find(a);//把b直接挂到a的根节点下
+                } else {//b也出现过
+
+                    if (find(a) == find(b)) {//同一根节点
+                        //成环
+                        ok = 0;
+                    } else {
+                        // 把两个树合并
+                        fa[find(a)] = find(b);
+                        countOfRoots--;
+                    }
+                }
+            }
+        }
+    }
+
+    if (a &lt; 0 &amp;&amp; b &lt; 0) {
+        break;
+    }
+
+    if (ok) {
+        if (top != -1) {//排除掉一个元素都没有的情况（空树）
+            if (countOfRoots != 1) {
+                ok = 0;
+            }
+        }
+    }
+
+    printf(&quot;%s\n&quot;, ok ? &quot;Yes&quot; : &quot;No&quot;);
+
+    while (top != -1) {
+        fa[stack[top]] = 0;
+        top--;
+    }
+}
+
+return 0;
+</code></pre><p>}<br>`</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/02/09/hdu-1325-1272-e5-b9-b6-e6-9f-a5-e9-9b-86-e5-88-a4-e6-96-ad-e6-9c-89-e5-90-91-e5-9b-be-e5-92-8c-e6-97-a0-e5-90-91-e5-9b-be-e6-98-af-e5-90-a6-e6-9e-84-e6-88-90-e4-b8-80-e6-a3-b5-e6-a0-91-e5-9e-8b/" data-id="cje9syozo001j23w5pt6trryh" class="article-share-link">Teilen</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-codeforces-699d-fix-a-tree-e5-b9-b6-e6-9f-a5-e9-9b-86-e4-bc-98-e5-8c-96-e7-bb-99-e5-87-ba-e6-89-80-e6-9c-89-e8-8a-82-e7-82-b9-e7-9a-84-e7-88-b6-e8-8a-82-e7-82-b9-ef-bc-8c-e7-94-a8" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/02/08/codeforces-699d-fix-a-tree-e5-b9-b6-e6-9f-a5-e9-9b-86-e4-bc-98-e5-8c-96-e7-bb-99-e5-87-ba-e6-89-80-e6-9c-89-e8-8a-82-e7-82-b9-e7-9a-84-e7-88-b6-e8-8a-82-e7-82-b9-ef-bc-8c-e7-94-a8/" class="article-date">
+  <time datetime="2018-02-08T10:24:54.000Z" itemprop="datePublished">2018-02-08</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/未分类/">未分类</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/02/08/codeforces-699d-fix-a-tree-e5-b9-b6-e6-9f-a5-e9-9b-86-e4-bc-98-e5-8c-96-e7-bb-99-e5-87-ba-e6-89-80-e6-9c-89-e8-8a-82-e7-82-b9-e7-9a-84-e7-88-b6-e8-8a-82-e7-82-b9-ef-bc-8c-e7-94-a8/">CodeForces 699D Fix a Tree——并查集优化 给出所有节点的父节点（有向图），用最少的修改生成一颗合法的树（环的判断，去环）</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <pre>
+D. Fix a Tree
+time limit per test
+2 seconds
+memory limit per test
+256 megabytes
+input
+standard input
+output
+standard output
+
+A tree is an undirected connected graph without cycles.
+
+Let's consider a rooted undirected tree with n vertices, numbered 1 through n. There are many ways to represent such a tree. One way is to create an array with n integers p1, p2, ..., pn, where pi denotes a parent of vertex i (here, for convenience a root is considered its own parent).
+For this rooted tree the array p is [2, 3, 3, 2].
+
+Given a sequence p1, p2, ..., pn, one is able to restore a tree:
+
+    There must be exactly one index r that pr = r. A vertex r is a root of the tree.
+    For all other n - 1 vertices i, there is an edge between vertex i and vertex pi. 
+
+A sequence p1, p2, ..., pn is called valid if the described procedure generates some (any) rooted tree. For example, for n = 3 sequences (1,2,2), (2,3,1) and (2,1,3) are not valid.
+
+You are given a sequence a1, a2, ..., an, not necessarily valid. Your task is to change the minimum number of elements, in order to get a valid sequence. Print the minimum number of changes and an example of a valid sequence after that number of changes. If there are many valid sequences achievable in the minimum number of changes, print any of them.
+Input
+
+The first line of the input contains an integer n (2 ≤ n ≤ 200 000) — the number of vertices in the tree.
+
+The second line contains n integers a1, a2, ..., an (1 ≤ ai ≤ n).
+Output
+
+In the first line print the minimum number of elements to change, in order to get a valid sequence.
+
+In the second line, print any valid sequence possible to get from (a1, a2, ..., an) in the minimum number of changes. If there are many such sequences, any of them will be accepted.
+Examples
+Input
+
+4
+2 3 3 4
+
+Output
+
+1
+2 3 4 4 
+
+Input
+
+5
+3 2 2 5 3
+
+Output
+
+0
+3 2 2 5 3 
+
+Input
+
+8
+2 3 5 4 1 6 6 7
+
+Output
+
+2
+2 3 7 8 1 6 6 7
+</pre>
+
+<p>这题我的第一种解法就是先将多个树合并到一起，然后遍历每一个节点，暴力搜寻环，类似dfs，不断向父元素递进，用一个set储存途经的所有元素，对于查找到节点i时，判断它的父元素在set中是否出现了，如果出现了就说明成了环，然后设置节点i的父节点为一个统一的根节点<br>为了优化速度，引入一个visited数组记录某个节点是否已经访问过，如果访问过那么下一次遇到的时候就直接结束向父元素的递进</p>
+<p>`</p>
+<p>#include <iostream></iostream></p>
+<p>#include <cstdio></cstdio></p>
+<p>#include <cstring></cstring></p>
+<p>#include <cmath></cmath></p>
+<p>#include <set></set></p>
+<p>using namespace std;</p>
+<p>// AC<br>//200ms</p>
+<p>set<int> line;//缓存查找过程中经过的所有元素,耗时高</int></p>
+<p>int n, changes = 0;<br>int root = 0;</p>
+<p>int fa[200005];//这个数组作为最后的输出结果<br>int visited[200005];//优化</p>
+<p>void check(int i) {//检查是否有环出现</p>
+<pre><code>if (!line.empty()) {
+    line.clear();
+}
+
+while (fa[i] != i) {//未到达树顶端时不断循环
+
+    visited[i] = 1;
+
+    if (line.count(fa[i])) {//若找到环
+        changes++;//改变次数+1
+        if (!root) {//若还没有根元素
+            root = i;// 将此时的i作为根元素
+        }
+
+        fa[i] = root;//把当前元素挂到根元素下
+
+        return;//退出循环
+
+    } else {//若这一步也没出现环
+        line.insert(i);//把当前元素加到set中
+        i = fa[i];// 迭代
+        if (visited[i]) { //若已经拜访过了,就直接退出，这一步优化很关键！
+            return;
+        }
+    }
+
+}
+</code></pre><p>}</p>
+<p>int main(int argc, char const *argv[])<br>{<br>    scanf(“%d”, &amp;n);</p>
+<pre><code>for (int i = 1; i &lt;= n; ++i) {
+    scanf(&quot;%d&quot;, fa + i);
+    if (fa[i] == i) {
+        if (root) { //若此前已经有根节点
+            fa[i] = root;
+            changes++;
+        } else {
+            root = i;
+        }
+    }
+}
+
+for (int i = 1; i &lt;= n; ++i) {
+    if (!visited[i]) {
+        check(i);
+    }
+}
+
+printf(&quot;%d\n&quot;, changes);
+
+printf(&quot;%d&quot;, fa[1]);
+
+for (int i = 2; i &lt;= n; ++i) {
+    printf(&quot; %d&quot;, fa[i]);
+}
+
+printf(&quot;\n&quot;);
+return 0;
+</code></pre><p>}<br>`</p>
+<p>我的第二种解法是结合并查集</p>
+<p>思考<br>如果将一个树中的某个节点i的父节点设置为某个节点j，导致出现了环，那么显然从j沿着父节点的方向去递推（用并查集的find函数），最终一定会到达i节点（先把所有没有指定父节点的节点指向自己，即初始化fa[x] = x，这样find（j）就会在i节点处结束）</p>
+<p>也就是说当i = find(j)的时候,如果把i的父节点设置为j，就会造成环的出现<br>抓住这一点，在环即将出现时，我们就可以把i的父节点改成指向统一的根节点，这样就用一个操作就把环消除了</p>
+<p>优化：<br>由于最终我们要输出一个最少修改数量的数组，但是find函数的优化是建立在把大量节点直接挂到根节点下的这种操作上的，所以我建立了另一个数组icopy来让find函数得以优化</p>
+<p>`</p>
+<p>#include <iostream></iostream></p>
+<p>#include <cstdio></cstdio></p>
+<p>#include <cstring></cstring></p>
+<p>#include <cmath></cmath></p>
+<p>#include <queue></queue></p>
+<p>using namespace std;</p>
+<p>//并查集实现<br>//108ms</p>
+<p>/**</p>
+<ul>
+<li>思路:</li>
+<li>所有可能的情况就两种,</li>
+<li>1.正常的树</li>
+<li>2.成环</li>
+<li>我们要做的是,把环拆开成树,把所有树并在一起,要做到操作次数最少,那么当然是一个环在某一个地方拆开,指向另一个根节点,但是到底指向哪里暂时还不知道,所以让它先指向自己,称为假根节点,记录下这些假节点,之后再来处理它的去向</li>
+<li>如果有多个根节点,选其中一个作为最终的根节点,其余的根节点和假节点都并在它的下面[操作次数=假根节点的数量 + 根节点的数量 - 1]</li>
+<li>如果没有根节点,那么某一个假节点作为最终根节点[操作次数 = 假根节点数量 + 根节点数量(是0)]<br><em>
+</em>/</li>
+</ul>
+<p>int n, changes = 0, root;</p>
+<p>queue<int> fackRoot;</int></p>
+<p>int fa[200005];//这个数组作为最后的输出结果<br>int facopy[200005];//这个数组作为最后的输出结果</p>
+<p>void init() {<br>    for (int i = 1; i &lt;= n; ++i) {<br>        facopy[i] = i;<br>    }<br>}</p>
+<p>int find(int i) {//非递归实现<br>    int icopy = i;<br>    while (i != facopy[i]) {//找到根元素<br>        i = facopy[i];<br>    }</p>
+<pre><code>while (icopy != facopy[icopy]) {
+    icopy = facopy[icopy];//获取父节点
+    facopy[icopy] = i;//挂到根节点下
+}
+
+return i;
+</code></pre><p>}</p>
+<p>int main(int argc, char const *argv[])<br>{<br>    scanf(“%d”, &amp;n);</p>
+<pre><code>init();
+
+for (int i = 1; i &lt;= n; ++i) {
+    scanf(&quot;%d&quot;, fa + i);
+
+    if (fa[i] == i) {
+        if (root) {
+            changes++;//做出改变
+            fa[i] = root;
+        } else {
+            root = i;
+        }
+        facopy[i] = root;
+    } else {
+        if (i == find(fa[i])) {//若出现环
+            //加入到fackRoot
+            fackRoot.push(i);
+            // facopy[i] = i;//拆开环，作为假的根元素，暂时指向自己
+            // 上面这一步操作不用写，因为之前对并查集执行过init()操作
+        } else {
+            facopy[i] = find(fa[i]);//直接挂在根节点
+        }
+    }
+}
+
+// 处理所有fackRoot
+changes += fackRoot.size();
+while (!fackRoot.empty()) {
+    if (root) {//若之前确立了根元素
+        fa[fackRoot.front()] = root;
+        fackRoot.pop();
+    } else {
+        root = fackRoot.front();
+    }
+}
+
+printf(&quot;%d\n&quot;, changes);
+
+printf(&quot;%d&quot;, fa[1]);
+
+for (int i = 2; i &lt;= n; ++i) {
+    printf(&quot; %d&quot;, fa[i]);
+}
+
+printf(&quot;\n&quot;);
+return 0;
+</code></pre><p>}</p>
+<p>`</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/02/08/codeforces-699d-fix-a-tree-e5-b9-b6-e6-9f-a5-e9-9b-86-e4-bc-98-e5-8c-96-e7-bb-99-e5-87-ba-e6-89-80-e6-9c-89-e8-8a-82-e7-82-b9-e7-9a-84-e7-88-b6-e8-8a-82-e7-82-b9-ef-bc-8c-e7-94-a8/" data-id="cje9syoys000e23w5n8bv0ait" class="article-share-link">Teilen</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-codeforces-699c-vacations-e5-8a-a8-e6-80-81-e8-a7-84-e5-88-92" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/02/08/codeforces-699c-vacations-e5-8a-a8-e6-80-81-e8-a7-84-e5-88-92/" class="article-date">
+  <time datetime="2018-02-08T03:49:53.000Z" itemprop="datePublished">2018-02-08</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/算法/">算法</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/02/08/codeforces-699c-vacations-e5-8a-a8-e6-80-81-e8-a7-84-e5-88-92/">CodeForces 699C Vacations——动态规划</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><a href="http://codeforces.com/problemset/problem/699/C" target="_blank" rel="noopener">原题链接</a></p>
+<pre>
+
+C. Vacations
+time limit per test
+1 second
+memory limit per test
+256 megabytes
+input
+standard input
+output
+standard output
+
+Vasya has n days of vacations! So he decided to improve his IT skills and do sport. Vasya knows the following information about each of this n days: whether that gym opened and whether a contest was carried out in the Internet on that day. For the i-th day there are four options:
+
+    on this day the gym is closed and the contest is not carried out;
+    on this day the gym is closed and the contest is carried out;
+    on this day the gym is open and the contest is not carried out;
+    on this day the gym is open and the contest is carried out. 
+
+On each of days Vasya can either have a rest or write the contest (if it is carried out on this day), or do sport (if the gym is open on this day).
+
+Find the minimum number of days on which Vasya will have a rest (it means, he will not do sport and write the contest at the same time). The only limitation that Vasya has — he does not want to do the same activity on two consecutive days: it means, he will not do sport on two consecutive days, and write the contest on two consecutive days.
+Input
+
+The first line contains a positive integer n (1 ≤ n ≤ 100) — the number of days of Vasya's vacations.
+
+The second line contains the sequence of integers a1, a2, ..., an (0 ≤ ai ≤ 3) separated by space, where:
+
+    ai equals 0, if on the i-th day of vacations the gym is closed and the contest is not carried out;
+    ai equals 1, if on the i-th day of vacations the gym is closed, but the contest is carried out;
+    ai equals 2, if on the i-th day of vacations the gym is open and the contest is not carried out;
+    ai equals 3, if on the i-th day of vacations the gym is open and the contest is carried out.
+
+Output
+
+Print the minimum possible number of days on which Vasya will have a rest. Remember that Vasya refuses:
+
+    to do sport on any two consecutive days,
+    to write the contest on any two consecutive days. 
+
+Examples
+Input
+
+4
+1 3 2 0
+
+Output
+
+2
+
+Input
+
+7
+1 3 3 2 1 2 3
+
+Output
+
+0
+
+Input
+
+2
+2 2
+
+Output
+
+1
+
+Note
+
+In the first test Vasya can write the contest on the day number 1 and do sport on the day number 3\. Thus, he will have a rest for only 2 days.
+
+In the second test Vasya should write contests on days number 1, 3, 5 and 7, in other days do sport. Thus, he will not have a rest for a single day.
+
+In the third test Vasya can do sport either on a day number 1 or number 2\. He can not do sport in two days, because it will be contrary to the his limitation. Thus, he will have a rest for only one day.
+
+</pre>
+
+<p>`</p>
+<p>#include <iostream></iostream></p>
+<p>#include <cstdio></cstdio></p>
+<p>using namespace std;</p>
+<p>int max(int x, int y) {<br>    return x &gt; y ? x : y;<br>}<br>int max(int x, int y, int z) {<br>    return x &gt; y ? (x &gt; z ? x : z) : (y &gt; z ? y : z);<br>}</p>
+<p>int main(int argc, char const *argv[])<br>{<br>    int t;<br>    scanf(“%d”, &amp;t);<br>    int g_date[t] = {0};//g_date<a href="i从0开始">i</a>表示第i天体育场是否开放<br>    int c_date[t] = {0};//c_date<a href="i从0开始">i</a>表示第i天是否有比赛</p>
+<pre><code>int dp[t][3] = {0};
+// dp[i][x],i从0开始，储存截止到第i天结束工作的天数，工作天数越多，说明休息天数越少
+// [i][0]表示第i天啥都不做，[i][1]表示第i天去体育馆，[i][2]表示第i天打比赛，
+int c_dp[t][2] = {0};
+
+int temp;
+
+for (int i = 0; i &lt; t; i++) {
+    scanf(&quot;%d&quot;, &amp;temp);
+    switch (temp) {
+    case 0:
+        break;
+    case 1:
+        c_date[i] = 1;
+        break;
+    case 2:
+        g_date[i] = 1;
+        break;
+    case 3:
+        c_date[i] = 1;
+        g_date[i] = 1;
+        break;
+    }
+}
+
+for (int i = 0; i &lt; t ; i++) {
+    if (i == 0) {//第一天的情况
+        dp[i][0] = 0;
+
+        if (g_date[i]) {//若第i天体育馆开放
+            dp[i][1] = 1;//选择去体育馆
+        }
+
+        if (c_date[i]) {//若第i天有比赛可打
+            dp[i][2] = 1;//选择去打比赛
+        }
+
+    } else {//若不是第一天
+
+        dp[i][0] = max(dp[i - 1][1], dp[i - 1][0], dp[i - 1][2]);//选择什么也不做，那么最大工作天数等于昨天的三种情况里最大的那个
+        if (g_date[i]) {//若今天体育馆开门
+            dp[i][1] = 1 + max(dp[i - 1][0], dp[i - 1][2]);//从昨天啥都不做和昨天去打比赛中选一个最大的
+        }//若今天体育馆不开门，显然今天dp[i][1]的状态是不存在的，不能被使用，如何防止以后用到这种不存在的状态呢？这里就和max函数有关系了，只要把不存在的状态的值设置的足够小，那么max函数就肯定不会选取这个比别的数都小的值作为返回值，也就是max函数恰好筛选掉了不合法的状态，而dp[i][1]为默认值0，我们知道工作天数的最小值就是0，所以我们可以大胆地不对dp[i][1]赋值，当然如果你怕出问题的话，你可以赋值为-1或者-inf
+
+        if (c_date[i]) {//若今天有比赛可打
+            dp[i][2] = 1 + max(dp[i - 1][1], dp[i - 1][0]);
+        }//若今天无比赛，情况和上面的描述类似，可以不赋值(就用默认值0)
+    }
+}
+// 最小休息天数 = 总天数 - 最大工作天数
+printf(&quot;%d\n&quot;, t - max(dp[t - 1][0], dp[t - 1][1], dp[t - 1][2]));
+return 0;
+</code></pre><p>}<br>`</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/02/08/codeforces-699c-vacations-e5-8a-a8-e6-80-81-e8-a7-84-e5-88-92/" data-id="cje9syoz4000q23w550d2ut1z" class="article-share-link">Teilen</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-hysbz-1216-hnoi2003-e6-93-8d-e4-bd-9c-e7-b3-bb-e7-bb-9f" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/02/07/hysbz-1216-hnoi2003-e6-93-8d-e4-bd-9c-e7-b3-bb-e7-bb-9f/" class="article-date">
+  <time datetime="2018-02-07T15:27:09.000Z" itemprop="datePublished">2018-02-07</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/算法/">算法</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/02/07/hysbz-1216-hnoi2003-e6-93-8d-e4-bd-9c-e7-b3-bb-e7-bb-9f/">HYSBZ 1216: [HNOI2003]操作系统</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><a href="http://www.lydsy.com/JudgeOnline/problem.php?id=1216" target="_blank" rel="noopener">题目链接</a></p>
+<pre>
+1216: [HNOI2003]操作系统
+Time Limit: 10 Sec  Memory Limit: 162 MB
+Submit: 1045  Solved: 565
+[Submit][Status][Discuss]
+Description
+
+写一个程序来模拟操作系统的进程调度。假设该系统只有一个CPU，每一个进程的到达时间，执行时间和运行优先级都是已知的。其中运行优先级用自然数表示，数字越大，则优先级越高。如果一个进程到达的时候CPU是空闲的，则它会一直占用CPU直到该进程结束。除非在这个过程中，有一个比它优先级高的进程要运行。在这种情况下，这个新的（优先级更高的）进程会占用CPU，而老的只有等待。如果一个进程到达时，CPU正在处理一个比它优先级高或优先级相同的进程，则这个（新到达的）进程必须等待。一旦CPU空闲，如果此时有进程在等待，则选择优先级最高的先运行。如果有多个优先级最高的进程，则选择到达时间最早的。
+Input
+
+输入文件包含若干行，每一行有四个自然数（均不超过108），分别是进程号，到达时间，执行时间和优先级。不同进程有不同的编号，不会有两个相同优先级的进程同时到达。输入数据已经按到达时间从小到大排序。输入数据保证在任何时候，等待队列中的进程不超过15000个。
+Output
+
+按照进程结束的时间输出每个进程的进程号和结束时间
+Sample Input
+1 1 5 3
+
+2 10 5 1
+
+3 12 7 2
+
+4 20 2 3
+
+5 21 9 4
+
+6 22 2 4
+
+7 23 5 2
+
+8 24 2 4
+Sample Output
+1 6
+
+3 19
+
+5 30
+
+6 32
+
+8 34
+
+4 35
+
+7 40
+
+2 42
+</pre>
+
+<p>这题利用了优先队列<br>`</p>
+<p>#include <iostream></iostream></p>
+<p>#include <cstdio></cstdio></p>
+<p>#include <cstring></cstring></p>
+<p>#include <queue></queue></p>
+<p>#define iinf 0x7FFFFFFF</p>
+<p>// AC<br>// 优先队列</p>
+<p>using namespace std;</p>
+<p>int proCount;</p>
+<p>struct Pro {<br>    int id;<br>    int comeTime;<br>    int runTime;<br>    int priority;<br>    Pro(int a, int b, int c, int d): id(a), comeTime(b), runTime(c), priority(d) {}<br>};</p>
+<p>struct cmp {//判断“一个元素是否小于另一个元素”的结构体<br>// 重载operator ()必须是某个类的成员函数。<br>// 当某个类重载了()方法，这个类就可以成为函数对象。<br>    bool operator() (Pro<em>&amp; p0, Pro</em>&amp; p1) const {//关于这里的参数最前是否需要加const关键字，我的应对策略是：先试着加上，如果有错的话，编译器会回答找不到对应的方法，比如，加了const提示 ： error: no match for call to ‘(cmp) (Pro<em>&amp;, Pro</em>&amp;)’，可知这里不用加const<br>        if (p0-&gt;priority == p1-&gt;priority) {//若优先级相同，则更早来的在前面（优先队列中最前的元素，即top()，是比较之后值最大的那个元素，要让时间更前的元素排得越前，则它在这个自定义比较函数里面的“值”越大越好，即：优先级相同的两个元素，时间更前的元素反而更大）<br>            return p0-&gt;comeTime &gt; p1-&gt;comeTime;//若第一个参数指向的元素来到时间比第二个元素的早，则表达式返回 false，代表第一个参数指向的元素大于第二个元素，排的更前。<br>        } else {<br>            return p0-&gt;priority &lt; p1-&gt;priority;//若优先级不同，则优先级高的在前面<br>        }<br>    }<br>};</p>
+<p>/**</p>
+<ul>
+<li>为什么我不直接在Pro结构体内部重载 &lt; 操作符，因为我这个queue存的是指针变量，并不是实际的元素，重载Pro结构体的 &lt; 操作符不会有作用，因为这时候queue里面比较的是Pro<em>类型的元素，我们要想办法为Pro</em>类型的元素适配比较函数</li>
+<li>所以我写了上面那个比较函数，后来看了别人的代码发现，上面这个自定义的比较函数其实可以不用这么麻烦</li>
+<li>我们要想办法让 &lt; 操作符支持 Pro<em> 类型和 Pro</em> 类型之间的比较，所以我们可以在全局方范围内重载 &lt; 操作符</li>
+<li>例如：</li>
+<li></li>
+<li>bool operator &lt; (Pro p0, Pro*&amp; p1) {</li>
+<li>if (p0-&gt;priority == p1-&gt;priority) {</li>
+<li>return p0-&gt;comeTime &gt; p1-&gt;comeTime;</li>
+<li>} else {</li>
+<li>return p0-&gt;priority &lt; p1-&gt;priority;</li>
+<li>}</li>
+<li>}</li>
+<li>同时下面的waitQu改成</li>
+<li>priority_queue &lt;Pro*&gt; waitQu;</li>
+<li>可是，编译报错</li>
+<li>error: ‘bool operator&lt;(Pro<em>&amp;, Pro</em>&amp;)’ must have an argument of class or enumerated type</li>
+<li>bool operator &lt; (Pro<em>&amp; p0, Pro</em>&amp; p1) {</li>
+<li>^</li>
+<li>原来c++有些操作符在某些情况下是不能重载的，比如对两个指针的比较的小于号操作符，这个操作符已经有具体实现了，我们不能重载它，否则那些库里面用到用&lt;比较指针的操作都变成了我们自定义的操作了，岂不是乱了套<br>*/</li>
+</ul>
+<p>queue&lt;Pro*&gt; allPro;</p>
+<p>priority_queue &lt;Pro<em>, vector&lt;Pro</em>&gt;, cmp&gt; waitQu; //存放排队等候中的进程<br>//                                    ^这里在模板中传入比较函数的类型，相当于自己实现一个 &lt; 函数</p>
+<p>int main(int argc, char const <em>argv[])<br>{<br>    int a, b, c, d;<br>    Pro</em> t;<br>    while (~scanf(“%d%d%d%d”, &amp;a, &amp;b, &amp;c, &amp;d)) {<br>        t = new Pro(a, b, c, d);//这里是手动在堆上申请内存，让queue和priority_queue维护指针，实际上不用这样，可以直接在栈上建立一个Pro元素，queue和priority_queue会进行拷贝操作，在堆上形成一份原来栈内存上的元素的拷贝<br>        allPro.push(t);//先读取放到allPro这个队列中<br>    }</p>
+<pre><code>int nowTime = 0;
+int stepTime;//一次步进多长时间
+
+for (; (!waitQu.empty()) || (!allPro.empty());) {//当等待队列waitQu和allPro队列都为空时就退出
+
+    stepTime = iinf;
+
+    if (!waitQu.empty()) { //若等待队列中还有元素
+        stepTime = min(stepTime, waitQu.top()-&gt;runTime);
+    }
+
+    if (!allPro.empty()) {//若未加入的任务队列中还有元素
+        stepTime = min(stepTime, allPro.front()-&gt;comeTime - nowTime);
+    }
+    //至此步进时长确定完成
+
+    nowTime += stepTime;
+
+    if (!waitQu.empty()) {
+        //每次处理等待队列中的第一个元素
+        waitQu.top()-&gt;runTime -= stepTime;//等待队列中的第一个元素的剩余运行时间减去步进时间
+        if (waitQu.top()-&gt;runTime == 0) {//若任务执行完毕
+            printf(&quot;%d %d\n&quot;, waitQu.top()-&gt;id, nowTime);
+            delete waitQu.top();//记得释放内存
+            waitQu.pop();
+        }
+    }
+
+    if (!allPro.empty()) {
+        if (nowTime == allPro.front()-&gt;comeTime) {//若第一个未加入的任务时机已到，则加入任务到等待队列中
+            waitQu.push(allPro.front());
+            allPro.pop();
+        }
+    }
+}
+
+return 0;
+</code></pre><p>}<br>`</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/02/07/hysbz-1216-hnoi2003-e6-93-8d-e4-bd-9c-e7-b3-bb-e7-bb-9f/" data-id="cje9syozu001q23w58kdrgnlt" class="article-share-link">Teilen</a>
       
       
     </footer>
@@ -144,11 +1916,23 @@
   
 
 
+  <nav id="page-nav">
+    
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/">weiter &raquo;</a>
+  </nav>
+
 </section>
         
           <aside id="sidebar">
   
     
+  <div class="widget-wrap">
+    <h3 class="widget-title">Kategorien</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/C-C/">C/C++</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/C-C/Java/">Java</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/CodeForces/">CodeForces</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/CodeForces/动态规划/">动态规划</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/CodeForces/动态规划/算法/">算法</a></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/HDU/">HDU</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/HDU/POJ/">POJ</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/HDU/POJ/动态规划/">动态规划</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/HDU/POJ/动态规划/算法/">算法</a></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/HDU/动态规划/">动态规划</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/HDU/动态规划/未分类/">未分类</a></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Xposed/">Xposed</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/raspberry-pi/">raspberry pi</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/未分类/">未分类</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/算法/">算法</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/闲时研究/">闲时研究</a></li></ul>
+    </div>
+  </div>
+
 
   
     
@@ -158,9 +1942,9 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Archives</h3>
+    <h3 class="widget-title">Archiv</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li></ul>
     </div>
   </div>
 
@@ -168,7 +1952,7 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Articles récents</h3>
+    <h3 class="widget-title">letzter Beitrag</h3>
     <div class="widget">
       <ul>
         
@@ -178,6 +1962,18 @@
         
           <li>
             <a href="/2018/03/02/hello-world/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/2018/03/02/hdu-2586-how-far-away-ef-bc-9f-e6-a0-91-e4-b8-8a-e8-8a-82-e7-82-b9-e6-9c-80-e7-9f-ad-e8-b7-9d-e7-a6-bb-ef-bc-8clca-ef-bc-8c-e5-8f-8c-e4-ba-b2-e8-a1-a8-e7-a4-ba-e6-b3-95-e6-9a-b4/">HDU 2586 How far away ？——树上节点最短距离，LCA， 双亲表示法+暴力从下至上追溯，孩子链表示法+（Tarjan 或 欧拉环游RMQ+（ST 或 SegmentTree））</a>
+          </li>
+        
+          <li>
+            <a href="/2018/02/27/codeforces-891-a-pride/">CodeForces 891 A. Pride</a>
+          </li>
+        
+          <li>
+            <a href="/2018/02/26/hdu-1080-poj-1080-human-gene-functions-e5-8a-a8-e6-80-81-e8-a7-84-e5-88-92/">HDU 1080 POJ 1080 Human Gene Functions——动态规划</a>
           </li>
         
       </ul>
@@ -193,7 +1989,7 @@
   <div class="outer">
     <div id="footer-info" class="inner">
       &copy; 2018 John Doe<br>
-      Propulsé par <a href="http://hexo.io/" target="_blank">Hexo</a>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>
 </footer>

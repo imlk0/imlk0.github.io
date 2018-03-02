@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>Java继承的覆盖与隐藏 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="参考：https://www.cnblogs.com/it12345/p/5221673.html 隐藏和覆盖的区别隐藏：将类型转换为父类的类型 即可解除 隐藏覆盖：将类型转换为父类的类型也 不能 解除覆盖 成员变量只可能被隐藏，不存在覆盖一说 父类的成员变量静态或非静态都可能被子类中同名的成员变量 隐藏 （不一定要匹配类型，同名即可隐藏） 处理直接用圆点运算符父类中的成员变量的办法：将类型转换为">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java继承的覆盖与隐藏">
+<meta property="og:url" content="http://yoursite.com/2018/01/21/java-e7-bb-a7-e6-89-bf-e7-9a-84-e8-a6-86-e7-9b-96-e4-b8-8e-e9-9a-90-e8-97-8f/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="参考：https://www.cnblogs.com/it12345/p/5221673.html 隐藏和覆盖的区别隐藏：将类型转换为父类的类型 即可解除 隐藏覆盖：将类型转换为父类的类型也 不能 解除覆盖 成员变量只可能被隐藏，不存在覆盖一说 父类的成员变量静态或非静态都可能被子类中同名的成员变量 隐藏 （不一定要匹配类型，同名即可隐藏） 处理直接用圆点运算符父类中的成员变量的办法：将类型转换为">
+<meta property="og:updated_time" content="2018-03-02T10:34:14.517Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Java继承的覆盖与隐藏">
+<meta name="twitter:description" content="参考：https://www.cnblogs.com/it12345/p/5221673.html 隐藏和覆盖的区别隐藏：将类型转换为父类的类型 即可解除 隐藏覆盖：将类型转换为父类的类型也 不能 解除覆盖 成员变量只可能被隐藏，不存在覆盖一说 父类的成员变量静态或非静态都可能被子类中同名的成员变量 隐藏 （不一定要匹配类型，同名即可隐藏） 处理直接用圆点运算符父类中的成员变量的办法：将类型转换为">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Suche"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-java-e7-bb-a7-e6-89-bf-e7-9a-84-e8-a6-86-e7-9b-96-e4-b8-8e-e9-9a-90-e8-97-8f" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/01/21/java-e7-bb-a7-e6-89-bf-e7-9a-84-e8-a6-86-e7-9b-96-e4-b8-8e-e9-9a-90-e8-97-8f/" class="article-date">
+  <time datetime="2018-01-21T14:39:20.000Z" itemprop="datePublished">2018-01-21</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Java/">Java</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Java继承的覆盖与隐藏
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>参考：<br><a href="https://www.cnblogs.com/it12345/p/5221673.html" target="_blank" rel="noopener">https://www.cnblogs.com/it12345/p/5221673.html</a></p>
+<h3 id="隐藏和覆盖的区别"><a href="#隐藏和覆盖的区别" class="headerlink" title="隐藏和覆盖的区别"></a>隐藏和覆盖的区别</h3><p>隐藏：将类型转换为父类的类型 即可解除 隐藏<br>覆盖：将类型转换为父类的类型也 不能 解除覆盖</p>
+<h3 id="成员变量"><a href="#成员变量" class="headerlink" title="成员变量"></a>成员变量</h3><p><strong>只可能被隐藏，不存在覆盖一说</strong></p>
+<p>父类的成员变量静态或非静态都可能被子类中同名的成员变量 隐藏 （不一定要匹配类型，同名即可隐藏）</p>
+<h4 id="处理"><a href="#处理" class="headerlink" title="处理"></a>处理</h4><p><strong>直接用圆点运算符父类中的成员变量的办法：将类型转换为父类的类型。</strong><br><strong> 在子类的方法中调用父类中被隐藏的成员变量的办法：在子类方法中使用super关键字配合圆点运算符取父类中的成员变量</strong></p>
+<h3 id="成员方法"><a href="#成员方法" class="headerlink" title="成员方法"></a>成员方法</h3><p>可以被隐藏，也可以被覆盖<br>同名的实例方法被覆盖 ，同名的静态方法被隐藏</p>
+<h4 id="补充：继承规则"><a href="#补充：继承规则" class="headerlink" title="补充：继承规则"></a>补充：继承规则</h4><p>子类中与父类同名同参的方法才会发生重写，<br>重写时：<br>1.要求重写的方法的静态与非静态属性相同，<br>2.要求重写的方法的返回值类型相同，<br>3.重写后方法的可访问性必须更开放或不变，例如：private-&gt;public<br>不满足这三条的程序将报错无法通过编译</p>
+<p><strong>若重写了实例方法，则发生覆盖</strong><br><strong> 若重写了静态方法，则发生隐藏</strong></p>
+<h4 id="处理-1"><a href="#处理-1" class="headerlink" title="处理"></a>处理</h4><p><strong>通过反射能直接调用被“覆盖”的父类的方法的目的</strong><br><br><strong>无法在外部调用被“覆盖”的父类方法，只能在子类的内部使用super关键字配合圆点运算符调用父类的方法</strong><br><br><strong>无法通过转换类型达到调用被“覆盖”的父类的方法的目的</strong><br></p>
+<p>&nbsp;</p>
+<h3 id="关于方法中使用到成员变量的问题"><a href="#关于方法中使用到成员变量的问题" class="headerlink" title="关于方法中使用到成员变量的问题"></a>关于方法中使用到成员变量的问题</h3><p><strong>所取用的成员变量是子类中的还是父类中的取决于实际被调用的方法是在父类中还是子类中，以实际被调用的方法所在位置来观察可以判断出使用的是哪里的成员变量。</strong></p>
+<p>例如：</p>
+<p>`<br>public class Main {<br>    public static void main(String[] args) {</p>
+<pre><code>    Ch ch = new Ch();
+    ch.show();
+}
+</code></pre><p>}</p>
+<p>class Su{<br>    int a = 3;//被隐藏<br>    String b =”what”;//被隐藏<br>    void show() {//被覆盖<br>        System.out.println(a);<br>        System.out.println(b);<br>    }<br>}<br>class Ch extends Su{<br>    float a = 1.23f;//发生隐藏<br>    boolean b = false;//发生隐藏</p>
+<pre><code>void show() {//发生覆盖
+    System.out.println(a);
+    System.out.println(b);
+    super.show();
+}
+</code></pre><p>}</p>
+<p>/**</p>
+<ul>
+<li>输出：</li>
+<li>1.23</li>
+<li>false</li>
+<li>3</li>
+<li>what</li>
+<li>*/</li>
+</ul>
+<p>`</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/01/21/java-e7-bb-a7-e6-89-bf-e7-9a-84-e8-a6-86-e7-9b-96-e4-b8-8e-e9-9a-90-e8-97-8f/" data-id="cje9syp00001y23w5s9vn3qjy" class="article-share-link">Teilen</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/01/27/e6-8c-87-e4-bb-a4-e9-9b-86-e5-90-88/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Neuer</strong>
+      <div class="article-nav-title">
+        
+          指令集合
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/01/21/e9-87-8d-e6-8b-bepython-e4-b9-8b-e6-97-85/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Älter</strong>
+      <div class="article-nav-title">重拾Python之旅</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Kategorien</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/C-C/">C/C++</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/C-C/Java/">Java</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/CodeForces/">CodeForces</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/CodeForces/动态规划/">动态规划</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/CodeForces/动态规划/算法/">算法</a></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/HDU/">HDU</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/HDU/POJ/">POJ</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/HDU/POJ/动态规划/">动态规划</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/HDU/POJ/动态规划/算法/">算法</a></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/HDU/动态规划/">动态规划</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/HDU/动态规划/未分类/">未分类</a></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Xposed/">Xposed</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/raspberry-pi/">raspberry pi</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/未分类/">未分类</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/算法/">算法</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/闲时研究/">闲时研究</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archiv</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">letzter Beitrag</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2018/03/02/HelloWorld/">HelloWorld</a>
+          </li>
+        
+          <li>
+            <a href="/2018/03/02/hello-world/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/2018/03/02/hdu-2586-how-far-away-ef-bc-9f-e6-a0-91-e4-b8-8a-e8-8a-82-e7-82-b9-e6-9c-80-e7-9f-ad-e8-b7-9d-e7-a6-bb-ef-bc-8clca-ef-bc-8c-e5-8f-8c-e4-ba-b2-e8-a1-a8-e7-a4-ba-e6-b3-95-e6-9a-b4/">HDU 2586 How far away ？——树上节点最短距离，LCA， 双亲表示法+暴力从下至上追溯，孩子链表示法+（Tarjan 或 欧拉环游RMQ+（ST 或 SegmentTree））</a>
+          </li>
+        
+          <li>
+            <a href="/2018/02/27/codeforces-891-a-pride/">CodeForces 891 A. Pride</a>
+          </li>
+        
+          <li>
+            <a href="/2018/02/26/hdu-1080-poj-1080-human-gene-functions-e5-8a-a8-e6-80-81-e8-a7-84-e5-88-92/">HDU 1080 POJ 1080 Human Gene Functions——动态规划</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

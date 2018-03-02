@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>HYSBZ 1216: [HNOI2003]操作系统 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="题目链接  1216: [HNOI2003]操作系统 Time Limit: 10 Sec  Memory Limit: 162 MB Submit: 1045  Solved: 565 [Submit][Status][Discuss] Description  写一个程序来模拟操作系统的进程调度。假设该系统只有一个CPU，每一个进程的到达时间，执行时间和运行优先级都是已知的。其中运行优先级用自">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HYSBZ 1216: [HNOI2003]操作系统">
+<meta property="og:url" content="http://yoursite.com/2018/02/07/hysbz-1216-hnoi2003-e6-93-8d-e4-bd-9c-e7-b3-bb-e7-bb-9f/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="题目链接  1216: [HNOI2003]操作系统 Time Limit: 10 Sec  Memory Limit: 162 MB Submit: 1045  Solved: 565 [Submit][Status][Discuss] Description  写一个程序来模拟操作系统的进程调度。假设该系统只有一个CPU，每一个进程的到达时间，执行时间和运行优先级都是已知的。其中运行优先级用自">
+<meta property="og:updated_time" content="2018-03-02T10:34:14.515Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="HYSBZ 1216: [HNOI2003]操作系统">
+<meta name="twitter:description" content="题目链接  1216: [HNOI2003]操作系统 Time Limit: 10 Sec  Memory Limit: 162 MB Submit: 1045  Solved: 565 [Submit][Status][Discuss] Description  写一个程序来模拟操作系统的进程调度。假设该系统只有一个CPU，每一个进程的到达时间，执行时间和运行优先级都是已知的。其中运行优先级用自">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Suche"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-hysbz-1216-hnoi2003-e6-93-8d-e4-bd-9c-e7-b3-bb-e7-bb-9f" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/02/07/hysbz-1216-hnoi2003-e6-93-8d-e4-bd-9c-e7-b3-bb-e7-bb-9f/" class="article-date">
+  <time datetime="2018-02-07T15:27:09.000Z" itemprop="datePublished">2018-02-07</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/算法/">算法</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      HYSBZ 1216: [HNOI2003]操作系统
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><a href="http://www.lydsy.com/JudgeOnline/problem.php?id=1216" target="_blank" rel="noopener">题目链接</a></p>
+<pre>
+1216: [HNOI2003]操作系统
+Time Limit: 10 Sec  Memory Limit: 162 MB
+Submit: 1045  Solved: 565
+[Submit][Status][Discuss]
+Description
+
+写一个程序来模拟操作系统的进程调度。假设该系统只有一个CPU，每一个进程的到达时间，执行时间和运行优先级都是已知的。其中运行优先级用自然数表示，数字越大，则优先级越高。如果一个进程到达的时候CPU是空闲的，则它会一直占用CPU直到该进程结束。除非在这个过程中，有一个比它优先级高的进程要运行。在这种情况下，这个新的（优先级更高的）进程会占用CPU，而老的只有等待。如果一个进程到达时，CPU正在处理一个比它优先级高或优先级相同的进程，则这个（新到达的）进程必须等待。一旦CPU空闲，如果此时有进程在等待，则选择优先级最高的先运行。如果有多个优先级最高的进程，则选择到达时间最早的。
+Input
+
+输入文件包含若干行，每一行有四个自然数（均不超过108），分别是进程号，到达时间，执行时间和优先级。不同进程有不同的编号，不会有两个相同优先级的进程同时到达。输入数据已经按到达时间从小到大排序。输入数据保证在任何时候，等待队列中的进程不超过15000个。
+Output
+
+按照进程结束的时间输出每个进程的进程号和结束时间
+Sample Input
+1 1 5 3
+
+2 10 5 1
+
+3 12 7 2
+
+4 20 2 3
+
+5 21 9 4
+
+6 22 2 4
+
+7 23 5 2
+
+8 24 2 4
+Sample Output
+1 6
+
+3 19
+
+5 30
+
+6 32
+
+8 34
+
+4 35
+
+7 40
+
+2 42
+</pre>
+
+<p>这题利用了优先队列<br>`</p>
+<p>#include <iostream></iostream></p>
+<p>#include <cstdio></cstdio></p>
+<p>#include <cstring></cstring></p>
+<p>#include <queue></queue></p>
+<p>#define iinf 0x7FFFFFFF</p>
+<p>// AC<br>// 优先队列</p>
+<p>using namespace std;</p>
+<p>int proCount;</p>
+<p>struct Pro {<br>    int id;<br>    int comeTime;<br>    int runTime;<br>    int priority;<br>    Pro(int a, int b, int c, int d): id(a), comeTime(b), runTime(c), priority(d) {}<br>};</p>
+<p>struct cmp {//判断“一个元素是否小于另一个元素”的结构体<br>// 重载operator ()必须是某个类的成员函数。<br>// 当某个类重载了()方法，这个类就可以成为函数对象。<br>    bool operator() (Pro<em>&amp; p0, Pro</em>&amp; p1) const {//关于这里的参数最前是否需要加const关键字，我的应对策略是：先试着加上，如果有错的话，编译器会回答找不到对应的方法，比如，加了const提示 ： error: no match for call to ‘(cmp) (Pro<em>&amp;, Pro</em>&amp;)’，可知这里不用加const<br>        if (p0-&gt;priority == p1-&gt;priority) {//若优先级相同，则更早来的在前面（优先队列中最前的元素，即top()，是比较之后值最大的那个元素，要让时间更前的元素排得越前，则它在这个自定义比较函数里面的“值”越大越好，即：优先级相同的两个元素，时间更前的元素反而更大）<br>            return p0-&gt;comeTime &gt; p1-&gt;comeTime;//若第一个参数指向的元素来到时间比第二个元素的早，则表达式返回 false，代表第一个参数指向的元素大于第二个元素，排的更前。<br>        } else {<br>            return p0-&gt;priority &lt; p1-&gt;priority;//若优先级不同，则优先级高的在前面<br>        }<br>    }<br>};</p>
+<p>/**</p>
+<ul>
+<li>为什么我不直接在Pro结构体内部重载 &lt; 操作符，因为我这个queue存的是指针变量，并不是实际的元素，重载Pro结构体的 &lt; 操作符不会有作用，因为这时候queue里面比较的是Pro<em>类型的元素，我们要想办法为Pro</em>类型的元素适配比较函数</li>
+<li>所以我写了上面那个比较函数，后来看了别人的代码发现，上面这个自定义的比较函数其实可以不用这么麻烦</li>
+<li>我们要想办法让 &lt; 操作符支持 Pro<em> 类型和 Pro</em> 类型之间的比较，所以我们可以在全局方范围内重载 &lt; 操作符</li>
+<li>例如：</li>
+<li></li>
+<li>bool operator &lt; (Pro p0, Pro*&amp; p1) {</li>
+<li>if (p0-&gt;priority == p1-&gt;priority) {</li>
+<li>return p0-&gt;comeTime &gt; p1-&gt;comeTime;</li>
+<li>} else {</li>
+<li>return p0-&gt;priority &lt; p1-&gt;priority;</li>
+<li>}</li>
+<li>}</li>
+<li>同时下面的waitQu改成</li>
+<li>priority_queue &lt;Pro*&gt; waitQu;</li>
+<li>可是，编译报错</li>
+<li>error: ‘bool operator&lt;(Pro<em>&amp;, Pro</em>&amp;)’ must have an argument of class or enumerated type</li>
+<li>bool operator &lt; (Pro<em>&amp; p0, Pro</em>&amp; p1) {</li>
+<li>^</li>
+<li>原来c++有些操作符在某些情况下是不能重载的，比如对两个指针的比较的小于号操作符，这个操作符已经有具体实现了，我们不能重载它，否则那些库里面用到用&lt;比较指针的操作都变成了我们自定义的操作了，岂不是乱了套<br>*/</li>
+</ul>
+<p>queue&lt;Pro*&gt; allPro;</p>
+<p>priority_queue &lt;Pro<em>, vector&lt;Pro</em>&gt;, cmp&gt; waitQu; //存放排队等候中的进程<br>//                                    ^这里在模板中传入比较函数的类型，相当于自己实现一个 &lt; 函数</p>
+<p>int main(int argc, char const <em>argv[])<br>{<br>    int a, b, c, d;<br>    Pro</em> t;<br>    while (~scanf(“%d%d%d%d”, &amp;a, &amp;b, &amp;c, &amp;d)) {<br>        t = new Pro(a, b, c, d);//这里是手动在堆上申请内存，让queue和priority_queue维护指针，实际上不用这样，可以直接在栈上建立一个Pro元素，queue和priority_queue会进行拷贝操作，在堆上形成一份原来栈内存上的元素的拷贝<br>        allPro.push(t);//先读取放到allPro这个队列中<br>    }</p>
+<pre><code>int nowTime = 0;
+int stepTime;//一次步进多长时间
+
+for (; (!waitQu.empty()) || (!allPro.empty());) {//当等待队列waitQu和allPro队列都为空时就退出
+
+    stepTime = iinf;
+
+    if (!waitQu.empty()) { //若等待队列中还有元素
+        stepTime = min(stepTime, waitQu.top()-&gt;runTime);
+    }
+
+    if (!allPro.empty()) {//若未加入的任务队列中还有元素
+        stepTime = min(stepTime, allPro.front()-&gt;comeTime - nowTime);
+    }
+    //至此步进时长确定完成
+
+    nowTime += stepTime;
+
+    if (!waitQu.empty()) {
+        //每次处理等待队列中的第一个元素
+        waitQu.top()-&gt;runTime -= stepTime;//等待队列中的第一个元素的剩余运行时间减去步进时间
+        if (waitQu.top()-&gt;runTime == 0) {//若任务执行完毕
+            printf(&quot;%d %d\n&quot;, waitQu.top()-&gt;id, nowTime);
+            delete waitQu.top();//记得释放内存
+            waitQu.pop();
+        }
+    }
+
+    if (!allPro.empty()) {
+        if (nowTime == allPro.front()-&gt;comeTime) {//若第一个未加入的任务时机已到，则加入任务到等待队列中
+            waitQu.push(allPro.front());
+            allPro.pop();
+        }
+    }
+}
+
+return 0;
+</code></pre><p>}<br>`</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/02/07/hysbz-1216-hnoi2003-e6-93-8d-e4-bd-9c-e7-b3-bb-e7-bb-9f/" data-id="cje9syozu001q23w58kdrgnlt" class="article-share-link">Teilen</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/02/08/codeforces-699c-vacations-e5-8a-a8-e6-80-81-e8-a7-84-e5-88-92/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Neuer</strong>
+      <div class="article-nav-title">
+        
+          CodeForces 699C Vacations——动态规划
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/02/06/e6-9c-80-e9-95-bf-e9-80-92-e5-a2-9e-e5-ad-90-e5-88-97-e7-9a-84-e5-8f-a6-e4-b8-80-e7-a7-8d-e6-80-9d-e8-b7-af-ef-bc-88-e8-bd-ac-e5-8c-96-e4-b8-balcs-e9-97-ae-e9-a2-98-ef-bc-89/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Älter</strong>
+      <div class="article-nav-title">最长递增子列的另一种思路（转化为LCS问题）</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Kategorien</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/C-C/">C/C++</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/C-C/Java/">Java</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/CodeForces/">CodeForces</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/CodeForces/动态规划/">动态规划</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/CodeForces/动态规划/算法/">算法</a></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/HDU/">HDU</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/HDU/POJ/">POJ</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/HDU/POJ/动态规划/">动态规划</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/HDU/POJ/动态规划/算法/">算法</a></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/HDU/动态规划/">动态规划</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/HDU/动态规划/未分类/">未分类</a></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Xposed/">Xposed</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/raspberry-pi/">raspberry pi</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/未分类/">未分类</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/算法/">算法</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/闲时研究/">闲时研究</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archiv</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">letzter Beitrag</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2018/03/02/HelloWorld/">HelloWorld</a>
+          </li>
+        
+          <li>
+            <a href="/2018/03/02/hello-world/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/2018/03/02/hdu-2586-how-far-away-ef-bc-9f-e6-a0-91-e4-b8-8a-e8-8a-82-e7-82-b9-e6-9c-80-e7-9f-ad-e8-b7-9d-e7-a6-bb-ef-bc-8clca-ef-bc-8c-e5-8f-8c-e4-ba-b2-e8-a1-a8-e7-a4-ba-e6-b3-95-e6-9a-b4/">HDU 2586 How far away ？——树上节点最短距离，LCA， 双亲表示法+暴力从下至上追溯，孩子链表示法+（Tarjan 或 欧拉环游RMQ+（ST 或 SegmentTree））</a>
+          </li>
+        
+          <li>
+            <a href="/2018/02/27/codeforces-891-a-pride/">CodeForces 891 A. Pride</a>
+          </li>
+        
+          <li>
+            <a href="/2018/02/26/hdu-1080-poj-1080-human-gene-functions-e5-8a-a8-e6-80-81-e8-a7-84-e5-88-92/">HDU 1080 POJ 1080 Human Gene Functions——动态规划</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

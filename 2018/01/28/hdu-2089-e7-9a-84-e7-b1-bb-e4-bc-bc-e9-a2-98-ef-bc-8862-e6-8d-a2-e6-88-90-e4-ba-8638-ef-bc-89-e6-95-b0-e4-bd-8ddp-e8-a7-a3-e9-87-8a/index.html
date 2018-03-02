@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>HDU 2089的类似题（62换成了38） 数位dp解释 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="链接：https://www.nowcoder.com/acm/contest/74/G 来源：牛客网  杭州人称傻乎乎的人为62，而嘟嘟家这里没有这样的习俗。  相比62，他那里的人更加讨厌数字38，当然啦，还有4这个  数字！所以啊，嘟嘟不点都不想见到包含38或者4的数字。  每次给出一个区间[n，m],你能找到所有令人讨厌的数字吗？  输入描述:  多组输入输出； 输入的都是整数对n、m（">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HDU 2089的类似题（62换成了38） 数位dp解释">
+<meta property="og:url" content="http://yoursite.com/2018/01/28/hdu-2089-e7-9a-84-e7-b1-bb-e4-bc-bc-e9-a2-98-ef-bc-8862-e6-8d-a2-e6-88-90-e4-ba-8638-ef-bc-89-e6-95-b0-e4-bd-8ddp-e8-a7-a3-e9-87-8a/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="链接：https://www.nowcoder.com/acm/contest/74/G 来源：牛客网  杭州人称傻乎乎的人为62，而嘟嘟家这里没有这样的习俗。  相比62，他那里的人更加讨厌数字38，当然啦，还有4这个  数字！所以啊，嘟嘟不点都不想见到包含38或者4的数字。  每次给出一个区间[n，m],你能找到所有令人讨厌的数字吗？  输入描述:  多组输入输出； 输入的都是整数对n、m（">
+<meta property="og:updated_time" content="2018-03-02T10:34:14.515Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="HDU 2089的类似题（62换成了38） 数位dp解释">
+<meta name="twitter:description" content="链接：https://www.nowcoder.com/acm/contest/74/G 来源：牛客网  杭州人称傻乎乎的人为62，而嘟嘟家这里没有这样的习俗。  相比62，他那里的人更加讨厌数字38，当然啦，还有4这个  数字！所以啊，嘟嘟不点都不想见到包含38或者4的数字。  每次给出一个区间[n，m],你能找到所有令人讨厌的数字吗？  输入描述:  多组输入输出； 输入的都是整数对n、m（">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Suche"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-hdu-2089-e7-9a-84-e7-b1-bb-e4-bc-bc-e9-a2-98-ef-bc-8862-e6-8d-a2-e6-88-90-e4-ba-8638-ef-bc-89-e6-95-b0-e4-bd-8ddp-e8-a7-a3-e9-87-8a" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/01/28/hdu-2089-e7-9a-84-e7-b1-bb-e4-bc-bc-e9-a2-98-ef-bc-8862-e6-8d-a2-e6-88-90-e4-ba-8638-ef-bc-89-e6-95-b0-e4-bd-8ddp-e8-a7-a3-e9-87-8a/" class="article-date">
+  <time datetime="2018-01-28T15:41:21.000Z" itemprop="datePublished">2018-01-28</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/算法/">算法</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      HDU 2089的类似题（62换成了38） 数位dp解释
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <pre>
+链接：https://www.nowcoder.com/acm/contest/74/G
+来源：牛客网
+
+杭州人称傻乎乎的人为62，而嘟嘟家这里没有这样的习俗。
+
+相比62，他那里的人更加讨厌数字38，当然啦，还有4这个
+
+数字！所以啊，嘟嘟不点都不想见到包含38或者4的数字。
+
+每次给出一个区间[n，m],你能找到所有令人讨厌的数字吗？
+
+输入描述:
+
+多组输入输出；
+输入的都是整数对n、m（0<n≤m<1000000）， 0="" 1="" 20="" 100="" 如果遇到都是0的整数对，则输入结束。="" 输出描述:="" 对于每次的输入="" 输出全部令人讨厌的数的个数="" 示例1="" 输入="" 输出="" <="" pre="">
+
+<p>`</p>
+<p>#include <iostream></iostream></p>
+<p>#include <cstring><br>using namespace std ;<br>const int len = 7 ;<br>int dp[8][10] , bit[8] ;//全局变量初始为0，dp[x][y]数组表示长为x的以y打头的所有数中“合法”数的个数，<br>// 注意首位为0的数也看作x位，例如0123看作4位数，<br>// 原因：如果不考虑以0开头的数那么dp[3][3] = dp[2][9] + dp[2][8] + …+ dp[2][2] + dp [2][1] + dp[1][9] + dp[1][8] + … + dp[1][2] + dp[1][1]<br>// 若把所有一位数看作以0开头的2位数则实际上dp[3][3] = dp[2][9] + dp[2][8] + …+ dp[2][2] + dp [2][1] + dp[2][0]<br>// 所以认为dp[x][0] = dp[x-1][0…9]<br>// 我们只需要把dp[2][0…9]这些加起来就好了<br>int n , m ;</cstring></p>
+<p>void Get_dp() {<br>    dp[0][0] = 1 ;<br>    for ( int i = 1 ; i &lt;= len ; ++i )//长度i从1到7<br>        for ( int j = 0 ; j &lt;= 9 ; ++j )//数值j从0到9<br>            if ( j != 4 )//排除j等于4的情况<br>                for ( int k = 0 ; k &lt;= 9 ; ++k )//第二个数值k从0到9<br>                    if ( !( j == 3 &amp;&amp; k == 8 ) )//排除j，k为3，8的情况<br>                        dp[i][j] += dp[i - 1][k] ;//i从1开始所以i-1不会越界且由于是全局变量默认值为0，所以免去了对i-1是否越界的讨论</p>
+<pre><code>/**
+* 从长为1位的数，开头的数从0到9，填表
+* 状态转移方程：
+* dp[x][y] = 0;    若y==4
+*             dp[x-1][0...9];    若y!=3（相当于在所有x-1位的合法数前面加了个不是3的数，肯定也是合法数）
+*             dp[x-1][0...9] - dp[x-1][8];    若y==3则要排除掉第二位为8的情况
+*/
+</code></pre><p>}</p>
+<p>int solve( int n ) {//根据表来得出从1到n（实际上没有包括n，因为下面有一句for ( int j = 0 ; j &lt; bit[i] ; ++j )用的小于号，我们先不考虑这细节）的所有合法数的个数<br>    memset( bit , 0 , sizeof( bit ) ) ;//将n分解放入bit数组中<br>    int top = 0 ;//（从n的底位到高位倒序放入）<br>    while ( n ) {<br>        bit[++top] = n % 10 ;<br>        n /= 10 ;<br>    }</p>
+<pre><code>int ans = 0 ;//保存所有合法数个数
+for ( int i = len ; i &gt;= 1 ; --i ) {//i从数的最高位开始向下
+    for ( int j = 0 ; j &lt; bit[i] ; ++j )
+        if ( !( bit[i + 1] == 3 &amp;&amp; j == 8 ) )
+            ans += dp[i][j] ;//排除上一位是3且这一位以8开头的情况
+    if ( bit[i] == 4 || ( bit[i + 1] == 3 &amp;&amp; bit[i] == 8 ) )
+        break ;//若这一位是4则跳出循环
+}
+/**
+* 这里举个例子解释一下：
+* 假设输入n为243
+* 那么我们应该将1...243分解成        000...199        200...239         240...242                243
+* 对应一下其实就是                dp[3][0...1]    dp[2][0...3]    dp[1][0...2]            dp[0][]恒为0（所以代码中不管数字n是否合法都没有考虑到，最终返回值其实是1...n-1的所有合法数个数）
+* 注解                            (1)                (2)                (3)不合法，之后的也是        (4)不合法
+* 
+* (1)从最高位开始
+* (2)00...39中的所有合法数前面加一个2还是合法数
+* (3)0...2的前面加上一个4出问题了！！，所有的0...2中的合法数变得不合法,应该排除,接下来所以位的分解前面也会加上4，所以直接跳出循环
+*    if ( bit[i] == 4 || ( bit[i + 1] == 3 &amp;&amp; bit[i] == 8 ) )
+*         break ;//若这一位是4则跳出循环
+* (4)这里为什么单独分开来？提示：“小于”号“&lt;”
+* 
+* 其实这些分法都是受到了上面的：
+* for ( int j = 0 ; j &lt; bit[i] ; ++j )
+* 的影响（注意小于号），也就是按照这条语句来分的
+* 需要仔细想想
+*/
+return ans ;
+</code></pre><p>}</p>
+<p>int main() {<br>    Get_dp() ;//打表<br>    while ( cin &gt;&gt; n &gt;&gt; m &amp;&amp; ( n || m ) )<br>        cout &lt;&lt; m - n + 1 - ( solve( m + 1 ) - solve( n ) ) &lt;&lt; endl ;<br>    return 0 ;<br>}</p>
+<p>`</p>
+</n≤m<1000000），></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/01/28/hdu-2089-e7-9a-84-e7-b1-bb-e4-bc-bc-e9-a2-98-ef-bc-8862-e6-8d-a2-e6-88-90-e4-ba-8638-ef-bc-89-e6-95-b0-e4-bd-8ddp-e8-a7-a3-e9-87-8a/" data-id="cje9syozn001h23w5shd5ebw8" class="article-share-link">Teilen</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/02/01/e4-b8-a4-e5-a4-a7lcs-e9-97-ae-e9-a2-98/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Neuer</strong>
+      <div class="article-nav-title">
+        
+          两大LCS问题
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/01/27/e6-8c-87-e4-bb-a4-e9-9b-86-e5-90-88/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Älter</strong>
+      <div class="article-nav-title">指令集合</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Kategorien</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/C-C/">C/C++</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/C-C/Java/">Java</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/CodeForces/">CodeForces</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/CodeForces/动态规划/">动态规划</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/CodeForces/动态规划/算法/">算法</a></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/HDU/">HDU</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/HDU/POJ/">POJ</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/HDU/POJ/动态规划/">动态规划</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/HDU/POJ/动态规划/算法/">算法</a></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/HDU/动态规划/">动态规划</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/HDU/动态规划/未分类/">未分类</a></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Xposed/">Xposed</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/raspberry-pi/">raspberry pi</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/未分类/">未分类</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/算法/">算法</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/闲时研究/">闲时研究</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archiv</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">letzter Beitrag</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2018/03/02/HelloWorld/">HelloWorld</a>
+          </li>
+        
+          <li>
+            <a href="/2018/03/02/hello-world/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/2018/03/02/hdu-2586-how-far-away-ef-bc-9f-e6-a0-91-e4-b8-8a-e8-8a-82-e7-82-b9-e6-9c-80-e7-9f-ad-e8-b7-9d-e7-a6-bb-ef-bc-8clca-ef-bc-8c-e5-8f-8c-e4-ba-b2-e8-a1-a8-e7-a4-ba-e6-b3-95-e6-9a-b4/">HDU 2586 How far away ？——树上节点最短距离，LCA， 双亲表示法+暴力从下至上追溯，孩子链表示法+（Tarjan 或 欧拉环游RMQ+（ST 或 SegmentTree））</a>
+          </li>
+        
+          <li>
+            <a href="/2018/02/27/codeforces-891-a-pride/">CodeForces 891 A. Pride</a>
+          </li>
+        
+          <li>
+            <a href="/2018/02/26/hdu-1080-poj-1080-human-gene-functions-e5-8a-a8-e6-80-81-e8-a7-84-e5-88-92/">HDU 1080 POJ 1080 Human Gene Functions——动态规划</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

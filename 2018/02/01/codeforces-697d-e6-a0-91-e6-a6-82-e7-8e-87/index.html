@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>CodeForces 697D 树+概率 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="原题链接  D. Puzzles time limit per test 1 second memory limit per test 256 megabytes input standard input output standard output  Barney lives in country USC (United States of Charzeh). USC has n cities">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CodeForces 697D 树+概率">
+<meta property="og:url" content="http://yoursite.com/2018/02/01/codeforces-697d-e6-a0-91-e6-a6-82-e7-8e-87/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="原题链接  D. Puzzles time limit per test 1 second memory limit per test 256 megabytes input standard input output standard output  Barney lives in country USC (United States of Charzeh). USC has n cities">
+<meta property="og:updated_time" content="2018-03-02T10:34:14.515Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="CodeForces 697D 树+概率">
+<meta name="twitter:description" content="原题链接  D. Puzzles time limit per test 1 second memory limit per test 256 megabytes input standard input output standard output  Barney lives in country USC (United States of Charzeh). USC has n cities">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Suche"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-codeforces-697d-e6-a0-91-e6-a6-82-e7-8e-87" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/02/01/codeforces-697d-e6-a0-91-e6-a6-82-e7-8e-87/" class="article-date">
+  <time datetime="2018-02-01T15:34:57.000Z" itemprop="datePublished">2018-02-01</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/算法/">算法</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      CodeForces 697D 树+概率
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><a href="http://codeforces.com/problemset/problem/697/D" target="_blank" rel="noopener">原题链接</a></p>
+<pre>
+D. Puzzles
+time limit per test
+1 second
+memory limit per test
+256 megabytes
+input
+standard input
+output
+standard output
+
+Barney lives in country USC (United States of Charzeh). USC has n cities numbered from 1 through n and n - 1 roads between them. Cities and roads of USC form a rooted tree (Barney's not sure why it is rooted). Root of the tree is the city number 1\. Thus if one will start his journey from city 1, he can visit any city he wants by following roads.
+
+Some girl has stolen Barney's heart, and Barney wants to find her. He starts looking for in the root of the tree and (since he is Barney Stinson not a random guy), he uses a random DFS to search in the cities. A pseudo code of this algorithm is as follows:
+
+let starting_time be an array of length n
+current_time = 0
+dfs(v):
+    current_time = current_time + 1
+    starting_time[v] = current_time
+    shuffle children[v] randomly (each permutation with equal possibility)
+    // children[v] is vector of children cities of city v
+    for u in children[v]:
+        dfs(u)
+
+As told before, Barney will start his journey in the root of the tree (equivalent to call dfs(1)).
+
+Now Barney needs to pack a backpack and so he wants to know more about his upcoming journey: for every city i, Barney wants to know the expected value of starting_time[i]. He's a friend of Jon Snow and knows nothing, that's why he asked for your help.
+Input
+
+The first line of input contains a single integer n (1 ≤ n ≤ 105) — the number of cities in USC.
+
+The second line contains n - 1 integers p2, p3, ..., pn (1 ≤ pi < i), 1="" 2="" 3="" 4="" 7="" 8="" 10="" 12="" where="" pi="" is="" the="" number="" of="" parent="" city="" i="" in="" tree,="" meaning="" there="" a="" road="" between="" cities="" numbered="" and="" usc.="" output="" first="" only="" line="" print="" n="" numbers,="" i-th="" expected="" value="" starting_time[i].="" your="" answer="" for="" each="" will="" be="" considered="" correct="" if="" its="" absolute="" or="" relative="" error="" does="" not="" exceed="" 10 - 6.="" examples="" input="" 1.0="" 4.0="" 5.0="" 3.5="" 4.5="" 5.5="" 6.5="" 7.5="" 8.0="" 7.0="" <="" pre="">
+
+<p>`</p>
+<p>#include <iostream></iostream></p>
+<p>#include <cstdio></cstdio></p>
+<p>#include <set><br>//multiset的定义在set头文件中</set></p>
+<p>using namespace std;</p>
+<p>int data[100005][2];//[0]自身以及子节点的数量[1]父节点<br>double ans[100005];</p>
+<p>struct Node {<br>    int x;//父节点<br>    int y;//子节点</p>
+<pre><code>Node(int x, int y): x(x), y(y) {
+}
+int operator &lt; (Node const &amp; n) const {//倒序
+    return x &gt; n.x;
+}
+</code></pre><p>};</p>
+<p>multiset<node> ms;</node></p>
+<p>int main(int argc, char const *argv[])<br>{</p>
+<pre><code>int n, temp;
+scanf(&quot;%d&quot;, &amp;n);
+data[1][0] = 1;
+for (int i = 2; i &lt;= n; i++) {
+    scanf(&quot;%d&quot;, &amp;temp);
+    data[i][0] = 1;
+    data[i][1] = temp;
+    Node n(temp, i);
+    ms.insert(n);
+}
+
+// 从树的最底开始上升
+int cou = 0;
+for (multiset&lt;Node&gt;::iterator i = ms.begin(); i != ms.end(); ++i) {
+    data[i-&gt;x][0] += data[i-&gt;y][0];
+}
+
+ans[1] = 1.0;
+printf(&quot;1.0&quot;);
+for (int i = 2; i &lt;= n; i++) {
+    /**
+    * 第i个节点的期望 == 它的父节点的期望 + 在它自身的耗时(1) + 第i个节点的兄弟节点及它拓展的子节点耗时的期望(即兄弟节点及它拓展的子节点数 * 0.5)
+    * (兄弟节点及它拓展的子节点数 == i 的父节点 - i 节点拓展的树的所有节点(包括i) - 1(父节点自身))，
+    * 这些节点每一个要么在i之前被遍历，要么在i之后，于是期望值乘以0.5
+    */
+    ans[i] = ans[data[i][1]] + 1 + (data[data[i][1]][0] - 1 - data[i][0]) * 0.5;
+    printf(&quot; %.1f&quot;, ans[i]);
+}
+
+return 0;
+</code></pre><p>}</p>
+<p>`</p>
+</ i),></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/02/01/codeforces-697d-e6-a0-91-e6-a6-82-e7-8e-87/" data-id="cje9syoyq000d23w5espzxs6t" class="article-share-link">Teilen</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/02/02/e7-ae-97-e6-b3-95-e8-af-8d-e6-b1-87/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Neuer</strong>
+      <div class="article-nav-title">
+        
+          算法词汇
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/02/01/trashed/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Älter</strong>
+      <div class="article-nav-title">__trashed</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Kategorien</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/C-C/">C/C++</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/C-C/Java/">Java</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/CodeForces/">CodeForces</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/CodeForces/动态规划/">动态规划</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/CodeForces/动态规划/算法/">算法</a></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/HDU/">HDU</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/HDU/POJ/">POJ</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/HDU/POJ/动态规划/">动态规划</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/HDU/POJ/动态规划/算法/">算法</a></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/HDU/动态规划/">动态规划</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/HDU/动态规划/未分类/">未分类</a></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Xposed/">Xposed</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/raspberry-pi/">raspberry pi</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/未分类/">未分类</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/算法/">算法</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/闲时研究/">闲时研究</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archiv</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">letzter Beitrag</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2018/03/02/HelloWorld/">HelloWorld</a>
+          </li>
+        
+          <li>
+            <a href="/2018/03/02/hello-world/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/2018/03/02/hdu-2586-how-far-away-ef-bc-9f-e6-a0-91-e4-b8-8a-e8-8a-82-e7-82-b9-e6-9c-80-e7-9f-ad-e8-b7-9d-e7-a6-bb-ef-bc-8clca-ef-bc-8c-e5-8f-8c-e4-ba-b2-e8-a1-a8-e7-a4-ba-e6-b3-95-e6-9a-b4/">HDU 2586 How far away ？——树上节点最短距离，LCA， 双亲表示法+暴力从下至上追溯，孩子链表示法+（Tarjan 或 欧拉环游RMQ+（ST 或 SegmentTree））</a>
+          </li>
+        
+          <li>
+            <a href="/2018/02/27/codeforces-891-a-pride/">CodeForces 891 A. Pride</a>
+          </li>
+        
+          <li>
+            <a href="/2018/02/26/hdu-1080-poj-1080-human-gene-functions-e5-8a-a8-e6-80-81-e8-a7-84-e5-88-92/">HDU 1080 POJ 1080 Human Gene Functions——动态规划</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

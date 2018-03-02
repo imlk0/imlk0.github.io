@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>HDU 1080 POJ 1080 Human Gene Functions——动态规划 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="http://poj.org/problem?id=1080http://acm.hdu.edu.cn/showproblem.php?pid=1080 ` #include  #include  #include  #include  #define MAX(x,y,z) ((x)&amp;gt;(y)?((x)&amp;gt;(z)?(x):(z)):((y)&amp;gt;(z)?(y):(z))) using n">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HDU 1080 POJ 1080 Human Gene Functions——动态规划">
+<meta property="og:url" content="http://yoursite.com/2018/02/26/hdu-1080-poj-1080-human-gene-functions-e5-8a-a8-e6-80-81-e8-a7-84-e5-88-92/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="http://poj.org/problem?id=1080http://acm.hdu.edu.cn/showproblem.php?pid=1080 ` #include  #include  #include  #include  #define MAX(x,y,z) ((x)&amp;gt;(y)?((x)&amp;gt;(z)?(x):(z)):((y)&amp;gt;(z)?(y):(z))) using n">
+<meta property="og:updated_time" content="2018-03-02T10:34:14.518Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="HDU 1080 POJ 1080 Human Gene Functions——动态规划">
+<meta name="twitter:description" content="http://poj.org/problem?id=1080http://acm.hdu.edu.cn/showproblem.php?pid=1080 ` #include  #include  #include  #include  #define MAX(x,y,z) ((x)&amp;gt;(y)?((x)&amp;gt;(z)?(x):(z)):((y)&amp;gt;(z)?(y):(z))) using n">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Suche"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-hdu-1080-poj-1080-human-gene-functions-e5-8a-a8-e6-80-81-e8-a7-84-e5-88-92" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/02/26/hdu-1080-poj-1080-human-gene-functions-e5-8a-a8-e6-80-81-e8-a7-84-e5-88-92/" class="article-date">
+  <time datetime="2018-02-26T13:53:24.000Z" itemprop="datePublished">2018-02-26</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/HDU/">HDU</a>►<a class="article-category-link" href="/categories/HDU/POJ/">POJ</a>►<a class="article-category-link" href="/categories/HDU/POJ/动态规划/">动态规划</a>►<a class="article-category-link" href="/categories/HDU/POJ/动态规划/算法/">算法</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      HDU 1080 POJ 1080 Human Gene Functions——动态规划
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><a href="http://poj.org/problem?id=1080" target="_blank" rel="noopener">http://poj.org/problem?id=1080</a><br><a href="http://acm.hdu.edu.cn/showproblem.php?pid=1080" target="_blank" rel="noopener">http://acm.hdu.edu.cn/showproblem.php?pid=1080</a></p>
+<p>`</p>
+<p>#include <iostream></iostream></p>
+<p>#include <cstdio></cstdio></p>
+<p>#include <map></map></p>
+<p>#include <cstring></cstring></p>
+<p>#define MAX(x,y,z) ((x)&gt;(y)?((x)&gt;(z)?(x):(z)):((y)&gt;(z)?(y):(z)))</p>
+<p>using namespace std;</p>
+<p>char str1[105];<br>char str2[105];<br>int list[6][6] = {<br>//              { \0,  A,  C,  G,  T,  -}<br>    /<em>\0</em>/    {  0,  0,  0,  0,  0,  0},<br>    /<em>A</em>/    {  0,  5, -1, -2, -1, -3},<br>    /<em>C</em>/    {  0, -1,  5, -3, -2, -4},<br>    /<em>G</em>/    {  0, -2, -3,  5, -2, -2},<br>    /<em>T</em>/    {  0, -1, -2, -2,  5, -1},<br>    /<em>-</em>/    {  0, -3, -4, -2, -1,  0},<br>};<br>map&lt;char, int&gt;m;</p>
+<p>int dp[105][105];//dp[x][y]表示str1中1…x-1个字符和str2中第1…y-1之间匹配的最优解</p>
+<p>int main(int argc, char const *argv[])<br>{<br>    int T, len1, len2;<br>    scanf(“%d”, &amp;T);</p>
+<pre><code>m[&apos;\0&apos;] = 0;
+m[&apos;A&apos;] = 1;
+m[&apos;C&apos;] = 2;
+m[&apos;G&apos;] = 3;
+m[&apos;T&apos;] = 4;
+m[&apos;-&apos;] = 5;
+
+while (T--) {
+    memset(dp, 0, sizeof(dp));
+    scanf(&quot;%d%s&quot;, &amp;len1, str1 + 1);
+    scanf(&quot;%d%s&quot;, &amp;len2, str2 + 1);
+
+    // printf(&quot;\t\t&quot;);
+    // for (int y = 0; y &lt; len2; y++) {
+    //     printf(&quot;%c\t&quot;, s2[y]);
+    // }
+    // printf(&quot;\n\t&quot;);
+
+    // for (int y = 0; y &lt;= len2; y++) {
+    //     printf(&quot;%d\t&quot;, dp[0][y]);
+
+    // }
+    // printf(&quot;\n&quot;);
+
+    for (int x = 1; x &lt;= len1 + 1; x++) {
+        dp[x][0] = -1e9;
+    }
+
+    for (int y = 1; y &lt;= len2 + 1; y++) {
+        dp[0][y] = -1e9;
+    }
+
+    for (int x = 1; x &lt;= len1 + 1; x++) {
+
+        for (int y = 1; y &lt;= len2 + 1; y++) {
+            dp[x][y] = MAX(
+                           dp[x - 1][y - 1] + list[m[str1[x - 1]]][m[str2[y - 1]]],
+                           dp[x - 1][y] + list[m[str1[x - 1]]][m[&apos;-&apos;]],
+                           dp[x][y - 1] + list[m[&apos;-&apos;]][m[str2[y - 1]]]
+                       );
+</code></pre><p>//取消注釋打印流程</p>
+<p>/*                if (dp[x - 1][y - 1] + list[m[str1[x - 1]]][m[str2[y - 1]]]<br>                        &gt;= dp[x - 1][y] + list[m[str1[x - 1]]][m[‘-‘]]) {<br>                    if (dp[x - 1][y - 1] + list[m[str1[x - 1]]][m[str2[y - 1]]]<br>                            &gt;=<br>                            dp[x][y - 1] + list[m[‘-‘]][m[str2[y - 1]]]) {<br>                        printf(“&#x2196;%d\t”, dp[x][y]);<br>                    } else {<br>                        printf(“←%d\t”, dp[x][y]);<br>                    }<br>                } else {<br>                    if (dp[x - 1][y] + list[m[str1[x - 1]]][m[‘-‘]]<br>                            &gt;=<br>                            dp[x][y - 1] + list[m[‘-‘]][m[str2[y - 1]]]) {<br>                        printf(“↑%d\t”, dp[x][y]);<br>                    } else {<br>                        printf(“←%d\t”, dp[x][y]);</p>
+<pre><code>    }
+}
+</code></pre><p>*/</p>
+<pre><code>}
+</code></pre><p>/<em><br>            printf(“\n”);
+</em>/</p>
+<pre><code>    }
+    printf(&quot;%d\n&quot;, dp[len1 + 1][len2 + 1]);
+
+    /**
+    *
+    *    in:
+    *    
+    *    2
+    *    7 AGTGATG
+    *    5 GTTAG
+    *    7 AGCTATT
+    *    9 AGCTTTAAA
+    *    
+    *    out:
+    *    
+    *    &amp;#x2196;0        ←-2        ←-3        ←-4        ←-7        ←-9
+    *    ↑-3        &amp;#x2196;-2        &amp;#x2196;-3        &amp;#x2196;-4        &amp;#x2196;1        ←-1
+    *    ↑-5        &amp;#x2196;2        ←1        ←0        ↑-1        &amp;#x2196;6
+    *    ↑-6        ↑1        &amp;#x2196;7        &amp;#x2196;6        ←3        ↑5
+    *    ↑-8        &amp;#x2196;-1        ↑5        &amp;#x2196;5        &amp;#x2196;4        &amp;#x2196;8
+    *    ↑-11    ↑-4        ↑2        &amp;#x2196;4        &amp;#x2196;10        ←8
+    *    ↑-12    ↑-5        &amp;#x2196;1        &amp;#x2196;7        ↑9        &amp;#x2196;8
+    *    ↑-14    &amp;#x2196;-7        ↑-1        ↑5        ↑7        &amp;#x2196;14
+    *    
+    *    14
+    *    
+    *    &amp;#x2196;0        ←-3        ←-5        ←-9        ←-10    ←-11    ←-12    ←-15    ←-18    ←-21
+    *    ↑-3        &amp;#x2196;5        ←3        ←-1        ←-2        ←-3        ←-4        &amp;#x2196;-7        &amp;#x2196;-10    &amp;#x2196;-13
+    *    ↑-5        ↑3        &amp;#x2196;10        ←6        ←5        ←4        ←3        ←0        ←-3        ←-6
+    *    ↑-9        ↑-1        ↑6        &amp;#x2196;15        ←14        ←13        ←12        ←9        ←6        ←3
+    *    ↑-10    ↑-2        ↑5        ↑14        &amp;#x2196;20        &amp;#x2196;19        &amp;#x2196;18        ←15        ←12        ←9
+    *    ↑-13    &amp;#x2196;-5        ↑2        ↑11        ↑17        &amp;#x2196;19        &amp;#x2196;18        &amp;#x2196;23        &amp;#x2196;20        &amp;#x2196;17
+    *    ↑-14    ↑-6        ↑1        ↑10        &amp;#x2196;16        &amp;#x2196;22        &amp;#x2196;24        ↑22        &amp;#x2196;22        &amp;#x2196;19
+    *    ↑-15    ↑-7        ↑0        ↑9        &amp;#x2196;15        &amp;#x2196;21        &amp;#x2196;27        ←24        &amp;#x2196;21        &amp;#x2196;21
+    *    
+    *    
+    *    21
+    *    
+    *    
+    *    
+    */
+
+}
+return 0;
+</code></pre><p>}</p>
+<p>`</p>
+<p>后来发现是自己想得太多了，这个题的“状态”不一定非要理解成原先那样，<br>其实完全可以也像最大公共子列那样的，<br>dp[x][y]表示str1的前x个字符和str2的前y个字符之间的匹配结果的最优解<br>这样也便于理解，便于思考</p>
+<p>这样的话dp[x][y]就是最终答案，不过要注意边界的预处理<br>代码如下</p>
+<p>`</p>
+<p>#include <iostream></iostream></p>
+<p>#include <cstdio></cstdio></p>
+<p>#include <map></map></p>
+<p>#include <cstring></cstring></p>
+<p>#define MAX(x,y,z) ((x)&gt;(y)?((x)&gt;(z)?(x):(z)):((y)&gt;(z)?(y):(z)))</p>
+<p>using namespace std;</p>
+<p>char str1[105];<br>char str2[105];<br>int list[6][6] = {<br>//              {  A,  C,  G,  T,  -}<br>    /<em>A</em>/    {  5, -1, -2, -1, -3},<br>    /<em>C</em>/    { -1,  5, -3, -2, -4},<br>    /<em>G</em>/    { -2, -3,  5, -2, -2},<br>    /<em>T</em>/    { -1, -2, -2,  5, -1},<br>    /<em>-</em>/    { -3, -4, -2, -1,  0},<br>};</p>
+<p>map&lt;char, int&gt;m;</p>
+<p>int dp[105][105];//dp[x][y]表示str1中1…x个字符和str2中第1…y这两个子串之间的所有匹配方式的最大利益</p>
+<p>int main(int argc, char const *argv[])<br>{<br>    int T, len1, len2;<br>    scanf(“%d”, &amp;T);</p>
+<pre><code>m[&apos;A&apos;] = 0;
+m[&apos;C&apos;] = 1;
+m[&apos;G&apos;] = 2;
+m[&apos;T&apos;] = 3;
+m[&apos;-&apos;] = 4;
+
+while (T--) {
+    memset(dp, 0, sizeof(dp));
+    scanf(&quot;%d%s&quot;, &amp;len1, str1 + 1);
+    scanf(&quot;%d%s&quot;, &amp;len2, str2 + 1);
+
+    // printf(&quot;\t\t&quot;);
+    // for (int y = 0; y &lt; len2; y++) {
+    //     printf(&quot;%c\t&quot;, s2[y]);
+    // }
+    // printf(&quot;\n\t&quot;);
+
+    // for (int y = 0; y &lt;= len2; y++) {
+    //     printf(&quot;%d\t&quot;, dp[0][y]);
+
+    // }
+    // printf(&quot;\n&quot;);
+
+    for (int x = 1; x &lt;= len1; x++) {
+        dp[x][0] = dp[x - 1][0] + list[m[str1[x]]][m[&apos;-&apos;]];
+    }
+
+    // printf(&quot;&amp;#x2196;0\t&quot;);
+    for (int y = 1; y &lt;= len2; y++) {
+        dp[0][y] = dp[0][y - 1] + list[m[str2[y]]][m[&apos;-&apos;]];
+        // printf(&quot;←%d\t&quot;, dp[0][y]);
+    }
+    // printf(&quot;\n&quot;);
+
+    for (int x = 1; x &lt;= len1; x++) {
+
+        // printf(&quot;↑%d\t&quot;, dp[x][0]);
+
+        for (int y = 1; y &lt;= len2; y++) {
+            dp[x][y] = MAX(
+                           dp[x - 1][y - 1] + list[m[str1[x]]][m[str2[y]]],
+                           dp[x - 1][y] + list[m[str1[x]]][m[&apos;-&apos;]],
+                           dp[x][y - 1] + list[m[&apos;-&apos;]][m[str2[y]]]
+                       );
+</code></pre><p>//取消所有额外注释可打印流程<br>                /*<br>                                if (dp[x - 1][y - 1] + list[m[str1[x]]][m[str2[y]]]<br>                                        &gt;= dp[x - 1][y] + list[m[str1[x]]][m[‘-‘]]) {<br>                                    if (dp[x - 1][y - 1] + list[m[str1[x]]][m[str2[y]]]<br>                                            &gt;=<br>                                            dp[x][y - 1] + list[m[‘-‘]][m[str2[y]]]) {<br>                                        printf(“&#x2196;%d\t”, dp[x][y]);<br>                                    } else {<br>                                        printf(“←%d\t”, dp[x][y]);<br>                                    }<br>                                } else {<br>                                    if (dp[x - 1][y] + list[m[str1[x]]][m[‘-‘]]<br>                                            &gt;=<br>                                            dp[x][y - 1] + list[m[‘-‘]][m[str2[y]]]) {<br>                                        printf(“↑%d\t”, dp[x][y]);<br>                                    } else {<br>                                        printf(“←%d\t”, dp[x][y]);</p>
+<pre><code>                                }
+                            }
+            */
+
+        }
+
+        /*
+                    printf(&quot;\n&quot;);
+        */
+
+    }
+    printf(&quot;%d\n&quot;, dp[len1][len2]);
+
+    /**
+    *
+    *    in:
+    *
+    *    2
+    *    7 AGTGATG
+    *    5 GTTAG
+    *    7 AGCTATT
+    *    9 AGCTTTAAA
+    *
+    *    out:
+    *
+    *    &amp;#x2196;0        ←-2        ←-3        ←-4        ←-7        ←-9
+    *    ↑-3        &amp;#x2196;-2        &amp;#x2196;-3        &amp;#x2196;-4        &amp;#x2196;1        ←-1
+    *    ↑-5        &amp;#x2196;2        ←1        ←0        ↑-1        &amp;#x2196;6
+    *    ↑-6        ↑1        &amp;#x2196;7        &amp;#x2196;6        ←3        ↑5
+    *    ↑-8        &amp;#x2196;-1        ↑5        &amp;#x2196;5        &amp;#x2196;4        &amp;#x2196;8
+    *    ↑-11    ↑-4        ↑2        &amp;#x2196;4        &amp;#x2196;10        ←8
+    *    ↑-12    ↑-5        &amp;#x2196;1        &amp;#x2196;7        ↑9        &amp;#x2196;8
+    *    ↑-14    &amp;#x2196;-7        ↑-1        ↑5        ↑7        &amp;#x2196;14
+    *
+    *    14
+    *
+    *    &amp;#x2196;0        ←-3        ←-5        ←-9        ←-10    ←-11    ←-12    ←-15    ←-18    ←-21
+    *    ↑-3        &amp;#x2196;5        ←3        ←-1        ←-2        ←-3        ←-4        &amp;#x2196;-7        &amp;#x2196;-10    &amp;#x2196;-13
+    *    ↑-5        ↑3        &amp;#x2196;10        ←6        ←5        ←4        ←3        ←0        ←-3        ←-6
+    *    ↑-9        ↑-1        ↑6        &amp;#x2196;15        ←14        ←13        ←12        ←9        ←6        ←3
+    *    ↑-10    ↑-2        ↑5        ↑14        &amp;#x2196;20        &amp;#x2196;19        &amp;#x2196;18        ←15        ←12        ←9
+    *    ↑-13    &amp;#x2196;-5        ↑2        ↑11        ↑17        &amp;#x2196;19        &amp;#x2196;18        &amp;#x2196;23        &amp;#x2196;20        &amp;#x2196;17
+    *    ↑-14    ↑-6        ↑1        ↑10        &amp;#x2196;16        &amp;#x2196;22        &amp;#x2196;24        ↑22        &amp;#x2196;22        &amp;#x2196;19
+    *    ↑-15    ↑-7        ↑0        ↑9        &amp;#x2196;15        &amp;#x2196;21        &amp;#x2196;27        ←24        &amp;#x2196;21        &amp;#x2196;21
+    *
+    *
+    *    21
+    *
+    *
+    *
+    */
+
+}
+return 0;
+</code></pre><p>}</p>
+<p>`</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/02/26/hdu-1080-poj-1080-human-gene-functions-e5-8a-a8-e6-80-81-e8-a7-84-e5-88-92/" data-id="cje9syozj001923w51ke1ffxw" class="article-share-link">Teilen</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/02/27/codeforces-891-a-pride/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Neuer</strong>
+      <div class="article-nav-title">
+        
+          CodeForces 891 A. Pride
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/02/25/fragment-fragment-xposed-e5-bc-80-e5-8f-91-e6-97-b6-e9-81-87-e5-88-b0-e7-9a-84-e5-85-b3-e4-ba-8eclassloader-e7-9a-84-e9-97-ae-e9-a2-98/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Älter</strong>
+      <div class="article-nav-title">Fragment != Fragment ? —— Xposed开发时遇到的关于ClassLoader的问题</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Kategorien</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/C-C/">C/C++</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/C-C/Java/">Java</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/CodeForces/">CodeForces</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/CodeForces/动态规划/">动态规划</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/CodeForces/动态规划/算法/">算法</a></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/HDU/">HDU</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/HDU/POJ/">POJ</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/HDU/POJ/动态规划/">动态规划</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/HDU/POJ/动态规划/算法/">算法</a></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/HDU/动态规划/">动态规划</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/HDU/动态规划/未分类/">未分类</a></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Xposed/">Xposed</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/raspberry-pi/">raspberry pi</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/未分类/">未分类</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/算法/">算法</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/闲时研究/">闲时研究</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archiv</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">letzter Beitrag</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2018/03/02/HelloWorld/">HelloWorld</a>
+          </li>
+        
+          <li>
+            <a href="/2018/03/02/hello-world/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/2018/03/02/hdu-2586-how-far-away-ef-bc-9f-e6-a0-91-e4-b8-8a-e8-8a-82-e7-82-b9-e6-9c-80-e7-9f-ad-e8-b7-9d-e7-a6-bb-ef-bc-8clca-ef-bc-8c-e5-8f-8c-e4-ba-b2-e8-a1-a8-e7-a4-ba-e6-b3-95-e6-9a-b4/">HDU 2586 How far away ？——树上节点最短距离，LCA， 双亲表示法+暴力从下至上追溯，孩子链表示法+（Tarjan 或 欧拉环游RMQ+（ST 或 SegmentTree））</a>
+          </li>
+        
+          <li>
+            <a href="/2018/02/27/codeforces-891-a-pride/">CodeForces 891 A. Pride</a>
+          </li>
+        
+          <li>
+            <a href="/2018/02/26/hdu-1080-poj-1080-human-gene-functions-e5-8a-a8-e6-80-81-e8-a7-84-e5-88-92/">HDU 1080 POJ 1080 Human Gene Functions——动态规划</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

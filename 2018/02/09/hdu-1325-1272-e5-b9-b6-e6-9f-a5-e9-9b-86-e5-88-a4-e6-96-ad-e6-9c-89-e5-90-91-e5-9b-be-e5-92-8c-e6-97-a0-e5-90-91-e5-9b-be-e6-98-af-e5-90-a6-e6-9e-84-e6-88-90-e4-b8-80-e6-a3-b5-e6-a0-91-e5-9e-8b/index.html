@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>HDU 1325 1272 并查集判断有向图和无向图是否构成一棵树型 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="HDU 1325HDU 1272 HDU 1325是有向图，给定某个节点是另一个元素的父节点HDU 1272是无向图，将两个节点连接起来 共同点：判断是否成环，判断是树木还是森林 区别：有向图可能出现多个箭头指向同一个节点的情况（即一个节点多个父节点）例如[caption width=”176” align=”aligncenter”] 多节点指向同一节点[/caption] 另外，关于HDU 1">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HDU 1325 1272 并查集判断有向图和无向图是否构成一棵树型">
+<meta property="og:url" content="http://yoursite.com/2018/02/09/hdu-1325-1272-e5-b9-b6-e6-9f-a5-e9-9b-86-e5-88-a4-e6-96-ad-e6-9c-89-e5-90-91-e5-9b-be-e5-92-8c-e6-97-a0-e5-90-91-e5-9b-be-e6-98-af-e5-90-a6-e6-9e-84-e6-88-90-e4-b8-80-e6-a3-b5-e6-a0-91-e5-9e-8b/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="HDU 1325HDU 1272 HDU 1325是有向图，给定某个节点是另一个元素的父节点HDU 1272是无向图，将两个节点连接起来 共同点：判断是否成环，判断是树木还是森林 区别：有向图可能出现多个箭头指向同一个节点的情况（即一个节点多个父节点）例如[caption width=”176” align=”aligncenter”] 多节点指向同一节点[/caption] 另外，关于HDU 1">
+<meta property="og:image" content="http://acm.hdu.edu.cn/data/images/1325-3.gif">
+<meta property="og:updated_time" content="2018-03-02T10:34:14.517Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="HDU 1325 1272 并查集判断有向图和无向图是否构成一棵树型">
+<meta name="twitter:description" content="HDU 1325HDU 1272 HDU 1325是有向图，给定某个节点是另一个元素的父节点HDU 1272是无向图，将两个节点连接起来 共同点：判断是否成环，判断是树木还是森林 区别：有向图可能出现多个箭头指向同一个节点的情况（即一个节点多个父节点）例如[caption width=”176” align=”aligncenter”] 多节点指向同一节点[/caption] 另外，关于HDU 1">
+<meta name="twitter:image" content="http://acm.hdu.edu.cn/data/images/1325-3.gif">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Suche"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-hdu-1325-1272-e5-b9-b6-e6-9f-a5-e9-9b-86-e5-88-a4-e6-96-ad-e6-9c-89-e5-90-91-e5-9b-be-e5-92-8c-e6-97-a0-e5-90-91-e5-9b-be-e6-98-af-e5-90-a6-e6-9e-84-e6-88-90-e4-b8-80-e6-a3-b5-e6-a0-91-e5-9e-8b" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/02/09/hdu-1325-1272-e5-b9-b6-e6-9f-a5-e9-9b-86-e5-88-a4-e6-96-ad-e6-9c-89-e5-90-91-e5-9b-be-e5-92-8c-e6-97-a0-e5-90-91-e5-9b-be-e6-98-af-e5-90-a6-e6-9e-84-e6-88-90-e4-b8-80-e6-a3-b5-e6-a0-91-e5-9e-8b/" class="article-date">
+  <time datetime="2018-02-09T08:49:34.000Z" itemprop="datePublished">2018-02-09</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/未分类/">未分类</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      HDU 1325 1272 并查集判断有向图和无向图是否构成一棵树型
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><a href="http://acm.hdu.edu.cn/showproblem.php?pid=1325" target="_blank" rel="noopener">HDU 1325</a><br><a href="http://acm.hdu.edu.cn/showproblem.php?pid=1272" target="_blank" rel="noopener">HDU 1272</a></p>
+<p>HDU 1325是有向图，给定某个节点是另一个元素的父节点<br>HDU 1272是无向图，将两个节点连接起来</p>
+<p>共同点：判断是否成环，判断是树木还是森林</p>
+<p>区别：有向图可能出现多个箭头指向同一个节点的情况（即一个节点多个父节点）<br>例如<br>[caption width=”176” align=”aligncenter”]<img src="http://acm.hdu.edu.cn/data/images/1325-3.gif" alt=""> 多节点指向同一节点[/caption]</p>
+<p>另外，关于HDU 1272</p>
+<p>评论区看到一种利用离散数学结论的解法<br>（对于无向图）<br>如果m个节点被连成环，那么边的条数就是 m<br>如果m个节点形成了n个树，那么边的条数就是 m - n<br>（这个动动笔画画就能明白）<br><a href="http://acm.hdu.edu.cn/discuss/problem/post/reply.php?postid=28804&#038;messageid=1&#038;deep=0" target="_blank" rel="noopener">链接：这题目干嘛都用并查集做啊</a><br>那么按照题目要求：Yes的条件就是<br>1.边的条数 = 所有节点数 - 1<br>或<br>2.节点数为0</p>
+<p>上代码：<br>HDU 1325<br>`</p>
+<p>#include <iostream></iostream></p>
+<p>#include <cstdio></cstdio></p>
+<p>#include <cstring></cstring></p>
+<p>#include <cmath></cmath></p>
+<p>#define maxlen 200005</p>
+<p>using namespace std;</p>
+<p>//并查集实现</p>
+<p>int roots, ok;</p>
+<p>int fa[maxlen];</p>
+<p>// 这个栈和栈顶指针只是用来记录出现过的元素，用来清空fa数组用的，<br>// 记录fa数组的哪些地方被用过了，<br>// 完成一个示例以后就根据这个栈里面记录的位置来把fa数组里面对应的位置恢复成0<br>// 之所以不用memset，是因为fa数组很大，不是所有部分都用上了，每次都把整个数组写0太浪费时间了<br>int stack[maxlen];<br>int top = -1;</p>
+<p>int find(int i) {//非递归实现<br>    int icopy = i;<br>    while (i != fa[i]) {//找到根元素<br>        i = fa[i];<br>    }</p>
+<pre><code>while (icopy != fa[icopy]) {
+    icopy = fa[icopy];//获取父节点
+    fa[icopy] = i;//挂到根节点下
+}
+
+return i;
+</code></pre><p>}</p>
+<p>int main(int argc, char const *argv[]) {</p>
+<pre><code>int a, b, t = 1;
+
+int count = 0;
+while (1) {
+
+    ok = 1;
+    count = 0;
+
+    // memset(fa, 0, sizeof(fa));//每次都全部写0，耗时长，改为用栈记录修改过的位置
+
+    while (scanf(&quot;%d%d&quot;, &amp;a, &amp;b) &amp;&amp; a &gt; 0 &amp;&amp; b &gt; 0) {
+
+        // a --&gt; b
+        // a是b的父节点
+
+        if (ok) {
+            if (!fa[a]) { //若a没有出现过,就初始化为自己
+                fa[a] = a;
+                count++;
+
+                top++;
+                stack[top] = a;
+                // printf(&quot;add\n&quot;);
+            }
+            if (!fa[b]) {
+                fa[b] = b;
+
+                top++;
+                stack[top] = b;
+
+            } else {
+                if (fa[b] == b) {
+                    count--;
+                    // printf(&quot;sub\n&quot;);
+                }
+            }
+
+            if (fa[b] != b &amp;&amp; fa[b] != a) {//若出现多指一,则不ok
+                ok = 0;
+                // printf(&quot;die 1\n&quot;);
+                continue;
+            } else {
+                a = find(a);//把a换为a的根节点
+                if (b == a) {//环
+                    ok = 0;
+                    // printf(&quot;die 2\n&quot;);
+                    continue;
+                } else {
+                    fa[b] = a;//直接挂在根节点
+                }
+            }
+        }
+    }
+
+    if (a &lt; 0 &amp;&amp; b &lt; 0) {
+        break;
+    }
+    if (ok) {
+        if (count != 1) {
+            ok = 0;
+            // printf(&quot;die 3\n&quot;);
+        }
+    }
+
+    printf(&quot;Case %d is %sa tree.\n&quot;, t, ok ? &quot;&quot; : &quot;not &quot;);
+
+    while (top != -1) {
+        fa[stack[top]] = 0;
+        top--;
+    }
+
+    t++;
+}
+
+return 0;
+</code></pre><p>}<br>`</p>
+<p>HDU 1272</p>
+<p>`</p>
+<p>#include <iostream></iostream></p>
+<p>#include <cstdio></cstdio></p>
+<p>#include <cstring></cstring></p>
+<p>#include <cmath></cmath></p>
+<p>#define maxlen 200005</p>
+<p>using namespace std;</p>
+<p>//并查集实现<br>//虽然给的输入似乎是无向的，但最终我们构造的依然是一个有向的树，我们只要考虑是否会出现环和森林，所以这题和hdu1325性质相同</p>
+<p>int ok;</p>
+<p>int fa[maxlen];</p>
+<p>// 这个栈和栈顶指针只是用来记录出现过的元素，用来清空fa数组用的，<br>// 记录fa数组的哪些地方被用过了，<br>// 完成一个示例以后就根据这个栈里面记录的位置来把fa数组里面对应的位置恢复成0<br>// 之所以不用memset，是因为fa数组很大，不是所有部分都用上了，每次都把整个数组写0太浪费时间了<br>int stack[maxlen];<br>int top = -1;</p>
+<p>int find(int i) {//非递归实现<br>    int icopy = i;<br>    while (i != fa[i]) {//找到根元素<br>        i = fa[i];<br>    }</p>
+<pre><code>while (icopy != fa[icopy]) {
+    icopy = fa[icopy];//获取父节点
+    fa[icopy] = i;//挂到根节点下
+}
+
+return i;
+</code></pre><p>}</p>
+<p>int main(int argc, char const *argv[]) {</p>
+<pre><code>int a, b;
+
+int countOfRoots = 0;
+while (1) {
+
+    ok = 1;
+    countOfRoots = 0;
+
+    // memset(fa, 0, sizeof(fa));//每次都全部写0，耗时长，改为用栈记录修改过的位置
+
+    while (scanf(&quot;%d%d&quot;, &amp;a, &amp;b) &amp;&amp; a &gt; 0 &amp;&amp; b &gt; 0) {
+
+        if (ok) {
+
+            if (!fa[a]) { //若a没有出现过,就初始化为自己
+
+                top++;
+                stack[top] = a;//所有出现过的节点都记录在stack中
+
+                if (!fa[b]) {//若b也没有出现过
+
+                    top++;
+                    stack[top] = b;
+
+                    //指定a为b的父节点,a为独立的根节点
+
+                    fa[a] = a;
+                    fa[b] = a;
+                    countOfRoots++;//根节点数量+1
+
+                } else {//若b出现过
+
+                    fa[a] = find(b);//把a直接挂到b的根节点下
+
+                }
+
+            } else {//若a出现过
+
+                if (!fa[b]) {//而b没出现过
+
+                    top++;
+                    stack[top] = b;
+
+                    fa[b] = find(a);//把b直接挂到a的根节点下
+                } else {//b也出现过
+
+                    if (find(a) == find(b)) {//同一根节点
+                        //成环
+                        ok = 0;
+                    } else {
+                        // 把两个树合并
+                        fa[find(a)] = find(b);
+                        countOfRoots--;
+                    }
+                }
+            }
+        }
+    }
+
+    if (a &lt; 0 &amp;&amp; b &lt; 0) {
+        break;
+    }
+
+    if (ok) {
+        if (top != -1) {//排除掉一个元素都没有的情况（空树）
+            if (countOfRoots != 1) {
+                ok = 0;
+            }
+        }
+    }
+
+    printf(&quot;%s\n&quot;, ok ? &quot;Yes&quot; : &quot;No&quot;);
+
+    while (top != -1) {
+        fa[stack[top]] = 0;
+        top--;
+    }
+}
+
+return 0;
+</code></pre><p>}<br>`</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/02/09/hdu-1325-1272-e5-b9-b6-e6-9f-a5-e9-9b-86-e5-88-a4-e6-96-ad-e6-9c-89-e5-90-91-e5-9b-be-e5-92-8c-e6-97-a0-e5-90-91-e5-9b-be-e6-98-af-e5-90-a6-e6-9e-84-e6-88-90-e4-b8-80-e6-a3-b5-e6-a0-91-e5-9e-8b/" data-id="cje9syozo001j23w5pt6trryh" class="article-share-link">Teilen</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/02/25/fragment-fragment-xposed-e5-bc-80-e5-8f-91-e6-97-b6-e9-81-87-e5-88-b0-e7-9a-84-e5-85-b3-e4-ba-8eclassloader-e7-9a-84-e9-97-ae-e9-a2-98/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Neuer</strong>
+      <div class="article-nav-title">
+        
+          Fragment != Fragment ? —— Xposed开发时遇到的关于ClassLoader的问题
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/02/08/codeforces-699d-fix-a-tree-e5-b9-b6-e6-9f-a5-e9-9b-86-e4-bc-98-e5-8c-96-e7-bb-99-e5-87-ba-e6-89-80-e6-9c-89-e8-8a-82-e7-82-b9-e7-9a-84-e7-88-b6-e8-8a-82-e7-82-b9-ef-bc-8c-e7-94-a8/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Älter</strong>
+      <div class="article-nav-title">CodeForces 699D Fix a Tree——并查集优化 给出所有节点的父节点（有向图），用最少的修改生成一颗合法的树（环的判断，去环）</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Kategorien</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/C-C/">C/C++</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/C-C/Java/">Java</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/CodeForces/">CodeForces</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/CodeForces/动态规划/">动态规划</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/CodeForces/动态规划/算法/">算法</a></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/HDU/">HDU</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/HDU/POJ/">POJ</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/HDU/POJ/动态规划/">动态规划</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/HDU/POJ/动态规划/算法/">算法</a></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/HDU/动态规划/">动态规划</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/HDU/动态规划/未分类/">未分类</a></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Java/">Java</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Python/">Python</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Xposed/">Xposed</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/raspberry-pi/">raspberry pi</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/未分类/">未分类</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/算法/">算法</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/闲时研究/">闲时研究</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archiv</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">letzter Beitrag</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2018/03/02/HelloWorld/">HelloWorld</a>
+          </li>
+        
+          <li>
+            <a href="/2018/03/02/hello-world/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/2018/03/02/hdu-2586-how-far-away-ef-bc-9f-e6-a0-91-e4-b8-8a-e8-8a-82-e7-82-b9-e6-9c-80-e7-9f-ad-e8-b7-9d-e7-a6-bb-ef-bc-8clca-ef-bc-8c-e5-8f-8c-e4-ba-b2-e8-a1-a8-e7-a4-ba-e6-b3-95-e6-9a-b4/">HDU 2586 How far away ？——树上节点最短距离，LCA， 双亲表示法+暴力从下至上追溯，孩子链表示法+（Tarjan 或 欧拉环游RMQ+（ST 或 SegmentTree））</a>
+          </li>
+        
+          <li>
+            <a href="/2018/02/27/codeforces-891-a-pride/">CodeForces 891 A. Pride</a>
+          </li>
+        
+          <li>
+            <a href="/2018/02/26/hdu-1080-poj-1080-human-gene-functions-e5-8a-a8-e6-80-81-e8-a7-84-e5-88-92/">HDU 1080 POJ 1080 Human Gene Functions——动态规划</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>
