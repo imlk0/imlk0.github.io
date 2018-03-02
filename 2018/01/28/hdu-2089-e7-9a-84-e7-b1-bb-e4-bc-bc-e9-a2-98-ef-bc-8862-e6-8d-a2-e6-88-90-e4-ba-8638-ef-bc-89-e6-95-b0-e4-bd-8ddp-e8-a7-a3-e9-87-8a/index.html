@@ -82,8 +82,8 @@
 <meta name="description" content="链接：https://www.nowcoder.com/acm/contest/74/G 来源：牛客网  杭州人称傻乎乎的人为62，而嘟嘟家这里没有这样的习俗。  相比62，他那里的人更加讨厌数字38，当然啦，还有4这个  数字！所以啊，嘟嘟不点都不想见到包含38或者4的数字。  每次给出一个区间[n，m],你能找到所有令人讨厌的数字吗？  输入描述:  多组输入输出； 输入的都是整数对n、m（">
 <meta property="og:type" content="article">
 <meta property="og:title" content="HDU 2089的类似题（62换成了38） 数位dp解释">
-<meta property="og:url" content="http://yoursite.com/2018/01/28/hdu-2089-e7-9a-84-e7-b1-bb-e4-bc-bc-e9-a2-98-ef-bc-8862-e6-8d-a2-e6-88-90-e4-ba-8638-ef-bc-89-e6-95-b0-e4-bd-8ddp-e8-a7-a3-e9-87-8a/index.html">
-<meta property="og:site_name" content="Hexo">
+<meta property="og:url" content="http://kb5201314.github.io/2018/01/28/hdu-2089-e7-9a-84-e7-b1-bb-e4-bc-bc-e9-a2-98-ef-bc-8862-e6-8d-a2-e6-88-90-e4-ba-8638-ef-bc-89-e6-95-b0-e4-bd-8ddp-e8-a7-a3-e9-87-8a/index.html">
+<meta property="og:site_name" content="IMLK">
 <meta property="og:description" content="链接：https://www.nowcoder.com/acm/contest/74/G 来源：牛客网  杭州人称傻乎乎的人为62，而嘟嘟家这里没有这样的习俗。  相比62，他那里的人更加讨厌数字38，当然啦，还有4这个  数字！所以啊，嘟嘟不点都不想见到包含38或者4的数字。  每次给出一个区间[n，m],你能找到所有令人讨厌的数字吗？  输入描述:  多组输入输出； 输入的都是整数对n、m（">
 <meta property="og:updated_time" content="2018-03-02T10:34:14.515Z">
 <meta name="twitter:card" content="summary">
@@ -104,7 +104,7 @@
     motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
     duoshuo: {
       userId: '0',
-      author: 'Author'
+      author: 'Penulis'
     },
     algolia: {
       applicationID: '',
@@ -118,13 +118,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2018/01/28/hdu-2089-e7-9a-84-e7-b1-bb-e4-bc-bc-e9-a2-98-ef-bc-8862-e6-8d-a2-e6-88-90-e4-ba-8638-ef-bc-89-e6-95-b0-e4-bd-8ddp-e8-a7-a3-e9-87-8a/"/>
+  <link rel="canonical" href="http://kb5201314.github.io/2018/01/28/hdu-2089-e7-9a-84-e7-b1-bb-e4-bc-bc-e9-a2-98-ef-bc-8862-e6-8d-a2-e6-88-90-e4-ba-8638-ef-bc-89-e6-95-b0-e4-bd-8ddp-e8-a7-a3-e9-87-8a/"/>
 
 
 
 
 
-  <title>HDU 2089的类似题（62换成了38） 数位dp解释 | Hexo</title>
+  <title>HDU 2089的类似题（62换成了38） 数位dp解释 | IMLK</title>
   
 
 
@@ -154,7 +154,7 @@
     <div class="custom-logo-site-title">
       <a href="/"  class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
-        <span class="site-title">Hexo</span>
+        <span class="site-title">IMLK</span>
         <span class="logo-line-after"><i></i></span>
       </a>
     </div>
@@ -184,7 +184,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
-            Startseite
+            Beranda
           </a>
         </li>
       
@@ -194,7 +194,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
             
-            Archiv
+            Arsip
           </a>
         </li>
       
@@ -231,16 +231,16 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/01/28/hdu-2089-e7-9a-84-e7-b1-bb-e4-bc-bc-e9-a2-98-ef-bc-8862-e6-8d-a2-e6-88-90-e4-ba-8638-ef-bc-89-e6-95-b0-e4-bd-8ddp-e8-a7-a3-e9-87-8a/">
+    <link itemprop="mainEntityOfPage" href="http://kb5201314.github.io/2018/01/28/hdu-2089-e7-9a-84-e7-b1-bb-e4-bc-bc-e9-a2-98-ef-bc-8862-e6-8d-a2-e6-88-90-e4-ba-8638-ef-bc-89-e6-95-b0-e4-bd-8ddp-e8-a7-a3-e9-87-8a/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="John Doe">
+      <meta itemprop="name" content="imlk">
       <meta itemprop="description" content="">
       <meta itemprop="image" content="/images/avatar.gif">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
+      <meta itemprop="name" content="IMLK">
     </span>
 
     
@@ -258,7 +258,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">Diposting di</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-01-28T23:41:21+08:00">
                 2018-01-28
@@ -279,7 +279,7 @@
                 <i class="fa fa-folder-o"></i>
               </span>
               
-                <span class="post-meta-item-text">in</span>
+                <span class="post-meta-item-text">Di</span>
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
@@ -474,7 +474,7 @@ return ans ;
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
-              <p class="site-author-name" itemprop="name">John Doe</p>
+              <p class="site-author-name" itemprop="name">imlk</p>
               <p class="site-description motion-element" itemprop="description"></p>
           </div>
 
@@ -486,7 +486,7 @@ return ans ;
                 <a href="/archives/">
               
                   <span class="site-state-item-count">33</span>
-                  <span class="site-state-item-name">Artikel</span>
+                  <span class="site-state-item-name">posting</span>
                 </a>
               </div>
             
@@ -497,7 +497,7 @@ return ans ;
               <div class="site-state-item site-state-categories">
                 
                   <span class="site-state-item-count">18</span>
-                  <span class="site-state-item-name">Kategorien</span>
+                  <span class="site-state-item-name">kategori</span>
                 
               </div>
             
@@ -539,13 +539,13 @@ return ans ;
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>
-  <span class="author" itemprop="copyrightHolder">John Doe</span>
+  <span class="author" itemprop="copyrightHolder">imlk</span>
 
   
 </div>
 
 
-  <div class="powered-by">Erstellt mit  <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
 
 
 
@@ -553,7 +553,7 @@ return ans ;
 
 
 
-  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+  <div class="theme-info">Tema &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
 
 
 

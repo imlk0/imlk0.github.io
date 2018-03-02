@@ -82,8 +82,8 @@
 <meta name="description" content="HDU 1325HDU 1272 HDU 1325是有向图，给定某个节点是另一个元素的父节点HDU 1272是无向图，将两个节点连接起来 共同点：判断是否成环，判断是树木还是森林 区别：有向图可能出现多个箭头指向同一个节点的情况（即一个节点多个父节点）例如[caption width=”176” align=”aligncenter”] 多节点指向同一节点[/caption] 另外，关于HDU 1">
 <meta property="og:type" content="article">
 <meta property="og:title" content="HDU 1325 1272 并查集判断有向图和无向图是否构成一棵树型">
-<meta property="og:url" content="http://yoursite.com/2018/02/09/hdu-1325-1272-e5-b9-b6-e6-9f-a5-e9-9b-86-e5-88-a4-e6-96-ad-e6-9c-89-e5-90-91-e5-9b-be-e5-92-8c-e6-97-a0-e5-90-91-e5-9b-be-e6-98-af-e5-90-a6-e6-9e-84-e6-88-90-e4-b8-80-e6-a3-b5-e6-a0-91-e5-9e-8b/index.html">
-<meta property="og:site_name" content="Hexo">
+<meta property="og:url" content="http://kb5201314.github.io/2018/02/09/hdu-1325-1272-e5-b9-b6-e6-9f-a5-e9-9b-86-e5-88-a4-e6-96-ad-e6-9c-89-e5-90-91-e5-9b-be-e5-92-8c-e6-97-a0-e5-90-91-e5-9b-be-e6-98-af-e5-90-a6-e6-9e-84-e6-88-90-e4-b8-80-e6-a3-b5-e6-a0-91-e5-9e-8b/index.html">
+<meta property="og:site_name" content="IMLK">
 <meta property="og:description" content="HDU 1325HDU 1272 HDU 1325是有向图，给定某个节点是另一个元素的父节点HDU 1272是无向图，将两个节点连接起来 共同点：判断是否成环，判断是树木还是森林 区别：有向图可能出现多个箭头指向同一个节点的情况（即一个节点多个父节点）例如[caption width=”176” align=”aligncenter”] 多节点指向同一节点[/caption] 另外，关于HDU 1">
 <meta property="og:image" content="http://acm.hdu.edu.cn/data/images/1325-3.gif">
 <meta property="og:updated_time" content="2018-03-02T10:34:14.517Z">
@@ -106,7 +106,7 @@
     motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
     duoshuo: {
       userId: '0',
-      author: 'Author'
+      author: 'Penulis'
     },
     algolia: {
       applicationID: '',
@@ -120,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2018/02/09/hdu-1325-1272-e5-b9-b6-e6-9f-a5-e9-9b-86-e5-88-a4-e6-96-ad-e6-9c-89-e5-90-91-e5-9b-be-e5-92-8c-e6-97-a0-e5-90-91-e5-9b-be-e6-98-af-e5-90-a6-e6-9e-84-e6-88-90-e4-b8-80-e6-a3-b5-e6-a0-91-e5-9e-8b/"/>
+  <link rel="canonical" href="http://kb5201314.github.io/2018/02/09/hdu-1325-1272-e5-b9-b6-e6-9f-a5-e9-9b-86-e5-88-a4-e6-96-ad-e6-9c-89-e5-90-91-e5-9b-be-e5-92-8c-e6-97-a0-e5-90-91-e5-9b-be-e6-98-af-e5-90-a6-e6-9e-84-e6-88-90-e4-b8-80-e6-a3-b5-e6-a0-91-e5-9e-8b/"/>
 
 
 
 
 
-  <title>HDU 1325 1272 并查集判断有向图和无向图是否构成一棵树型 | Hexo</title>
+  <title>HDU 1325 1272 并查集判断有向图和无向图是否构成一棵树型 | IMLK</title>
   
 
 
@@ -156,7 +156,7 @@
     <div class="custom-logo-site-title">
       <a href="/"  class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
-        <span class="site-title">Hexo</span>
+        <span class="site-title">IMLK</span>
         <span class="logo-line-after"><i></i></span>
       </a>
     </div>
@@ -186,7 +186,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
-            Startseite
+            Beranda
           </a>
         </li>
       
@@ -196,7 +196,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
             
-            Archiv
+            Arsip
           </a>
         </li>
       
@@ -233,16 +233,16 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/02/09/hdu-1325-1272-e5-b9-b6-e6-9f-a5-e9-9b-86-e5-88-a4-e6-96-ad-e6-9c-89-e5-90-91-e5-9b-be-e5-92-8c-e6-97-a0-e5-90-91-e5-9b-be-e6-98-af-e5-90-a6-e6-9e-84-e6-88-90-e4-b8-80-e6-a3-b5-e6-a0-91-e5-9e-8b/">
+    <link itemprop="mainEntityOfPage" href="http://kb5201314.github.io/2018/02/09/hdu-1325-1272-e5-b9-b6-e6-9f-a5-e9-9b-86-e5-88-a4-e6-96-ad-e6-9c-89-e5-90-91-e5-9b-be-e5-92-8c-e6-97-a0-e5-90-91-e5-9b-be-e6-98-af-e5-90-a6-e6-9e-84-e6-88-90-e4-b8-80-e6-a3-b5-e6-a0-91-e5-9e-8b/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="John Doe">
+      <meta itemprop="name" content="imlk">
       <meta itemprop="description" content="">
       <meta itemprop="image" content="/images/avatar.gif">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
+      <meta itemprop="name" content="IMLK">
     </span>
 
     
@@ -260,7 +260,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">Diposting di</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-02-09T16:49:34+08:00">
                 2018-02-09
@@ -281,7 +281,7 @@
                 <i class="fa fa-folder-o"></i>
               </span>
               
-                <span class="post-meta-item-text">in</span>
+                <span class="post-meta-item-text">Di</span>
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
@@ -619,7 +619,7 @@ return 0;
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
-              <p class="site-author-name" itemprop="name">John Doe</p>
+              <p class="site-author-name" itemprop="name">imlk</p>
               <p class="site-description motion-element" itemprop="description"></p>
           </div>
 
@@ -631,7 +631,7 @@ return 0;
                 <a href="/archives/">
               
                   <span class="site-state-item-count">33</span>
-                  <span class="site-state-item-name">Artikel</span>
+                  <span class="site-state-item-name">posting</span>
                 </a>
               </div>
             
@@ -642,7 +642,7 @@ return 0;
               <div class="site-state-item site-state-categories">
                 
                   <span class="site-state-item-count">18</span>
-                  <span class="site-state-item-name">Kategorien</span>
+                  <span class="site-state-item-name">kategori</span>
                 
               </div>
             
@@ -684,13 +684,13 @@ return 0;
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>
-  <span class="author" itemprop="copyrightHolder">John Doe</span>
+  <span class="author" itemprop="copyrightHolder">imlk</span>
 
   
 </div>
 
 
-  <div class="powered-by">Erstellt mit  <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
 
 
 
@@ -698,7 +698,7 @@ return 0;
 
 
 
-  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+  <div class="theme-info">Tema &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
 
 
 

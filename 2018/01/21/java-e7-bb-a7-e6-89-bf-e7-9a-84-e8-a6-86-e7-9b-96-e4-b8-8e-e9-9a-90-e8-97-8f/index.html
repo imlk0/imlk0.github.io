@@ -82,8 +82,8 @@
 <meta name="description" content="参考：https://www.cnblogs.com/it12345/p/5221673.html 隐藏和覆盖的区别隐藏：将类型转换为父类的类型 即可解除 隐藏覆盖：将类型转换为父类的类型也 不能 解除覆盖 成员变量只可能被隐藏，不存在覆盖一说 父类的成员变量静态或非静态都可能被子类中同名的成员变量 隐藏 （不一定要匹配类型，同名即可隐藏） 处理直接用圆点运算符父类中的成员变量的办法：将类型转换为">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Java继承的覆盖与隐藏">
-<meta property="og:url" content="http://yoursite.com/2018/01/21/java-e7-bb-a7-e6-89-bf-e7-9a-84-e8-a6-86-e7-9b-96-e4-b8-8e-e9-9a-90-e8-97-8f/index.html">
-<meta property="og:site_name" content="Hexo">
+<meta property="og:url" content="http://kb5201314.github.io/2018/01/21/java-e7-bb-a7-e6-89-bf-e7-9a-84-e8-a6-86-e7-9b-96-e4-b8-8e-e9-9a-90-e8-97-8f/index.html">
+<meta property="og:site_name" content="IMLK">
 <meta property="og:description" content="参考：https://www.cnblogs.com/it12345/p/5221673.html 隐藏和覆盖的区别隐藏：将类型转换为父类的类型 即可解除 隐藏覆盖：将类型转换为父类的类型也 不能 解除覆盖 成员变量只可能被隐藏，不存在覆盖一说 父类的成员变量静态或非静态都可能被子类中同名的成员变量 隐藏 （不一定要匹配类型，同名即可隐藏） 处理直接用圆点运算符父类中的成员变量的办法：将类型转换为">
 <meta property="og:updated_time" content="2018-03-02T10:34:14.517Z">
 <meta name="twitter:card" content="summary">
@@ -104,7 +104,7 @@
     motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
     duoshuo: {
       userId: '0',
-      author: 'Author'
+      author: 'Penulis'
     },
     algolia: {
       applicationID: '',
@@ -118,13 +118,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2018/01/21/java-e7-bb-a7-e6-89-bf-e7-9a-84-e8-a6-86-e7-9b-96-e4-b8-8e-e9-9a-90-e8-97-8f/"/>
+  <link rel="canonical" href="http://kb5201314.github.io/2018/01/21/java-e7-bb-a7-e6-89-bf-e7-9a-84-e8-a6-86-e7-9b-96-e4-b8-8e-e9-9a-90-e8-97-8f/"/>
 
 
 
 
 
-  <title>Java继承的覆盖与隐藏 | Hexo</title>
+  <title>Java继承的覆盖与隐藏 | IMLK</title>
   
 
 
@@ -154,7 +154,7 @@
     <div class="custom-logo-site-title">
       <a href="/"  class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
-        <span class="site-title">Hexo</span>
+        <span class="site-title">IMLK</span>
         <span class="logo-line-after"><i></i></span>
       </a>
     </div>
@@ -184,7 +184,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
-            Startseite
+            Beranda
           </a>
         </li>
       
@@ -194,7 +194,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
             
-            Archiv
+            Arsip
           </a>
         </li>
       
@@ -231,16 +231,16 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/01/21/java-e7-bb-a7-e6-89-bf-e7-9a-84-e8-a6-86-e7-9b-96-e4-b8-8e-e9-9a-90-e8-97-8f/">
+    <link itemprop="mainEntityOfPage" href="http://kb5201314.github.io/2018/01/21/java-e7-bb-a7-e6-89-bf-e7-9a-84-e8-a6-86-e7-9b-96-e4-b8-8e-e9-9a-90-e8-97-8f/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="John Doe">
+      <meta itemprop="name" content="imlk">
       <meta itemprop="description" content="">
       <meta itemprop="image" content="/images/avatar.gif">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
+      <meta itemprop="name" content="IMLK">
     </span>
 
     
@@ -258,7 +258,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">Diposting di</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-01-21T22:39:20+08:00">
                 2018-01-21
@@ -279,7 +279,7 @@
                 <i class="fa fa-folder-o"></i>
               </span>
               
-                <span class="post-meta-item-text">in</span>
+                <span class="post-meta-item-text">Di</span>
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
@@ -444,10 +444,10 @@
       
         <ul class="sidebar-nav motion-element">
           <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            Inhaltsverzeichnis
+            Daftar Isi
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            Übersicht
+            Ikhtisar
           </li>
         </ul>
       
@@ -456,7 +456,7 @@
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
-              <p class="site-author-name" itemprop="name">John Doe</p>
+              <p class="site-author-name" itemprop="name">imlk</p>
               <p class="site-description motion-element" itemprop="description"></p>
           </div>
 
@@ -468,7 +468,7 @@
                 <a href="/archives/">
               
                   <span class="site-state-item-count">33</span>
-                  <span class="site-state-item-name">Artikel</span>
+                  <span class="site-state-item-name">posting</span>
                 </a>
               </div>
             
@@ -479,7 +479,7 @@
               <div class="site-state-item site-state-categories">
                 
                   <span class="site-state-item-count">18</span>
-                  <span class="site-state-item-name">Kategorien</span>
+                  <span class="site-state-item-name">kategori</span>
                 
               </div>
             
@@ -537,13 +537,13 @@
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>
-  <span class="author" itemprop="copyrightHolder">John Doe</span>
+  <span class="author" itemprop="copyrightHolder">imlk</span>
 
   
 </div>
 
 
-  <div class="powered-by">Erstellt mit  <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
 
 
 
@@ -551,7 +551,7 @@
 
 
 
-  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+  <div class="theme-info">Tema &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
 
 
 

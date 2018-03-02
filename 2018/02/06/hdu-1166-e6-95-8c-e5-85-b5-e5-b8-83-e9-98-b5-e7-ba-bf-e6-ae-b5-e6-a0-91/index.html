@@ -82,8 +82,8 @@
 <meta name="description" content="这题本来我打算用前缀数组实现源数据的处理，并把更变用map实现，发现后来还是超时了； 借机学习了一下线段树，虽然没怎么看懂，但大概还是理解了一点；这题用 指针构成的线段树 和 数组构成的线段树 分别来实现了一下资料：线段树从零开始 - CSDN博客http://blog.csdn.net/zearot/article/details/52280189线段树详解 （原理，实现与应用） - CSDN博">
 <meta property="og:type" content="article">
 <meta property="og:title" content="HDU 1166 敌兵布阵——线段树，树状数组">
-<meta property="og:url" content="http://yoursite.com/2018/02/06/hdu-1166-e6-95-8c-e5-85-b5-e5-b8-83-e9-98-b5-e7-ba-bf-e6-ae-b5-e6-a0-91/index.html">
-<meta property="og:site_name" content="Hexo">
+<meta property="og:url" content="http://kb5201314.github.io/2018/02/06/hdu-1166-e6-95-8c-e5-85-b5-e5-b8-83-e9-98-b5-e7-ba-bf-e6-ae-b5-e6-a0-91/index.html">
+<meta property="og:site_name" content="IMLK">
 <meta property="og:description" content="这题本来我打算用前缀数组实现源数据的处理，并把更变用map实现，发现后来还是超时了； 借机学习了一下线段树，虽然没怎么看懂，但大概还是理解了一点；这题用 指针构成的线段树 和 数组构成的线段树 分别来实现了一下资料：线段树从零开始 - CSDN博客http://blog.csdn.net/zearot/article/details/52280189线段树详解 （原理，实现与应用） - CSDN博">
 <meta property="og:updated_time" content="2018-03-02T10:34:14.515Z">
 <meta name="twitter:card" content="summary">
@@ -104,7 +104,7 @@
     motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
     duoshuo: {
       userId: '0',
-      author: 'Author'
+      author: 'Penulis'
     },
     algolia: {
       applicationID: '',
@@ -118,13 +118,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2018/02/06/hdu-1166-e6-95-8c-e5-85-b5-e5-b8-83-e9-98-b5-e7-ba-bf-e6-ae-b5-e6-a0-91/"/>
+  <link rel="canonical" href="http://kb5201314.github.io/2018/02/06/hdu-1166-e6-95-8c-e5-85-b5-e5-b8-83-e9-98-b5-e7-ba-bf-e6-ae-b5-e6-a0-91/"/>
 
 
 
 
 
-  <title>HDU 1166 敌兵布阵——线段树，树状数组 | Hexo</title>
+  <title>HDU 1166 敌兵布阵——线段树，树状数组 | IMLK</title>
   
 
 
@@ -154,7 +154,7 @@
     <div class="custom-logo-site-title">
       <a href="/"  class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
-        <span class="site-title">Hexo</span>
+        <span class="site-title">IMLK</span>
         <span class="logo-line-after"><i></i></span>
       </a>
     </div>
@@ -184,7 +184,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
-            Startseite
+            Beranda
           </a>
         </li>
       
@@ -194,7 +194,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
             
-            Archiv
+            Arsip
           </a>
         </li>
       
@@ -231,16 +231,16 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/02/06/hdu-1166-e6-95-8c-e5-85-b5-e5-b8-83-e9-98-b5-e7-ba-bf-e6-ae-b5-e6-a0-91/">
+    <link itemprop="mainEntityOfPage" href="http://kb5201314.github.io/2018/02/06/hdu-1166-e6-95-8c-e5-85-b5-e5-b8-83-e9-98-b5-e7-ba-bf-e6-ae-b5-e6-a0-91/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="John Doe">
+      <meta itemprop="name" content="imlk">
       <meta itemprop="description" content="">
       <meta itemprop="image" content="/images/avatar.gif">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
+      <meta itemprop="name" content="IMLK">
     </span>
 
     
@@ -258,7 +258,7 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Veröffentlicht am</span>
+                <span class="post-meta-item-text">Diposting di</span>
               
               <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-02-06T17:33:38+08:00">
                 2018-02-06
@@ -279,7 +279,7 @@
                 <i class="fa fa-folder-o"></i>
               </span>
               
-                <span class="post-meta-item-text">in</span>
+                <span class="post-meta-item-text">Di</span>
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
@@ -676,7 +676,7 @@ return 0;
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
-              <p class="site-author-name" itemprop="name">John Doe</p>
+              <p class="site-author-name" itemprop="name">imlk</p>
               <p class="site-description motion-element" itemprop="description"></p>
           </div>
 
@@ -688,7 +688,7 @@ return 0;
                 <a href="/archives/">
               
                   <span class="site-state-item-count">33</span>
-                  <span class="site-state-item-name">Artikel</span>
+                  <span class="site-state-item-name">posting</span>
                 </a>
               </div>
             
@@ -699,7 +699,7 @@ return 0;
               <div class="site-state-item site-state-categories">
                 
                   <span class="site-state-item-count">18</span>
-                  <span class="site-state-item-name">Kategorien</span>
+                  <span class="site-state-item-name">kategori</span>
                 
               </div>
             
@@ -741,13 +741,13 @@ return 0;
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>
-  <span class="author" itemprop="copyrightHolder">John Doe</span>
+  <span class="author" itemprop="copyrightHolder">imlk</span>
 
   
 </div>
 
 
-  <div class="powered-by">Erstellt mit  <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
 
 
 
@@ -755,7 +755,7 @@ return 0;
 
 
 
-  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+  <div class="theme-info">Tema &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
 
 
 
