@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.0.6" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.0.6">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.0.6">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.0.6">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.0.6" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '6.0.6',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="原题： http://acm.hdu.edu.cn/showproblem.php?pid=1003 看到这题的时候一脸懵逼，网上寻找解答，发现都讲的不详细，变量声明也很短，根本看不出是什么用途，这里给出了我的解答，参考了网上各位大神的方法，加上了注释，方便学习。 ##0x00 分治法解题1234567891011121314151617181920212223242526272829303132">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HDU 1003 Max sum——分治法的应用，动态规划，前缀数组">
+<meta property="og:url" content="http://kb5201314.github.io/2017/12/06/HDU 1003 Max sum/index.html">
+<meta property="og:site_name" content="IMLK">
+<meta property="og:description" content="原题： http://acm.hdu.edu.cn/showproblem.php?pid=1003 看到这题的时候一脸懵逼，网上寻找解答，发现都讲的不详细，变量声明也很短，根本看不出是什么用途，这里给出了我的解答，参考了网上各位大神的方法，加上了注释，方便学习。 ##0x00 分治法解题1234567891011121314151617181920212223242526272829303132">
+<meta property="og:updated_time" content="2018-03-31T13:47:33.936Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="HDU 1003 Max sum——分治法的应用，动态规划，前缀数组">
+<meta name="twitter:description" content="原题： http://acm.hdu.edu.cn/showproblem.php?pid=1003 看到这题的时候一脸懵逼，网上寻找解答，发现都讲的不详细，变量声明也很短，根本看不出是什么用途，这里给出了我的解答，参考了网上各位大神的方法，加上了注释，方便学习。 ##0x00 分治法解题1234567891011121314151617181920212223242526272829303132">
+
+
+
+
+
+
+  <link rel="canonical" href="http://kb5201314.github.io/2017/12/06/HDU 1003 Max sum/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>HDU 1003 Max sum——分治法的应用，动态规划，前缀数组 | IMLK</title>
+  
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"> 
+
+<div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">IMLK</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+          
+  <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />Home</a>
+</li>
+
+      
+        
+        
+          
+  <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />Archives</a>
+</li>
+
+      
+
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+  
+
+
+
+ </div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://kb5201314.github.io/2017/12/06/HDU 1003 Max sum/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="imlk">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="IMLK">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">HDU 1003 Max sum——分治法的应用，动态规划，前缀数组</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-12-06T23:10:33+08:00">2017-12-06</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/HDU/" itemprop="url" rel="index"><span itemprop="name">HDU</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>原题： <a href="http://acm.hdu.edu.cn/showproblem.php?pid=1003" target="_blank" rel="noopener">http://acm.hdu.edu.cn/showproblem.php?pid=1003</a></p>
+<p>看到这题的时候一脸懵逼，网上寻找解答，发现都讲的不详细，变量声明也很短，根本看不出是什么用途，这里给出了我的解答，参考了网上各位大神的方法，加上了注释，方便学习。</p>
+<p>##<strong>0x00 分治法解题</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;stdio.h&gt;</span><br><span class="line"></span><br><span class="line">struct Sequence</span><br><span class="line">&#123;</span><br><span class="line">	//表示一个数组</span><br><span class="line"></span><br><span class="line">	int sum;//数组元素之和</span><br><span class="line">	int leftPosition;//数组左边界位置</span><br><span class="line">	int rightPosition;//数组右边界位置</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">/*</span><br><span class="line">	求最大子列：</span><br><span class="line"></span><br><span class="line">	首先明确：</span><br><span class="line">		给定一个数列</span><br><span class="line">		其最大子列的范围，要么包括正中间的位置，要么全在最中间位置的左边，要么全在最中间位置的右边</span><br><span class="line">		这三种情况在迭代函数中分别处理</span><br><span class="line">*/</span><br><span class="line"></span><br><span class="line">struct Sequence getMaxSequence(int * sourceSequence, int leftPosition, int rightPosition) &#123;</span><br><span class="line"></span><br><span class="line">	// printf(&quot;into： %d, %d\n&quot;,leftPosition,rightPosition);</span><br><span class="line">	int mediumPosition;</span><br><span class="line"></span><br><span class="line">	//范围：[leftPosition, rightPosition]</span><br><span class="line">	if (leftPosition == rightPosition) &#123;</span><br><span class="line">		//给定范围内的子数列只有一个元素,构造一个struct sequence来描述;</span><br><span class="line">		struct Sequence sequence;</span><br><span class="line">		sequence.leftPosition = leftPosition;</span><br><span class="line"></span><br><span class="line">		sequence.rightPosition = rightPosition;</span><br><span class="line">		sequence.sum = sourceSequence[leftPosition];</span><br><span class="line">		// printf(&quot;return: %d, %d\n&quot;,sequence.leftPosition,sequence.rightPosition);</span><br><span class="line"></span><br><span class="line">		return sequence;</span><br><span class="line">		    //将这个元素返回</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	//取得中间位置</span><br><span class="line">	mediumPosition = (leftPosition + rightPosition) / 2;</span><br><span class="line"></span><br><span class="line">	//构造三种struct来保存三种情况的返回值；</span><br><span class="line">	struct Sequence leftSequence;</span><br><span class="line">	struct Sequence rightSequence;</span><br><span class="line">	struct Sequence aroundSequence;</span><br><span class="line"></span><br><span class="line">	leftSequence = getMaxSequence(sourceSequence, leftPosition, mediumPosition);</span><br><span class="line"></span><br><span class="line">	rightSequence = getMaxSequence(sourceSequence, mediumPosition + 1, rightPosition);</span><br><span class="line"></span><br><span class="line">	//第三种情况下，先从中间向左边查找找出最大的和，再从中间向右边查找找出最大的和，相加得到横跨中间位置的最大值及范围</span><br><span class="line">	//先是左边</span><br><span class="line">	//先保存向左边出发遇到的第一个值</span><br><span class="line">	int leftMaxSumTmp = sourceSequence[mediumPosition];</span><br><span class="line">	//并保存该值的位置</span><br><span class="line">	aroundSequence.leftPosition = mediumPosition;</span><br><span class="line"></span><br><span class="line">	int leftSumTmp = 0;</span><br><span class="line">	for (int index = mediumPosition; index &gt;= leftPosition; index--) &#123;</span><br><span class="line">		leftSumTmp = leftSumTmp + sourceSequence[index];</span><br><span class="line">		if (leftSumTmp &gt;= leftMaxSumTmp) &#123;</span><br><span class="line">			//如果发现从中间到左边某一项的所有值之和比leftMaxSumTmp更大了,就更新leftMaxSumTmp</span><br><span class="line">			//并记录此位置到aroundSequence的leftPosition字段</span><br><span class="line">			leftMaxSumTmp = leftSumTmp;</span><br><span class="line">			aroundSequence.leftPosition = index;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line">	//再是右边</span><br><span class="line">	//先保存向右边出发遇到的第一个值(因为到这里leftPosition和rightPosition不相等所以meiumPosition + 1（一定小于等于rightPosition）一定没有超过范围：[leftPosition, rightPosition])，不加if</span><br><span class="line">	int rightMaxSumTmp = sourceSequence[mediumPosition + 1];</span><br><span class="line">	//保存该值的位置</span><br><span class="line">	aroundSequence.rightPosition = mediumPosition + 1;</span><br><span class="line"></span><br><span class="line">	int rightSumTmp = 0;</span><br><span class="line">	for (int index = mediumPosition + 1; index &lt;= rightPosition; index++) &#123;</span><br><span class="line">		rightSumTmp = rightSumTmp + sourceSequence[index];</span><br><span class="line">		if (rightSumTmp &gt;= rightMaxSumTmp) &#123;</span><br><span class="line">			//如果发现从中间到右边某一项的所有值之和比rightMaxSumTmp更大了,就更新rightMaxSumTmp</span><br><span class="line">			//并记录此位置到aroundSequence的rightPosition字段</span><br><span class="line">			rightMaxSumTmp = rightSumTmp;</span><br><span class="line">			aroundSequence.rightPosition = index;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	aroundSequence.sum = leftMaxSumTmp + rightMaxSumTmp;</span><br><span class="line"></span><br><span class="line">	//三选一返回，选sum最长的那个返回</span><br><span class="line"></span><br><span class="line">	// printf(&quot;return: %d, %d\n&quot;,finalSequence.leftPosition,finalSequence.rightPosition);</span><br><span class="line">	return (leftSequence.sum &gt; rightSequence.sum) ? ((leftSequence.sum &gt; aroundSequence.sum) ? leftSequence : aroundSequence) : ((rightSequence.sum &gt; aroundSequence.sum) ? rightSequence : aroundSequence);</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line">int main() &#123;</span><br><span class="line">	int numOfCase , indexOfCase = 1,lengthOfSquence;</span><br><span class="line">	scanf(&quot;%d&quot;, &amp;numOfCase);</span><br><span class="line">	while (indexOfCase &lt;= numOfCase) &#123;</span><br><span class="line">		scanf(&quot;%d&quot;,&amp;lengthOfSquence);</span><br><span class="line">		int sourceSequence[100000];</span><br><span class="line">		for(int index = 0;index &lt;lengthOfSquence;index++)&#123;</span><br><span class="line">			scanf(&quot;%d&quot;,sourceSequence + index); </span><br><span class="line">		&#125;</span><br><span class="line">		struct Sequence aimSequence =  getMaxSequence(sourceSequence,0,lengthOfSquence - 1);</span><br><span class="line">		printf(&quot;Case %d:\n%d %d %d\n&quot;, indexOfCase ,aimSequence.sum,aimSequence.leftPosition + 1,aimSequence.rightPosition + 1);</span><br><span class="line">		if(indexOfCase != numOfCase)&#123;</span><br><span class="line">			printf(&quot;\n&quot;);</span><br><span class="line">		&#125;</span><br><span class="line">		indexOfCase++;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>寒假看到这样一篇文章，讲的很详细<br><a href="http://conw.net/archives/9/#comment-25" target="_blank" rel="noopener">http://conw.net/archives/9/#comment-25</a></p>
+<p>##<strong>0x01 动态规划</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line">#include &lt;cstdio&gt;</span><br><span class="line">#include &lt;cstring&gt;</span><br><span class="line"></span><br><span class="line">#define iinf 1e9</span><br><span class="line"></span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">// O(n)AC</span><br><span class="line"></span><br><span class="line">// 动态规划</span><br><span class="line">// 原先维护一个dp数组，dp[i]保存以第i个位子结尾的所有子列的最大和</span><br><span class="line">// dp[i] = list[i] + max(dp[i - 1], 0);</span><br><span class="line">// 自处省略这个数组，用两个变量来实现</span><br><span class="line"></span><br><span class="line">int main(int argc, char const *argv[])</span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">	int T, N, last, now, ans, startpos, l, r;</span><br><span class="line">	scanf(&quot;%d&quot;, &amp;T);</span><br><span class="line">	for (int j = 1; j &lt;= T; j++) &#123;</span><br><span class="line">		last = -1;</span><br><span class="line">		ans = -iinf;</span><br><span class="line">		l = 1;</span><br><span class="line">		r = 1;</span><br><span class="line">		scanf(&quot;%d&quot;, &amp;N);</span><br><span class="line"></span><br><span class="line">		for (int i = 1; i &lt;= N; i++) &#123;</span><br><span class="line">			scanf(&quot;%d&quot;, &amp;now);</span><br><span class="line">			if (last &gt;= 0) &#123;</span><br><span class="line">				last = now + last;</span><br><span class="line"></span><br><span class="line">			&#125; else &#123;</span><br><span class="line">				last = now;</span><br><span class="line">				startpos = i;</span><br><span class="line"></span><br><span class="line">			&#125;</span><br><span class="line"></span><br><span class="line">			if (last &gt; ans) &#123;</span><br><span class="line">				ans = last;</span><br><span class="line">				l = startpos;</span><br><span class="line">				r = i;</span><br><span class="line">			&#125;</span><br><span class="line"></span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		if (j == 1) &#123;</span><br><span class="line">			printf(&quot;Case 1:\n&quot;);</span><br><span class="line">		&#125; else &#123;</span><br><span class="line">			printf(&quot;\nCase %d:\n&quot;, j);</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		printf(&quot;%d %d %d\n&quot;, ans, l, r);</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>##<strong>0x02 结合优化后的前缀数组</strong></p>
+<p>用这种用法的人似乎更多</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line">#include &lt;cstdio&gt;</span><br><span class="line">#include &lt;cstring&gt;</span><br><span class="line">#include &lt;algorithm&gt;</span><br><span class="line"></span><br><span class="line">#define iinf 1e9</span><br><span class="line"></span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">// O(n)AC</span><br><span class="line"></span><br><span class="line">// 另一种结合前缀数组的方法</span><br><span class="line">// data[i] = list[0...(i - 1)];</span><br><span class="line">// data数组从1开始避免对边界的判断</span><br><span class="line">// 则list[x...y] = data[y + 1] - data[x];</span><br><span class="line">// i作为循环变量</span><br><span class="line">// 维护data[i]的最小值mi，更新ans的最大值</span><br><span class="line">// mi = min(mi, data[i])</span><br><span class="line">// ans = max(data[i] - mi, ans)</span><br><span class="line">// 可知若以第y个元素结尾的所有子列中list[x...y]为最优解，那么data[x]一定是data[1],data[2],data[3]...data[y](注意这里没有data[y+1],因为至少要有一个元素)中的最小值</span><br><span class="line"></span><br><span class="line">int main(int argc, char const *argv[])</span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">	int T, N, sum, now, ans, min, minpos, l, r;</span><br><span class="line">	scanf(&quot;%d&quot;, &amp;T);</span><br><span class="line">	for (int j = 1; j &lt;= T; j++) &#123;</span><br><span class="line">		sum = 0;</span><br><span class="line">		ans = -iinf;</span><br><span class="line">		min = 0;</span><br><span class="line">		minpos = 0;</span><br><span class="line">		l = 1;</span><br><span class="line">		r = 1;</span><br><span class="line">		scanf(&quot;%d&quot;, &amp;N);</span><br><span class="line"></span><br><span class="line">		for (int i = 1; i &lt;= N; i++) &#123;</span><br><span class="line">			scanf(&quot;%d&quot;, &amp;now);</span><br><span class="line">			sum += now;</span><br><span class="line">			if (sum - min &gt; ans) &#123;//更新答案，这里使用的是上一次循环的min值</span><br><span class="line">				r = i;</span><br><span class="line">				l = minpos + 1;</span><br><span class="line">				ans = sum - min;</span><br><span class="line">			&#125;</span><br><span class="line">			if (sum &lt; min) &#123;//该判断语句不可和上一句调换，否则将可能出现最优解的数列长度为0；</span><br><span class="line">				min = sum;//更新本次循环的min，为在下一循环中使用到</span><br><span class="line">				minpos = i;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		if (j == 1) &#123;</span><br><span class="line">			printf(&quot;Case 1:\n&quot;);</span><br><span class="line">		&#125; else &#123;</span><br><span class="line">			printf(&quot;\nCase %d:\n&quot;, j);</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		printf(&quot;%d %d %d\n&quot;, ans, l, r);</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/12/06/关于scanf的误区/" rel="next" title="关于scanf的误区">
+                <i class="fa fa-chevron-left"></i> 关于scanf的误区
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/12/09/一道抓小偷的OJ题，不用数组实现，遗憾位移以后没有赋值，在此记下/" rel="prev" title="一道抓小偷的OJ题，不用数组实现，遗憾位移以后没有赋值，在此记下">
+                一道抓小偷的OJ题，不用数组实现，遗憾位移以后没有赋值，在此记下 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">imlk</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">33</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">14</span>
+                    <span class="site-state-item-name">categories</span>
+                  
+                </div>
+              
+
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love" id="animate"> 
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">imlk</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/theme-next/hexo-theme-next">NexT.Mist</a> v6.0.6</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.0.6"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.0.6"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.0.6"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.0.6"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.0.6"></script>
+
+
+
+  
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
