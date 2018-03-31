@@ -5,7 +5,7 @@
   
 
 
-<html class="theme-next mist use-motion" lang="">
+<html class="theme-next mist use-motion" lang="zh-Hans">
 <head>
   <meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -99,12 +99,16 @@
 
 
 
-  <meta property="og:type" content="website">
+  <meta name="description" content="勿在浮沙铸高台">
+<meta property="og:type" content="website">
 <meta property="og:title" content="IMLK">
 <meta property="og:url" content="http://kb5201314.github.io/index.html">
 <meta property="og:site_name" content="IMLK">
+<meta property="og:description" content="勿在浮沙铸高台">
+<meta property="og:locale" content="zh-Hans">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="IMLK">
+<meta name="twitter:description" content="勿在浮沙铸高台">
 
 
 
@@ -161,7 +165,7 @@
 
 </head>
 
-<body itemscope itemtype="http://schema.org/WebPage" lang="">
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
 
   
   
@@ -187,7 +191,7 @@
       </a>
     </div>
       
-        <p class="site-subtitle"></p>
+        <p class="site-subtitle">一条咸鱼</p>
       
   </div>
 
@@ -209,18 +213,45 @@
         
         
           
-  <li class="menu-item menu-item-home">
+  <li class="menu-item menu-item-主页">
     <a href="/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />Home</a>
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />主页</a>
 </li>
 
       
         
         
           
-  <li class="menu-item menu-item-archives">
+  <li class="menu-item menu-item-关于">
+    <a href="/about/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-user"></i> <br />关于</a>
+</li>
+
+      
+        
+        
+          
+  <li class="menu-item menu-item-目录">
+    <a href="/categories/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-th"></i> <br />目录</a>
+</li>
+
+      
+        
+        
+          
+  <li class="menu-item menu-item-文章">
     <a href="/archives/" rel="section">
-      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />Archives</a>
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />文章</a>
+</li>
+
+      
+        
+        
+          
+  <li class="menu-item menu-item-友链">
+    <a href="/links/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-link"></i> <br />友链</a>
 </li>
 
       
@@ -231,6 +262,28 @@
 
   
     
+
+    
+    
+      
+      
+    
+      
+      
+    
+      
+      
+    
+      
+      
+    
+      
+      
+    
+    
+
+  
+
 
   
 
@@ -390,1349 +443,11 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://kb5201314.github.io/2018/03/02/HDU 2586 How far away ？/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="imlk">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="IMLK">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/03/02/HDU 2586 How far away ？/" itemprop="url">HDU 2586 How far away ？——树上节点最短距离，LCA， 双亲表示法+暴力从下至上追溯，孩子链表示法+（Tarjan 或 欧拉环游RMQ+（ST 或 SegmentTree））</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-03-02T15:58:51+08:00">2018-03-02</time>
-            
-
-            
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/动态规划/" itemprop="url" rel="index"><span itemprop="name">动态规划</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>标题真长。。。</p>
-<p>HDU 2586 How far away ？——树上节点最短距离，LCA， 双亲表示法+暴力从下至上追溯，孩子链表示法+（Tarjan 或 欧拉环游RMQ+（ST 或 SegmentTree））</p>
-<p><a href="http://acm.hdu.edu.cn/showproblem.php?pid=2586" target="_blank" rel="noopener">http://acm.hdu.edu.cn/showproblem.php?pid=2586</a></p>
-<h2 id="四种解法："><a href="#四种解法：" class="headerlink" title="四种解法："></a>四种解法：</h2><p>- 双亲表示法+暴力从下至上追溯<br>- 孩子链表示法+Tarjan<br>- 孩子链表示法+欧拉环游RMQ+ST<br>- 孩子链表示法+欧拉环游RMQ+SegmentTree</p>
-<h2 id="对于建树的问题，要解决父节点和子节点的问题："><a href="#对于建树的问题，要解决父节点和子节点的问题：" class="headerlink" title="对于建树的问题，要解决父节点和子节点的问题："></a>对于建树的问题，要解决父节点和子节点的问题：</h2><p>- 第一种解法中，双亲表示法，用一个一维数组houses来储存所有节点，houses[x].fa表示该节点的父节点，当两个子树被合并造成冲突时，将其中一棵树倒置</p>
-<p>如：</p>
-<blockquote>
-<p>1    2<br>↑    ↑<br>3    4<br>↑    ↑<br>5    6</p>
-</blockquote>
-<p>此时要连接3和4，必定会造成冲突，因为，若将3作为4的父节点（3 → 4），4就会有两个父节点，于是把4 ← 6这一支倒置成 4 → 6<br>于是：</p>
-<blockquote>
-<p>1    2<br>↑    ↑<br>3  → 4<br>↑    ↓<br>5    6<br>（5成为合并以后的根元素）</p>
-</blockquote>
-<p>- 剩下三种解法则利用孩子链表示法，记录所有与目标节点相连接的节点（包括一个父节点和一个子节点），然后随便选取一个节点作为父节点，用dfs遍历这些连接的节点，同时用visited数组来跳过其中的父节点</p>
-<h1 id="解法1："><a href="#解法1：" class="headerlink" title="解法1："></a>解法1：</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line">#include &lt;algorithm&gt;</span><br><span class="line">#include &lt;cstring&gt;</span><br><span class="line">#include &lt;string&gt;</span><br><span class="line">#include &lt;cstdio&gt;</span><br><span class="line">#include &lt;cmath&gt;</span><br><span class="line"></span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">//31ms</span><br><span class="line"></span><br><span class="line">//双亲表示法</span><br><span class="line"></span><br><span class="line">//当建树遇到冲突时，将冲突的一支树倒置</span><br><span class="line"></span><br><span class="line">struct Node</span><br><span class="line">&#123;</span><br><span class="line">	int disToFa;</span><br><span class="line">	int fa;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">Node houses[40005];</span><br><span class="line">int visited[40005];</span><br><span class="line"></span><br><span class="line">void add(int x, int y, int z) &#123;</span><br><span class="line">	if (!houses[x].fa) &#123;//若x还没有父元素</span><br><span class="line">		//把x挂在y下</span><br><span class="line">		houses[x].fa = y;</span><br><span class="line">		houses[x].disToFa = z;</span><br><span class="line"></span><br><span class="line">	&#125; else &#123;</span><br><span class="line"></span><br><span class="line">		if (!houses[y].fa) &#123; //若y还没有父元素</span><br><span class="line">			//把y挂在x下</span><br><span class="line">			houses[y].fa = x;</span><br><span class="line">			houses[y].disToFa = z;</span><br><span class="line">		&#125; else &#123;</span><br><span class="line">			//x和y都有父元素了</span><br><span class="line"></span><br><span class="line">			//将x的父元素向上追溯全部变成子元素（将这一支箭头全部倒置）</span><br><span class="line"></span><br><span class="line">			//修改前的副本</span><br><span class="line">			Node temp_x = houses[x];</span><br><span class="line">			Node temp_x_fa = houses[temp_x.fa];</span><br><span class="line"></span><br><span class="line">			//把x挂在y下</span><br><span class="line">			houses[x].fa = y;</span><br><span class="line">			houses[x].disToFa = z;</span><br><span class="line"></span><br><span class="line">			while (temp_x_fa.fa) &#123;</span><br><span class="line"></span><br><span class="line">				houses[temp_x.fa].disToFa = temp_x.disToFa;</span><br><span class="line">				houses[temp_x.fa].fa = x;</span><br><span class="line"></span><br><span class="line">				x = temp_x.fa;</span><br><span class="line">				temp_x = houses[x];</span><br><span class="line">				temp_x_fa = houses[temp_x.fa];</span><br><span class="line"></span><br><span class="line">			&#125;</span><br><span class="line"></span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int cal(int x, int y) &#123;</span><br><span class="line">//先从x开始一直追溯到根节点，沿途标记所有经过的节点（visited数组两个作用，一是用来标记是否访问过，二是用来记录从x节点出发以后走过的距离）</span><br><span class="line">	int sum_x = 0;</span><br><span class="line">	visited[x] = -1;</span><br><span class="line"></span><br><span class="line">	sum_x += houses[x].disToFa;</span><br><span class="line">	x = houses[x].fa;</span><br><span class="line"></span><br><span class="line">	while (houses[x].fa) &#123;//当未到树顶时</span><br><span class="line">		visited[x] = sum_x;</span><br><span class="line">		sum_x += houses[x].disToFa;</span><br><span class="line">		x = houses[x].fa;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	//此时x是树顶</span><br><span class="line">	if (visited[x] != -1) &#123;</span><br><span class="line">		visited[x] = sum_x;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	//接下来从y开始向上追溯</span><br><span class="line">	int sum_y = 0;</span><br><span class="line">	while (!visited[y]) &#123;</span><br><span class="line">		sum_y += houses[y].disToFa;</span><br><span class="line">		y = houses[y].fa;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	//根据之前留下的-1判断原始的x是否为y的父元素</span><br><span class="line">	if (visited[y] == -1) &#123;//这种情况表明y向上追溯的过程中遇到了x</span><br><span class="line">		return sum_y;//直接返回y向上追溯到x的距离</span><br><span class="line">	&#125; else &#123;//这种情况表明y追溯到了x的某一个祖先元素</span><br><span class="line">		return sum_y + visited[y];//返回y向上追溯到x的距离 + 从x到这个祖先元素的距离</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main(int argc, char const *argv[])</span><br><span class="line">&#123;</span><br><span class="line">	int T, n, m, cp_n, a1, a2, a3;</span><br><span class="line">	scanf(&quot;%d&quot;, &amp;T);</span><br><span class="line">	while (T--) &#123;</span><br><span class="line">		scanf(&quot;%d%d&quot;, &amp;n, &amp;m);</span><br><span class="line"></span><br><span class="line">		cp_n = n;</span><br><span class="line"></span><br><span class="line">		memset(houses, 0, sizeof(Node) * (n + 1));</span><br><span class="line"></span><br><span class="line">		while (--n) &#123;</span><br><span class="line">			scanf(&quot;%d%d%d&quot;, &amp;a1, &amp;a2, &amp;a3);</span><br><span class="line"></span><br><span class="line">			add(a1, a2, a3);</span><br><span class="line"></span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		while (m--) &#123;</span><br><span class="line">			scanf(&quot;%d%d&quot;, &amp;a1, &amp;a2);</span><br><span class="line"></span><br><span class="line">			memset(visited, 0, sizeof(int) * (cp_n + 1));//每处理一个问题前刷新一次</span><br><span class="line"></span><br><span class="line">			printf(&quot;%d\n&quot;, cal(a1, a2));</span><br><span class="line"></span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h1 id="解法2："><a href="#解法2：" class="headerlink" title="解法2："></a>解法2：</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line">#include &lt;algorithm&gt;</span><br><span class="line">#include &lt;cstring&gt;</span><br><span class="line">#include &lt;string&gt;</span><br><span class="line">#include &lt;cstdio&gt;</span><br><span class="line">#include &lt;cmath&gt;</span><br><span class="line"></span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">//31ms</span><br><span class="line">//Tarjan</span><br><span class="line"></span><br><span class="line">//孩子链表示法(链表)</span><br><span class="line">//这里的孩子不一定是子节点，可能还有一个父节点，但是可以用visited数组来区别</span><br><span class="line">//随便选取一个hand作为根节点，就可以建成一棵树</span><br><span class="line"></span><br><span class="line">int hand[40005];//保存第x号房子的所有孩子节点链表的起始节点编号</span><br><span class="line"></span><br><span class="line">struct Node//链表节点</span><br><span class="line">&#123;</span><br><span class="line">	int distance;//权值</span><br><span class="line">	int to;</span><br><span class="line">	int next;//保存下一个Node的位置（并非指房子的编号，是节点的编号），即孩子组成的链表中的下一个节点的位置</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">Node nodes[40005 &lt;&lt; 1];//需要两倍空间</span><br><span class="line">int pos;//pos为nodes的当前可用的Node的位置编号</span><br><span class="line">int disToRoot[40005];//代表到根节点的距离</span><br><span class="line">// 结果 = disToRoot[x] + disToRoot[y] - 2 * disToRoot[LCA(x, y)]</span><br><span class="line"></span><br><span class="line">//Tarjan</span><br><span class="line">int fa[40005];</span><br><span class="line">int visited[40005];</span><br><span class="line">int qhand[40005];</span><br><span class="line">Node ques[40005 &lt;&lt; 1];</span><br><span class="line">int qpos;</span><br><span class="line"></span><br><span class="line">void addToTree(int x, int y, int z) &#123;//表示为x号房子添加一个子节点 y ,距离为z</span><br><span class="line">	//为pos号节点写入数据</span><br><span class="line">	nodes[pos].to = y;</span><br><span class="line">	nodes[pos].distance = z;</span><br><span class="line">	nodes[pos].next = hand[x];</span><br><span class="line">	hand[x] = pos;</span><br><span class="line"></span><br><span class="line">	pos++;//当前可用的节点编号+1</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void addToQue(int x, int y) &#123;</span><br><span class="line">	ques[qpos].to = y;</span><br><span class="line">	ques[qpos].distance = 0;</span><br><span class="line">	ques[qpos].next = qhand[x];</span><br><span class="line">	qhand[x] = qpos;</span><br><span class="line"></span><br><span class="line">	qpos++;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int tarjanFind(int x) &#123;//并查集查找（非递归压缩路径）</span><br><span class="line">	int cp_x = x;</span><br><span class="line">	while (fa[x] != x) &#123;</span><br><span class="line">		x = fa[x];</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	while (fa[cp_x] != cp_x) &#123;</span><br><span class="line">		cp_x = fa[cp_x];</span><br><span class="line">		fa[cp_x] = x;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	return x;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void tarjan(int which) &#123;</span><br><span class="line"></span><br><span class="line">	visited[which] = 1;</span><br><span class="line"></span><br><span class="line">	fa[which] = which;</span><br><span class="line"></span><br><span class="line">	int childPos = hand[which];</span><br><span class="line"></span><br><span class="line">	while (childPos) &#123;</span><br><span class="line"></span><br><span class="line">		if (visited[nodes[childPos].to]) &#123;//跳过父元素</span><br><span class="line">			childPos = nodes[childPos].next;</span><br><span class="line">			continue;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		disToRoot[nodes[childPos].to] = disToRoot[which] + nodes[childPos].distance;//写入到根节点的距离</span><br><span class="line">		tarjan(nodes[childPos].to);</span><br><span class="line"></span><br><span class="line">		fa[nodes[childPos].to] = which;</span><br><span class="line"></span><br><span class="line">		childPos = nodes[childPos].next;</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">//处理询问</span><br><span class="line">	int quesPos = qhand[which];</span><br><span class="line"></span><br><span class="line">	while (quesPos) &#123;</span><br><span class="line"></span><br><span class="line">		if (visited[ques[quesPos].to]) &#123;</span><br><span class="line">			ques[quesPos].distance = disToRoot[which] + disToRoot[ques[quesPos].to] - 2 * disToRoot[tarjanFind(ques[quesPos].to)];</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		quesPos = ques[quesPos].next;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main(int argc, char const *argv[])</span><br><span class="line">&#123;</span><br><span class="line">	int T, n, m, a1, a2, a3;</span><br><span class="line">	scanf(&quot;%d&quot;, &amp;T);</span><br><span class="line">	while (T--) &#123;</span><br><span class="line">		scanf(&quot;%d%d&quot;, &amp;n, &amp;m);</span><br><span class="line"></span><br><span class="line">		memset(hand, 0, sizeof(int) * (n + 1));</span><br><span class="line">		memset(qhand, 0, sizeof(int) * (n + 1));</span><br><span class="line">		memset(visited, 0, sizeof(int) * (n + 1));</span><br><span class="line"></span><br><span class="line">		pos = 1;</span><br><span class="line"></span><br><span class="line">		while (--n) &#123;</span><br><span class="line">			scanf(&quot;%d%d%d&quot;, &amp;a1, &amp;a2, &amp;a3);</span><br><span class="line"></span><br><span class="line">			addToTree(a1, a2, a3);</span><br><span class="line">			addToTree(a2, a1, a3);</span><br><span class="line"></span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		qpos = 1;</span><br><span class="line"></span><br><span class="line">		//离线算法（先收集所有问题，然后统一遍历）</span><br><span class="line">		while (m--) &#123;</span><br><span class="line"></span><br><span class="line">			scanf(&quot;%d%d&quot;, &amp;a1, &amp;a2);</span><br><span class="line"></span><br><span class="line">			//建立链表的方法和上面建树的方法类似</span><br><span class="line">			addToQue(a1, a2);</span><br><span class="line">			addToQue(a2, a1);</span><br><span class="line"></span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		disToRoot[1] = 0;</span><br><span class="line">		tarjan(1);</span><br><span class="line"></span><br><span class="line">		for (int i = 1; i &lt; qpos; i += 2) &#123;</span><br><span class="line">			printf(&quot;%d\n&quot;, ques[i].distance ? ques[i].distance : ques[i + 1].distance);</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h1 id="解法3："><a href="#解法3：" class="headerlink" title="解法3："></a>解法3：</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line">#include &lt;algorithm&gt;</span><br><span class="line">#include &lt;cstring&gt;</span><br><span class="line">#include &lt;string&gt;</span><br><span class="line">#include &lt;cstdio&gt;</span><br><span class="line">#include &lt;cmath&gt;</span><br><span class="line"></span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">//46ms</span><br><span class="line">//转化为RMQ问题_ST</span><br><span class="line">//在线算法</span><br><span class="line"></span><br><span class="line">//孩子链表示法(链表)</span><br><span class="line">//这里的孩子不一定是子节点，可能还有一个父节点，但是可以用visited数组来区别</span><br><span class="line">//随便选取一个hand作为根节点，就可以建成一棵树</span><br><span class="line"></span><br><span class="line">int hand[40005];//保存第x号房子的所有孩子节点链表的起始节点编号</span><br><span class="line"></span><br><span class="line">struct Node//链表节点</span><br><span class="line">&#123;</span><br><span class="line">	int distance;//权值</span><br><span class="line">	int to;</span><br><span class="line">	int next;//保存下一个Node的位置（并非指房子的编号，是节点的编号），即孩子组成的链表中的下一个节点的位置</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">Node nodes[40005 &lt;&lt; 1];//需要两倍空间</span><br><span class="line"></span><br><span class="line">int pos;//pos为nodes的当前可用的Node的位置编号</span><br><span class="line">int disToRoot[40005];//代表到根节点的距离</span><br><span class="line">// 结果 = disToRoot[x] + disToRoot[y] - 2 * disToRoot[LCA(x, y)]</span><br><span class="line"></span><br><span class="line">//RMQ</span><br><span class="line">int rmq_which[40005 &lt;&lt; 1];//RMQ数组长度约为节点数的两倍（实际上是2n-1），储存欧拉环游经过的所有节点号</span><br><span class="line">int rmq_deep[40005 &lt;&lt; 1];//储存环游中节点的深度</span><br><span class="line">int rmq_first[40005];//储存循环中 x 号节点（房子）第一次出现的位置</span><br><span class="line">int rmq_pos;</span><br><span class="line"></span><br><span class="line">int visited[40005];//排除父节点</span><br><span class="line"></span><br><span class="line">//ST</span><br><span class="line">int st[40005 &lt;&lt; 1][18]; //2的17次方大于 40005</span><br><span class="line">// st[x][y] = 代表rmq_deep数组中从x开始持续长为（2的y次方）长的区间范围内的最小deep 的位置</span><br><span class="line"></span><br><span class="line">void addToTree(int x, int y, int z) &#123;//表示为x号房子添加一个子节点 y ,距离为z</span><br><span class="line">	//为pos号节点写入数据</span><br><span class="line">	nodes[pos].to = y;</span><br><span class="line">	nodes[pos].distance = z;</span><br><span class="line">	nodes[pos].next = hand[x];</span><br><span class="line">	hand[x] = pos;</span><br><span class="line"></span><br><span class="line">	pos++;//当前可用的节点编号+1</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line">* rmq函数用欧拉环游生成了rmq_which 和 rmq_deep 和 rmq_first 和 disToRoot 四个数组</span><br><span class="line">*/</span><br><span class="line">void rmq(int which, int deep) &#123;</span><br><span class="line">	visited[which] = 1;</span><br><span class="line"></span><br><span class="line">	rmq_which[rmq_pos] = which;</span><br><span class="line">	rmq_deep[rmq_pos] = deep;</span><br><span class="line">	rmq_first[which] = rmq_pos;</span><br><span class="line">	rmq_pos++;</span><br><span class="line"></span><br><span class="line">	int childPos = hand[which];</span><br><span class="line"></span><br><span class="line">	while (childPos) &#123;</span><br><span class="line">		if (visited[nodes[childPos].to]) &#123;</span><br><span class="line">			childPos = nodes[childPos].next;</span><br><span class="line">			continue;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		disToRoot[nodes[childPos].to] = disToRoot[which] + nodes[childPos].distance;</span><br><span class="line"></span><br><span class="line">		rmq(nodes[childPos].to, deep + 1);</span><br><span class="line"></span><br><span class="line">		rmq_which[rmq_pos] = which;</span><br><span class="line">		rmq_deep[rmq_pos] = deep;</span><br><span class="line">		rmq_pos++;</span><br><span class="line"></span><br><span class="line">		childPos = nodes[childPos].next;</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//初始化st数组</span><br><span class="line">void init_st() &#123;</span><br><span class="line">	for (int i = 0; i &lt; rmq_pos; ++i) &#123;//根据st的定义，y为0时，st[i][0] = i;</span><br><span class="line">		st[i][0] = i;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	for (int y = 1 ; y &lt; 18; ++y) &#123;</span><br><span class="line">		for (int i = 0; i + (1 &lt;&lt; y) - 1 &lt; rmq_pos; ++i) &#123;</span><br><span class="line">			st[i][y] =	rmq_deep[st[i][y - 1]] &lt; rmq_deep[st[i + (1 &lt;&lt; (y - 1))][y - 1]] ? st[i][y - 1] : st[i + (1 &lt;&lt; (y - 1))][y - 1];</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 返回rmq_deep数组区间[x, y]之间的最小元素的位置</span><br><span class="line">int min_st(int x, int y) &#123;</span><br><span class="line"></span><br><span class="line">	if (x &gt; y) &#123;//保证输入的x &lt;= y;若不满足，则反过来</span><br><span class="line">		return min_st(y, x);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	for (int i = 17; i &gt;= 0; --i) &#123;</span><br><span class="line">		if (x + (1 &lt;&lt; i) - 1 &gt; y) &#123;</span><br><span class="line">			continue;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		if (x + (1 &lt;&lt; i) - 1 == y) &#123;</span><br><span class="line">			return st[x][i];</span><br><span class="line">		&#125; else &#123;</span><br><span class="line">			int temp = min_st(x + (1 &lt;&lt; i), y);</span><br><span class="line">			return rmq_deep[st[x][i]] &lt; rmq_deep[temp] ? st[x][i] : temp;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main(int argc, char const *argv[])</span><br><span class="line">&#123;</span><br><span class="line">	int T, n, m, a1, a2, a3, first = 1;</span><br><span class="line">	scanf(&quot;%d&quot;, &amp;T);</span><br><span class="line">	while (T--) &#123;</span><br><span class="line">		scanf(&quot;%d%d&quot;, &amp;n, &amp;m);</span><br><span class="line"></span><br><span class="line">		memset(hand, 0, sizeof(int) * (n + 1));</span><br><span class="line">		memset(visited, 0, sizeof(int) * (n + 1));</span><br><span class="line"></span><br><span class="line">		pos = 1;</span><br><span class="line"></span><br><span class="line">		while (--n) &#123;</span><br><span class="line">			scanf(&quot;%d%d%d&quot;, &amp;a1, &amp;a2, &amp;a3);</span><br><span class="line"></span><br><span class="line">			addToTree(a1, a2, a3);</span><br><span class="line">			addToTree(a2, a1, a3);</span><br><span class="line"></span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		disToRoot[1] = 0;</span><br><span class="line"></span><br><span class="line">		//在线算法（逐个回答问题）</span><br><span class="line"></span><br><span class="line">		rmq_pos = 0;</span><br><span class="line"></span><br><span class="line">		rmq(1, 1);</span><br><span class="line"></span><br><span class="line">		init_st();</span><br><span class="line"></span><br><span class="line">		if (first) &#123;</span><br><span class="line">			first = 0;</span><br><span class="line">		&#125; else &#123;</span><br><span class="line">			printf(&quot;\n&quot;);</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		// for (int i = 0; i &lt; rmq_pos; i++) &#123;</span><br><span class="line">		// 	printf(&quot;%d &quot;, rmq_which[i]);</span><br><span class="line">		// &#125;</span><br><span class="line">		// printf(&quot;\n&quot;);</span><br><span class="line">		// for (int i = 0; i &lt; rmq_pos; i++) &#123;</span><br><span class="line">		// 	printf(&quot;%d &quot;, rmq_deep[i]);</span><br><span class="line">		// &#125;</span><br><span class="line">		// printf(&quot;\n&quot;);</span><br><span class="line">		// for (int i = 1; i &lt;= 6; i++) &#123;</span><br><span class="line">		// 	printf(&quot;%d &quot;, rmq_first[i]);</span><br><span class="line">		// &#125;</span><br><span class="line">		// printf(&quot;\n&quot;);</span><br><span class="line"></span><br><span class="line">		// for (int x = 0; x &lt; 18; x++) &#123;</span><br><span class="line">		// 	for (int i = 0; i &lt; rmq_pos; i++) &#123;</span><br><span class="line">		// 		printf(&quot;%d &quot;, st[i][x]);</span><br><span class="line">		// 	&#125;</span><br><span class="line">		// 	printf(&quot;\n&quot;);</span><br><span class="line">		// &#125;</span><br><span class="line"></span><br><span class="line">		while (m--) &#123;</span><br><span class="line"></span><br><span class="line">			scanf(&quot;%d%d&quot;, &amp;a1, &amp;a2);</span><br><span class="line"></span><br><span class="line">			printf(&quot;%d\n&quot;, disToRoot[a1] + disToRoot[a2] - 2 * disToRoot[rmq_which[min_st(rmq_first[a1], rmq_first[a2])]]);</span><br><span class="line"></span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h1 id="解法4："><a href="#解法4：" class="headerlink" title="解法4："></a>解法4：</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line">#include &lt;algorithm&gt;</span><br><span class="line">#include &lt;cstring&gt;</span><br><span class="line">#include &lt;string&gt;</span><br><span class="line">#include &lt;cstdio&gt;</span><br><span class="line">#include &lt;cmath&gt;</span><br><span class="line"></span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">//31ms</span><br><span class="line">//转化为RMQ问题_Segment_Tree</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line">*	注意线段树需要4倍空间</span><br><span class="line">*	注意线段树需要4倍空间</span><br><span class="line">*	注意线段树需要4倍空间</span><br><span class="line">*/</span><br><span class="line"></span><br><span class="line">//在线算法</span><br><span class="line"></span><br><span class="line">//孩子链表示法(链表)</span><br><span class="line">//这里的孩子不一定是子节点，可能还有一个父节点，但是可以用visited数组来区别</span><br><span class="line">//随便选取一个hand作为根节点，就可以建成一棵树</span><br><span class="line"></span><br><span class="line">int hand[40005];//保存第x号房子的所有孩子节点链表的起始节点编号</span><br><span class="line"></span><br><span class="line">struct Node//链表节点</span><br><span class="line">&#123;</span><br><span class="line">	int distance;//权值</span><br><span class="line">	int to;</span><br><span class="line">	int next;//保存下一个Node的位置（并非指房子的编号，是节点的编号），即孩子组成的链表中的下一个节点的位置</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">Node nodes[40005 &lt;&lt; 1];//需要两倍空间</span><br><span class="line"></span><br><span class="line">int pos;//pos为nodes的当前可用的Node的位置编号</span><br><span class="line">int disToRoot[40005];//代表到根节点的距离</span><br><span class="line">// 结果 = disToRoot[x] + disToRoot[y] - 2 * disToRoot[LCA(x, y)]</span><br><span class="line"></span><br><span class="line">//RMQ</span><br><span class="line">int rmq_which[40005 &lt;&lt; 1];//RMQ数组长度约为节点数的两倍（实际上是2n-1），储存欧拉环游经过的所有节点号</span><br><span class="line">int rmq_deep[40005 &lt;&lt; 1];//储存环游中节点的深度</span><br><span class="line">int rmq_first[40005];//储存循环中 x 号节点（房子）第一次出现的位置</span><br><span class="line">int rmq_pos;</span><br><span class="line"></span><br><span class="line">int visited[40005];//排除父节点</span><br><span class="line"></span><br><span class="line">//Segment_Tree</span><br><span class="line">struct SegNode</span><br><span class="line">&#123;</span><br><span class="line">	int left;</span><br><span class="line">	int right;</span><br><span class="line">	int minPos;//储存[left, right]区间内deep最小值所处的位置</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">//线段树需要原基础数组长度四倍的空间</span><br><span class="line">SegNode segs[40005 &lt;&lt; 3];//从1开始</span><br><span class="line"></span><br><span class="line">void addToTree(int x, int y, int z) &#123;//表示为x号房子添加一个子节点 y ,距离为z</span><br><span class="line">	//为pos号节点写入数据</span><br><span class="line">	nodes[pos].to = y;</span><br><span class="line">	nodes[pos].distance = z;</span><br><span class="line">	nodes[pos].next = hand[x];</span><br><span class="line">	hand[x] = pos;</span><br><span class="line"></span><br><span class="line">	pos++;//当前可用的节点编号+1</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line">* rmq函数用欧拉环游生成了rmq_which 和 rmq_deep 和 rmq_first 和 disToRoot 四个数组</span><br><span class="line">*/</span><br><span class="line">void rmq(int which, int deep) &#123;</span><br><span class="line">	visited[which] = 1;</span><br><span class="line"></span><br><span class="line">	rmq_which[rmq_pos] = which;</span><br><span class="line">	rmq_deep[rmq_pos] = deep;</span><br><span class="line">	rmq_first[which] = rmq_pos;</span><br><span class="line">	rmq_pos++;</span><br><span class="line"></span><br><span class="line">	int childPos = hand[which];</span><br><span class="line"></span><br><span class="line">	while (childPos) &#123;</span><br><span class="line">		if (visited[nodes[childPos].to]) &#123;</span><br><span class="line">			childPos = nodes[childPos].next;</span><br><span class="line">			continue;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		disToRoot[nodes[childPos].to] = disToRoot[which] + nodes[childPos].distance;</span><br><span class="line"></span><br><span class="line">		rmq(nodes[childPos].to, deep + 1);</span><br><span class="line"></span><br><span class="line">		rmq_which[rmq_pos] = which;</span><br><span class="line">		rmq_deep[rmq_pos] = deep;</span><br><span class="line">		rmq_pos++;</span><br><span class="line"></span><br><span class="line">		childPos = nodes[childPos].next;</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//初始化segment数组</span><br><span class="line">void build_seg(int spos, int left, int right) &#123;</span><br><span class="line">	// printf(&quot;spos -&gt; %d\n&quot;, spos);</span><br><span class="line">	segs[spos].left = left;</span><br><span class="line">	segs[spos].right = right;</span><br><span class="line"></span><br><span class="line">	if (left == right) &#123;</span><br><span class="line">		segs[spos].minPos = left;</span><br><span class="line">		return;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	build_seg(spos &lt;&lt; 1, left, (left + right) / 2);</span><br><span class="line">	build_seg((spos &lt;&lt; 1) | 1, ((left + right) / 2) + 1, right);</span><br><span class="line"></span><br><span class="line">	segs[spos].minPos = rmq_deep[segs[spos &lt;&lt; 1].minPos] &lt; rmq_deep[segs[(spos &lt;&lt; 1) | 1].minPos] ? segs[spos &lt;&lt; 1].minPos : segs[(spos &lt;&lt; 1) | 1].minPos;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 返回rmq_deep数组区间[x, y]之间的最小元素的位置</span><br><span class="line">int min_seg(int pos, int x, int y) &#123;</span><br><span class="line">	if (x == segs[pos].left &amp;&amp; y == segs[pos].right) &#123;</span><br><span class="line">		return segs[pos].minPos;</span><br><span class="line">	&#125; else if (y &lt;= ((segs[pos].left + segs[pos].right) / 2)) &#123;</span><br><span class="line">		return min_seg(pos &lt;&lt; 1, x, y);</span><br><span class="line">	&#125; else if (x &gt; ((segs[pos].left + segs[pos].right) / 2)) &#123;</span><br><span class="line">		return min_seg((pos &lt;&lt; 1) | 1, x, y);</span><br><span class="line">	&#125; else &#123;</span><br><span class="line">		int temp1, temp2;</span><br><span class="line">		temp1 = min_seg(pos &lt;&lt; 1, x, (segs[pos].left + segs[pos].right) / 2);</span><br><span class="line">		temp2 = min_seg((pos &lt;&lt; 1) | 1, ((segs[pos].left + segs[pos].right) / 2) + 1, y);</span><br><span class="line"></span><br><span class="line">		return rmq_deep[temp1] &lt; rmq_deep[temp2] ? temp1 : temp2;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main(int argc, char const *argv[])</span><br><span class="line">&#123;</span><br><span class="line">	int T, n, m, a1, a2, a3, first = 1;</span><br><span class="line">	scanf(&quot;%d&quot;, &amp;T);</span><br><span class="line">	while (T--) &#123;</span><br><span class="line">		scanf(&quot;%d%d&quot;, &amp;n, &amp;m);</span><br><span class="line"></span><br><span class="line">		memset(hand, 0, sizeof(int) * (n + 1));</span><br><span class="line">		memset(visited, 0, sizeof(int) * (n + 1));</span><br><span class="line"></span><br><span class="line">		pos = 1;</span><br><span class="line"></span><br><span class="line">		while (--n) &#123;</span><br><span class="line">			scanf(&quot;%d%d%d&quot;, &amp;a1, &amp;a2, &amp;a3);</span><br><span class="line"></span><br><span class="line">			addToTree(a1, a2, a3);</span><br><span class="line">			addToTree(a2, a1, a3);</span><br><span class="line"></span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		disToRoot[1] = 0;</span><br><span class="line"></span><br><span class="line">		//在线算法（逐个回答问题）</span><br><span class="line"></span><br><span class="line">		rmq_pos = 0;</span><br><span class="line"></span><br><span class="line">		rmq(1, 1);</span><br><span class="line"></span><br><span class="line">		// printf(&quot;rmq_pos -&gt; %d\n&quot;, rmq_pos);</span><br><span class="line"></span><br><span class="line">		build_seg(1, 0, rmq_pos - 1);</span><br><span class="line"></span><br><span class="line">		if (first) &#123;//好像没有空行也能过</span><br><span class="line">			first = 0;</span><br><span class="line">		&#125; else &#123;</span><br><span class="line">			printf(&quot;\n&quot;);</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		// for (int i = 0; i &lt; rmq_pos; i++) &#123;</span><br><span class="line">		// 	printf(&quot;%d &quot;, rmq_which[i]);</span><br><span class="line">		// &#125;</span><br><span class="line">		// printf(&quot;\n&quot;);</span><br><span class="line">		// for (int i = 0; i &lt; rmq_pos; i++) &#123;</span><br><span class="line">		// 	printf(&quot;%d &quot;, rmq_deep[i]);</span><br><span class="line">		// &#125;</span><br><span class="line">		// printf(&quot;\n&quot;);</span><br><span class="line">		// for (int i = 1; i &lt;= 6; i++) &#123;</span><br><span class="line">		// 	printf(&quot;%d &quot;, rmq_first[i]);</span><br><span class="line">		// &#125;</span><br><span class="line">		// printf(&quot;\n&quot;);</span><br><span class="line"></span><br><span class="line">		while (m--) &#123;</span><br><span class="line"></span><br><span class="line">			scanf(&quot;%d%d&quot;, &amp;a1, &amp;a2);</span><br><span class="line"></span><br><span class="line">			if (rmq_first[a1] &lt; rmq_first[a2]) &#123;</span><br><span class="line"></span><br><span class="line">				printf(&quot;%d\n&quot;, disToRoot[a1] + disToRoot[a2] - 2 * disToRoot[rmq_which[min_seg(1, rmq_first[a1], rmq_first[a2])]]);</span><br><span class="line">			&#125; else &#123;</span><br><span class="line">				printf(&quot;%d\n&quot;, disToRoot[a1] + disToRoot[a2] - 2 * disToRoot[rmq_which[min_seg(1, rmq_first[a2], rmq_first[a1])]]);</span><br><span class="line">			&#125;</span><br><span class="line"></span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://kb5201314.github.io/2018/02/27/CodeForces 891 A. Pride/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="imlk">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="IMLK">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/02/27/CodeForces 891 A. Pride/" itemprop="url">CodeForces 891 A. Pride</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-02-27T10:30:47+08:00">2018-02-27</time>
-            
-
-            
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/CodeForces/" itemprop="url" rel="index"><span itemprop="name">CodeForces</span></a></span>
-
-                
-                
-                  , 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/CodeForces/动态规划/" itemprop="url" rel="index"><span itemprop="name">动态规划</span></a></span>
-
-                
-                
-                  , 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/CodeForces/动态规划/算法/" itemprop="url" rel="index"><span itemprop="name">算法</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p><a href="http://codeforces.com/problemset/problem/891/A" target="_blank" rel="noopener">http://codeforces.com/problemset/problem/891/A</a></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line">#include &lt;cstdio&gt;</span><br><span class="line">#include &lt;cstring&gt;</span><br><span class="line">#include &lt;cmath&gt;</span><br><span class="line"></span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">long long dp[2005][2005]; // dp[x][y]表示gcd(x...(x + y))</span><br><span class="line">/*</span><br><span class="line">x是起始点位置,y是距离</span><br><span class="line">a1, a2, a3, a4, a5, a6, a7, a8</span><br><span class="line">	↑	←	y	→	↑</span><br><span class="line">	x				x + y</span><br><span class="line">*/</span><br><span class="line"></span><br><span class="line">// gcd(a1, a2, a3) = gcd(gcd(a1, a2), a3) = gcd(gcd(a1, a2), gcd(a2, a3))</span><br><span class="line">// 所以</span><br><span class="line"></span><br><span class="line">// 状态方程</span><br><span class="line">// dp[x][y] = gcd(dp[x][y - 1], dp[x + 1][y - 1])</span><br><span class="line"></span><br><span class="line">long long gcd(long long a, long long b) &#123;</span><br><span class="line">	while (1) &#123;</span><br><span class="line">		a = a % b;</span><br><span class="line">		if (!a) &#123;</span><br><span class="line">			return b;</span><br><span class="line">		&#125;</span><br><span class="line">		b = b % a;</span><br><span class="line">		if (!b) &#123;</span><br><span class="line">			return a;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main(int argc, char const *argv[])</span><br><span class="line">&#123;</span><br><span class="line">	int n;</span><br><span class="line">	int ones = 0;</span><br><span class="line">	scanf(&quot;%d&quot;, &amp;n);</span><br><span class="line"></span><br><span class="line">	for (int x = 0; x &lt; n; x++) &#123;</span><br><span class="line">		scanf(&quot;%lld&quot;, dp[x]);</span><br><span class="line">		if (dp[x][0] == 1) &#123;</span><br><span class="line">			ones++;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		// printf(&quot;%lld\t&quot;, dp[x][0]);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	// printf(&quot;\n&quot;);</span><br><span class="line"></span><br><span class="line">	if (ones) &#123;</span><br><span class="line">		printf(&quot;%d\n&quot;, n - ones);</span><br><span class="line">		return 0;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	for (int y = 1; y &lt; n; y++) &#123;//跨度距离从1开始</span><br><span class="line">		for (int x = 0; x + y &lt; n; x++) &#123;//起始位置从x开始</span><br><span class="line"></span><br><span class="line">			dp[x][y] = gcd(dp[x][y - 1], dp[x + 1][y - 1]);</span><br><span class="line"></span><br><span class="line">			// printf(&quot;%lld\t&quot;, dp[x][y]);</span><br><span class="line"></span><br><span class="line">			if (dp[x][y] == 1) &#123;</span><br><span class="line">				// printf(&quot;\n&quot;);</span><br><span class="line">				printf(&quot;%d\n&quot;, n + y - 1);</span><br><span class="line">				return 0;</span><br><span class="line">			&#125;</span><br><span class="line"></span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	printf(&quot;-1\n&quot;);</span><br><span class="line">	return 0;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line">*	</span><br><span class="line">*	in:</span><br><span class="line">*	</span><br><span class="line">*	5</span><br><span class="line">*	2 2 3 4 6</span><br><span class="line">*	</span><br><span class="line">*	out:</span><br><span class="line">*	</span><br><span class="line">*	2		2		3		4		6</span><br><span class="line">*	↑↗		↑↗</span><br><span class="line">*	2		1</span><br><span class="line">*	</span><br><span class="line">*	result：</span><br><span class="line">*	</span><br><span class="line">*	5</span><br><span class="line">*	</span><br><span class="line">*	</span><br><span class="line">*/</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://kb5201314.github.io/2018/02/26/HDU 1080 POJ 1080 Human Gene Functions——动态规划/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="imlk">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="IMLK">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/02/26/HDU 1080 POJ 1080 Human Gene Functions——动态规划/" itemprop="url">HDU 1080 POJ 1080 Human Gene Functions——动态规划</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-02-26T21:53:24+08:00">2018-02-26</time>
-            
-
-            
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/HDU/" itemprop="url" rel="index"><span itemprop="name">HDU</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p><a href="http://poj.org/problem?id=1080" target="_blank" rel="noopener">http://poj.org/problem?id=1080</a><br><a href="http://acm.hdu.edu.cn/showproblem.php?pid=1080" target="_blank" rel="noopener">http://acm.hdu.edu.cn/showproblem.php?pid=1080</a></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line">#include &lt;cstdio&gt;</span><br><span class="line">#include &lt;map&gt;</span><br><span class="line">#include &lt;cstring&gt;</span><br><span class="line"></span><br><span class="line">#define MAX(x,y,z) ((x)&gt;(y)?((x)&gt;(z)?(x):(z)):((y)&gt;(z)?(y):(z)))</span><br><span class="line"></span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">char str1[105];</span><br><span class="line">char str2[105];</span><br><span class="line">int list[6][6] = &#123;</span><br><span class="line">//	  		&#123; \0,  A,  C,  G,  T,  -&#125;</span><br><span class="line">	/*\0*/	&#123;  0,  0,  0,  0,  0,  0&#125;,</span><br><span class="line">	/*A*/	&#123;  0,  5, -1, -2, -1, -3&#125;,</span><br><span class="line">	/*C*/	&#123;  0, -1,  5, -3, -2, -4&#125;,</span><br><span class="line">	/*G*/	&#123;  0, -2, -3,  5, -2, -2&#125;,</span><br><span class="line">	/*T*/	&#123;  0, -1, -2, -2,  5, -1&#125;,</span><br><span class="line">	/*-*/	&#123;  0, -3, -4, -2, -1,  0&#125;,</span><br><span class="line">&#125;;</span><br><span class="line">map&lt;char, int&gt;m;</span><br><span class="line"></span><br><span class="line">int dp[105][105];//dp[x][y]表示str1中1...x-1个字符和str2中第1...y-1之间匹配的最优解</span><br><span class="line"></span><br><span class="line">int main(int argc, char const *argv[])</span><br><span class="line">&#123;</span><br><span class="line">	int T, len1, len2;</span><br><span class="line">	scanf(&quot;%d&quot;, &amp;T);</span><br><span class="line"></span><br><span class="line">	m[&apos;\0&apos;] = 0;</span><br><span class="line">	m[&apos;A&apos;] = 1;</span><br><span class="line">	m[&apos;C&apos;] = 2;</span><br><span class="line">	m[&apos;G&apos;] = 3;</span><br><span class="line">	m[&apos;T&apos;] = 4;</span><br><span class="line">	m[&apos;-&apos;] = 5;</span><br><span class="line"></span><br><span class="line">	while (T--) &#123;</span><br><span class="line">		memset(dp, 0, sizeof(dp));</span><br><span class="line">		scanf(&quot;%d%s&quot;, &amp;len1, str1 + 1);</span><br><span class="line">		scanf(&quot;%d%s&quot;, &amp;len2, str2 + 1);</span><br><span class="line"></span><br><span class="line">		// printf(&quot;\t\t&quot;);</span><br><span class="line">		// for (int y = 0; y &lt; len2; y++) &#123;</span><br><span class="line">		// 	printf(&quot;%c\t&quot;, s2[y]);</span><br><span class="line">		// &#125;</span><br><span class="line">		// printf(&quot;\n\t&quot;);</span><br><span class="line"></span><br><span class="line">		// for (int y = 0; y &lt;= len2; y++) &#123;</span><br><span class="line">		// 	printf(&quot;%d\t&quot;, dp[0][y]);</span><br><span class="line"></span><br><span class="line">		// &#125;</span><br><span class="line">		// printf(&quot;\n&quot;);</span><br><span class="line"></span><br><span class="line">		for (int x = 1; x &lt;= len1 + 1; x++) &#123;</span><br><span class="line">			dp[x][0] = -1e9;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		for (int y = 1; y &lt;= len2 + 1; y++) &#123;</span><br><span class="line">			dp[0][y] = -1e9;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		for (int x = 1; x &lt;= len1 + 1; x++) &#123;</span><br><span class="line"></span><br><span class="line">			for (int y = 1; y &lt;= len2 + 1; y++) &#123;</span><br><span class="line">				dp[x][y] = MAX(</span><br><span class="line">				               dp[x - 1][y - 1] + list[m[str1[x - 1]]][m[str2[y - 1]]],</span><br><span class="line">				               dp[x - 1][y] + list[m[str1[x - 1]]][m[&apos;-&apos;]],</span><br><span class="line">				               dp[x][y - 1] + list[m[&apos;-&apos;]][m[str2[y - 1]]]</span><br><span class="line">				           );</span><br><span class="line"></span><br><span class="line">//取消注釋打印流程</span><br><span class="line"></span><br><span class="line">/*				if (dp[x - 1][y - 1] + list[m[str1[x - 1]]][m[str2[y - 1]]]</span><br><span class="line">				        &gt;= dp[x - 1][y] + list[m[str1[x - 1]]][m[&apos;-&apos;]]) &#123;</span><br><span class="line">					if (dp[x - 1][y - 1] + list[m[str1[x - 1]]][m[str2[y - 1]]]</span><br><span class="line">					        &gt;=</span><br><span class="line">					        dp[x][y - 1] + list[m[&apos;-&apos;]][m[str2[y - 1]]]) &#123;</span><br><span class="line">						printf(&quot;↖%d\t&quot;, dp[x][y]);</span><br><span class="line">					&#125; else &#123;</span><br><span class="line">						printf(&quot;←%d\t&quot;, dp[x][y]);</span><br><span class="line">					&#125;</span><br><span class="line">				&#125; else &#123;</span><br><span class="line">					if (dp[x - 1][y] + list[m[str1[x - 1]]][m[&apos;-&apos;]]</span><br><span class="line">					        &gt;=</span><br><span class="line">					        dp[x][y - 1] + list[m[&apos;-&apos;]][m[str2[y - 1]]]) &#123;</span><br><span class="line">						printf(&quot;↑%d\t&quot;, dp[x][y]);</span><br><span class="line">					&#125; else &#123;</span><br><span class="line">						printf(&quot;←%d\t&quot;, dp[x][y]);</span><br><span class="line"></span><br><span class="line">					&#125;</span><br><span class="line">				&#125;</span><br><span class="line">*/</span><br><span class="line"></span><br><span class="line">			&#125;</span><br><span class="line"></span><br><span class="line">/*</span><br><span class="line">			printf(&quot;\n&quot;);</span><br><span class="line">*/</span><br><span class="line"></span><br><span class="line">		&#125;</span><br><span class="line">		printf(&quot;%d\n&quot;, dp[len1 + 1][len2 + 1]);</span><br><span class="line"></span><br><span class="line">		/**</span><br><span class="line">		*</span><br><span class="line">		*	in:</span><br><span class="line">		*	</span><br><span class="line">		*	2</span><br><span class="line">		*	7 AGTGATG</span><br><span class="line">		*	5 GTTAG</span><br><span class="line">		*	7 AGCTATT</span><br><span class="line">		*	9 AGCTTTAAA</span><br><span class="line">		*	</span><br><span class="line">		*	out:</span><br><span class="line">		*	</span><br><span class="line">		*	↖0		←-2		←-3		←-4		←-7		←-9</span><br><span class="line">		*	↑-3		↖-2		↖-3		↖-4		↖1		←-1</span><br><span class="line">		*	↑-5		↖2		←1		←0		↑-1		↖6</span><br><span class="line">		*	↑-6		↑1		↖7		↖6		←3		↑5</span><br><span class="line">		*	↑-8		↖-1		↑5		↖5		↖4		↖8</span><br><span class="line">		*	↑-11	↑-4		↑2		↖4		↖10		←8</span><br><span class="line">		*	↑-12	↑-5		↖1		↖7		↑9		↖8</span><br><span class="line">		*	↑-14	↖-7		↑-1		↑5		↑7		↖14</span><br><span class="line">		*	</span><br><span class="line">		*	14</span><br><span class="line">		*	</span><br><span class="line">		*	↖0		←-3		←-5		←-9		←-10	←-11	←-12	←-15	←-18	←-21</span><br><span class="line">		*	↑-3		↖5		←3		←-1		←-2		←-3		←-4		↖-7		↖-10	↖-13</span><br><span class="line">		*	↑-5		↑3		↖10		←6		←5		←4		←3		←0		←-3		←-6</span><br><span class="line">		*	↑-9		↑-1		↑6		↖15		←14		←13		←12		←9		←6		←3</span><br><span class="line">		*	↑-10	↑-2		↑5		↑14		↖20		↖19		↖18		←15		←12		←9</span><br><span class="line">		*	↑-13	↖-5		↑2		↑11		↑17		↖19		↖18		↖23		↖20		↖17</span><br><span class="line">		*	↑-14	↑-6		↑1		↑10		↖16		↖22		↖24		↑22		↖22		↖19</span><br><span class="line">		*	↑-15	↑-7		↑0		↑9		↖15		↖21		↖27		←24		↖21		↖21</span><br><span class="line">		*	</span><br><span class="line">		*	</span><br><span class="line">		*	21</span><br><span class="line">		*	</span><br><span class="line">		*	</span><br><span class="line">		*	</span><br><span class="line">		*/</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>后来发现是自己想得太多了，这个题的“状态”不一定非要理解成原先那样，<br>其实完全可以也像最大公共子列那样的，<br>dp[x][y]表示str1的前x个字符和str2的前y个字符之间的匹配结果的最优解<br>这样也便于理解，便于思考</p>
-<p>这样的话dp[x][y]就是最终答案，不过要注意边界的预处理<br>代码如下</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line">#include &lt;cstdio&gt;</span><br><span class="line">#include &lt;map&gt;</span><br><span class="line">#include &lt;cstring&gt;</span><br><span class="line"></span><br><span class="line">#define MAX(x,y,z) ((x)&gt;(y)?((x)&gt;(z)?(x):(z)):((y)&gt;(z)?(y):(z)))</span><br><span class="line"></span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">char str1[105];</span><br><span class="line">char str2[105];</span><br><span class="line">int list[6][6] = &#123;</span><br><span class="line">//	  		&#123;  A,  C,  G,  T,  -&#125;</span><br><span class="line">	/*A*/	&#123;  5, -1, -2, -1, -3&#125;,</span><br><span class="line">	/*C*/	&#123; -1,  5, -3, -2, -4&#125;,</span><br><span class="line">	/*G*/	&#123; -2, -3,  5, -2, -2&#125;,</span><br><span class="line">	/*T*/	&#123; -1, -2, -2,  5, -1&#125;,</span><br><span class="line">	/*-*/	&#123; -3, -4, -2, -1,  0&#125;,</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">map&lt;char, int&gt;m;</span><br><span class="line"></span><br><span class="line">int dp[105][105];//dp[x][y]表示str1中1...x个字符和str2中第1...y这两个子串之间的所有匹配方式的最大利益</span><br><span class="line"></span><br><span class="line">int main(int argc, char const *argv[])</span><br><span class="line">&#123;</span><br><span class="line">	int T, len1, len2;</span><br><span class="line">	scanf(&quot;%d&quot;, &amp;T);</span><br><span class="line"></span><br><span class="line">	m[&apos;A&apos;] = 0;</span><br><span class="line">	m[&apos;C&apos;] = 1;</span><br><span class="line">	m[&apos;G&apos;] = 2;</span><br><span class="line">	m[&apos;T&apos;] = 3;</span><br><span class="line">	m[&apos;-&apos;] = 4;</span><br><span class="line"></span><br><span class="line">	while (T--) &#123;</span><br><span class="line">		memset(dp, 0, sizeof(dp));</span><br><span class="line">		scanf(&quot;%d%s&quot;, &amp;len1, str1 + 1);</span><br><span class="line">		scanf(&quot;%d%s&quot;, &amp;len2, str2 + 1);</span><br><span class="line"></span><br><span class="line">		// printf(&quot;\t\t&quot;);</span><br><span class="line">		// for (int y = 0; y &lt; len2; y++) &#123;</span><br><span class="line">		// 	printf(&quot;%c\t&quot;, s2[y]);</span><br><span class="line">		// &#125;</span><br><span class="line">		// printf(&quot;\n\t&quot;);</span><br><span class="line"></span><br><span class="line">		// for (int y = 0; y &lt;= len2; y++) &#123;</span><br><span class="line">		// 	printf(&quot;%d\t&quot;, dp[0][y]);</span><br><span class="line"></span><br><span class="line">		// &#125;</span><br><span class="line">		// printf(&quot;\n&quot;);</span><br><span class="line"></span><br><span class="line">		for (int x = 1; x &lt;= len1; x++) &#123;</span><br><span class="line">			dp[x][0] = dp[x - 1][0] + list[m[str1[x]]][m[&apos;-&apos;]];</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		// printf(&quot;↖0\t&quot;);</span><br><span class="line">		for (int y = 1; y &lt;= len2; y++) &#123;</span><br><span class="line">			dp[0][y] = dp[0][y - 1] + list[m[str2[y]]][m[&apos;-&apos;]];</span><br><span class="line">			// printf(&quot;←%d\t&quot;, dp[0][y]);</span><br><span class="line">		&#125;</span><br><span class="line">		// printf(&quot;\n&quot;);</span><br><span class="line"></span><br><span class="line">		for (int x = 1; x &lt;= len1; x++) &#123;</span><br><span class="line"></span><br><span class="line">			// printf(&quot;↑%d\t&quot;, dp[x][0]);</span><br><span class="line"></span><br><span class="line">			for (int y = 1; y &lt;= len2; y++) &#123;</span><br><span class="line">				dp[x][y] = MAX(</span><br><span class="line">				               dp[x - 1][y - 1] + list[m[str1[x]]][m[str2[y]]],</span><br><span class="line">				               dp[x - 1][y] + list[m[str1[x]]][m[&apos;-&apos;]],</span><br><span class="line">				               dp[x][y - 1] + list[m[&apos;-&apos;]][m[str2[y]]]</span><br><span class="line">				           );</span><br><span class="line"></span><br><span class="line">//取消所有额外注释可打印流程</span><br><span class="line">				/*</span><br><span class="line">								if (dp[x - 1][y - 1] + list[m[str1[x]]][m[str2[y]]]</span><br><span class="line">								        &gt;= dp[x - 1][y] + list[m[str1[x]]][m[&apos;-&apos;]]) &#123;</span><br><span class="line">									if (dp[x - 1][y - 1] + list[m[str1[x]]][m[str2[y]]]</span><br><span class="line">									        &gt;=</span><br><span class="line">									        dp[x][y - 1] + list[m[&apos;-&apos;]][m[str2[y]]]) &#123;</span><br><span class="line">										printf(&quot;↖%d\t&quot;, dp[x][y]);</span><br><span class="line">									&#125; else &#123;</span><br><span class="line">										printf(&quot;←%d\t&quot;, dp[x][y]);</span><br><span class="line">									&#125;</span><br><span class="line">								&#125; else &#123;</span><br><span class="line">									if (dp[x - 1][y] + list[m[str1[x]]][m[&apos;-&apos;]]</span><br><span class="line">									        &gt;=</span><br><span class="line">									        dp[x][y - 1] + list[m[&apos;-&apos;]][m[str2[y]]]) &#123;</span><br><span class="line">										printf(&quot;↑%d\t&quot;, dp[x][y]);</span><br><span class="line">									&#125; else &#123;</span><br><span class="line">										printf(&quot;←%d\t&quot;, dp[x][y]);</span><br><span class="line"></span><br><span class="line">									&#125;</span><br><span class="line">								&#125;</span><br><span class="line">				*/</span><br><span class="line"></span><br><span class="line">			&#125;</span><br><span class="line"></span><br><span class="line">			/*</span><br><span class="line">						printf(&quot;\n&quot;);</span><br><span class="line">			*/</span><br><span class="line"></span><br><span class="line">		&#125;</span><br><span class="line">		printf(&quot;%d\n&quot;, dp[len1][len2]);</span><br><span class="line"></span><br><span class="line">		/**</span><br><span class="line">		*</span><br><span class="line">		*	in:</span><br><span class="line">		*</span><br><span class="line">		*	2</span><br><span class="line">		*	7 AGTGATG</span><br><span class="line">		*	5 GTTAG</span><br><span class="line">		*	7 AGCTATT</span><br><span class="line">		*	9 AGCTTTAAA</span><br><span class="line">		*</span><br><span class="line">		*	out:</span><br><span class="line">		*</span><br><span class="line">		*	↖0		←-2		←-3		←-4		←-7		←-9</span><br><span class="line">		*	↑-3		↖-2		↖-3		↖-4		↖1		←-1</span><br><span class="line">		*	↑-5		↖2		←1		←0		↑-1		↖6</span><br><span class="line">		*	↑-6		↑1		↖7		↖6		←3		↑5</span><br><span class="line">		*	↑-8		↖-1		↑5		↖5		↖4		↖8</span><br><span class="line">		*	↑-11	↑-4		↑2		↖4		↖10		←8</span><br><span class="line">		*	↑-12	↑-5		↖1		↖7		↑9		↖8</span><br><span class="line">		*	↑-14	↖-7		↑-1		↑5		↑7		↖14</span><br><span class="line">		*</span><br><span class="line">		*	14</span><br><span class="line">		*</span><br><span class="line">		*	↖0		←-3		←-5		←-9		←-10	←-11	←-12	←-15	←-18	←-21</span><br><span class="line">		*	↑-3		↖5		←3		←-1		←-2		←-3		←-4		↖-7		↖-10	↖-13</span><br><span class="line">		*	↑-5		↑3		↖10		←6		←5		←4		←3		←0		←-3		←-6</span><br><span class="line">		*	↑-9		↑-1		↑6		↖15		←14		←13		←12		←9		←6		←3</span><br><span class="line">		*	↑-10	↑-2		↑5		↑14		↖20		↖19		↖18		←15		←12		←9</span><br><span class="line">		*	↑-13	↖-5		↑2		↑11		↑17		↖19		↖18		↖23		↖20		↖17</span><br><span class="line">		*	↑-14	↑-6		↑1		↑10		↖16		↖22		↖24		↑22		↖22		↖19</span><br><span class="line">		*	↑-15	↑-7		↑0		↑9		↖15		↖21		↖27		←24		↖21		↖21</span><br><span class="line">		*</span><br><span class="line">		*</span><br><span class="line">		*	21</span><br><span class="line">		*</span><br><span class="line">		*</span><br><span class="line">		*</span><br><span class="line">		*/</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://kb5201314.github.io/2018/02/25/Fragment != Fragment  —— Xposed开发时遇到的关于ClassLoader的问题/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="imlk">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="IMLK">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/02/25/Fragment != Fragment  —— Xposed开发时遇到的关于ClassLoader的问题/" itemprop="url">Fragment != Fragment ? —— Xposed开发时遇到的关于ClassLoader的问题</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-02-25T18:02:56+08:00">2018-02-25</time>
-            
-
-            
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Xposed/" itemprop="url" rel="index"><span itemprop="name">Xposed</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>今天在写Xposed模块的过程中，为了找到某个Field，需要判断Filed的某个祖先的类型是是Fragment类型</p>
-<p>但在做比较的时候出现了问题，发生了Fragment != Fragment的问题：</p>
-<p>注：这里的 Fragment 是 android.support.v4.app.Fragment 而不是 android.app.Fragment</p>
-<p>我们知道v4包是要额外导入的，<br><img src="/images/blog/M9K1OOS5CIH2SJI3II-300x25.png" alt=""></p>
-<p>所以说，一共出现了两份v4包，一份打包在宿主app里，一份打包在自己的模块里面，在加载的时候会出现因为ClassLoader不一致而导致两个class不同的情况</p>
-<p>如图：<br><img src="/images/blog/BAKUOWNSKS_8271NN-300x23.png" alt=""></p>
-<p>在debug添加查看发现，两个Class虽然都是android.support.v4.app.Fragment但由于ClassLoader不一样，导致两个Class不相等；</p>
-<p>查看其它的Class发现，系统自带的那些jar里面的Class都是由BootClassLoader加载的，<br><img src="/images/blog/EDVUKB9H6VA5UD2WJ-300x19.png" alt=""><br>而BootClassLoader的实例在虚拟机中只有一个，所以模块中的Context.class和宿主app里的Context.class是一样的</p>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://kb5201314.github.io/2018/02/09/HDU 1325 1272 并查集判断有向图和无向图是否构成一棵树型/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="imlk">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="IMLK">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/02/09/HDU 1325 1272 并查集判断有向图和无向图是否构成一棵树型/" itemprop="url">HDU 1325 1272 并查集判断有向图和无向图是否构成一棵树型</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-02-09T16:49:34+08:00">2018-02-09</time>
-            
-
-            
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/HDU/" itemprop="url" rel="index"><span itemprop="name">HDU</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p><a href="http://acm.hdu.edu.cn/showproblem.php?pid=1325" target="_blank" rel="noopener">HDU 1325</a><br><a href="http://acm.hdu.edu.cn/showproblem.php?pid=1272" target="_blank" rel="noopener">HDU 1272</a></p>
-<p>HDU 1325是有向图，给定某个节点是另一个元素的父节点<br>HDU 1272是无向图，将两个节点连接起来</p>
-<p>共同点：判断是否成环，判断是树木还是森林</p>
-<p>区别：有向图可能出现多个箭头指向同一个节点的情况（即一个节点多个父节点）<br>例如<br>[caption width=”176” align=”aligncenter”]<img src="http://acm.hdu.edu.cn/data/images/1325-3.gif" alt=""> 多节点指向同一节点[/caption]</p>
-<p>另外，关于HDU 1272</p>
-<p>评论区看到一种利用离散数学结论的解法<br>（对于无向图）<br>如果m个节点被连成环，那么边的条数就是 m<br>如果m个节点形成了n个树，那么边的条数就是 m - n<br>（这个动动笔画画就能明白）<br><a href="http://acm.hdu.edu.cn/discuss/problem/post/reply.php?postid=28804&#038;messageid=1&#038;deep=0" target="_blank" rel="noopener">链接：这题目干嘛都用并查集做啊</a><br>那么按照题目要求：Yes的条件就是<br>1.边的条数 = 所有节点数 - 1<br>或<br>2.节点数为0</p>
-<p>上代码：<br>HDU 1325<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line">#include &lt;cstdio&gt;</span><br><span class="line">#include &lt;cstring&gt;</span><br><span class="line">#include &lt;cmath&gt;</span><br><span class="line"></span><br><span class="line">#define maxlen 200005</span><br><span class="line"></span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">//并查集实现</span><br><span class="line"></span><br><span class="line">int roots, ok;</span><br><span class="line"></span><br><span class="line">int fa[maxlen];</span><br><span class="line"></span><br><span class="line">// 这个栈和栈顶指针只是用来记录出现过的元素，用来清空fa数组用的，</span><br><span class="line">// 记录fa数组的哪些地方被用过了，</span><br><span class="line">// 完成一个示例以后就根据这个栈里面记录的位置来把fa数组里面对应的位置恢复成0</span><br><span class="line">// 之所以不用memset，是因为fa数组很大，不是所有部分都用上了，每次都把整个数组写0太浪费时间了</span><br><span class="line">int stack[maxlen];</span><br><span class="line">int top = -1;</span><br><span class="line"></span><br><span class="line">int find(int i) &#123;//非递归实现</span><br><span class="line">	int icopy = i;</span><br><span class="line">	while (i != fa[i]) &#123;//找到根元素</span><br><span class="line">		i = fa[i];</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	while (icopy != fa[icopy]) &#123;</span><br><span class="line">		icopy = fa[icopy];//获取父节点</span><br><span class="line">		fa[icopy] = i;//挂到根节点下</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	return i;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main(int argc, char const *argv[]) &#123;</span><br><span class="line"></span><br><span class="line">	int a, b, t = 1;</span><br><span class="line"></span><br><span class="line">	int count = 0;</span><br><span class="line">	while (1) &#123;</span><br><span class="line"></span><br><span class="line">		ok = 1;</span><br><span class="line">		count = 0;</span><br><span class="line"></span><br><span class="line">		// memset(fa, 0, sizeof(fa));//每次都全部写0，耗时长，改为用栈记录修改过的位置</span><br><span class="line"></span><br><span class="line">		while (scanf(&quot;%d%d&quot;, &amp;a, &amp;b) &amp;&amp; a &gt; 0 &amp;&amp; b &gt; 0) &#123;</span><br><span class="line"></span><br><span class="line">			// a --&gt; b</span><br><span class="line">			// a是b的父节点</span><br><span class="line"></span><br><span class="line">			if (ok) &#123;</span><br><span class="line">				if (!fa[a]) &#123; //若a没有出现过,就初始化为自己</span><br><span class="line">					fa[a] = a;</span><br><span class="line">					count++;</span><br><span class="line"></span><br><span class="line">					top++;</span><br><span class="line">					stack[top] = a;</span><br><span class="line">					// printf(&quot;add\n&quot;);</span><br><span class="line">				&#125;</span><br><span class="line">				if (!fa[b]) &#123;</span><br><span class="line">					fa[b] = b;</span><br><span class="line"></span><br><span class="line">					top++;</span><br><span class="line">					stack[top] = b;</span><br><span class="line"></span><br><span class="line">				&#125; else &#123;</span><br><span class="line">					if (fa[b] == b) &#123;</span><br><span class="line">						count--;</span><br><span class="line">						// printf(&quot;sub\n&quot;);</span><br><span class="line">					&#125;</span><br><span class="line">				&#125;</span><br><span class="line"></span><br><span class="line">				if (fa[b] != b &amp;&amp; fa[b] != a) &#123;//若出现多指一,则不ok</span><br><span class="line">					ok = 0;</span><br><span class="line">					// printf(&quot;die 1\n&quot;);</span><br><span class="line">					continue;</span><br><span class="line">				&#125; else &#123;</span><br><span class="line">					a = find(a);//把a换为a的根节点</span><br><span class="line">					if (b == a) &#123;//环</span><br><span class="line">						ok = 0;</span><br><span class="line">						// printf(&quot;die 2\n&quot;);</span><br><span class="line">						continue;</span><br><span class="line">					&#125; else &#123;</span><br><span class="line">						fa[b] = a;//直接挂在根节点</span><br><span class="line">					&#125;</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		if (a &lt; 0 &amp;&amp; b &lt; 0) &#123;</span><br><span class="line">			break;</span><br><span class="line">		&#125;</span><br><span class="line">		if (ok) &#123;</span><br><span class="line">			if (count != 1) &#123;</span><br><span class="line">				ok = 0;</span><br><span class="line">				// printf(&quot;die 3\n&quot;);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		printf(&quot;Case %d is %sa tree.\n&quot;, t, ok ? &quot;&quot; : &quot;not &quot;);</span><br><span class="line"></span><br><span class="line">		while (top != -1) &#123;</span><br><span class="line">			fa[stack[top]] = 0;</span><br><span class="line">			top--;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		t++;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>HDU 1272</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line">#include &lt;cstdio&gt;</span><br><span class="line">#include &lt;cstring&gt;</span><br><span class="line">#include &lt;cmath&gt;</span><br><span class="line"></span><br><span class="line">#define maxlen 200005</span><br><span class="line"></span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">//并查集实现</span><br><span class="line">//虽然给的输入似乎是无向的，但最终我们构造的依然是一个有向的树，我们只要考虑是否会出现环和森林，所以这题和hdu1325性质相同</span><br><span class="line"></span><br><span class="line">int ok;</span><br><span class="line"></span><br><span class="line">int fa[maxlen];</span><br><span class="line"></span><br><span class="line">// 这个栈和栈顶指针只是用来记录出现过的元素，用来清空fa数组用的，</span><br><span class="line">// 记录fa数组的哪些地方被用过了，</span><br><span class="line">// 完成一个示例以后就根据这个栈里面记录的位置来把fa数组里面对应的位置恢复成0</span><br><span class="line">// 之所以不用memset，是因为fa数组很大，不是所有部分都用上了，每次都把整个数组写0太浪费时间了</span><br><span class="line">int stack[maxlen];</span><br><span class="line">int top = -1;</span><br><span class="line"></span><br><span class="line">int find(int i) &#123;//非递归实现</span><br><span class="line">	int icopy = i;</span><br><span class="line">	while (i != fa[i]) &#123;//找到根元素</span><br><span class="line">		i = fa[i];</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	while (icopy != fa[icopy]) &#123;</span><br><span class="line">		icopy = fa[icopy];//获取父节点</span><br><span class="line">		fa[icopy] = i;//挂到根节点下</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	return i;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main(int argc, char const *argv[]) &#123;</span><br><span class="line"></span><br><span class="line">	int a, b;</span><br><span class="line"></span><br><span class="line">	int countOfRoots = 0;</span><br><span class="line">	while (1) &#123;</span><br><span class="line"></span><br><span class="line">		ok = 1;</span><br><span class="line">		countOfRoots = 0;</span><br><span class="line"></span><br><span class="line">		// memset(fa, 0, sizeof(fa));//每次都全部写0，耗时长，改为用栈记录修改过的位置</span><br><span class="line"></span><br><span class="line">		while (scanf(&quot;%d%d&quot;, &amp;a, &amp;b) &amp;&amp; a &gt; 0 &amp;&amp; b &gt; 0) &#123;</span><br><span class="line"></span><br><span class="line">			if (ok) &#123;</span><br><span class="line"></span><br><span class="line">				if (!fa[a]) &#123; //若a没有出现过,就初始化为自己</span><br><span class="line"></span><br><span class="line">					top++;</span><br><span class="line">					stack[top] = a;//所有出现过的节点都记录在stack中</span><br><span class="line"></span><br><span class="line">					if (!fa[b]) &#123;//若b也没有出现过</span><br><span class="line"></span><br><span class="line">						top++;</span><br><span class="line">						stack[top] = b;</span><br><span class="line"></span><br><span class="line">						//指定a为b的父节点,a为独立的根节点</span><br><span class="line"></span><br><span class="line">						fa[a] = a;</span><br><span class="line">						fa[b] = a;</span><br><span class="line">						countOfRoots++;//根节点数量+1</span><br><span class="line"></span><br><span class="line">					&#125; else &#123;//若b出现过</span><br><span class="line"></span><br><span class="line">						fa[a] = find(b);//把a直接挂到b的根节点下</span><br><span class="line"></span><br><span class="line">					&#125;</span><br><span class="line"></span><br><span class="line">				&#125; else &#123;//若a出现过</span><br><span class="line"></span><br><span class="line">					if (!fa[b]) &#123;//而b没出现过</span><br><span class="line"></span><br><span class="line">						top++;</span><br><span class="line">						stack[top] = b;</span><br><span class="line"></span><br><span class="line">						fa[b] = find(a);//把b直接挂到a的根节点下</span><br><span class="line">					&#125; else &#123;//b也出现过</span><br><span class="line"></span><br><span class="line">						if (find(a) == find(b)) &#123;//同一根节点</span><br><span class="line">							//成环</span><br><span class="line">							ok = 0;</span><br><span class="line">						&#125; else &#123;</span><br><span class="line">							// 把两个树合并</span><br><span class="line">							fa[find(a)] = find(b);</span><br><span class="line">							countOfRoots--;</span><br><span class="line">						&#125;</span><br><span class="line">					&#125;</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		if (a &lt; 0 &amp;&amp; b &lt; 0) &#123;</span><br><span class="line">			break;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		if (ok) &#123;</span><br><span class="line">			if (top != -1) &#123;//排除掉一个元素都没有的情况（空树）</span><br><span class="line">				if (countOfRoots != 1) &#123;</span><br><span class="line">					ok = 0;</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		printf(&quot;%s\n&quot;, ok ? &quot;Yes&quot; : &quot;No&quot;);</span><br><span class="line"></span><br><span class="line">		while (top != -1) &#123;</span><br><span class="line">			fa[stack[top]] = 0;</span><br><span class="line">			top--;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://kb5201314.github.io/2018/02/08/CodeForces 699D Fix a Tree/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="imlk">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="IMLK">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/02/08/CodeForces 699D Fix a Tree/" itemprop="url">CodeForces 699D Fix a Tree——并查集优化 给出所有节点的父节点（有向图），用最少的修改生成一颗合法的树（环的判断，去环）</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-02-08T18:24:54+08:00">2018-02-08</time>
-            
-
-            
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/未分类/" itemprop="url" rel="index"><span itemprop="name">未分类</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line">D. Fix a Tree</span><br><span class="line">time limit per test</span><br><span class="line">2 seconds</span><br><span class="line">memory limit per test</span><br><span class="line">256 megabytes</span><br><span class="line">input</span><br><span class="line">standard input</span><br><span class="line">output</span><br><span class="line">standard output</span><br><span class="line"></span><br><span class="line">A tree is an undirected connected graph without cycles.</span><br><span class="line"></span><br><span class="line">Let&apos;s consider a rooted undirected tree with n vertices, numbered 1 through n. There are many ways to represent such a tree. One way is to create an array with n integers p1, p2, ..., pn, where pi denotes a parent of vertex i (here, for convenience a root is considered its own parent).</span><br><span class="line">For this rooted tree the array p is [2, 3, 3, 2].</span><br><span class="line"></span><br><span class="line">Given a sequence p1, p2, ..., pn, one is able to restore a tree:</span><br><span class="line"></span><br><span class="line">    There must be exactly one index r that pr = r. A vertex r is a root of the tree.</span><br><span class="line">    For all other n - 1 vertices i, there is an edge between vertex i and vertex pi. </span><br><span class="line"></span><br><span class="line">A sequence p1, p2, ..., pn is called valid if the described procedure generates some (any) rooted tree. For example, for n = 3 sequences (1,2,2), (2,3,1) and (2,1,3) are not valid.</span><br><span class="line"></span><br><span class="line">You are given a sequence a1, a2, ..., an, not necessarily valid. Your task is to change the minimum number of elements, in order to get a valid sequence. Print the minimum number of changes and an example of a valid sequence after that number of changes. If there are many valid sequences achievable in the minimum number of changes, print any of them.</span><br><span class="line">Input</span><br><span class="line"></span><br><span class="line">The first line of the input contains an integer n (2 ≤ n ≤ 200 000) — the number of vertices in the tree.</span><br><span class="line"></span><br><span class="line">The second line contains n integers a1, a2, ..., an (1 ≤ ai ≤ n).</span><br><span class="line">Output</span><br><span class="line"></span><br><span class="line">In the first line print the minimum number of elements to change, in order to get a valid sequence.</span><br><span class="line"></span><br><span class="line">In the second line, print any valid sequence possible to get from (a1, a2, ..., an) in the minimum number of changes. If there are many such sequences, any of them will be accepted.</span><br><span class="line">Examples</span><br><span class="line">Input</span><br><span class="line"></span><br><span class="line">4</span><br><span class="line">2 3 3 4</span><br><span class="line"></span><br><span class="line">Output</span><br><span class="line"></span><br><span class="line">1</span><br><span class="line">2 3 4 4 </span><br><span class="line"></span><br><span class="line">Input</span><br><span class="line"></span><br><span class="line">5</span><br><span class="line">3 2 2 5 3</span><br><span class="line"></span><br><span class="line">Output</span><br><span class="line"></span><br><span class="line">0</span><br><span class="line">3 2 2 5 3 </span><br><span class="line"></span><br><span class="line">Input</span><br><span class="line"></span><br><span class="line">8</span><br><span class="line">2 3 5 4 1 6 6 7</span><br><span class="line"></span><br><span class="line">Output</span><br><span class="line"></span><br><span class="line">2</span><br><span class="line">2 3 7 8 1 6 6 7</span><br></pre></td></tr></table></figure>
-<p>##<strong>0x00</strong></p>
-<p><strong>这题我的第一种解法就是先将多个树合并到一起，然后遍历每一个节点，暴力搜寻环，类似dfs，不断向父元素递进，用一个set储存途经的所有元素，对于查找到节点i时，判断它的父元素在set中是否出现了，如果出现了就说明成了环，然后设置节点i的父节点为一个统一的根节点<br>为了优化速度，引入一个visited数组记录某个节点是否已经访问过，如果访问过那么下一次遇到的时候就直接结束向父元素的递进</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line">#include &lt;cstdio&gt;</span><br><span class="line">#include &lt;cstring&gt;</span><br><span class="line">#include &lt;cmath&gt;</span><br><span class="line">#include &lt;set&gt;</span><br><span class="line"></span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">// AC</span><br><span class="line">//200ms</span><br><span class="line"></span><br><span class="line">set&lt;int&gt; line;//缓存查找过程中经过的所有元素,耗时高</span><br><span class="line"></span><br><span class="line">int n, changes = 0;</span><br><span class="line">int root = 0;</span><br><span class="line"></span><br><span class="line">int fa[200005];//这个数组作为最后的输出结果</span><br><span class="line">int visited[200005];//优化</span><br><span class="line"></span><br><span class="line">void check(int i) &#123;//检查是否有环出现</span><br><span class="line"></span><br><span class="line">	if (!line.empty()) &#123;</span><br><span class="line">		line.clear();</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	while (fa[i] != i) &#123;//未到达树顶端时不断循环</span><br><span class="line"></span><br><span class="line">		visited[i] = 1;</span><br><span class="line"></span><br><span class="line">		if (line.count(fa[i])) &#123;//若找到环</span><br><span class="line">			changes++;//改变次数+1</span><br><span class="line">			if (!root) &#123;//若还没有根元素</span><br><span class="line">				root = i;// 将此时的i作为根元素</span><br><span class="line">			&#125;</span><br><span class="line"></span><br><span class="line">			fa[i] = root;//把当前元素挂到根元素下</span><br><span class="line"></span><br><span class="line">			return;//退出循环</span><br><span class="line"></span><br><span class="line">		&#125; else &#123;//若这一步也没出现环</span><br><span class="line">			line.insert(i);//把当前元素加到set中</span><br><span class="line">			i = fa[i];// 迭代</span><br><span class="line">			if (visited[i]) &#123; //若已经拜访过了,就直接退出，这一步优化很关键！</span><br><span class="line">				return;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main(int argc, char const *argv[])</span><br><span class="line">&#123;</span><br><span class="line">	scanf(&quot;%d&quot;, &amp;n);</span><br><span class="line"></span><br><span class="line">	for (int i = 1; i &lt;= n; ++i) &#123;</span><br><span class="line">		scanf(&quot;%d&quot;, fa + i);</span><br><span class="line">		if (fa[i] == i) &#123;</span><br><span class="line">			if (root) &#123; //若此前已经有根节点</span><br><span class="line">				fa[i] = root;</span><br><span class="line">				changes++;</span><br><span class="line">			&#125; else &#123;</span><br><span class="line">				root = i;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	for (int i = 1; i &lt;= n; ++i) &#123;</span><br><span class="line">		if (!visited[i]) &#123;</span><br><span class="line">			check(i);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	printf(&quot;%d\n&quot;, changes);</span><br><span class="line"></span><br><span class="line">	printf(&quot;%d&quot;, fa[1]);</span><br><span class="line"></span><br><span class="line">	for (int i = 2; i &lt;= n; ++i) &#123;</span><br><span class="line">		printf(&quot; %d&quot;, fa[i]);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	printf(&quot;\n&quot;);</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>##<strong>0x01</strong><br><strong>我的第二种解法是结合并查集</strong></p>
-<p><strong>思考<br>如果将一个树中的某个节点i的父节点设置为某个节点j，导致出现了环，那么显然从j沿着父节点的方向去递推（用并查集的find函数），最终一定会到达i节点（先把所有没有指定父节点的节点指向自己，即初始化fa[x] = x，这样find（j）就会在i节点处结束）</strong></p>
-<p><strong>也就是说当i = find(j)的时候,如果把i的父节点设置为j，就会造成环的出现<br>抓住这一点，在环即将出现时，我们就可以把i的父节点改成指向统一的根节点，这样就用一个操作就把环消除了</strong></p>
-<p><strong>优化：<br>由于最终我们要输出一个最少修改数量的数组，但是find函数的优化是建立在把大量节点直接挂到根节点下的这种操作上的，所以我建立了另一个数组icopy来让find函数得以优化</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line">#include &lt;cstdio&gt;</span><br><span class="line">#include &lt;cstring&gt;</span><br><span class="line">#include &lt;cmath&gt;</span><br><span class="line">#include &lt;queue&gt;</span><br><span class="line"></span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">//并查集实现</span><br><span class="line">//108ms</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line">*	思路:</span><br><span class="line">*	所有可能的情况就两种,</span><br><span class="line">*	1.正常的树</span><br><span class="line">*	2.成环</span><br><span class="line">*	我们要做的是,把环拆开成树,把所有树并在一起,要做到操作次数最少,那么当然是一个环在某一个地方拆开,指向另一个根节点,但是到底指向哪里暂时还不知道,所以让它先指向自己,称为假根节点,记录下这些假节点,之后再来处理它的去向</span><br><span class="line">*	如果有多个根节点,选其中一个作为最终的根节点,其余的根节点和假节点都并在它的下面[操作次数=假根节点的数量 + 根节点的数量 - 1]</span><br><span class="line">*	如果没有根节点,那么某一个假节点作为最终根节点[操作次数 = 假根节点数量 + 根节点数量(是0)]</span><br><span class="line">*</span><br><span class="line">*/</span><br><span class="line"></span><br><span class="line">int n, changes = 0, root;</span><br><span class="line"></span><br><span class="line">queue&lt;int&gt; fackRoot;</span><br><span class="line"></span><br><span class="line">int fa[200005];//这个数组作为最后的输出结果</span><br><span class="line">int facopy[200005];//这个数组作为最后的输出结果</span><br><span class="line"></span><br><span class="line">void init() &#123;</span><br><span class="line">	for (int i = 1; i &lt;= n; ++i) &#123;</span><br><span class="line">		facopy[i] = i;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int find(int i) &#123;//非递归实现</span><br><span class="line">	int icopy = i;</span><br><span class="line">	while (i != facopy[i]) &#123;//找到根元素</span><br><span class="line">		i = facopy[i];</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	while (icopy != facopy[icopy]) &#123;</span><br><span class="line">		icopy = facopy[icopy];//获取父节点</span><br><span class="line">		facopy[icopy] = i;//挂到根节点下</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	return i;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main(int argc, char const *argv[])</span><br><span class="line">&#123;</span><br><span class="line">	scanf(&quot;%d&quot;, &amp;n);</span><br><span class="line"></span><br><span class="line">	init();</span><br><span class="line"></span><br><span class="line">	for (int i = 1; i &lt;= n; ++i) &#123;</span><br><span class="line">		scanf(&quot;%d&quot;, fa + i);</span><br><span class="line"></span><br><span class="line">		if (fa[i] == i) &#123;</span><br><span class="line">			if (root) &#123;</span><br><span class="line">				changes++;//做出改变</span><br><span class="line">				fa[i] = root;</span><br><span class="line">			&#125; else &#123;</span><br><span class="line">				root = i;</span><br><span class="line">			&#125;</span><br><span class="line">			facopy[i] = root;</span><br><span class="line">		&#125; else &#123;</span><br><span class="line">			if (i == find(fa[i])) &#123;//若出现环</span><br><span class="line">				//加入到fackRoot</span><br><span class="line">				fackRoot.push(i);</span><br><span class="line">				// facopy[i] = i;//拆开环，作为假的根元素，暂时指向自己</span><br><span class="line">				// 上面这一步操作不用写，因为之前对并查集执行过init()操作</span><br><span class="line">			&#125; else &#123;</span><br><span class="line">				facopy[i] = find(fa[i]);//直接挂在根节点</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	// 处理所有fackRoot</span><br><span class="line">	changes += fackRoot.size();</span><br><span class="line">	while (!fackRoot.empty()) &#123;</span><br><span class="line">		if (root) &#123;//若之前确立了根元素</span><br><span class="line">			fa[fackRoot.front()] = root;</span><br><span class="line">			fackRoot.pop();</span><br><span class="line">		&#125; else &#123;</span><br><span class="line">			root = fackRoot.front();</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	printf(&quot;%d\n&quot;, changes);</span><br><span class="line"></span><br><span class="line">	printf(&quot;%d&quot;, fa[1]);</span><br><span class="line"></span><br><span class="line">	for (int i = 2; i &lt;= n; ++i) &#123;</span><br><span class="line">		printf(&quot; %d&quot;, fa[i]);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	printf(&quot;\n&quot;);</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://kb5201314.github.io/2018/02/08/CodeForces 699C Vacations——动态规划/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="imlk">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="IMLK">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/02/08/CodeForces 699C Vacations——动态规划/" itemprop="url">CodeForces 699C Vacations——动态规划</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-02-08T11:49:53+08:00">2018-02-08</time>
-            
-
-            
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/算法/" itemprop="url" rel="index"><span itemprop="name">算法</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p><a href="http://codeforces.com/problemset/problem/699/C" target="_blank" rel="noopener">原题链接</a></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br></pre></td><td class="code"><pre><span class="line">C. Vacations</span><br><span class="line">time limit per test</span><br><span class="line">1 second</span><br><span class="line">memory limit per test</span><br><span class="line">256 megabytes</span><br><span class="line">input</span><br><span class="line">standard input</span><br><span class="line">output</span><br><span class="line">standard output</span><br><span class="line"></span><br><span class="line">Vasya has n days of vacations! So he decided to improve his IT skills and do sport. Vasya knows the following information about each of this n days: whether that gym opened and whether a contest was carried out in the Internet on that day. For the i-th day there are four options:</span><br><span class="line"></span><br><span class="line">    on this day the gym is closed and the contest is not carried out;</span><br><span class="line">    on this day the gym is closed and the contest is carried out;</span><br><span class="line">    on this day the gym is open and the contest is not carried out;</span><br><span class="line">    on this day the gym is open and the contest is carried out. </span><br><span class="line"></span><br><span class="line">On each of days Vasya can either have a rest or write the contest (if it is carried out on this day), or do sport (if the gym is open on this day).</span><br><span class="line"></span><br><span class="line">Find the minimum number of days on which Vasya will have a rest (it means, he will not do sport and write the contest at the same time). The only limitation that Vasya has — he does not want to do the same activity on two consecutive days: it means, he will not do sport on two consecutive days, and write the contest on two consecutive days.</span><br><span class="line">Input</span><br><span class="line"></span><br><span class="line">The first line contains a positive integer n (1 ≤ n ≤ 100) — the number of days of Vasya&apos;s vacations.</span><br><span class="line"></span><br><span class="line">The second line contains the sequence of integers a1, a2, ..., an (0 ≤ ai ≤ 3) separated by space, where:</span><br><span class="line"></span><br><span class="line">    ai equals 0, if on the i-th day of vacations the gym is closed and the contest is not carried out;</span><br><span class="line">    ai equals 1, if on the i-th day of vacations the gym is closed, but the contest is carried out;</span><br><span class="line">    ai equals 2, if on the i-th day of vacations the gym is open and the contest is not carried out;</span><br><span class="line">    ai equals 3, if on the i-th day of vacations the gym is open and the contest is carried out.</span><br><span class="line"></span><br><span class="line">Output</span><br><span class="line"></span><br><span class="line">Print the minimum possible number of days on which Vasya will have a rest. Remember that Vasya refuses:</span><br><span class="line"></span><br><span class="line">    to do sport on any two consecutive days,</span><br><span class="line">    to write the contest on any two consecutive days. </span><br><span class="line"></span><br><span class="line">Examples</span><br><span class="line">Input</span><br><span class="line"></span><br><span class="line">4</span><br><span class="line">1 3 2 0</span><br><span class="line"></span><br><span class="line">Output</span><br><span class="line"></span><br><span class="line">2</span><br><span class="line"></span><br><span class="line">Input</span><br><span class="line"></span><br><span class="line">7</span><br><span class="line">1 3 3 2 1 2 3</span><br><span class="line"></span><br><span class="line">Output</span><br><span class="line"></span><br><span class="line">0</span><br><span class="line"></span><br><span class="line">Input</span><br><span class="line"></span><br><span class="line">2</span><br><span class="line">2 2</span><br><span class="line"></span><br><span class="line">Output</span><br><span class="line"></span><br><span class="line">1</span><br><span class="line"></span><br><span class="line">Note</span><br><span class="line"></span><br><span class="line">In the first test Vasya can write the contest on the day number 1 and do sport on the day number 3\. Thus, he will have a rest for only 2 days.</span><br><span class="line"></span><br><span class="line">In the second test Vasya should write contests on days number 1, 3, 5 and 7, in other days do sport. Thus, he will not have a rest for a single day.</span><br><span class="line"></span><br><span class="line">In the third test Vasya can do sport either on a day number 1 or number 2\. He can not do sport in two days, because it will be contrary to the his limitation. Thus, he will have a rest for only one day.</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line">#include &lt;cstdio&gt;</span><br><span class="line"></span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">int max(int x, int y) &#123;</span><br><span class="line">	return x &gt; y ? x : y;</span><br><span class="line">&#125;</span><br><span class="line">int max(int x, int y, int z) &#123;</span><br><span class="line">	return x &gt; y ? (x &gt; z ? x : z) : (y &gt; z ? y : z);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main(int argc, char const *argv[])</span><br><span class="line">&#123;</span><br><span class="line">	int t;</span><br><span class="line">	scanf(&quot;%d&quot;, &amp;t);</span><br><span class="line">	int g_date[t] = &#123;0&#125;;//g_date[i](i从0开始)表示第i天体育场是否开放</span><br><span class="line">	int c_date[t] = &#123;0&#125;;//c_date[i](i从0开始)表示第i天是否有比赛</span><br><span class="line"></span><br><span class="line">	int dp[t][3] = &#123;0&#125;;</span><br><span class="line">	// dp[i][x],i从0开始，储存截止到第i天结束工作的天数，工作天数越多，说明休息天数越少</span><br><span class="line">	// [i][0]表示第i天啥都不做，[i][1]表示第i天去体育馆，[i][2]表示第i天打比赛，</span><br><span class="line">	int c_dp[t][2] = &#123;0&#125;;</span><br><span class="line"></span><br><span class="line">	int temp;</span><br><span class="line"></span><br><span class="line">	for (int i = 0; i &lt; t; i++) &#123;</span><br><span class="line">		scanf(&quot;%d&quot;, &amp;temp);</span><br><span class="line">		switch (temp) &#123;</span><br><span class="line">		case 0:</span><br><span class="line">			break;</span><br><span class="line">		case 1:</span><br><span class="line">			c_date[i] = 1;</span><br><span class="line">			break;</span><br><span class="line">		case 2:</span><br><span class="line">			g_date[i] = 1;</span><br><span class="line">			break;</span><br><span class="line">		case 3:</span><br><span class="line">			c_date[i] = 1;</span><br><span class="line">			g_date[i] = 1;</span><br><span class="line">			break;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	for (int i = 0; i &lt; t ; i++) &#123;</span><br><span class="line">		if (i == 0) &#123;//第一天的情况</span><br><span class="line">			dp[i][0] = 0;</span><br><span class="line"></span><br><span class="line">			if (g_date[i]) &#123;//若第i天体育馆开放</span><br><span class="line">				dp[i][1] = 1;//选择去体育馆</span><br><span class="line">			&#125;</span><br><span class="line"></span><br><span class="line">			if (c_date[i]) &#123;//若第i天有比赛可打</span><br><span class="line">				dp[i][2] = 1;//选择去打比赛</span><br><span class="line">			&#125;</span><br><span class="line"></span><br><span class="line">		&#125; else &#123;//若不是第一天</span><br><span class="line"></span><br><span class="line">			dp[i][0] = max(dp[i - 1][1], dp[i - 1][0], dp[i - 1][2]);//选择什么也不做，那么最大工作天数等于昨天的三种情况里最大的那个</span><br><span class="line">			if (g_date[i]) &#123;//若今天体育馆开门</span><br><span class="line">				dp[i][1] = 1 + max(dp[i - 1][0], dp[i - 1][2]);//从昨天啥都不做和昨天去打比赛中选一个最大的</span><br><span class="line">			&#125;//若今天体育馆不开门，显然今天dp[i][1]的状态是不存在的，不能被使用，如何防止以后用到这种不存在的状态呢？这里就和max函数有关系了，只要把不存在的状态的值设置的足够小，那么max函数就肯定不会选取这个比别的数都小的值作为返回值，也就是max函数恰好筛选掉了不合法的状态，而dp[i][1]为默认值0，我们知道工作天数的最小值就是0，所以我们可以大胆地不对dp[i][1]赋值，当然如果你怕出问题的话，你可以赋值为-1或者-inf</span><br><span class="line"></span><br><span class="line">			if (c_date[i]) &#123;//若今天有比赛可打</span><br><span class="line">				dp[i][2] = 1 + max(dp[i - 1][1], dp[i - 1][0]);</span><br><span class="line">			&#125;//若今天无比赛，情况和上面的描述类似，可以不赋值(就用默认值0)</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	// 最小休息天数 = 总天数 - 最大工作天数</span><br><span class="line">	printf(&quot;%d\n&quot;, t - max(dp[t - 1][0], dp[t - 1][1], dp[t - 1][2]));</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://kb5201314.github.io/2018/02/07/HYSBZ 1216 [HNOI2003]操作系统/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="imlk">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="IMLK">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/02/07/HYSBZ 1216 [HNOI2003]操作系统/" itemprop="url">HYSBZ 1216: [HNOI2003]操作系统</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-02-07T23:27:09+08:00">2018-02-07</time>
-            
-
-            
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/算法/" itemprop="url" rel="index"><span itemprop="name">算法</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p><a href="http://www.lydsy.com/JudgeOnline/problem.php?id=1216" target="_blank" rel="noopener">题目链接</a></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line">1216: [HNOI2003]操作系统</span><br><span class="line">Time Limit: 10 Sec  Memory Limit: 162 MB</span><br><span class="line">Submit: 1045  Solved: 565</span><br><span class="line">[Submit][Status][Discuss]</span><br><span class="line">Description</span><br><span class="line"></span><br><span class="line">写一个程序来模拟操作系统的进程调度。假设该系统只有一个CPU，每一个进程的到达时间，执行时间和运行优先级都是已知的。其中运行优先级用自然数表示，数字越大，则优先级越高。如果一个进程到达的时候CPU是空闲的，则它会一直占用CPU直到该进程结束。除非在这个过程中，有一个比它优先级高的进程要运行。在这种情况下，这个新的（优先级更高的）进程会占用CPU，而老的只有等待。如果一个进程到达时，CPU正在处理一个比它优先级高或优先级相同的进程，则这个（新到达的）进程必须等待。一旦CPU空闲，如果此时有进程在等待，则选择优先级最高的先运行。如果有多个优先级最高的进程，则选择到达时间最早的。</span><br><span class="line">Input</span><br><span class="line"></span><br><span class="line">输入文件包含若干行，每一行有四个自然数（均不超过108），分别是进程号，到达时间，执行时间和优先级。不同进程有不同的编号，不会有两个相同优先级的进程同时到达。输入数据已经按到达时间从小到大排序。输入数据保证在任何时候，等待队列中的进程不超过15000个。</span><br><span class="line">Output</span><br><span class="line"></span><br><span class="line">按照进程结束的时间输出每个进程的进程号和结束时间</span><br><span class="line">Sample Input</span><br><span class="line">1 1 5 3</span><br><span class="line"></span><br><span class="line">2 10 5 1</span><br><span class="line"></span><br><span class="line">3 12 7 2</span><br><span class="line"></span><br><span class="line">4 20 2 3</span><br><span class="line"></span><br><span class="line">5 21 9 4</span><br><span class="line"></span><br><span class="line">6 22 2 4</span><br><span class="line"></span><br><span class="line">7 23 5 2</span><br><span class="line"></span><br><span class="line">8 24 2 4</span><br><span class="line">Sample Output</span><br><span class="line">1 6</span><br><span class="line"></span><br><span class="line">3 19</span><br><span class="line"></span><br><span class="line">5 30</span><br><span class="line"></span><br><span class="line">6 32</span><br><span class="line"></span><br><span class="line">8 34</span><br><span class="line"></span><br><span class="line">4 35</span><br><span class="line"></span><br><span class="line">7 40</span><br><span class="line"></span><br><span class="line">2 42</span><br></pre></td></tr></table></figure>
-<p>这题利用了优先队列</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line">#include &lt;cstdio&gt;</span><br><span class="line">#include &lt;cstring&gt;</span><br><span class="line">#include &lt;queue&gt;</span><br><span class="line"></span><br><span class="line">#define iinf 0x7FFFFFFF</span><br><span class="line"></span><br><span class="line">// AC</span><br><span class="line">// 优先队列</span><br><span class="line"></span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">int proCount;</span><br><span class="line"></span><br><span class="line">struct Pro &#123;</span><br><span class="line">	int id;</span><br><span class="line">	int comeTime;</span><br><span class="line">	int runTime;</span><br><span class="line">	int priority;</span><br><span class="line">	Pro(int a, int b, int c, int d): id(a), comeTime(b), runTime(c), priority(d) &#123;&#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">struct cmp &#123;//判断“一个元素是否小于另一个元素”的结构体</span><br><span class="line">// 重载operator ()必须是某个类的成员函数。</span><br><span class="line">// 当某个类重载了()方法，这个类就可以成为函数对象。</span><br><span class="line">	bool operator() (Pro*&amp; p0, Pro*&amp; p1) const &#123;//关于这里的参数最前是否需要加const关键字，我的应对策略是：先试着加上，如果有错的话，编译器会回答找不到对应的方法，比如，加了const提示 ： error: no match for call to ‘(cmp) (Pro*&amp;, Pro*&amp;)’，可知这里不用加const</span><br><span class="line">		if (p0-&gt;priority == p1-&gt;priority) &#123;//若优先级相同，则更早来的在前面（优先队列中最前的元素，即top()，是比较之后值最大的那个元素，要让时间更前的元素排得越前，则它在这个自定义比较函数里面的“值”越大越好，即：优先级相同的两个元素，时间更前的元素反而更大）</span><br><span class="line">			return p0-&gt;comeTime &gt; p1-&gt;comeTime;//若第一个参数指向的元素来到时间比第二个元素的早，则表达式返回 false，代表第一个参数指向的元素大于第二个元素，排的更前。</span><br><span class="line">		&#125; else &#123;</span><br><span class="line">			return p0-&gt;priority &lt; p1-&gt;priority;//若优先级不同，则优先级高的在前面</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line">*	为什么我不直接在Pro结构体内部重载 &lt; 操作符，因为我这个queue存的是指针变量，并不是实际的元素，重载Pro结构体的 &lt; 操作符不会有作用，因为这时候queue里面比较的是Pro*类型的元素，我们要想办法为Pro*类型的元素适配比较函数</span><br><span class="line">*	所以我写了上面那个比较函数，后来看了别人的代码发现，上面这个自定义的比较函数其实可以不用这么麻烦</span><br><span class="line">*	我们要想办法让 &lt; 操作符支持 Pro* 类型和 Pro* 类型之间的比较，所以我们可以在全局方范围内重载 &lt; 操作符</span><br><span class="line">*	例如：</span><br><span class="line">*	</span><br><span class="line">*	bool operator &lt; (Pro p0, Pro*&amp; p1) &#123;</span><br><span class="line">*		if (p0-&gt;priority == p1-&gt;priority) &#123;</span><br><span class="line">*			return p0-&gt;comeTime &gt; p1-&gt;comeTime;</span><br><span class="line">*		&#125; else &#123;</span><br><span class="line">*			return p0-&gt;priority &lt; p1-&gt;priority;</span><br><span class="line">*		&#125;</span><br><span class="line">*	&#125;</span><br><span class="line">*	同时下面的waitQu改成</span><br><span class="line">*	priority_queue &lt;Pro*&gt; waitQu;</span><br><span class="line">*	可是，编译报错</span><br><span class="line">*	 error: ‘bool operator&lt;(Pro*&amp;, Pro*&amp;)’ must have an argument of class or enumerated type</span><br><span class="line">*	 bool operator &lt; (Pro*&amp; p0, Pro*&amp; p1) &#123;</span><br><span class="line">*	                                    ^</span><br><span class="line">*	原来c++有些操作符在某些情况下是不能重载的，比如对两个指针的比较的小于号操作符，这个操作符已经有具体实现了，我们不能重载它，否则那些库里面用到用&lt;比较指针的操作都变成了我们自定义的操作了，岂不是乱了套</span><br><span class="line">*/</span><br><span class="line"></span><br><span class="line">queue&lt;Pro*&gt; allPro;</span><br><span class="line"></span><br><span class="line">priority_queue &lt;Pro*, vector&lt;Pro*&gt;, cmp&gt; waitQu; //存放排队等候中的进程</span><br><span class="line">//									^这里在模板中传入比较函数的类型，相当于自己实现一个 &lt; 函数</span><br><span class="line"></span><br><span class="line">int main(int argc, char const *argv[])</span><br><span class="line">&#123;</span><br><span class="line">	int a, b, c, d;</span><br><span class="line">	Pro* t;</span><br><span class="line">	while (~scanf(&quot;%d%d%d%d&quot;, &amp;a, &amp;b, &amp;c, &amp;d)) &#123;</span><br><span class="line">		t = new Pro(a, b, c, d);//这里是手动在堆上申请内存，让queue和priority_queue维护指针，实际上不用这样，可以直接在栈上建立一个Pro元素，queue和priority_queue会进行拷贝操作，在堆上形成一份原来栈内存上的元素的拷贝</span><br><span class="line">		allPro.push(t);//先读取放到allPro这个队列中</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	int nowTime = 0;</span><br><span class="line">	int stepTime;//一次步进多长时间</span><br><span class="line"></span><br><span class="line">	for (; (!waitQu.empty()) || (!allPro.empty());) &#123;//当等待队列waitQu和allPro队列都为空时就退出</span><br><span class="line"></span><br><span class="line">		stepTime = iinf;</span><br><span class="line"></span><br><span class="line">		if (!waitQu.empty()) &#123; //若等待队列中还有元素</span><br><span class="line">			stepTime = min(stepTime, waitQu.top()-&gt;runTime);</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		if (!allPro.empty()) &#123;//若未加入的任务队列中还有元素</span><br><span class="line">			stepTime = min(stepTime, allPro.front()-&gt;comeTime - nowTime);</span><br><span class="line">		&#125;</span><br><span class="line">		//至此步进时长确定完成</span><br><span class="line"></span><br><span class="line">		nowTime += stepTime;</span><br><span class="line"></span><br><span class="line">		if (!waitQu.empty()) &#123;</span><br><span class="line">			//每次处理等待队列中的第一个元素</span><br><span class="line">			waitQu.top()-&gt;runTime -= stepTime;//等待队列中的第一个元素的剩余运行时间减去步进时间</span><br><span class="line">			if (waitQu.top()-&gt;runTime == 0) &#123;//若任务执行完毕</span><br><span class="line">				printf(&quot;%d %d\n&quot;, waitQu.top()-&gt;id, nowTime);</span><br><span class="line">				delete waitQu.top();//记得释放内存</span><br><span class="line">				waitQu.pop();</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		if (!allPro.empty()) &#123;</span><br><span class="line">			if (nowTime == allPro.front()-&gt;comeTime) &#123;//若第一个未加入的任务时机已到，则加入任务到等待队列中</span><br><span class="line">				waitQu.push(allPro.front());</span><br><span class="line">				allPro.pop();</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://kb5201314.github.io/2018/02/06/最长递增子列的另一种思路（转化为LCS问题）/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="imlk">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="IMLK">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/02/06/最长递增子列的另一种思路（转化为LCS问题）/" itemprop="url">最长递增子列的另一种思路（转化为LCS问题）</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-02-06T21:11:32+08:00">2018-02-06</time>
-            
-
-            
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/算法/" itemprop="url" rel="index"><span itemprop="name">算法</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="利用LCS的解题思路可以解决最长递增子列的问题顺便求出该递增序列"><a href="#利用LCS的解题思路可以解决最长递增子列的问题顺便求出该递增序列" class="headerlink" title="利用LCS的解题思路可以解决最长递增子列的问题顺便求出该递增序列"></a>利用LCS的解题思路可以解决最长递增子列的问题顺便求出该递增序列</h2><blockquote>
-<p>例如<br>list1 = [1, 2, 3, 1, -1, 0, 4, 5]<br>将其排序得<br>list2 = [-1, 0, 1, 1, 2, 3, 4, 5]<br>则问题转化为<br>求list1和list2的最长的不要求连续的公共子列及其长度</p>
-</blockquote>
-<p>资料：<br><a href="http://blog.csdn.net/u013178472/article/details/54926531" target="_blank" rel="noopener">http://blog.csdn.net/u013178472/article/details/54926531</a></p>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/33/">33</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 
@@ -1765,7 +480,7 @@
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
               <p class="site-author-name" itemprop="name">imlk</p>
-              <p class="site-description motion-element" itemprop="description"></p>
+              <p class="site-description motion-element" itemprop="description">勿在浮沙铸高台</p>
           </div>
 
           
@@ -1773,7 +488,7 @@
               
                 <div class="site-state-item site-state-posts">
                 
-                  <a href="/archives/">
+                  <a href="/archives">
                 
                     <span class="site-state-item-count">33</span>
                     <span class="site-state-item-name">posts</span>
@@ -1785,7 +500,7 @@
                 
                 
                 <div class="site-state-item site-state-categories">
-                  
+                  <a href="/categories/index.html">
                     
                     
                       
@@ -1818,7 +533,7 @@
                     
                     <span class="site-state-item-count">14</span>
                     <span class="site-state-item-name">categories</span>
-                  
+                  </a>
                 </div>
               
 
@@ -1828,6 +543,20 @@
 
           
 
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/KB5201314" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:1789778853@qq.com" target="_blank" title="E-Mail"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  
+                </span>
+              
+            </div>
           
 
           
