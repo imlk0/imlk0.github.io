@@ -99,19 +99,19 @@
 
 
 
-  <meta name="description" content="今天读了姜维大神的Android系统篇之----Binder机制和远程服务调用机制分析 Android系统篇之—-Binder机制和远程服务调用机制分析 读完有一个疑惑，就是文中  6、最后返回的对象其实就是这个Proxy对象，而这个对象内部使用了静态代理方式，内部有一个来自远端的mRemote变量即IBinder对象。然后直接调用方法其实就是调用mRemote的transact方法进行通信了。">
+  <meta name="description" content="今天拜读了姜维大神的Android系统篇之----Binder机制和远程服务调用机制分析 Android系统篇之—-Binder机制和远程服务调用机制分析 读完有一个疑惑，就是文中  6、最后返回的对象其实就是这个Proxy对象，而这个对象内部使用了静态代理方式，内部有一个来自远端的mRemote变量即IBinder对象。然后直接调用方法其实就是调用mRemote的transact方法进行通信了。">
 <meta name="keywords" content="Android,笔记,Binder,IPC">
 <meta property="og:type" content="article">
 <meta property="og:title" content="[笔记]读Android中Service的Binder跨进程通信机制">
 <meta property="og:url" content="http://kb5201314.github.io/2018/04/11/00031_笔记-读Android中Service的Binder跨进程通信机制/index.html">
 <meta property="og:site_name" content="IMLK">
-<meta property="og:description" content="今天读了姜维大神的Android系统篇之----Binder机制和远程服务调用机制分析 Android系统篇之—-Binder机制和远程服务调用机制分析 读完有一个疑惑，就是文中  6、最后返回的对象其实就是这个Proxy对象，而这个对象内部使用了静态代理方式，内部有一个来自远端的mRemote变量即IBinder对象。然后直接调用方法其实就是调用mRemote的transact方法进行通信了。">
+<meta property="og:description" content="今天拜读了姜维大神的Android系统篇之----Binder机制和远程服务调用机制分析 Android系统篇之—-Binder机制和远程服务调用机制分析 读完有一个疑惑，就是文中  6、最后返回的对象其实就是这个Proxy对象，而这个对象内部使用了静态代理方式，内部有一个来自远端的mRemote变量即IBinder对象。然后直接调用方法其实就是调用mRemote的transact方法进行通信了。">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://kb5201314.github.io/images/blog/31_0.png">
-<meta property="og:updated_time" content="2018-04-11T15:17:25.305Z">
+<meta property="og:updated_time" content="2018-04-11T15:22:07.883Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="[笔记]读Android中Service的Binder跨进程通信机制">
-<meta name="twitter:description" content="今天读了姜维大神的Android系统篇之----Binder机制和远程服务调用机制分析 Android系统篇之—-Binder机制和远程服务调用机制分析 读完有一个疑惑，就是文中  6、最后返回的对象其实就是这个Proxy对象，而这个对象内部使用了静态代理方式，内部有一个来自远端的mRemote变量即IBinder对象。然后直接调用方法其实就是调用mRemote的transact方法进行通信了。">
+<meta name="twitter:description" content="今天拜读了姜维大神的Android系统篇之----Binder机制和远程服务调用机制分析 Android系统篇之—-Binder机制和远程服务调用机制分析 读完有一个疑惑，就是文中  6、最后返回的对象其实就是这个Proxy对象，而这个对象内部使用了静态代理方式，内部有一个来自远端的mRemote变量即IBinder对象。然后直接调用方法其实就是调用mRemote的transact方法进行通信了。">
 <meta name="twitter:image" content="http://kb5201314.github.io/images/blog/31_0.png">
 
 
@@ -411,7 +411,7 @@
       
 
       
-        <p>今天读了姜维大神的<code>Android系统篇之----Binder机制和远程服务调用机制分析</code></p>
+        <p>今天拜读了姜维大神的<code>Android系统篇之----Binder机制和远程服务调用机制分析</code></p>
 <p><a href="https://blog.csdn.net/jiangwei0910410003/article/details/52467919" target="_blank" rel="noopener">Android系统篇之—-Binder机制和远程服务调用机制分析</a></p>
 <p>读完有一个疑惑，就是<br>文中</p>
 <blockquote>
