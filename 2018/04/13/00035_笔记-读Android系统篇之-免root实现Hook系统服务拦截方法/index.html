@@ -99,23 +99,25 @@
 
 
 
-  <meta name="description" content="勿在浮沙铸高台">
-<meta property="og:type" content="website">
-<meta property="og:title" content="IMLK">
-<meta property="og:url" content="http://kb5201314.github.io/index.html">
+  <meta name="description" content="第二篇读书笔记 拜读姜维大神的Android系统篇之—-免root实现Hook系统服务拦截方法 梳理了下思路，解决了疑惑 我们使用剪切板服务的时候是调用了ContextImpl的getSystemService方法 ContextImpl的getSystemService方法 1234@Overridepublic Object getSystemService(String name) &amp;#12">
+<meta name="keywords" content="Android,笔记,Binder,IPC">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[笔记]读Android系统篇之----免root实现Hook系统服务拦截方法">
+<meta property="og:url" content="http://kb5201314.github.io/2018/04/13/00035_笔记-读Android系统篇之-免root实现Hook系统服务拦截方法/index.html">
 <meta property="og:site_name" content="IMLK">
-<meta property="og:description" content="勿在浮沙铸高台">
+<meta property="og:description" content="第二篇读书笔记 拜读姜维大神的Android系统篇之—-免root实现Hook系统服务拦截方法 梳理了下思路，解决了疑惑 我们使用剪切板服务的时候是调用了ContextImpl的getSystemService方法 ContextImpl的getSystemService方法 1234@Overridepublic Object getSystemService(String name) &amp;#12">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-04-13T09:01:19.450Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="IMLK">
-<meta name="twitter:description" content="勿在浮沙铸高台">
+<meta name="twitter:title" content="[笔记]读Android系统篇之----免root实现Hook系统服务拦截方法">
+<meta name="twitter:description" content="第二篇读书笔记 拜读姜维大神的Android系统篇之—-免root实现Hook系统服务拦截方法 梳理了下思路，解决了疑惑 我们使用剪切板服务的时候是调用了ContextImpl的getSystemService方法 ContextImpl的getSystemService方法 1234@Overridepublic Object getSystemService(String name) &amp;#12">
 
 
 
 
 
 
-  <link rel="canonical" href="http://kb5201314.github.io/"/>
+  <link rel="canonical" href="http://kb5201314.github.io/2018/04/13/00035_笔记-读Android系统篇之-免root实现Hook系统服务拦截方法/"/>
 
 
 
@@ -125,7 +127,7 @@
   };
 </script>
 
-  <title>IMLK</title>
+  <title>[笔记]读Android系统篇之----免root实现Hook系统服务拦截方法 | IMLK</title>
   
 
 
@@ -172,8 +174,7 @@
     
   
 
-  <div class="container sidebar-position-left 
-  page-home">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -307,9 +308,9 @@
           
           <div id="content" class="content">
             
-  <section id="posts" class="posts-expand">
+
+  <div id="posts" class="posts-expand">
     
-      
 
   
 
@@ -341,9 +342,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/04/13/00035_笔记-读Android系统篇之-免root实现Hook系统服务拦截方法/" itemprop="url">[笔记]读Android系统篇之----免root实现Hook系统服务拦截方法</a></h1>
+          <h1 class="post-title" itemprop="name headline">[笔记]读Android系统篇之----免root实现Hook系统服务拦截方法</h1>
         
 
         <div class="post-meta">
@@ -410,9 +409,7 @@
       
 
       
-        
-          
-            <p>第二篇读书笔记</p>
+        <p>第二篇读书笔记</p>
 <p>拜读姜维大神的<a href="https://blog.csdn.net/jiangwei0910410003/article/details/52523679" target="_blank" rel="noopener">Android系统篇之—-免root实现Hook系统服务拦截方法</a></p>
 <p>梳理了下思路，解决了疑惑</p>
 <p>我们使用剪切板服务的时候是调用了<code>ContextImpl</code>的<code>getSystemService</code>方法</p>
@@ -447,8 +444,6 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">graph LR</span><br><span class="line"></span><br><span class="line">G[Hook开始] --&gt; H[主动反射调用`ServiceManager`中的`getService`并动态代理远端对象]</span><br><span class="line">H --&gt; J[正常调用开始]</span><br><span class="line">J --&gt; I[调用`getSystemService`]</span><br><span class="line">I -- &gt;A[`ClipboardManager`的构造函数]</span><br><span class="line">A --&gt; B[间接调用了`ServiceManager`中的`getService`]</span><br><span class="line">B --&gt; C[获得第一次动态代理生成的对象]</span><br><span class="line">C --&gt; D[调用`IClipboard.Stub`的`asInterface`并把远端对象传入]</span><br><span class="line">D --&gt; K[拦截`queryLocalInterface`并合成`IClipboard`接口的代理对象]</span><br><span class="line">K --&gt; L[返回合成的代理对象]</span><br><span class="line">L --&gt; F[后续使用]</span><br></pre></td></tr></table></figure>
 <p>就这样，两次动态代理，第一次代理远端对象，拦截<code>queryLocalInterface</code>方法，第二次动态代理合成了一个实现了<code>IClipboard</code>接口的对象，骗过了<code>ClipboardManager</code>。</p>
 
-          
-        
       
     </div>
 
@@ -466,14 +461,42 @@
 
     <footer class="post-footer">
       
-
+        <div class="post-tags">
+          
+            <a href="/tags/Android/" rel="tag"># Android</a>
+          
+            <a href="/tags/笔记/" rel="tag"># 笔记</a>
+          
+            <a href="/tags/Binder/" rel="tag"># Binder</a>
+          
+            <a href="/tags/IPC/" rel="tag"># IPC</a>
+          
+        </div>
       
 
       
+      
+      
 
       
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/04/11/00031_笔记-读Android中Service的Binder跨进程通信机制/" rel="next" title="[笔记]读Android中Service的Binder跨进程通信机制">
+                <i class="fa fa-chevron-left"></i> [笔记]读Android中Service的Binder跨进程通信机制
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
       
-        <div class="post-eof"></div>
+
+      
       
     </footer>
   </div>
@@ -483,18 +506,19 @@
   </article>
 
 
-    
-  </section>
 
-  
-  <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/35/">35</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
-  </nav>
-
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
           
+
+  
+
+
 
         </div>
         
@@ -515,8 +539,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -635,6 +668,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#BinderProxy中queryLocalInterface的实现"><span class="nav-number">1.</span> <span class="nav-text">BinderProxy中queryLocalInterface的实现</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#IClipboard-Stub的asInterface方法"><span class="nav-number">2.</span> <span class="nav-text">IClipboard.Stub的asInterface方法</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -762,6 +811,10 @@
   
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.0.6"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.0.6"></script>
+
+
 
   
 
