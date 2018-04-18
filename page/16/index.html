@@ -324,7 +324,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://kb5201314.github.io/blog/16/">
+    <link itemprop="mainEntityOfPage" href="http://kb5201314.github.io/blog/5/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="imlk">
@@ -343,7 +343,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/blog/16/" itemprop="url">HDU 2577 How To Type 动态规划</a></h1>
+                <a class="post-title-link" href="/blog/5/" itemprop="url">CodeForces 697D 树+概率</a></h1>
         
 
         <div class="post-meta">
@@ -355,7 +355,7 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-02-01T17:59:56+08:00">2018-02-01</time>
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-02-01T23:34:57+08:00">2018-02-01</time>
             
 
             
@@ -412,39 +412,9 @@
       
         
           
-            <blockquote>
-<p>How to Type</p>
-<p>  Time Limit: 2000/1000 MS (Java/Others)    Memory Limit: 32768/32768 K (Java/Others)</p>
-<p>  Total Submission(s): 7448    Accepted Submission(s): 3374</p>
-<p>  Problem Description</p>
-<p>  Pirates have finished developing the typing software. He called Cathy to test his typing software. She is good at thinking. After testing for several days, she finds that if she types a string by some ways, she will type the key at least. But she has a bad habit that if the caps lock is on, she must turn off it, after she finishes typing. Now she wants to know the smallest times of typing the key to finish typing a string.</p>
-<p>  Input</p>
-<p>  The first line is an integer t (t&lt;=100), which is the number of test case in the input file. For each test case, there is only one string which consists of lowercase letter and upper case letter. The length of the string is at most 100.</p>
-<p>  Output</p>
-<p>  For each test case, you must output the smallest times of typing the key to finish typing this string.</p>
-<p>  Sample Input</p>
-<p>  3</p>
-<p>  Pirates</p>
-<p>  HDUacm</p>
-<p>  HDUACM</p>
-<p>  Sample Output</p>
-<p>  8</p>
-<p>  8</p>
-<p>  8</p>
-<p>  Hint</p>
-<p>  The string “Pirates”, can type this way, Shift, p, i, r, a, t, e, s, the answer is 8.</p>
-<p>  The string “HDUacm”, can type this way, Caps lock, h, d, u, Caps lock, a, c, m, the answer is 8</p>
-<p>  The string “HDUACM”, can type this way Caps lock h, d, u, a, c, m, Caps lock, the answer is 8</p>
-<p>  Author</p>
-<p>  Dellenge</p>
-<p>  Source</p>
-<p>  HDU 2009-5 Programming Contest</p>
-<p>  Recommend</p>
-<p>  lcy</p>
-</blockquote>
-<p><strong>输入每个字符前的状态是：</strong><br><strong>大小写锁开启on或者关闭off</strong></p>
-<p><strong><em>注意开启锁时按shift可以输入小写</em></strong></p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">isup</span><span class="params">(<span class="keyword">char</span> a)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> (a &amp;gt;= <span class="string">'A'</span> &amp;amp;&amp;amp; a &amp;lt;= <span class="string">'Z'</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> <span class="keyword">const</span> *argv[])</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> t;</span><br><span class="line">    <span class="keyword">char</span> data[<span class="number">105</span>];</span><br><span class="line">    <span class="keyword">int</span> off[<span class="number">105</span>];</span><br><span class="line">    <span class="keyword">int</span> on[<span class="number">105</span>];</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">"%d"</span>, &amp;amp;t);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> (t--) &#123;</span><br><span class="line">        <span class="keyword">int</span> capsLock = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> ans = <span class="number">0</span>;</span><br><span class="line">        <span class="built_in">scanf</span>(<span class="string">"%s"</span>, data);</span><br><span class="line">        <span class="keyword">int</span> i;</span><br><span class="line">        <span class="comment">// 每次输入之前锁有两种状态</span></span><br><span class="line">        off[<span class="number">0</span>] = <span class="number">0</span>;<span class="comment">//表示输入第i个字符前状态为off/on的按键最少次数</span></span><br><span class="line">        on[<span class="number">0</span>] = <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">for</span> (i = <span class="number">0</span>; data[i] != <span class="string">'\0'</span>; i++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (isup(data[i])) &#123;</span><br><span class="line">                <span class="comment">// 输入大写字母以后锁：on</span></span><br><span class="line">                <span class="comment">// 直接输入，按下caps再输入（原先锁off）</span></span><br><span class="line">                on[i + <span class="number">1</span>] = min(on[i] + <span class="number">1</span>, off[i] + <span class="number">2</span>);</span><br><span class="line">                <span class="comment">// 输入大写字母以后锁：off</span></span><br><span class="line">                <span class="comment">// 按下caps再输入（原先锁on）,按shift输入</span></span><br><span class="line">                off[i + <span class="number">1</span>] = min(on[i] + <span class="number">2</span>, off[i] + <span class="number">2</span>);</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line"></span><br><span class="line">                on[i + <span class="number">1</span>] = min(on[i] + <span class="number">2</span>, off[i] + <span class="number">2</span>);</span><br><span class="line">                off[i + <span class="number">1</span>] = min(on[i] + <span class="number">2</span>, off[i] + <span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"%d\n"</span>, min(on[i] + <span class="number">1</span>, off[i]));</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+            <p><a href="http://codeforces.com/problemset/problem/697/D" target="_blank" rel="noopener">原题链接</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line">D. Puzzles</span><br><span class="line">time limit per test</span><br><span class="line">1 second</span><br><span class="line">memory limit per test</span><br><span class="line">256 megabytes</span><br><span class="line">input</span><br><span class="line">standard input</span><br><span class="line">output</span><br><span class="line">standard output</span><br><span class="line"></span><br><span class="line">Barney lives in country USC (United States of Charzeh). USC has n cities numbered from 1 through n and n - 1 roads between them. Cities and roads of USC form a rooted tree (Barney&apos;s not sure why it is rooted). Root of the tree is the city number 1\. Thus if one will start his journey from city 1, he can visit any city he wants by following roads.</span><br><span class="line"></span><br><span class="line">Some girl has stolen Barney&apos;s heart, and Barney wants to find her. He starts looking for in the root of the tree and (since he is Barney Stinson not a random guy), he uses a random DFS to search in the cities. A pseudo code of this algorithm is as follows:</span><br><span class="line"></span><br><span class="line">let starting_time be an array of length n</span><br><span class="line">current_time = 0</span><br><span class="line">dfs(v):</span><br><span class="line">	current_time = current_time + 1</span><br><span class="line">	starting_time[v] = current_time</span><br><span class="line">	shuffle children[v] randomly (each permutation with equal possibility)</span><br><span class="line">	// children[v] is vector of children cities of city v</span><br><span class="line">	for u in children[v]:</span><br><span class="line">		dfs(u)</span><br><span class="line"></span><br><span class="line">As told before, Barney will start his journey in the root of the tree (equivalent to call dfs(1)).</span><br><span class="line"></span><br><span class="line">Now Barney needs to pack a backpack and so he wants to know more about his upcoming journey: for every city i, Barney wants to know the expected value of starting_time[i]. He&apos;s a friend of Jon Snow and knows nothing, that&apos;s why he asked for your help.</span><br><span class="line">Input</span><br><span class="line"></span><br><span class="line">The first line of input contains a single integer n (1 ≤ n ≤ 105) — the number of cities in USC.</span><br><span class="line"></span><br><span class="line">The second line contains n - 1 integers p2, p3, ..., pn (1 ≤ pi &lt; i), where pi is the number of the parent city of city number i in the tree, meaning there is a road between cities numbered pi and i in USC.</span><br><span class="line">Output</span><br><span class="line"></span><br><span class="line">In the first and only line of output print n numbers, where i-th number is the expected value of starting_time[i].</span><br><span class="line"></span><br><span class="line">Your answer for each city will be considered correct if its absolute or relative error does not exceed 10 - 6.</span><br><span class="line">Examples</span><br><span class="line">Input</span><br><span class="line"></span><br><span class="line">7</span><br><span class="line">1 2 1 1 4 4</span><br><span class="line"></span><br><span class="line">Output</span><br><span class="line"></span><br><span class="line">1.0 4.0 5.0 3.5 4.5 5.0 5.0 </span><br><span class="line"></span><br><span class="line">Input</span><br><span class="line"></span><br><span class="line">12</span><br><span class="line">1 1 2 2 4 4 3 3 1 10 8</span><br><span class="line"></span><br><span class="line">Output</span><br><span class="line"></span><br><span class="line">1.0 5.0 5.5 6.5 7.5 8.0 8.0 7.0 7.5 6.5 7.5 8.0</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line">#include &lt;cstdio&gt;</span><br><span class="line">#include &lt;set&gt;</span><br><span class="line">//multiset的定义在set头文件中</span><br><span class="line"></span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">int data[100005][2];//[0]自身以及子节点的数量[1]父节点</span><br><span class="line">double ans[100005];</span><br><span class="line"></span><br><span class="line">struct Node &#123;</span><br><span class="line">	int x;//父节点</span><br><span class="line">	int y;//子节点</span><br><span class="line"></span><br><span class="line">	Node(int x, int y): x(x), y(y) &#123;</span><br><span class="line">	&#125;</span><br><span class="line">	int operator &lt; (Node const &amp; n) const &#123;//倒序</span><br><span class="line">		return x &gt; n.x;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">multiset&lt;Node&gt; ms;</span><br><span class="line"></span><br><span class="line">int main(int argc, char const *argv[])</span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">	int n, temp;</span><br><span class="line">	scanf(&quot;%d&quot;, &amp;n);</span><br><span class="line">	data[1][0] = 1;</span><br><span class="line">	for (int i = 2; i &lt;= n; i++) &#123;</span><br><span class="line">		scanf(&quot;%d&quot;, &amp;temp);</span><br><span class="line">		data[i][0] = 1;</span><br><span class="line">		data[i][1] = temp;</span><br><span class="line">		Node n(temp, i);</span><br><span class="line">		ms.insert(n);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	// 从树的最底开始上升</span><br><span class="line">	int cou = 0;</span><br><span class="line">	for (multiset&lt;Node&gt;::iterator i = ms.begin(); i != ms.end(); ++i) &#123;</span><br><span class="line">		data[i-&gt;x][0] += data[i-&gt;y][0];</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	ans[1] = 1.0;</span><br><span class="line">	printf(&quot;1.0&quot;);</span><br><span class="line">	for (int i = 2; i &lt;= n; i++) &#123;</span><br><span class="line">		/**</span><br><span class="line">		* 第i个节点的期望 == 它的父节点的期望 + 在它自身的耗时(1) + 第i个节点的兄弟节点及它拓展的子节点耗时的期望(即兄弟节点及它拓展的子节点数 * 0.5)</span><br><span class="line">		* (兄弟节点及它拓展的子节点数 == i 的父节点 - i 节点拓展的树的所有节点(包括i) - 1(父节点自身))，</span><br><span class="line">		* 这些节点每一个要么在i之前被遍历，要么在i之后，于是期望值乘以0.5</span><br><span class="line">		*/</span><br><span class="line">		ans[i] = ans[data[i][1]] + 1 + (data[data[i][1]][0] - 1 - data[i][0]) * 0.5;</span><br><span class="line">		printf(&quot; %.1f&quot;, ans[i]);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
           
         
       
@@ -486,7 +456,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/15/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/15/">15</a><span class="page-number current">16</span><a class="page-number" href="/page/17/">17</a><span class="space">&hellip;</span><a class="page-number" href="/page/35/">35</a><a class="extend next" rel="next" href="/page/17/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <a class="extend prev" rel="prev" href="/page/15/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/15/">15</a><span class="page-number current">16</span><a class="page-number" href="/page/17/">17</a><span class="space">&hellip;</span><a class="page-number" href="/page/36/">36</a><a class="extend next" rel="next" href="/page/17/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 
@@ -529,7 +499,7 @@
                 
                   <a href="/archives">
                 
-                    <span class="site-state-item-count">35</span>
+                    <span class="site-state-item-count">36</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -574,7 +544,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">16</span>
+                      
+                    
+                    <span class="site-state-item-count">17</span>
                     <span class="site-state-item-name">categories</span>
                   </a>
                 </div>
@@ -595,7 +567,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">4</span>
+                      
+                    
+                    <span class="site-state-item-count">5</span>
                     <span class="site-state-item-name">tags</span>
                   
                 </div>
