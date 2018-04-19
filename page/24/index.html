@@ -324,7 +324,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://kb5201314.github.io/blog/1/">
+    <link itemprop="mainEntityOfPage" href="http://kb5201314.github.io/blog/2/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="imlk">
@@ -343,7 +343,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/blog/1/" itemprop="url">C++拷贝函数</a></h1>
+                <a class="post-title-link" href="/blog/2/" itemprop="url">C++构造函数中转而调用其它构造函数的三种方法</a></h1>
         
 
         <div class="post-meta">
@@ -355,7 +355,7 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-01-19T21:02:14+08:00">2018-01-19</time>
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-01-19T21:41:51+08:00">2018-01-19</time>
             
 
             
@@ -412,7 +412,15 @@
       
         
           
-            <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line">*	拷贝构造函数,编译器默认提供</span><br><span class="line">*	触发情形：</span><br><span class="line">*	Teacher tear2(tear1);</span><br><span class="line">*	或者：</span><br><span class="line">*	Teacher tear3 = tear1;//多发生于作为函数参数传递时</span><br><span class="line">*/</span><br><span class="line"></span><br><span class="line">//函数声明</span><br><span class="line">Teacher::Teacher(const Teacher&amp; teacher);</span><br></pre></td></tr></table></figure>
+            <h2 id="C-构造函数中转而调用其它构造函数的三种方法"><a href="#C-构造函数中转而调用其它构造函数的三种方法" class="headerlink" title="C++构造函数中转而调用其它构造函数的三种方法"></a><strong>C++构造函数中转而调用其它构造函数的三种方法</strong></h2><p><strong>0x00 在初始化列表中调调用另一个构造函数</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line">*	warning: delegating constructors only available with -std=c++11 or -std=gnu++11</span><br><span class="line">*/</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Teacher::Teacher(): Teacher(&quot;unknown&quot;,30) &#123;&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>0x01 使用this指针显式调用构造函数</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line">*	经过实践发现g++似乎不能这么用</span><br><span class="line">*	error: cannot call constructor ‘Teacher::Teacher’ directly</span><br><span class="line">*	参见：</span><br><span class="line">*	https://stackoverflow.com/questions/9253619/c-cannot-call-constructor-directly</span><br><span class="line">*/</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Teacher::Teacher() &#123;</span><br><span class="line">	this-&gt;Teacher::Teacher(&quot;unknown&quot;,30);//此方法必须加上作用域</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>0x02 原始内存覆盖</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line">*	使用new (void*p) ClassType(param...)，这种语句的意思是不重新分配内存，而是直接覆盖在原内存上。</span><br><span class="line">*	参见：</span><br><span class="line">*	https://www.jianshu.com/p/4af119c44086</span><br><span class="line">*/</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Teacher::Teacher():m_iMaxStudentNum(30) &#123;</span><br><span class="line">	new (this) Teacher(&quot;unknown&quot;,30);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
           
         
       
@@ -454,7 +462,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/23/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/23/">23</a><span class="page-number current">24</span><a class="page-number" href="/page/25/">25</a><span class="space">&hellip;</span><a class="page-number" href="/page/36/">36</a><a class="extend next" rel="next" href="/page/25/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <a class="extend prev" rel="prev" href="/page/23/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/23/">23</a><span class="page-number current">24</span><a class="page-number" href="/page/25/">25</a><span class="space">&hellip;</span><a class="page-number" href="/page/37/">37</a><a class="extend next" rel="next" href="/page/25/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 
@@ -497,7 +505,7 @@
                 
                   <a href="/archives">
                 
-                    <span class="site-state-item-count">36</span>
+                    <span class="site-state-item-count">37</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -544,7 +552,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">17</span>
+                      
+                    
+                    <span class="site-state-item-count">18</span>
                     <span class="site-state-item-name">categories</span>
                   </a>
                 </div>
@@ -567,7 +577,11 @@
                     
                       
                     
-                    <span class="site-state-item-count">5</span>
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">7</span>
                     <span class="site-state-item-name">tags</span>
                   
                 </div>
