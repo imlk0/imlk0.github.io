@@ -99,18 +99,18 @@
 
 
 
-  <meta name="description" content="- JavaScript不区分整数和浮点数，统一用Number表示; - js注释12345// 注释/*注释*/ - js等号比较运算符123== // 会自动转换数据类型再比较，很多时候会得到非常诡异的结果=== // 不会自动转换数据类型，如果数据类型不一致，直接返回false，一致的话再比较 - 实际时常用===而不用==- 使用isNaN()函数判断是否为NaN- 浮点数运算有误差- %">
+  <meta name="description" content="JavaScript不区分整数和浮点数，统一用Number表示; js注释 12345// 注释/*注释*/  js等号比较运算符 123== // 会自动转换数据类型再比较，很多时候会得到非常诡异的结果=== // 不会自动转换数据类型，如果数据类型不一致，直接返回false，一致的话再比较  实际时常用===而不用==  使用isNaN()函数判断是否为NaN 浮点数运算有误差 %求余运算">
 <meta name="keywords" content="JavaScript">
 <meta property="og:type" content="article">
 <meta property="og:title" content="[笔记]JavaScript入门啦">
 <meta property="og:url" content="http://kb5201314.github.io/blog/36/index.html">
 <meta property="og:site_name" content="IMLK">
-<meta property="og:description" content="- JavaScript不区分整数和浮点数，统一用Number表示; - js注释12345// 注释/*注释*/ - js等号比较运算符123== // 会自动转换数据类型再比较，很多时候会得到非常诡异的结果=== // 不会自动转换数据类型，如果数据类型不一致，直接返回false，一致的话再比较 - 实际时常用===而不用==- 使用isNaN()函数判断是否为NaN- 浮点数运算有误差- %">
+<meta property="og:description" content="JavaScript不区分整数和浮点数，统一用Number表示; js注释 12345// 注释/*注释*/  js等号比较运算符 123== // 会自动转换数据类型再比较，很多时候会得到非常诡异的结果=== // 不会自动转换数据类型，如果数据类型不一致，直接返回false，一致的话再比较  实际时常用===而不用==  使用isNaN()函数判断是否为NaN 浮点数运算有误差 %求余运算">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-04-20T15:52:22.757Z">
+<meta property="og:updated_time" content="2018-04-20T16:03:49.790Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="[笔记]JavaScript入门啦">
-<meta name="twitter:description" content="- JavaScript不区分整数和浮点数，统一用Number表示; - js注释12345// 注释/*注释*/ - js等号比较运算符123== // 会自动转换数据类型再比较，很多时候会得到非常诡异的结果=== // 不会自动转换数据类型，如果数据类型不一致，直接返回false，一致的话再比较 - 实际时常用===而不用==- 使用isNaN()函数判断是否为NaN- 浮点数运算有误差- %">
+<meta name="twitter:description" content="JavaScript不区分整数和浮点数，统一用Number表示; js注释 12345// 注释/*注释*/  js等号比较运算符 123== // 会自动转换数据类型再比较，很多时候会得到非常诡异的结果=== // 不会自动转换数据类型，如果数据类型不一致，直接返回false，一致的话再比较  实际时常用===而不用==  使用isNaN()函数判断是否为NaN 浮点数运算有误差 %求余运算">
 
 
 
@@ -409,12 +409,29 @@
       
 
       
-        <p>- JavaScript不区分整数和浮点数，统一用Number表示;</p>
-<p>- js注释<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 注释</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">注释</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure></p>
-<p>- js等号比较运算符<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">== <span class="comment">// 会自动转换数据类型再比较，很多时候会得到非常诡异的结果</span></span><br><span class="line"></span><br><span class="line">=== <span class="comment">// 不会自动转换数据类型，如果数据类型不一致，直接返回false，一致的话再比较</span></span><br></pre></td></tr></table></figure></p>
-<p>- 实际时常用<code>===</code>而不用<code>==</code><br>- 使用<code>isNaN()</code>函数判断是否为<code>NaN</code><br>- 浮点数运算有误差<br>- <code>%</code>求余运算<br>- <code>node</code>交互模式中，<code>_</code>表示上一次语句执行成功后的结果<br>- <code>null</code>不等于<code>0</code>也不等于<code>&#39;&#39;</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&gt; null == 0</span><br><span class="line">false</span><br><span class="line">&gt; null === 0</span><br><span class="line">false</span><br><span class="line">&gt; null == &apos;&apos;</span><br><span class="line">false</span><br><span class="line">&gt; null === &apos;&apos;</span><br><span class="line">false</span><br><span class="line">&gt; null == null</span><br><span class="line">true</span><br><span class="line">&gt; null === null</span><br><span class="line">true</span><br><span class="line">&gt; 0 == &apos;&apos;</span><br><span class="line">true</span><br><span class="line">&gt; 0 === &apos;&apos;</span><br><span class="line">false</span><br></pre></td></tr></table></figure></p>
-<p>- js中还有一个特殊的元素<code>undefined</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt; undefined === undefined</span><br><span class="line">true</span><br></pre></td></tr></table></figure></p>
-<p>- js中<code>var</code>与不加<code>var</code>的区别：<a href="https://www.cnblogs.com/liuna/p/6140901.html" target="_blank" rel="noopener">https://www.cnblogs.com/liuna/p/6140901.html</a></p>
+        <ul>
+<li>JavaScript不区分整数和浮点数，统一用Number表示;</li>
+<li><p>js注释</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 注释</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">注释</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>js等号比较运算符</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">== <span class="comment">// 会自动转换数据类型再比较，很多时候会得到非常诡异的结果</span></span><br><span class="line"></span><br><span class="line">=== <span class="comment">// 不会自动转换数据类型，如果数据类型不一致，直接返回false，一致的话再比较</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>实际时常用<code>===</code>而不用<code>==</code></p>
+</li>
+<li>使用<code>isNaN()</code>函数判断是否为<code>NaN</code></li>
+<li>浮点数运算有误差</li>
+<li><code>%</code>求余运算</li>
+<li><code>node</code>交互模式中，<code>_</code>表示上一次语句执行成功后的结果</li>
+<li><p><code>null</code>不等于<code>0</code>也不等于<code>&#39;&#39;</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&gt; null == 0</span><br><span class="line">false</span><br><span class="line">&gt; null === 0</span><br><span class="line">false</span><br><span class="line">&gt; null == &apos;&apos;</span><br><span class="line">false</span><br><span class="line">&gt; null === &apos;&apos;</span><br><span class="line">false</span><br><span class="line">&gt; null == null</span><br><span class="line">true</span><br><span class="line">&gt; null === null</span><br><span class="line">true</span><br><span class="line">&gt; 0 == &apos;&apos;</span><br><span class="line">true</span><br><span class="line">&gt; 0 === &apos;&apos;</span><br><span class="line">false</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>js中还有一个特殊的元素<code>undefined</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt; undefined === undefined</span><br><span class="line">true</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>js中<code>var</code>与不加<code>var</code>的区别：<a href="https://www.cnblogs.com/liuna/p/6140901.html" target="_blank" rel="noopener">https://www.cnblogs.com/liuna/p/6140901.html</a></p>
+</li>
+</ul>
 
       
     </div>
