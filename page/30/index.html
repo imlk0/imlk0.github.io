@@ -324,7 +324,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://kb5201314.github.io/blog/9/">
+    <link itemprop="mainEntityOfPage" href="http://kb5201314.github.io/blog/22/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="imlk">
@@ -343,7 +343,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/blog/9/" itemprop="url">C——printf格式化动态长度</a></h1>
+                <a class="post-title-link" href="/blog/22/" itemprop="url">Xposed模块开发——在hook之后使用module的drawable资源</a></h1>
         
 
         <div class="post-meta">
@@ -355,7 +355,7 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-12-16T23:55:10+08:00">2017-12-16</time>
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-12-30T16:52:36+08:00">2017-12-30</time>
             
 
             
@@ -376,7 +376,7 @@
                 <span class="post-meta-item-text">In</span>
               
               
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/C-C/" itemprop="url" rel="index"><span itemprop="name">C/C++</span></a></span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Xposed/" itemprop="url" rel="index"><span itemprop="name">Xposed</span></a></span>
 
                 
                 
@@ -412,11 +412,19 @@
       
         
           
-            <p>printf要格式化输出动态长度的数，有两种方法：</p>
-<p><strong>0x00 构造一个字符数组，先根据要动态的长度构造出对应的格式化字符串，然后传入printf的第一个参数。</strong></p>
-<p><strong>0x01 采用<code>*</code>来占用长度的位置</strong></p>
-<p>例如：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">printf(&quot;%.*f&quot;, length, num);</span><br></pre></td></tr></table></figure></p>
-<p>长度作为第二个参数传入。</p>
+            <p>在xposed开发过程中遇到了直接使用模块内置资源失效的问题，而且这个问题很诡异，有时候失效，有时候有效果，没效果的时候一般是显示一把叉叉</p>
+<p>在上网搜索后发现，hook函数是在被hook应用内部执行的，环境不一样，所以直接用R.drawable.xxx的方式使用会出现问题。</p>
+<h3 id="解决办法："><a href="#解决办法：" class="headerlink" title="解决办法："></a>解决办法：</h3><p><a href="https://forum.xda-developers.com/xposed/access-resources-module-t2805276" target="_blank" rel="noopener">https://forum.xda-developers.com/xposed/access-resources-module-t2805276</a></p>
+<p>参考了rovo89大神在xda上面的回复，改用<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">private static String MODULE_PATH = null;</span><br><span class="line">private int mFakeId = 0;</span><br><span class="line"></span><br><span class="line">public void initZygote(StartupParam startupParam) throws Throwable &#123;</span><br><span class="line">	MODULE_PATH = startupParam.modulePath;//获取模块apk文件在储存中的位置</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public void handleInitPackageResources(InitPackageResourcesParam resparam) throws Throwable &#123;</span><br><span class="line">	if (!resparam.packageName.equals(&quot;your.target.app&quot;))</span><br><span class="line">	return;</span><br><span class="line"></span><br><span class="line">	XModuleResources modRes = XModuleResources.createInstance(MODULE_PATH, resparam.res);</span><br><span class="line">	mFakeId = resparam.res.addResource(modRes, R.drawable.ic_launcher);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><a href="http://api.xposed.info/reference/android/content/res/XResources.html#addResource" target="_blank" rel="noopener">http://api.xposed.info/reference/android/content/res/XResources.html#addResource</a>(android.content.res.Resources, int)</p>
+<p>获得<code>mFakeld</code>变量，它储存的是在被hook应用内植入的一个假id，这个id对应的是module里面的<code>R.drawable.ic_launcher</code>这个资源，通过这个假id就可以使用到我们的module内的drawable资源。</p>
+<h3 id="再次遇到问题"><a href="#再次遇到问题" class="headerlink" title="再次遇到问题"></a>再次遇到问题</h3><p>在实际使用中<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">view.setBackgroundResource(mFakeId);</span><br><span class="line">//导致异常</span><br><span class="line">//No known package when getting value for resource number 0x7e73c7c7&lt;/pre&gt;</span><br></pre></td></tr></table></figure></p>
+<h3 id="再次解决"><a href="#再次解决" class="headerlink" title="再次解决"></a>再次解决</h3><p>搜索到一段代码</p>
+<p><a href="https://github.com/neverweep/xStatusbarLunarDate/blob/master/src/de/xiaoxia/xstatusbarlunardate/Main.java" target="_blank" rel="noopener">https://github.com/neverweep/xStatusbarLunarDate/blob/master/src/de/xiaoxia/xstatusbarlunardate/Main.java</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">@Override</span><br><span class="line">public void handleInitPackageResources(InitPackageResourcesParam resparam)&#123;</span><br><span class="line"></span><br><span class="line">	if (!resparam.packageName.equals(PACKAGE_NAME))</span><br><span class="line"></span><br><span class="line">	return; //如果不是UI则跳过</span><br><span class="line"></span><br><span class="line">	//这里将自带的图标资源插入到systemui中，并获取到一个资源id</span><br><span class="line"></span><br><span class="line">	XModuleResources modRes = XModuleResources.createInstance(MODULE_PATH, resparam.res); //创建一个插入资源的实例</span><br><span class="line"></span><br><span class="line">	ic_toast_bg_fest = resparam.res.addResource(modRes, R.drawable.ic_toast_bg_fest);</span><br><span class="line"></span><br><span class="line">	ic_toast_bg = resparam.res.addResource(modRes, R.drawable.ic_toast_bg);</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>使用：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">if(_notify_icon)&#123;</span><br><span class="line"></span><br><span class="line">	//为Toast加入背景</span><br><span class="line">	</span><br><span class="line">	toastView.setBackground((context.getResources().getDrawable(isFest ? ic_toast_bg_fest : ic_toast_bg)));</span><br><span class="line">	</span><br><span class="line">	toastView.setGravity(Gravity.CENTER);</span><br><span class="line">	</span><br><span class="line">	if(toastTextView != null)&#123;</span><br><span class="line">	</span><br><span class="line">	toastTextView.setTextColor(0xFF000000);</span><br><span class="line">	</span><br><span class="line">	toastTextView.setPadding(0, 15, 0, 0);</span><br><span class="line">	</span><br><span class="line">	toastTextView.setShadowLayer(0, 0, 0, 0X00FFFFFF);</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>这段代码里面使用的是配合<code>context</code>获得<code>drawable</code>，使用<code>setBackground()</code>方法</p>
+<p>经过检验，这种写法正确。</p>
 
           
         
@@ -459,7 +467,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/29/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/29/">29</a><span class="page-number current">30</span><a class="page-number" href="/page/31/">31</a><span class="space">&hellip;</span><a class="page-number" href="/page/37/">37</a><a class="extend next" rel="next" href="/page/31/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <a class="extend prev" rel="prev" href="/page/29/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/29/">29</a><span class="page-number current">30</span><a class="page-number" href="/page/31/">31</a><span class="space">&hellip;</span><a class="page-number" href="/page/38/">38</a><a class="extend next" rel="next" href="/page/31/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 
@@ -502,7 +510,7 @@
                 
                   <a href="/archives">
                 
-                    <span class="site-state-item-count">37</span>
+                    <span class="site-state-item-count">38</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -547,11 +555,7 @@
                     
                       
                     
-                      
-                    
-                      
-                    
-                    <span class="site-state-item-count">18</span>
+                    <span class="site-state-item-count">16</span>
                     <span class="site-state-item-name">categories</span>
                   </a>
                 </div>
@@ -578,7 +582,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">7</span>
+                      
+                    
+                    <span class="site-state-item-count">8</span>
                     <span class="site-state-item-name">tags</span>
                   
                 </div>
