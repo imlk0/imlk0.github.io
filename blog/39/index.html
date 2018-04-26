@@ -99,24 +99,25 @@
 
 
 
-  <meta name="description" content="输入一串字符串’\n’结尾，X代表小偷，#代表普通人，数字代表警察，其数字是警察能巡视到的范围。输出小偷个数，换行。 1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162636465666768697071727374#i">
+  <meta name="description" content="第一次写npm插件，有点小激动，下面是写插件的坎坷之路 0x00 开局错误 在node_modules文件夹下新建hexo-mdjsp-util文件夹， 新建package.json和index.jsp并填好内容12345&amp;#123;  &amp;quot;name&amp;quot;: &amp;quot;hexo-mdjsp-util&amp;quot;,  &amp;quot;version&amp;quot;: &amp;quot;0.0.1&amp;">
+<meta name="keywords" content="笔记,杂文">
 <meta property="og:type" content="article">
-<meta property="og:title" content="一道抓小偷的OJ题，不用数组实现，遗憾位移以后没有赋值，在此记下">
-<meta property="og:url" content="http://kb5201314.github.io/blog/24/index.html">
+<meta property="og:title" content="[笔记]hexo模块mdjsp的开发心得">
+<meta property="og:url" content="http://kb5201314.github.io/blog/39/index.html">
 <meta property="og:site_name" content="IMLK">
-<meta property="og:description" content="输入一串字符串’\n’结尾，X代表小偷，#代表普通人，数字代表警察，其数字是警察能巡视到的范围。输出小偷个数，换行。 1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162636465666768697071727374#i">
+<meta property="og:description" content="第一次写npm插件，有点小激动，下面是写插件的坎坷之路 0x00 开局错误 在node_modules文件夹下新建hexo-mdjsp-util文件夹， 新建package.json和index.jsp并填好内容12345&amp;#123;  &amp;quot;name&amp;quot;: &amp;quot;hexo-mdjsp-util&amp;quot;,  &amp;quot;version&amp;quot;: &amp;quot;0.0.1&amp;">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-04-13T09:29:20.127Z">
+<meta property="og:updated_time" content="2018-04-26T15:08:24.290Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="一道抓小偷的OJ题，不用数组实现，遗憾位移以后没有赋值，在此记下">
-<meta name="twitter:description" content="输入一串字符串’\n’结尾，X代表小偷，#代表普通人，数字代表警察，其数字是警察能巡视到的范围。输出小偷个数，换行。 1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162636465666768697071727374#i">
+<meta name="twitter:title" content="[笔记]hexo模块mdjsp的开发心得">
+<meta name="twitter:description" content="第一次写npm插件，有点小激动，下面是写插件的坎坷之路 0x00 开局错误 在node_modules文件夹下新建hexo-mdjsp-util文件夹， 新建package.json和index.jsp并填好内容12345&amp;#123;  &amp;quot;name&amp;quot;: &amp;quot;hexo-mdjsp-util&amp;quot;,  &amp;quot;version&amp;quot;: &amp;quot;0.0.1&amp;">
 
 
 
 
 
 
-  <link rel="canonical" href="http://kb5201314.github.io/blog/24/"/>
+  <link rel="canonical" href="http://kb5201314.github.io/blog/39/"/>
 
 
 
@@ -126,7 +127,7 @@
   };
 </script>
 
-  <title>一道抓小偷的OJ题，不用数组实现，遗憾位移以后没有赋值，在此记下 | IMLK</title>
+  <title>[笔记]hexo模块mdjsp的开发心得 | IMLK</title>
   
 
 
@@ -324,7 +325,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://kb5201314.github.io/blog/24/">
+    <link itemprop="mainEntityOfPage" href="http://kb5201314.github.io/blog/39/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="imlk">
@@ -341,7 +342,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">一道抓小偷的OJ题，不用数组实现，遗憾位移以后没有赋值，在此记下</h1>
+          <h1 class="post-title" itemprop="name headline">[笔记]hexo模块mdjsp的开发心得</h1>
         
 
         <div class="post-meta">
@@ -353,7 +354,7 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-12-09T12:26:58+08:00">2017-12-09</time>
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-04-26T22:48:26+08:00">2018-04-26</time>
             
 
             
@@ -374,7 +375,7 @@
                 <span class="post-meta-item-text">In</span>
               
               
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/C-C/" itemprop="url" rel="index"><span itemprop="name">C/C++</span></a></span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/笔记/" itemprop="url" rel="index"><span itemprop="name">笔记</span></a></span>
 
                 
                 
@@ -408,8 +409,20 @@
       
 
       
-        <p>输入一串字符串’\n’结尾，X代表小偷，#代表普通人，数字代表警察，其数字是警察能巡视到的范围。<br>输出小偷个数，换行。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;stdio.h&gt;</span><br><span class="line"></span><br><span class="line">int printBin(unsigned long num)&#123;</span><br><span class="line">	while(num != 0)&#123;</span><br><span class="line">		printf(&quot;%d &quot;, num % 2);</span><br><span class="line">		num = num &gt;&gt; 1; </span><br><span class="line">	&#125;</span><br><span class="line">	printf(&quot;\n&quot;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main()&#123;</span><br><span class="line">	unsigned long line = 0,rangeLine = 0;</span><br><span class="line">	int index = 0,range,count = 0;</span><br><span class="line">	char tmp;</span><br><span class="line"></span><br><span class="line">	scanf(&quot;%c&quot;,&amp;tmp);</span><br><span class="line">	while(tmp != &apos;\n&apos;)&#123;</span><br><span class="line"></span><br><span class="line">		if(index &lt; 20)&#123;</span><br><span class="line">			if(tmp == &apos;X&apos;)&#123;</span><br><span class="line">				line = line | (1 &lt;&lt; index);</span><br><span class="line">			&#125;else if(tmp == &apos;#&apos;)&#123;		</span><br><span class="line"></span><br><span class="line">			&#125;else&#123;</span><br><span class="line">				range = tmp - &apos;0&apos;;</span><br><span class="line"></span><br><span class="line">				for(int i = 0; i &lt;= range; i++)&#123;</span><br><span class="line"></span><br><span class="line">					rangeLine = rangeLine | (1 &lt;&lt; index + i);</span><br><span class="line">					rangeLine = rangeLine | (1 &lt;&lt; index - i);</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line"></span><br><span class="line">			// printBin(line);</span><br><span class="line">			// printBin(rangeLine);</span><br><span class="line"></span><br><span class="line">			index++;</span><br><span class="line">			scanf(&quot;%c&quot;,&amp;tmp);</span><br><span class="line"></span><br><span class="line">		&#125;else&#123;</span><br><span class="line">			while(index &gt;= 10)&#123;</span><br><span class="line"></span><br><span class="line">				if(rangeLine &amp; 1)&#123;</span><br><span class="line">					if(line &amp; 1)&#123;</span><br><span class="line">						count++;</span><br><span class="line">					&#125;</span><br><span class="line">				&#125;</span><br><span class="line">				index--;</span><br><span class="line">				line = line &gt;&gt; 1;</span><br><span class="line">				rangeLine = rangeLine &gt;&gt; 1;</span><br><span class="line">			&#125;</span><br><span class="line"></span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	index--;</span><br><span class="line"></span><br><span class="line">	while(index &gt;= 0)&#123;</span><br><span class="line"></span><br><span class="line">//		printf(&quot;%d %d\n&quot;,line &amp; 1,rangeLine &amp; 1);</span><br><span class="line">		if(rangeLine &amp; 1)&#123;</span><br><span class="line">			if(line &amp; 1)&#123;</span><br><span class="line">				count++;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		index--;</span><br><span class="line">		line = line &gt;&gt; 1;</span><br><span class="line">		rangeLine = rangeLine &gt;&gt; 1;</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	printf(&quot;%d&quot;,count);</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+        <p>第一次写npm插件，有点小激动，下面是写插件的坎坷之路</p>
+<h2 id="0x00-开局错误"><a href="#0x00-开局错误" class="headerlink" title="0x00 开局错误"></a>0x00 开局错误</h2><ul>
+<li>在<code>node_modules</code>文件夹下新建<code>hexo-mdjsp-util</code>文件夹，</li>
+<li>新建<code>package.json</code>和<code>index.jsp</code>并填好内容<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &quot;name&quot;: &quot;hexo-mdjsp-util&quot;,</span><br><span class="line">  &quot;version&quot;: &quot;0.0.1&quot;,</span><br><span class="line">  &quot;main&quot;: &quot;index&quot;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>这是网上的教程中查到的步骤依葫芦画瓢，好像没啥问题了，执行<code>hexo g</code>，我在<code>index.js</code>中只写了<code>console.log(&quot;mdjsp_loaded&quot;);</code>，但并没有看到任何输出</p>
+<p>百度找遍了以后，遂上google<br>找到别人的博客：<br>编写Hexo插件<br><a href="http://xtutu.me/write-hexo-plugin/" target="_blank" rel="noopener">http://xtutu.me/write-hexo-plugin/</a></p>
+<p>看了下原来是没在hexo中加依赖。。。</p>
+<h2 id="0x01-祸不单行"><a href="#0x01-祸不单行" class="headerlink" title="0x01 祸不单行"></a>0x01 祸不单行</h2><p>加了依赖以后：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line">    &quot;hexo-renderer-marked&quot;: &quot;^0.3.0&quot;,</span><br><span class="line">    &quot;hexo-renderer-stylus&quot;: &quot;^0.3.1&quot;,</span><br><span class="line">    &quot;hexo-server&quot;: &quot;^0.2.0&quot;,</span><br><span class="line">    &quot;hexo-mdjsp-util&quot;: &quot;^0.0.1&quot;,</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">...</span><br></pre></td></tr></table></figure></p>
+<p>执行<code>hexo</code><br>直接：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ERROR Plugin load failed: hexo-mdjsp-util</span><br><span class="line">TypeError: this.log is not a function</span><br><span class="line">    at /mnt/d/hexo/node_modules/hexo-mdjsp-util/index.js:9:6</span><br><span class="line">...</span><br></pre></td></tr></table></figure></p>
+<p>google:</p>
+<p>Hexo：如何解决 FATAL Cannot read property ‘code’ of undefined：<br><a href="http://meiweiping.cn/Hexo%EF%BC%9A%E5%A6%82%E4%BD%95%E8%A7%A3%E5%86%B3-FATAL-Cannot-read-property-code-of-undefined/" target="_blank" rel="noopener">http://meiweiping.cn/Hexo%EF%BC%9A%E5%A6%82%E4%BD%95%E8%A7%A3%E5%86%B3-FATAL-Cannot-read-property-code-of-undefined/</a><br>原来是末尾多了个<code>,</code><br>真恶心的错误啊</p>
+
       
     </div>
 
@@ -427,6 +440,14 @@
 
     <footer class="post-footer">
       
+        <div class="post-tags">
+          
+            <a href="/tags/笔记/" rel="tag"># 笔记</a>
+          
+            <a href="/tags/杂文/" rel="tag"># 杂文</a>
+          
+        </div>
+      
 
       
       
@@ -436,8 +457,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/blog/11/" rel="next" title="HDU 1003 Max sum——分治法的应用，动态规划，前缀数组">
-                <i class="fa fa-chevron-left"></i> HDU 1003 Max sum——分治法的应用，动态规划，前缀数组
+              <a href="/blog/38/" rel="next" title="00038_[笔记]摘录自大佬口中的各种名词">
+                <i class="fa fa-chevron-left"></i> 00038_[笔记]摘录自大佬口中的各种名词
               </a>
             
           </div>
@@ -445,10 +466,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/blog/20/" rel="prev" title="Java Thread的一些误区">
-                Java Thread的一些误区 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -497,8 +514,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -629,6 +655,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#0x00-开局错误"><span class="nav-number">1.</span> <span class="nav-text">0x00 开局错误</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#0x01-祸不单行"><span class="nav-number">2.</span> <span class="nav-text">0x01 祸不单行</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       

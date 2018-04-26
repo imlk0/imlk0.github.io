@@ -99,24 +99,23 @@
 
 
 
-  <meta name="description" content="输入一串字符串’\n’结尾，X代表小偷，#代表普通人，数字代表警察，其数字是警察能巡视到的范围。输出小偷个数，换行。 1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162636465666768697071727374#i">
-<meta property="og:type" content="article">
-<meta property="og:title" content="一道抓小偷的OJ题，不用数组实现，遗憾位移以后没有赋值，在此记下">
-<meta property="og:url" content="http://kb5201314.github.io/blog/24/index.html">
+  <meta name="description" content="勿在浮沙铸高台">
+<meta property="og:type" content="website">
+<meta property="og:title" content="IMLK">
+<meta property="og:url" content="http://kb5201314.github.io/page/40/index.html">
 <meta property="og:site_name" content="IMLK">
-<meta property="og:description" content="输入一串字符串’\n’结尾，X代表小偷，#代表普通人，数字代表警察，其数字是警察能巡视到的范围。输出小偷个数，换行。 1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162636465666768697071727374#i">
+<meta property="og:description" content="勿在浮沙铸高台">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-04-13T09:29:20.127Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="一道抓小偷的OJ题，不用数组实现，遗憾位移以后没有赋值，在此记下">
-<meta name="twitter:description" content="输入一串字符串’\n’结尾，X代表小偷，#代表普通人，数字代表警察，其数字是警察能巡视到的范围。输出小偷个数，换行。 1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162636465666768697071727374#i">
+<meta name="twitter:title" content="IMLK">
+<meta name="twitter:description" content="勿在浮沙铸高台">
 
 
 
 
 
 
-  <link rel="canonical" href="http://kb5201314.github.io/blog/24/"/>
+  <link rel="canonical" href="http://kb5201314.github.io/page/40/"/>
 
 
 
@@ -126,7 +125,7 @@
   };
 </script>
 
-  <title>一道抓小偷的OJ题，不用数组实现，遗憾位移以后没有赋值，在此记下 | IMLK</title>
+  <title>IMLK</title>
   
 
 
@@ -173,7 +172,8 @@
     
   
 
-  <div class="container sidebar-position-left page-post-detail">
+  <div class="container sidebar-position-left 
+  page-home">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -307,9 +307,9 @@
           
           <div id="content" class="content">
             
-
-  <div id="posts" class="posts-expand">
+  <section id="posts" class="posts-expand">
     
+      
 
   
 
@@ -324,7 +324,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://kb5201314.github.io/blog/24/">
+    <link itemprop="mainEntityOfPage" href="http://kb5201314.github.io/blog/23/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="imlk">
@@ -341,7 +341,9 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">一道抓小偷的OJ题，不用数组实现，遗憾位移以后没有赋值，在此记下</h1>
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/blog/23/" itemprop="url">转载_各种文件头信息</a></h1>
         
 
         <div class="post-meta">
@@ -353,7 +355,7 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-12-09T12:26:58+08:00">2017-12-09</time>
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-11-18T00:02:43+08:00">2017-11-18</time>
             
 
             
@@ -374,7 +376,7 @@
                 <span class="post-meta-item-text">In</span>
               
               
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/C-C/" itemprop="url" rel="index"><span itemprop="name">C/C++</span></a></span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/闲时研究/" itemprop="url" rel="index"><span itemprop="name">闲时研究</span></a></span>
 
                 
                 
@@ -408,8 +410,464 @@
       
 
       
-        <p>输入一串字符串’\n’结尾，X代表小偷，#代表普通人，数字代表警察，其数字是警察能巡视到的范围。<br>输出小偷个数，换行。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;stdio.h&gt;</span><br><span class="line"></span><br><span class="line">int printBin(unsigned long num)&#123;</span><br><span class="line">	while(num != 0)&#123;</span><br><span class="line">		printf(&quot;%d &quot;, num % 2);</span><br><span class="line">		num = num &gt;&gt; 1; </span><br><span class="line">	&#125;</span><br><span class="line">	printf(&quot;\n&quot;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main()&#123;</span><br><span class="line">	unsigned long line = 0,rangeLine = 0;</span><br><span class="line">	int index = 0,range,count = 0;</span><br><span class="line">	char tmp;</span><br><span class="line"></span><br><span class="line">	scanf(&quot;%c&quot;,&amp;tmp);</span><br><span class="line">	while(tmp != &apos;\n&apos;)&#123;</span><br><span class="line"></span><br><span class="line">		if(index &lt; 20)&#123;</span><br><span class="line">			if(tmp == &apos;X&apos;)&#123;</span><br><span class="line">				line = line | (1 &lt;&lt; index);</span><br><span class="line">			&#125;else if(tmp == &apos;#&apos;)&#123;		</span><br><span class="line"></span><br><span class="line">			&#125;else&#123;</span><br><span class="line">				range = tmp - &apos;0&apos;;</span><br><span class="line"></span><br><span class="line">				for(int i = 0; i &lt;= range; i++)&#123;</span><br><span class="line"></span><br><span class="line">					rangeLine = rangeLine | (1 &lt;&lt; index + i);</span><br><span class="line">					rangeLine = rangeLine | (1 &lt;&lt; index - i);</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line"></span><br><span class="line">			// printBin(line);</span><br><span class="line">			// printBin(rangeLine);</span><br><span class="line"></span><br><span class="line">			index++;</span><br><span class="line">			scanf(&quot;%c&quot;,&amp;tmp);</span><br><span class="line"></span><br><span class="line">		&#125;else&#123;</span><br><span class="line">			while(index &gt;= 10)&#123;</span><br><span class="line"></span><br><span class="line">				if(rangeLine &amp; 1)&#123;</span><br><span class="line">					if(line &amp; 1)&#123;</span><br><span class="line">						count++;</span><br><span class="line">					&#125;</span><br><span class="line">				&#125;</span><br><span class="line">				index--;</span><br><span class="line">				line = line &gt;&gt; 1;</span><br><span class="line">				rangeLine = rangeLine &gt;&gt; 1;</span><br><span class="line">			&#125;</span><br><span class="line"></span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	index--;</span><br><span class="line"></span><br><span class="line">	while(index &gt;= 0)&#123;</span><br><span class="line"></span><br><span class="line">//		printf(&quot;%d %d\n&quot;,line &amp; 1,rangeLine &amp; 1);</span><br><span class="line">		if(rangeLine &amp; 1)&#123;</span><br><span class="line">			if(line &amp; 1)&#123;</span><br><span class="line">				count++;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		index--;</span><br><span class="line">		line = line &gt;&gt; 1;</span><br><span class="line">		rangeLine = rangeLine &gt;&gt; 1;</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	printf(&quot;%d&quot;,count);</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+        
+          
+            <p>源:<a href="http://blog.csdn.net/txgc0/article/details/17246625" target="_blank" rel="noopener">http://blog.csdn.net/txgc0/article/details/17246625</a></p>
+<h1 id="0x00-从Ultraedit中提取出来的文件头信息，两个字符算一字节-十六进制"><a href="#0x00-从Ultraedit中提取出来的文件头信息，两个字符算一字节-十六进制" class="headerlink" title="0x00 从Ultraedit中提取出来的文件头信息，两个字符算一字节(十六进制)"></a><strong>0x00 从Ultraedit中提取出来的文件头信息，两个字符算一字节(十六进制)</strong></h1><table>
+<thead>
+<tr>
+<th>文件格式</th>
+<th>文件头</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>JPEG (jpg)</td>
+<td>FFD8FF</td>
+</tr>
+<tr>
+<td>PNG (png)</td>
+<td>89504E47</td>
+</tr>
+<tr>
+<td>GIF (gif)</td>
+<td>47494638</td>
+</tr>
+<tr>
+<td>TIFF (tif)</td>
+<td>49492A00</td>
+</tr>
+<tr>
+<td>Windows Bitmap (bmp)</td>
+<td>424D</td>
+</tr>
+<tr>
+<td>CAD (dwg)</td>
+<td>41433130</td>
+</tr>
+<tr>
+<td>Adobe Photoshop (psd)</td>
+<td>38425053</td>
+</tr>
+<tr>
+<td>Rich Text Format (rtf)</td>
+<td>7B5C727466</td>
+</tr>
+<tr>
+<td>XML (xml)</td>
+<td>3C3F786D6C</td>
+</tr>
+<tr>
+<td>HTML (html)</td>
+<td>68746D6C3E</td>
+</tr>
+<tr>
+<td>Email (eml)</td>
+<td>44656C69766572792D646174653A</td>
+</tr>
+<tr>
+<td>Outlook Express (dbx)</td>
+<td>CFAD12FEC5FD746F</td>
+</tr>
+<tr>
+<td>Outlook (pst)</td>
+<td>2142444E</td>
+</tr>
+<tr>
+<td>MS Word/Excel (xls.or.doc)</td>
+<td>D0CF11E0</td>
+</tr>
+<tr>
+<td>MS Access (mdb)</td>
+<td>5374616E64617264204A</td>
+</tr>
+<tr>
+<td>WordPerfect (wpd)</td>
+<td>FF575043</td>
+</tr>
+<tr>
+<td>Postscript (eps.or.ps)</td>
+<td>252150532D41646F6265</td>
+</tr>
+<tr>
+<td>Adobe Acrobat (pdf)</td>
+<td>255044462D312E</td>
+</tr>
+<tr>
+<td>Quicken (qdf)</td>
+<td>AC9EBD8F</td>
+</tr>
+<tr>
+<td>Windows Password (pwl)</td>
+<td>E3828596</td>
+</tr>
+<tr>
+<td>ZIP Archive (zip)</td>
+<td>504B0304</td>
+</tr>
+<tr>
+<td>RAR Archive (rar)</td>
+<td>52617221</td>
+</tr>
+<tr>
+<td>Wave (wav)</td>
+<td>57415645</td>
+</tr>
+<tr>
+<td>AVI (avi)</td>
+<td>41564920</td>
+</tr>
+<tr>
+<td>Real Audio (ram)</td>
+<td>2E7261FD</td>
+</tr>
+<tr>
+<td>Real Media (rm)</td>
+<td>2E524D46</td>
+</tr>
+<tr>
+<td>MPEG (mpg)</td>
+<td>000001BA</td>
+</tr>
+<tr>
+<td>MPEG (mpg)</td>
+<td>000001B3</td>
+</tr>
+<tr>
+<td>Quicktime (mov)</td>
+<td>6D6F6F76</td>
+</tr>
+<tr>
+<td>Windows Media (asf)</td>
+<td>3026B2758E66CF11</td>
+</tr>
+<tr>
+<td>MIDI (mid)</td>
+<td>4D546864</td>
+</tr>
+</tbody>
+</table>
+<h1 id="0x01-从winhex中取出的文件头列表"><a href="#0x01-从winhex中取出的文件头列表" class="headerlink" title="0x01 从winhex中取出的文件头列表"></a><strong>0x01 从winhex中取出的文件头列表</strong></h1><table>
+<thead>
+<tr>
+<th>文件类型</th>
+<th>后缀</th>
+<th>文件头</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>JPEG</td>
+<td>jpg;jpeg</td>
+<td>0xFFD8FF</td>
+</tr>
+<tr>
+<td>PNG</td>
+<td>png</td>
+<td>0x89504E470D0A1A0A</td>
+</tr>
+<tr>
+<td>GIF</td>
+<td>gif</td>
+<td>GIF8</td>
+</tr>
+<tr>
+<td>TIFF</td>
+<td>tif;tiff</td>
+<td>0x49492A00</td>
+</tr>
+<tr>
+<td>TIFF</td>
+<td>tif;tiff</td>
+<td>0x4D4D002A</td>
+</tr>
+<tr>
+<td>Bit map</td>
+<td>bmp</td>
+<td>BM</td>
+</tr>
+<tr>
+<td>AOL ART</td>
+<td>art</td>
+<td>0x4A47040E000000</td>
+</tr>
+<tr>
+<td>AOL ART</td>
+<td>art</td>
+<td>0x4A47030E000000</td>
+</tr>
+<tr>
+<td>PC Paintbrush</td>
+<td>pcx</td>
+<td>0x0A050108</td>
+</tr>
+<tr>
+<td>Graphics Metafile</td>
+<td>wmf</td>
+<td>0xD7CDC69A</td>
+</tr>
+<tr>
+<td>Graphics Metafile</td>
+<td>wmf</td>
+<td>0x01000900</td>
+</tr>
+<tr>
+<td>Graphics Metafile</td>
+<td>wmf</td>
+<td>0x02000900</td>
+</tr>
+<tr>
+<td>Enhanced Metafile</td>
+<td>emf</td>
+<td>0x0100000058000000</td>
+</tr>
+<tr>
+<td>Corel Draw</td>
+<td>cdr</td>
+<td>CDR</td>
+</tr>
+<tr>
+<td>CAD</td>
+<td>dwg</td>
+<td>0x41433130</td>
+</tr>
+<tr>
+<td>Adobe Photoshop</td>
+<td>psd</td>
+<td>8BPS</td>
+</tr>
+<tr>
+<td>Rich Text Format</td>
+<td>rtf</td>
+<td>rtf</td>
+</tr>
+<tr>
+<td>XML</td>
+<td>xml</td>
+</tr>
+<tr>
+<td>HTML</td>
+<td>html;htm;php;php3;php4;phtml;shtml</td>
+<td>type</td>
+</tr>
+<tr>
+<td>Email</td>
+<td>eml</td>
+<td>Delivery-date:</td>
+</tr>
+<tr>
+<td>Outlook Express</td>
+<td>dbx</td>
+<td>0xCFAD12FE</td>
+</tr>
+<tr>
+<td>Outlookpst!BDN</td>
+</tr>
+<tr>
+<td>MS Office/OLE2</td>
+<td>doc;xls;dot;ppt;xla;ppa;pps;pot;msi;sdw;db</td>
+<td>0xD0CF11E0A1B11AE1</td>
+</tr>
+<tr>
+<td>MS Access</td>
+<td>mdb;mda;mde;mdt</td>
+<td>Standard J</td>
+</tr>
+<tr>
+<td>WordPerfect</td>
+<td>wpd</td>
+<td>0xFF575043</td>
+</tr>
+<tr>
+<td>OpenOffice Writer</td>
+<td>sxw</td>
+<td>writer</td>
+</tr>
+<tr>
+<td>OpenOffice Calc</td>
+<td>sxc</td>
+<td>calc</td>
+</tr>
+<tr>
+<td>OpenOffice Math</td>
+<td>sxm</td>
+<td>math</td>
+</tr>
+<tr>
+<td>OpenOffice Impress</td>
+<td>sxi</td>
+<td>impress</td>
+</tr>
+<tr>
+<td>OpenOffice Draw</td>
+<td>sxd</td>
+<td>draw</td>
+</tr>
+<tr>
+<td>Adobe FrameMaker</td>
+<td>fm</td>
+<td>&lt;MAKERFILE</td>
+</tr>
+<tr>
+<td>PostScript</td>
+<td>eps.or.ps;ps;eps</td>
+<td>%!PS-Adobe</td>
+</tr>
+<tr>
+<td>Adobe Acrobat</td>
+<td>pdf</td>
+<td>%PDF-1.</td>
+</tr>
+<tr>
+<td>Quicken</td>
+<td>qdf</td>
+<td>0xAC9EBD8F</td>
+</tr>
+<tr>
+<td>QuickBooks Backup</td>
+<td>qbb</td>
+<td>0x458600000600</td>
+</tr>
+<tr>
+<td>Sage</td>
+<td>sly.or.srt.or.slt;sly;srt;slt</td>
+<td>0x53520100</td>
+</tr>
+<tr>
+<td>Sage Backup</td>
+<td>1</td>
+<td>SAGEBACKUP</td>
+</tr>
+<tr>
+<td>Lotus WordPro v9</td>
+<td>lwp</td>
+<td>0x576F726450726F</td>
+</tr>
+<tr>
+<td>Lotus 123 v9</td>
+<td>123</td>
+<td>0x00001A00051004</td>
+</tr>
+<tr>
+<td>Lotus 123 v5</td>
+<td>wk4</td>
+<td>0x00001A0002100400</td>
+</tr>
+<tr>
+<td>Lotus 123 v3</td>
+<td>wk3</td>
+<td>0x00001A0000100400</td>
+</tr>
+<tr>
+<td>Lotus 123 v1</td>
+<td>wk1</td>
+<td>0x2000604060</td>
+</tr>
+<tr>
+<td>Windows Password</td>
+<td>pwl</td>
+<td>0xE3828596</td>
+</tr>
+<tr>
+<td>ZIP Archive</td>
+<td>zip;jar</td>
+<td>0x504B0304</td>
+</tr>
+<tr>
+<td>ZIP Archive (outdated)</td>
+<td>zip</td>
+<td>0x504B3030</td>
+</tr>
+<tr>
+<td>RAR Archive</td>
+<td>rar</td>
+<td>Rar!</td>
+</tr>
+<tr>
+<td>GZ Archive</td>
+<td>gz;tgz</td>
+<td>0x1F8B08</td>
+</tr>
+<tr>
+<td>BZIP Archive</td>
+<td>bz2</td>
+<td>BZh</td>
+</tr>
+<tr>
+<td>ARJ Archive</td>
+<td>arj</td>
+<td>0x60EA</td>
+</tr>
+<tr>
+<td>7－ZIP Archive</td>
+<td>7z</td>
+<td>7z集’</td>
+</tr>
+<tr>
+<td>Wave</td>
+<td>wav</td>
+<td>WAVE</td>
+</tr>
+<tr>
+<td>AVI</td>
+<td>avi</td>
+<td>AVI</td>
+</tr>
+<tr>
+<td>Real Audio</td>
+<td>ram;ra</td>
+<td>.ra?0</td>
+</tr>
+<tr>
+<td>Real Media</td>
+<td>rm</td>
+<td>.RMF</td>
+</tr>
+<tr>
+<td>MPEG</td>
+<td>mpg;mpeg</td>
+<td>0x000001BA</td>
+</tr>
+<tr>
+<td>MPEG</td>
+<td>mpg;mpeg</td>
+<td>0x000001B3</td>
+</tr>
+<tr>
+<td>Quicktime</td>
+<td>mov</td>
+<td>moov</td>
+</tr>
+<tr>
+<td>Windows Media</td>
+<td>asf</td>
+<td>0x3026B2758E66CF11</td>
+</tr>
+<tr>
+<td>MIDI</td>
+<td>mid</td>
+<td>MThd</td>
+</tr>
+<tr>
+<td>Win32 Executable(pe文件即可执行文件)</td>
+<td>exe;dll;drv;vxd;sys;ocx;vbx</td>
+<td>MZ</td>
+</tr>
+<tr>
+<td>Win16 Executable (pe文件即可执行文件)</td>
+<td>exe;dll;drv;vxd;sys;ocx;vbx</td>
+<td>MZ</td>
+</tr>
+<tr>
+<td>ELF Executable</td>
+<td>elf;;</td>
+<td>0x7F454C4601010100</td>
+</tr>
+</tbody>
+</table>
+
+          
+        
       
     </div>
 
@@ -429,32 +887,12 @@
       
 
       
-      
+
       
 
       
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
-            
-              <a href="/blog/11/" rel="next" title="HDU 1003 Max sum——分治法的应用，动态规划，前缀数组">
-                <i class="fa fa-chevron-left"></i> HDU 1003 Max sum——分治法的应用，动态规划，前缀数组
-              </a>
-            
-          </div>
-
-          <span class="post-nav-divider"></span>
-
-          <div class="post-nav-prev post-nav-item">
-            
-              <a href="/blog/20/" rel="prev" title="Java Thread的一些误区">
-                Java Thread的一些误区 <i class="fa fa-chevron-right"></i>
-              </a>
-            
-          </div>
-        </div>
       
-
-      
+        <div class="post-eof"></div>
       
     </footer>
   </div>
@@ -464,19 +902,18 @@
   </article>
 
 
+    
+  </section>
 
-    <div class="post-spread">
-      
-    </div>
-  </div>
+  
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" href="/page/39/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/39/">39</a><span class="page-number current">40</span>
+  </nav>
+
 
 
           </div>
           
-
-  
-
-
 
         </div>
         
@@ -756,10 +1193,6 @@
   
 
   
-  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.0.6"></script>
-<script type="text/javascript" src="/js/src/post-details.js?v=6.0.6"></script>
-
-
 
   
 

@@ -99,18 +99,18 @@
 
 
 
-  <meta name="description" content="以下所有代码示例均为在nodejs交互模式下进行的，Linux  JavaScript不区分整数和浮点数，统一用Number表示; js注释 12345// 注释/*注释*/  js等号比较运算符 123== // 会自动转换数据类型再比较，很多时候会得到非常诡异的结果=== // 不会自动转换数据类型，如果数据类型不一致，直接返回false，一致的话再比较  实际时常用===而不用==  使用i">
+  <meta name="description" content="参考资料：ECMAScript 6 入门:http://es6.ruanyifeng.com/ 以下所有代码示例均为在nodejs交互模式下进行的，环境：Linux  JavaScript不区分整数和浮点数，统一用Number表示; js注释 12345// 注释/*注释*/  js等号比较运算符 123== // 会自动转换数据类型再比较，很多时候会得到非常诡异的结果=== // 不会自动转换数">
 <meta name="keywords" content="JavaScript">
 <meta property="og:type" content="article">
 <meta property="og:title" content="[笔记]JavaScript入门啦">
 <meta property="og:url" content="http://kb5201314.github.io/blog/36/index.html">
 <meta property="og:site_name" content="IMLK">
-<meta property="og:description" content="以下所有代码示例均为在nodejs交互模式下进行的，Linux  JavaScript不区分整数和浮点数，统一用Number表示; js注释 12345// 注释/*注释*/  js等号比较运算符 123== // 会自动转换数据类型再比较，很多时候会得到非常诡异的结果=== // 不会自动转换数据类型，如果数据类型不一致，直接返回false，一致的话再比较  实际时常用===而不用==  使用i">
+<meta property="og:description" content="参考资料：ECMAScript 6 入门:http://es6.ruanyifeng.com/ 以下所有代码示例均为在nodejs交互模式下进行的，环境：Linux  JavaScript不区分整数和浮点数，统一用Number表示; js注释 12345// 注释/*注释*/  js等号比较运算符 123== // 会自动转换数据类型再比较，很多时候会得到非常诡异的结果=== // 不会自动转换数">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-04-24T15:09:31.341Z">
+<meta property="og:updated_time" content="2018-04-26T14:35:54.874Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="[笔记]JavaScript入门啦">
-<meta name="twitter:description" content="以下所有代码示例均为在nodejs交互模式下进行的，Linux  JavaScript不区分整数和浮点数，统一用Number表示; js注释 12345// 注释/*注释*/  js等号比较运算符 123== // 会自动转换数据类型再比较，很多时候会得到非常诡异的结果=== // 不会自动转换数据类型，如果数据类型不一致，直接返回false，一致的话再比较  实际时常用===而不用==  使用i">
+<meta name="twitter:description" content="参考资料：ECMAScript 6 入门:http://es6.ruanyifeng.com/ 以下所有代码示例均为在nodejs交互模式下进行的，环境：Linux  JavaScript不区分整数和浮点数，统一用Number表示; js注释 12345// 注释/*注释*/  js等号比较运算符 123== // 会自动转换数据类型再比较，很多时候会得到非常诡异的结果=== // 不会自动转换数">
 
 
 
@@ -409,7 +409,8 @@
       
 
       
-        <p><strong>以下所有代码示例均为在nodejs交互模式下进行的，Linux</strong></p>
+        <p>参考资料：<br>ECMAScript 6 入门:<br><a href="http://es6.ruanyifeng.com/" target="_blank" rel="noopener">http://es6.ruanyifeng.com/</a></p>
+<p><strong>以下所有代码示例均为在nodejs交互模式下进行的，环境：Linux</strong></p>
 <ul>
 <li>JavaScript不区分整数和浮点数，统一用Number表示;</li>
 <li><p>js注释</p>
@@ -466,6 +467,20 @@
 </li>
 <li><p>js中的<code>instanceof</code>关键字</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&gt; c = new f1(1,2);</span><br><span class="line">object</span><br><span class="line">2</span><br><span class="line">&#123; &apos;0&apos;: 1, &apos;1&apos;: 2 &#125;</span><br><span class="line">f1 &#123;&#125;</span><br><span class="line">&gt; c.constructor</span><br><span class="line">[Function: f1]</span><br><span class="line">&gt; c.constructor === f1</span><br><span class="line">true</span><br><span class="line">&gt; c instanceof f1</span><br><span class="line">true</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>exports 和 module.exports 的区别<br><a href="http://cnodejs.org/topic/5231a630101e574521e45ef8" target="_blank" rel="noopener">http://cnodejs.org/topic/5231a630101e574521e45ef8</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">module.exports 初始值为一个空对象 &#123;&#125;</span><br><span class="line">exports 是指向的 module.exports 的引用</span><br><span class="line">require() 返回的是 module.exports 而不是 exports</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>exports 快捷方式<br><a href="http://nodejs.cn/api/modules.html#modules_exports_shortcut" target="_blank" rel="noopener">http://nodejs.cn/api/modules.html#modules_exports_shortcut</a><br><code>exports</code>变量是在模块的文件级别作用域内有效的，它在模块被执行前被赋予<code>module.exports</code>的值。</p>
+</li>
+<li><p>js定义常量语法糖<code>const { PI }</code><br><a href="https://segmentfault.com/q/1010000011190967" target="_blank" rel="noopener">https://segmentfault.com/q/1010000011190967</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">const &#123; PI &#125; = Math;</span><br><span class="line">实际上是语法糖，等价于：</span><br><span class="line">const PI = Math.PI</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>js模块包装器<br><a href="http://nodejs.cn/api/modules.html#modules_the_module_wrapper" target="_blank" rel="noopener">http://nodejs.cn/api/modules.html#modules_the_module_wrapper</a><br>在执行模块代码之前，Node.js 会使用一个如下的函数包装器将其包装：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">(function(exports, require, module, __filename, __dirname) &#123;</span><br><span class="line">// 模块的代码实际上在这里</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>export<br>模块是独立的文件，该文件内部的所有的变量外部都无法获取。如果希望获取某个变量，必须通过export输出，</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">export var firstName = &apos;Michael&apos;;</span><br><span class="line">export var lastName = &apos;Jackson&apos;;</span><br><span class="line">export var year = 1958;</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
 
@@ -578,7 +593,7 @@
                 
                   <a href="/archives">
                 
-                    <span class="site-state-item-count">38</span>
+                    <span class="site-state-item-count">40</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -635,6 +650,8 @@
                 <div class="site-state-item site-state-tags">
                   
                     
+                    
+                      
                     
                       
                     
