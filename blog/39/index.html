@@ -107,7 +107,7 @@
 <meta property="og:site_name" content="IMLK">
 <meta property="og:description" content="第一次写npm插件，有点小激动，下面是写插件的坎坷之路 0x00 开局错误 在node_modules文件夹下新建hexo-mdjsp-util文件夹， 新建package.json和index.jsp并填好内容12345&amp;#123;  &amp;quot;name&amp;quot;: &amp;quot;hexo-mdjsp-util&amp;quot;,  &amp;quot;version&amp;quot;: &amp;quot;0.0.1&amp;">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-04-26T15:08:24.290Z">
+<meta property="og:updated_time" content="2018-04-27T16:06:25.435Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="[笔记]hexo模块mdjsp的开发心得">
 <meta name="twitter:description" content="第一次写npm插件，有点小激动，下面是写插件的坎坷之路 0x00 开局错误 在node_modules文件夹下新建hexo-mdjsp-util文件夹， 新建package.json和index.jsp并填好内容12345&amp;#123;  &amp;quot;name&amp;quot;: &amp;quot;hexo-mdjsp-util&amp;quot;,  &amp;quot;version&amp;quot;: &amp;quot;0.0.1&amp;">
@@ -422,6 +422,7 @@
 <p>执行<code>hexo</code><br>直接：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ERROR Plugin load failed: hexo-mdjsp-util</span><br><span class="line">TypeError: this.log is not a function</span><br><span class="line">    at /mnt/d/hexo/node_modules/hexo-mdjsp-util/index.js:9:6</span><br><span class="line">...</span><br></pre></td></tr></table></figure></p>
 <p>google:</p>
 <p>Hexo：如何解决 FATAL Cannot read property ‘code’ of undefined：<br><a href="http://meiweiping.cn/Hexo%EF%BC%9A%E5%A6%82%E4%BD%95%E8%A7%A3%E5%86%B3-FATAL-Cannot-read-property-code-of-undefined/" target="_blank" rel="noopener">http://meiweiping.cn/Hexo%EF%BC%9A%E5%A6%82%E4%BD%95%E8%A7%A3%E5%86%B3-FATAL-Cannot-read-property-code-of-undefined/</a><br>原来是末尾多了个<code>,</code><br>真恶心的错误啊</p>
+<p>接下来的事情就是jsp语句匹配啦！<br>先找几个开源项目看看</p>
 
       
     </div>
@@ -457,8 +458,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/blog/38/" rel="next" title="00038_[笔记]摘录自大佬口中的各种名词">
-                <i class="fa fa-chevron-left"></i> 00038_[笔记]摘录自大佬口中的各种名词
+              <a href="/blog/38/" rel="next" title="[笔记]摘录自大佬口中的各种名词">
+                <i class="fa fa-chevron-left"></i> [笔记]摘录自大佬口中的各种名词
               </a>
             
           </div>
@@ -466,6 +467,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/blog/40/" rel="prev" title="[笔记]第一次ZjDroid脱壳实战">
+                [笔记]第一次ZjDroid脱壳实战 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -539,7 +544,7 @@
                 
                   <a href="/archives">
                 
-                    <span class="site-state-item-count">40</span>
+                    <span class="site-state-item-count">41</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -596,8 +601,6 @@
                 <div class="site-state-item site-state-tags">
                   
                     
-                    
-                      
                     
                       
                     

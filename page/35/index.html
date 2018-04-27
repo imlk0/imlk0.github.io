@@ -324,7 +324,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://kb5201314.github.io/blog/24/">
+    <link itemprop="mainEntityOfPage" href="http://kb5201314.github.io/blog/20/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="imlk">
@@ -343,7 +343,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/blog/24/" itemprop="url">一道抓小偷的OJ题，不用数组实现，遗憾位移以后没有赋值，在此记下</a></h1>
+                <a class="post-title-link" href="/blog/20/" itemprop="url">Java Thread的一些误区</a></h1>
         
 
         <div class="post-meta">
@@ -355,7 +355,7 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-12-09T12:26:58+08:00">2017-12-09</time>
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-12-09T16:56:54+08:00">2017-12-09</time>
             
 
             
@@ -376,7 +376,7 @@
                 <span class="post-meta-item-text">In</span>
               
               
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/C-C/" itemprop="url" rel="index"><span itemprop="name">C/C++</span></a></span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Java/" itemprop="url" rel="index"><span itemprop="name">Java</span></a></span>
 
                 
                 
@@ -412,8 +412,30 @@
       
         
           
-            <p>输入一串字符串’\n’结尾，X代表小偷，#代表普通人，数字代表警察，其数字是警察能巡视到的范围。<br>输出小偷个数，换行。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;stdio.h&gt;</span><br><span class="line"></span><br><span class="line">int printBin(unsigned long num)&#123;</span><br><span class="line">	while(num != 0)&#123;</span><br><span class="line">		printf(&quot;%d &quot;, num % 2);</span><br><span class="line">		num = num &gt;&gt; 1; </span><br><span class="line">	&#125;</span><br><span class="line">	printf(&quot;\n&quot;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main()&#123;</span><br><span class="line">	unsigned long line = 0,rangeLine = 0;</span><br><span class="line">	int index = 0,range,count = 0;</span><br><span class="line">	char tmp;</span><br><span class="line"></span><br><span class="line">	scanf(&quot;%c&quot;,&amp;tmp);</span><br><span class="line">	while(tmp != &apos;\n&apos;)&#123;</span><br><span class="line"></span><br><span class="line">		if(index &lt; 20)&#123;</span><br><span class="line">			if(tmp == &apos;X&apos;)&#123;</span><br><span class="line">				line = line | (1 &lt;&lt; index);</span><br><span class="line">			&#125;else if(tmp == &apos;#&apos;)&#123;		</span><br><span class="line"></span><br><span class="line">			&#125;else&#123;</span><br><span class="line">				range = tmp - &apos;0&apos;;</span><br><span class="line"></span><br><span class="line">				for(int i = 0; i &lt;= range; i++)&#123;</span><br><span class="line"></span><br><span class="line">					rangeLine = rangeLine | (1 &lt;&lt; index + i);</span><br><span class="line">					rangeLine = rangeLine | (1 &lt;&lt; index - i);</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line"></span><br><span class="line">			// printBin(line);</span><br><span class="line">			// printBin(rangeLine);</span><br><span class="line"></span><br><span class="line">			index++;</span><br><span class="line">			scanf(&quot;%c&quot;,&amp;tmp);</span><br><span class="line"></span><br><span class="line">		&#125;else&#123;</span><br><span class="line">			while(index &gt;= 10)&#123;</span><br><span class="line"></span><br><span class="line">				if(rangeLine &amp; 1)&#123;</span><br><span class="line">					if(line &amp; 1)&#123;</span><br><span class="line">						count++;</span><br><span class="line">					&#125;</span><br><span class="line">				&#125;</span><br><span class="line">				index--;</span><br><span class="line">				line = line &gt;&gt; 1;</span><br><span class="line">				rangeLine = rangeLine &gt;&gt; 1;</span><br><span class="line">			&#125;</span><br><span class="line"></span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	index--;</span><br><span class="line"></span><br><span class="line">	while(index &gt;= 0)&#123;</span><br><span class="line"></span><br><span class="line">//		printf(&quot;%d %d\n&quot;,line &amp; 1,rangeLine &amp; 1);</span><br><span class="line">		if(rangeLine &amp; 1)&#123;</span><br><span class="line">			if(line &amp; 1)&#123;</span><br><span class="line">				count++;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		index--;</span><br><span class="line">		line = line &gt;&gt; 1;</span><br><span class="line">		rangeLine = rangeLine &gt;&gt; 1;</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	printf(&quot;%d&quot;,count);</span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+            <h2 id="Thread"><a href="#Thread" class="headerlink" title="Thread"></a>Thread</h2><h3 id="interrupt"><a href="#interrupt" class="headerlink" title="interrupt()"></a>interrupt()</h3><blockquote>
+<p>1.这个方法只会给线程设置一个为true的中断标志。<br>2.该方法可在需要中断的线程内自己调用，也可在其他线程中调用需要中断的线程对象的这个方法。</p>
+</blockquote>
+<blockquote>
+<p>Java doc:</p>
+<p>public void interrupt()Interrupts this thread.<br>Unless the current thread is interrupting itself, which is always permitted, the checkAccess method of this thread is invoked, which may cause a SecurityException to be thrown. </p>
+<p>If this thread is blocked in an invocation of the wait(), wait(long), or wait(long, int) methods of the Object class, or of the join(), join(long), join(long, int), sleep(long), or sleep(long, int), methods of this class, then its interrupt status will be cleared and it will receive an InterruptedException. </p>
+<p>If this thread is blocked in an I/O operation upon an InterruptibleChannel then the channel will be closed, the thread’s interrupt status will be set, and the thread will receive a ClosedByInterruptException. </p>
+<p>If this thread is blocked in a Selector then the thread’s interrupt status will be set and it will return immediately from the selection operation, possibly with a non-zero value, just as if the selector’s wakeup method were invoked. </p>
+<p>If none of the previous conditions hold then this thread’s interrupt status will be set. </p>
+<p>Interrupting a thread that is not alive need not have any effect.</p>
+<p>Throws:<br>SecurityException - if the current thread cannot modify this thread </p>
+</blockquote>
+<h3 id="join"><a href="#join" class="headerlink" title="join()"></a>join()</h3><blockquote>
+<p>调用“目标Thread对象”的join方法，把当前线程加入到该对象对应的线程中，等该对象对应的线程执行完毕再执行后加入的线程。</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">public final void join()</span><br><span class="line">                throws InterruptedExceptionWaits for this thread to die. </span><br><span class="line">An invocation of this method behaves in exactly the same way as the invocation </span><br><span class="line"></span><br><span class="line">join(0) </span><br><span class="line">Throws: </span><br><span class="line">InterruptedException - if any thread has interrupted the current thread. The interrupted status of the current thread is cleared when this exception is thrown.</span><br></pre></td></tr></table></figure>
+<h3 id="static-sleep"><a href="#static-sleep" class="headerlink" title="static sleep()"></a>static sleep()</h3><blockquote>
+<p>此方法的“调用者”所在线程进入休眠，谁调用谁睡觉。 </p>
+</blockquote>
+<blockquote>
+<p>与wait()的区别：<br>1.sleep来自Thread类，和wait来自Object类。<br>2.sleep方法没有释放锁，而wait方法释放了锁，使得其他线程可以使用同步控制块或者方法。<br>3.wait，notify和notifyAll只能在同步控制方法或者同步控制块里面使用，而sleep可以在任何地方使用。</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">public static void sleep(long millis)</span><br><span class="line">                  throws InterruptedExceptionCauses the currently executing thread to sleep (temporarily cease execution) for the specified number of milliseconds, subject to the precision and accuracy of system timers and schedulers. The thread does not lose ownership of any monitors.</span><br><span class="line">Parameters: </span><br><span class="line">millis - the length of time to sleep in milliseconds </span><br><span class="line">Throws: </span><br><span class="line">IllegalArgumentException - if the value of millis is negative </span><br><span class="line">InterruptedException - if any thread has interrupted the current thread. The interrupted status of the current thread is cleared when this exception is thrown.</span><br></pre></td></tr></table></figure>
           
         
       
@@ -455,7 +477,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/34/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/34/">34</a><span class="page-number current">35</span><a class="page-number" href="/page/36/">36</a><span class="space">&hellip;</span><a class="page-number" href="/page/40/">40</a><a class="extend next" rel="next" href="/page/36/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <a class="extend prev" rel="prev" href="/page/34/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/34/">34</a><span class="page-number current">35</span><a class="page-number" href="/page/36/">36</a><span class="space">&hellip;</span><a class="page-number" href="/page/41/">41</a><a class="extend next" rel="next" href="/page/36/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 
@@ -498,7 +520,7 @@
                 
                   <a href="/archives">
                 
-                    <span class="site-state-item-count">40</span>
+                    <span class="site-state-item-count">41</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -555,8 +577,6 @@
                 <div class="site-state-item site-state-tags">
                   
                     
-                    
-                      
                     
                       
                     

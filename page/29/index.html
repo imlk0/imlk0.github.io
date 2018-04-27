@@ -324,7 +324,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://kb5201314.github.io/blog/4/">
+    <link itemprop="mainEntityOfPage" href="http://kb5201314.github.io/blog/1/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="imlk">
@@ -343,7 +343,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/blog/4/" itemprop="url">Codeforces 429B B.Working out</a></h1>
+                <a class="post-title-link" href="/blog/1/" itemprop="url">C++拷贝函数</a></h1>
         
 
         <div class="post-meta">
@@ -355,7 +355,7 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-01-09T20:47:19+08:00">2018-01-09</time>
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-01-19T21:02:14+08:00">2018-01-19</time>
             
 
             
@@ -376,7 +376,7 @@
                 <span class="post-meta-item-text">In</span>
               
               
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/算法/" itemprop="url" rel="index"><span itemprop="name">算法</span></a></span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/C-C/" itemprop="url" rel="index"><span itemprop="name">C/C++</span></a></span>
 
                 
                 
@@ -412,10 +412,7 @@
       
         
           
-            <p><a href="http://codeforces.com/problemset/problem/429/B" target="_blank" rel="noopener">http://codeforces.com/problemset/problem/429/B</a><br>对于题中刁钻的要求，仔细分析所给条件的等价条件，有时候，所给条件符合的情形只有很少的几种。</p>
-<p><a href="http://blog.csdn.net/cc_again/article/details/25691925" target="_blank" rel="noopener">http://blog.csdn.net/cc_again/article/details/25691925</a></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">题目意思：</span><br><span class="line">给n*m的矩阵，每个格子有个数，A从(1,1)出发只能向下或右走，终点为(n,m)，B从(n,1)出发只能向上或右走，终点为(1,m)。两个人的速度不一样，走到的格子可以获的该格子的数，两人相遇的格子上的数两个人都不能拿。求A和B能拿到的数的总和的最大值。</span><br><span class="line">n,m&lt;=1000</span><br><span class="line">解题思路：</span><br><span class="line">dp.</span><br><span class="line">先预处理出每个格子到四个角落格子的路径最大数值，然后枚举两个人相遇的交点格子，枚举A、B的进来和出去方式，求最大值即可。</span><br><span class="line">注意边界情况。</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;cstdio&gt;</span><br><span class="line">#include &lt;algorithm&gt;</span><br><span class="line"></span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">#define MAX 1005</span><br><span class="line"></span><br><span class="line">long data[MAX][MAX];</span><br><span class="line">long dp0[MAX][MAX];</span><br><span class="line">long dp1[MAX][MAX];</span><br><span class="line">long dp2[MAX][MAX];</span><br><span class="line">long dp3[MAX][MAX];</span><br><span class="line"></span><br><span class="line">int main() &#123;</span><br><span class="line"></span><br><span class="line">	int n, m;</span><br><span class="line"></span><br><span class="line">	scanf(&quot;%d%d&quot;, &amp;n, &amp;m);</span><br><span class="line"></span><br><span class="line">	for (int x = 1; x &lt;= n; x++) &#123;</span><br><span class="line"></span><br><span class="line">		for (int y = 1; y &lt;= m; y++) &#123;</span><br><span class="line"></span><br><span class="line">			scanf(&quot;%ld&quot;, data[x] + y);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	for (int x = 1; x &lt;= n; x++) &#123;</span><br><span class="line">		for (int y = 1; y &lt;= m; y++) &#123;</span><br><span class="line">			dp0[x][y] = data[x][y] + max(dp0[x - 1][y] , dp0[x][y - 1]);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	for (int x = n; x &gt;= 1; x--) &#123;</span><br><span class="line">		for (int y = m; y &gt;= 1; y--) &#123;</span><br><span class="line">			dp1[x][y] = data[x][y] + max(dp1[x + 1][y] , dp1[x][y + 1]);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	for (int x = n; x &gt;= 1; x--) &#123;</span><br><span class="line">		for (int y = 1; y &lt;= m; y++) &#123;</span><br><span class="line">			dp2[x][y] = data[x][y] + max(dp2[x + 1][y] , dp2[x][y - 1]);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	for (int x = 1; x &lt;= n; x++) &#123;</span><br><span class="line">		for (int y = m; y &gt;= 1; y--) &#123;</span><br><span class="line">			dp3[x][y] = data[x][y] + max(dp3[x - 1][y] , dp3[x][y + 1]);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	long largest = 0;</span><br><span class="line">	for (int x = 2; x &lt; n; x++) &#123;</span><br><span class="line">		for (int y = 2; y &lt; m; y++ ) &#123;</span><br><span class="line"></span><br><span class="line">			/**</span><br><span class="line">			* 由于路径只允许重叠一次，根据两人的行动方向可知，重叠时</span><br><span class="line">			* 要么是第一个人从上向下通过，第二个人从左向右通过</span><br><span class="line">			* 要么是第一个人从左向右通过，第二个人从下向上通过</span><br><span class="line">			*/</span><br><span class="line">			largest = max(largest, dp0[x - 1][y] + dp1[x + 1][y] + dp2[x][y - 1] + dp3[x][y + 1]);</span><br><span class="line">			largest = max(largest, dp0[x][y - 1] + dp1[x][y + 1] + dp2[x + 1][y] + dp3[x - 1][y]);</span><br><span class="line"></span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	printf(&quot;%ld\n&quot;, largest);</span><br><span class="line"></span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+            <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line">*	拷贝构造函数,编译器默认提供</span><br><span class="line">*	触发情形：</span><br><span class="line">*	Teacher tear2(tear1);</span><br><span class="line">*	或者：</span><br><span class="line">*	Teacher tear3 = tear1;//多发生于作为函数参数传递时</span><br><span class="line">*/</span><br><span class="line"></span><br><span class="line">//函数声明</span><br><span class="line">Teacher::Teacher(const Teacher&amp; teacher);</span><br></pre></td></tr></table></figure>
           
         
       
@@ -457,7 +454,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/28/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/28/">28</a><span class="page-number current">29</span><a class="page-number" href="/page/30/">30</a><span class="space">&hellip;</span><a class="page-number" href="/page/40/">40</a><a class="extend next" rel="next" href="/page/30/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <a class="extend prev" rel="prev" href="/page/28/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/28/">28</a><span class="page-number current">29</span><a class="page-number" href="/page/30/">30</a><span class="space">&hellip;</span><a class="page-number" href="/page/41/">41</a><a class="extend next" rel="next" href="/page/30/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 
@@ -500,7 +497,7 @@
                 
                   <a href="/archives">
                 
-                    <span class="site-state-item-count">40</span>
+                    <span class="site-state-item-count">41</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -557,8 +554,6 @@
                 <div class="site-state-item site-state-tags">
                   
                     
-                    
-                      
                     
                       
                     

@@ -99,23 +99,30 @@
 
 
 
-  <meta name="description" content="勿在浮沙铸高台">
-<meta property="og:type" content="website">
-<meta property="og:title" content="IMLK">
-<meta property="og:url" content="http://kb5201314.github.io/index.html">
+  <meta name="description" content="看饿了那么多逆向破解的文章，总得来点实战的了，正所谓实践出真知嘛。 拜读了姜维大神的「Android中Xposed框架篇—基于Xposed的一款脱壳神器ZjDroid工具原理解析」，准备来个应用动手试试了，想起我自己之前有个应用恰好是大数字加固的，于是想试试破自己的应用。(纯粹是个人黑历史，就不贴应用链接了)。 环境我手头的设备是版本是 Android7.1.2 电脑上也有Android4.4版本">
+<meta name="keywords" content="笔记,杂文">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[笔记]第一次ZjDroid脱壳实战">
+<meta property="og:url" content="http://kb5201314.github.io/blog/40/index.html">
 <meta property="og:site_name" content="IMLK">
-<meta property="og:description" content="勿在浮沙铸高台">
+<meta property="og:description" content="看饿了那么多逆向破解的文章，总得来点实战的了，正所谓实践出真知嘛。 拜读了姜维大神的「Android中Xposed框架篇—基于Xposed的一款脱壳神器ZjDroid工具原理解析」，准备来个应用动手试试了，想起我自己之前有个应用恰好是大数字加固的，于是想试试破自己的应用。(纯粹是个人黑历史，就不贴应用链接了)。 环境我手头的设备是版本是 Android7.1.2 电脑上也有Android4.4版本">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://kb5201314.github.io/images/blog/40_0.png">
+<meta property="og:image" content="http://kb5201314.github.io/images/blog/40_1.png">
+<meta property="og:image" content="http://kb5201314.github.io/images/blog/40_2.png">
+<meta property="og:image" content="http://kb5201314.github.io/images/blog/40_3.png">
+<meta property="og:updated_time" content="2018-04-27T17:07:19.455Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="IMLK">
-<meta name="twitter:description" content="勿在浮沙铸高台">
+<meta name="twitter:title" content="[笔记]第一次ZjDroid脱壳实战">
+<meta name="twitter:description" content="看饿了那么多逆向破解的文章，总得来点实战的了，正所谓实践出真知嘛。 拜读了姜维大神的「Android中Xposed框架篇—基于Xposed的一款脱壳神器ZjDroid工具原理解析」，准备来个应用动手试试了，想起我自己之前有个应用恰好是大数字加固的，于是想试试破自己的应用。(纯粹是个人黑历史，就不贴应用链接了)。 环境我手头的设备是版本是 Android7.1.2 电脑上也有Android4.4版本">
+<meta name="twitter:image" content="http://kb5201314.github.io/images/blog/40_0.png">
 
 
 
 
 
 
-  <link rel="canonical" href="http://kb5201314.github.io/"/>
+  <link rel="canonical" href="http://kb5201314.github.io/blog/40/"/>
 
 
 
@@ -125,7 +132,7 @@
   };
 </script>
 
-  <title>IMLK</title>
+  <title>[笔记]第一次ZjDroid脱壳实战 | IMLK</title>
   
 
 
@@ -172,8 +179,7 @@
     
   
 
-  <div class="container sidebar-position-left 
-  page-home">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -307,9 +313,9 @@
           
           <div id="content" class="content">
             
-  <section id="posts" class="posts-expand">
+
+  <div id="posts" class="posts-expand">
     
-      
 
   
 
@@ -341,9 +347,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/blog/40/" itemprop="url">[笔记]第一次ZjDroid脱壳实战</a></h1>
+          <h1 class="post-title" itemprop="name headline">[笔记]第一次ZjDroid脱壳实战</h1>
         
 
         <div class="post-meta">
@@ -410,9 +414,7 @@
       
 
       
-        
-          
-            <p>看饿了那么多逆向破解的文章，总得来点实战的了，正所谓实践出真知嘛。</p>
+        <p>看饿了那么多逆向破解的文章，总得来点实战的了，正所谓实践出真知嘛。</p>
 <p>拜读了姜维大神的<a href="https://blog.csdn.net/jiangwei0910410003/article/details/52840602" target="_blank" rel="noopener">「Android中Xposed框架篇—基于Xposed的一款脱壳神器ZjDroid工具原理解析」</a>，准备来个应用动手试试了，想起我自己之前有个应用恰好是大数字加固的，于是想试试破自己的应用。<br>(纯粹是个人黑历史，就不贴应用链接了)。</p>
 <h3 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h3><p>我手头的设备是版本是 Android7.1.2 电脑上也有Android4.4版本的模拟器（Android Emulator，已root和刷入Xposed，不知道怎么手动给模拟器刷root的同学参考这个<a href="https://android.stackexchange.com/questions/171442/root-android-virtual-device-with-android-7-1-1" target="_blank" rel="noopener">https://android.stackexchange.com/questions/171442/root-android-virtual-device-with-android-7-1-1</a>）</p>
 <h3 id="准备"><a href="#准备" class="headerlink" title="准备"></a>准备</h3><p>首先嘛，当然是要下载大名鼎鼎的ZjDroid模块了，这个脱壳工具是基于Xposed模块的，看了下该项目的github，似乎并没有给出ZjDroid现成的apk安装包，网上虽然是有找，但我还是选择自己手动编译了一下，</p>
@@ -448,8 +450,6 @@
 <p>不过我倒是来了兴趣，想试试能不能修复这个问题，不过这就要对<code>mCookie</code>深入研究研究了。</p>
 <h3 id="未完待续"><a href="#未完待续" class="headerlink" title="未完待续"></a>未完待续</h3><h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><p>Android中Xposed框架篇—基于Xposed的一款脱壳神器ZjDroid工具原理解析：<br><a href="https://blog.csdn.net/jiangwei0910410003/article/details/52840602" target="_blank" rel="noopener">https://blog.csdn.net/jiangwei0910410003/article/details/52840602</a><br>[原创]安卓逆向之基于Xposed-ZjDroid脱壳：<br><a href="https://bbs.pediy.com/thread-218798.htm" target="_blank" rel="noopener">https://bbs.pediy.com/thread-218798.htm</a><br>ZjDroid项目源码（已经停更4年）：<br><a href="https://github.com/halfkiss/ZjDroid" target="_blank" rel="noopener">https://github.com/halfkiss/ZjDroid</a><br>android am命令用法：<br><a href="https://blog.csdn.net/u010164190/article/details/72875865" target="_blank" rel="noopener">https://blog.csdn.net/u010164190/article/details/72875865</a></p>
 
-          
-        
       
     </div>
 
@@ -467,14 +467,38 @@
 
     <footer class="post-footer">
       
-
+        <div class="post-tags">
+          
+            <a href="/tags/笔记/" rel="tag"># 笔记</a>
+          
+            <a href="/tags/杂文/" rel="tag"># 杂文</a>
+          
+        </div>
       
 
       
+      
+      
 
       
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/39/" rel="next" title="[笔记]hexo模块mdjsp的开发心得">
+                <i class="fa fa-chevron-left"></i> [笔记]hexo模块mdjsp的开发心得
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
       
-        <div class="post-eof"></div>
+
+      
       
     </footer>
   </div>
@@ -484,18 +508,19 @@
   </article>
 
 
-    
-  </section>
 
-  
-  <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/41/">41</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
-  </nav>
-
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
           
+
+  
+
+
 
         </div>
         
@@ -516,8 +541,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -647,6 +681,22 @@
       </section>
 
       
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#环境"><span class="nav-number">1.</span> <span class="nav-text">环境</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#准备"><span class="nav-number">2.</span> <span class="nav-text">准备</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#在脱壳的边缘试探"><span class="nav-number">3.</span> <span class="nav-text">在脱壳的边缘试探</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#在修复的边缘试探"><span class="nav-number">4.</span> <span class="nav-text">在修复的边缘试探</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#尝试用动态调试找出-1"><span class="nav-number">5.</span> <span class="nav-text">尝试用动态调试找出-1</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#未完待续"><span class="nav-number">6.</span> <span class="nav-text">未完待续</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考资料"><span class="nav-number">7.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
 
       
 
@@ -773,6 +823,10 @@
   
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.0.6"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.0.6"></script>
+
+
 
   
 
