@@ -99,23 +99,28 @@
 
 
 
-  <meta name="description" content="勿在浮沙铸高台">
-<meta property="og:type" content="website">
-<meta property="og:title" content="IMLK">
-<meta property="og:url" content="http://kb5201314.github.io/index.html">
+  <meta name="description" content="上星期趁着放假玩了玩ZjDroid，自己编译了一个来玩，最终克服万难总算找齐了源码，给编译出来了。上一篇文章https://blog.csdn.net/u010746456/article/details/80150250虽然，最终拿出来的大数字加固的dex没能恢复onCreate这个native方法（本人实在太菜），但是其他部分还是能看源码的。 最近一个朋友给我看了一个爱加密的包，我放到模拟器里">
+<meta name="keywords" content="笔记,杂文">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[笔记]ZjDroid适配art虚拟机的尝试">
+<meta property="og:url" content="http://kb5201314.github.io/blog/42/index.html">
 <meta property="og:site_name" content="IMLK">
-<meta property="og:description" content="勿在浮沙铸高台">
+<meta property="og:description" content="上星期趁着放假玩了玩ZjDroid，自己编译了一个来玩，最终克服万难总算找齐了源码，给编译出来了。上一篇文章https://blog.csdn.net/u010746456/article/details/80150250虽然，最终拿出来的大数字加固的dex没能恢复onCreate这个native方法（本人实在太菜），但是其他部分还是能看源码的。 最近一个朋友给我看了一个爱加密的包，我放到模拟器里">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://kb5201314.github.io/images/blog/40_0.png">
+<meta property="og:image" content="http://kb5201314.github.io/images/blog/42_0.png">
+<meta property="og:updated_time" content="2018-05-06T11:06:48.660Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="IMLK">
-<meta name="twitter:description" content="勿在浮沙铸高台">
+<meta name="twitter:title" content="[笔记]ZjDroid适配art虚拟机的尝试">
+<meta name="twitter:description" content="上星期趁着放假玩了玩ZjDroid，自己编译了一个来玩，最终克服万难总算找齐了源码，给编译出来了。上一篇文章https://blog.csdn.net/u010746456/article/details/80150250虽然，最终拿出来的大数字加固的dex没能恢复onCreate这个native方法（本人实在太菜），但是其他部分还是能看源码的。 最近一个朋友给我看了一个爱加密的包，我放到模拟器里">
+<meta name="twitter:image" content="http://kb5201314.github.io/images/blog/40_0.png">
 
 
 
 
 
 
-  <link rel="canonical" href="http://kb5201314.github.io/"/>
+  <link rel="canonical" href="http://kb5201314.github.io/blog/42/"/>
 
 
 
@@ -125,7 +130,7 @@
   };
 </script>
 
-  <title>IMLK</title>
+  <title>[笔记]ZjDroid适配art虚拟机的尝试 | IMLK</title>
   
 
 
@@ -172,8 +177,7 @@
     
   
 
-  <div class="container sidebar-position-left 
-  page-home">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -307,9 +311,9 @@
           
           <div id="content" class="content">
             
-  <section id="posts" class="posts-expand">
+
+  <div id="posts" class="posts-expand">
     
-      
 
   
 
@@ -341,9 +345,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/blog/42/" itemprop="url">[笔记]ZjDroid适配art虚拟机的尝试</a></h1>
+          <h1 class="post-title" itemprop="name headline">[笔记]ZjDroid适配art虚拟机的尝试</h1>
         
 
         <div class="post-meta">
@@ -410,9 +412,7 @@
       
 
       
-        
-          
-            <p>上星期趁着放假玩了玩ZjDroid，自己编译了一个来玩，最终克服万难总算找齐了源码，给编译出来了。<br>上一篇文章<a href="https://blog.csdn.net/u010746456/article/details/80150250" target="_blank" rel="noopener">https://blog.csdn.net/u010746456/article/details/80150250</a><br>虽然，最终拿出来的大数字加固的dex没能恢复onCreate这个native方法（本人实在太菜），但是其他部分还是能看源码的。</p>
+        <p>上星期趁着放假玩了玩ZjDroid，自己编译了一个来玩，最终克服万难总算找齐了源码，给编译出来了。<br>上一篇文章<a href="https://blog.csdn.net/u010746456/article/details/80150250" target="_blank" rel="noopener">https://blog.csdn.net/u010746456/article/details/80150250</a><br>虽然，最终拿出来的大数字加固的dex没能恢复onCreate这个native方法（本人实在太菜），但是其他部分还是能看源码的。</p>
 <p>最近一个朋友给我看了一个爱加密的包，我放到模拟器里面用我的ZjDroid脱，没想到这个包却主动退出了！<br>我以为是检测到了ZjDroid，就卸载了ZjDroid，结果还是崩，后来上网查才发现，爱加密检测到是模拟器环境就会主动退出。</p>
 <p>这可让我费脑筋啊！</p>
 <p>我手上只有Android7.1.2的设备，而目前的ZjDroid只支持dalvik虚拟机上跑，这可咋办呢，要我刷机？懒得备份。。。</p>
@@ -509,8 +509,6 @@
 <li>dalvik_system_DexFile.h头文件<br><a href="http://androidxref.com/7.1.2_r36/xref/art/runtime/native/dalvik_system_DexFile.h" target="_blank" rel="noopener">http://androidxref.com/7.1.2_r36/xref/art/runtime/native/dalvik_system_DexFile.h</a></li>
 </ul>
 
-          
-        
       
     </div>
 
@@ -528,14 +526,38 @@
 
     <footer class="post-footer">
       
-
+        <div class="post-tags">
+          
+            <a href="/tags/笔记/" rel="tag"># 笔记</a>
+          
+            <a href="/tags/杂文/" rel="tag"># 杂文</a>
+          
+        </div>
       
 
       
+      
+      
 
       
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/41/" rel="next" title="[笔记]Android实现Multidex及指定主dex中的class">
+                <i class="fa fa-chevron-left"></i> [笔记]Android实现Multidex及指定主dex中的class
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
       
-        <div class="post-eof"></div>
+
+      
       
     </footer>
   </div>
@@ -545,18 +567,19 @@
   </article>
 
 
-    
-  </section>
 
-  
-  <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/42/">42</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
-  </nav>
-
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
           
+
+  
+
+
 
         </div>
         
@@ -577,8 +600,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -708,6 +740,22 @@
       </section>
 
       
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#稍微尝试"><span class="nav-number">1.</span> <span class="nav-text">稍微尝试</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#art虚拟机的mCookie"><span class="nav-number">2.</span> <span class="nav-text">art虚拟机的mCookie</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#art中的DexFile"><span class="nav-number">3.</span> <span class="nav-text">art中的DexFile</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#总结"><span class="nav-number">4.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#遇到的几个问题"><span class="nav-number">5.</span> <span class="nav-text">遇到的几个问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#关于C-对象的内存结构"><span class="nav-number">6.</span> <span class="nav-text">关于C++对象的内存结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#挫折"><span class="nav-number">7.</span> <span class="nav-text">挫折</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#出炉"><span class="nav-number">8.</span> <span class="nav-text">出炉</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#遗留问题"><span class="nav-number">9.</span> <span class="nav-text">遗留问题</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考"><span class="nav-number"></span> <span class="nav-text">参考</span></a></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
 
       
 
@@ -834,6 +882,10 @@
   
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.0.6"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.0.6"></script>
+
+
 
   
 
