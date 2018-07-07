@@ -99,20 +99,20 @@
 
 
 
-  <meta name="description" content="上星期趁着放假玩了玩ZjDroid，自己编译了一个来玩，最终克服万难总算找齐了源码，给编译出来了。上一篇文章https://blog.csdn.net/u010746456/article/details/80150250虽然，最终拿出来的大数字加固的dex没能恢复onCreate这个native方法（本人实在太菜），但是其他部分还是能看源码的。 最近一个朋友给我看了一个爱加密的包，我放到模拟器里">
+  <meta name="description" content="上星期趁着放假玩了玩ZjDroid，自己编译了一个来玩，最终克服万难总算找齐了源码，给编译出来了。上一篇文章: 笔记-第一次ZjDroid脱壳实战https://blog.csdn.net/u010746456/article/details/80150250 虽然，最终拿出来的大数字加固的dex没能恢复onCreate这个native方法（本人实在太菜），但是其他部分还是能看源码的。 起因最近一">
 <meta name="keywords" content="笔记,杂文">
 <meta property="og:type" content="article">
 <meta property="og:title" content="[笔记]ZjDroid适配art虚拟机的尝试">
 <meta property="og:url" content="http://kb5201314.github.io/blog/42/index.html">
 <meta property="og:site_name" content="IMLK">
-<meta property="og:description" content="上星期趁着放假玩了玩ZjDroid，自己编译了一个来玩，最终克服万难总算找齐了源码，给编译出来了。上一篇文章https://blog.csdn.net/u010746456/article/details/80150250虽然，最终拿出来的大数字加固的dex没能恢复onCreate这个native方法（本人实在太菜），但是其他部分还是能看源码的。 最近一个朋友给我看了一个爱加密的包，我放到模拟器里">
+<meta property="og:description" content="上星期趁着放假玩了玩ZjDroid，自己编译了一个来玩，最终克服万难总算找齐了源码，给编译出来了。上一篇文章: 笔记-第一次ZjDroid脱壳实战https://blog.csdn.net/u010746456/article/details/80150250 虽然，最终拿出来的大数字加固的dex没能恢复onCreate这个native方法（本人实在太菜），但是其他部分还是能看源码的。 起因最近一">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://kb5201314.github.io/images/blog/40_0.png">
 <meta property="og:image" content="http://kb5201314.github.io/images/blog/42_0.png">
-<meta property="og:updated_time" content="2018-05-06T11:06:48.660Z">
+<meta property="og:updated_time" content="2018-05-19T05:33:41.213Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="[笔记]ZjDroid适配art虚拟机的尝试">
-<meta name="twitter:description" content="上星期趁着放假玩了玩ZjDroid，自己编译了一个来玩，最终克服万难总算找齐了源码，给编译出来了。上一篇文章https://blog.csdn.net/u010746456/article/details/80150250虽然，最终拿出来的大数字加固的dex没能恢复onCreate这个native方法（本人实在太菜），但是其他部分还是能看源码的。 最近一个朋友给我看了一个爱加密的包，我放到模拟器里">
+<meta name="twitter:description" content="上星期趁着放假玩了玩ZjDroid，自己编译了一个来玩，最终克服万难总算找齐了源码，给编译出来了。上一篇文章: 笔记-第一次ZjDroid脱壳实战https://blog.csdn.net/u010746456/article/details/80150250 虽然，最终拿出来的大数字加固的dex没能恢复onCreate这个native方法（本人实在太菜），但是其他部分还是能看源码的。 起因最近一">
 <meta name="twitter:image" content="http://kb5201314.github.io/images/blog/40_0.png">
 
 
@@ -412,8 +412,10 @@
       
 
       
-        <p>上星期趁着放假玩了玩ZjDroid，自己编译了一个来玩，最终克服万难总算找齐了源码，给编译出来了。<br>上一篇文章<a href="https://blog.csdn.net/u010746456/article/details/80150250" target="_blank" rel="noopener">https://blog.csdn.net/u010746456/article/details/80150250</a><br>虽然，最终拿出来的大数字加固的dex没能恢复onCreate这个native方法（本人实在太菜），但是其他部分还是能看源码的。</p>
-<p>最近一个朋友给我看了一个爱加密的包，我放到模拟器里面用我的ZjDroid脱，没想到这个包却主动退出了！<br>我以为是检测到了ZjDroid，就卸载了ZjDroid，结果还是崩，后来上网查才发现，爱加密检测到是模拟器环境就会主动退出。</p>
+        <p>上星期趁着放假玩了玩ZjDroid，自己编译了一个来玩，最终克服万难总算找齐了源码，给编译出来了。<br>上一篇文章:</p>
+<p>笔记-第一次ZjDroid脱壳实战<br><a href="https://blog.csdn.net/u010746456/article/details/80150250" target="_blank" rel="noopener">https://blog.csdn.net/u010746456/article/details/80150250</a></p>
+<p>虽然，最终拿出来的大数字加固的dex没能恢复onCreate这个native方法（本人实在太菜），但是其他部分还是能看源码的。</p>
+<h3 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h3><p>最近一个朋友给我看了一个爱加密的包，我放到模拟器里面用我的ZjDroid脱，没想到这个包却主动退出了！<br>我以为是检测到了ZjDroid，就卸载了ZjDroid，结果还是崩，后来上网查才发现，爱加密检测到是模拟器环境就会主动退出。</p>
 <p>这可让我费脑筋啊！</p>
 <p>我手上只有Android7.1.2的设备，而目前的ZjDroid只支持dalvik虚拟机上跑，这可咋办呢，要我刷机？懒得备份。。。</p>
 <p>我记得ZjDroid的源码最后是4年前更新的，然后作者就不维护了，于是我想能不能学习ZjDroid的原理去适配art呢？</p>
@@ -497,7 +499,11 @@
 <li>ZjDroid的<code>backsmali</code>命令虽然获取dex信息部分（native层）已经搞定，但是ZjDroid所使用的<code>org.jf.dexlib2</code>等库是四年前的版本，不支持art，要改为新版的话，要做很多修改。</li>
 </ul>
 <p>欢迎提交改进</p>
-<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
+<h3 id="查看Android源码的网站"><a href="#查看Android源码的网站" class="headerlink" title="查看Android源码的网站"></a>查看Android源码的网站</h3><ul>
+<li>grepcode:支持查看Android5.1.1及以前的源码，支持文件比较<br><a href="http://www.grepcode.com/" target="_blank" rel="noopener">http://www.grepcode.com/</a></li>
+<li>androidxref:资源全，但文件比较功能没上面的那个好用<br><a href="http://androidxref.com/" target="_blank" rel="noopener">http://androidxref.com/</a></li>
+</ul>
+<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><ul>
 <li>解决爱加密加固之后使用xposed hook的时候log打印不出来的问题:<br><a href="https://bbs.pediy.com/thread-216965.htm" target="_blank" rel="noopener">https://bbs.pediy.com/thread-216965.htm</a></li>
 <li>C++类对象的内存模型:<br><a href="https://www.linuxidc.com/Linux/2014-12/111047.htm" target="_blank" rel="noopener">https://www.linuxidc.com/Linux/2014-12/111047.htm</a></li>
 <li>std::string源码探秘和性能分析：<br><a href="https://blog.csdn.net/ybxuwei/article/details/51326830" target="_blank" rel="noopener">https://blog.csdn.net/ybxuwei/article/details/51326830</a></li>
@@ -506,6 +512,7 @@
 <li>阿里早期Android加固代码的实现分析:<br><a href="http://www.voidcn.com/article/p-ntseiwvg-bqs.html" target="_blank" rel="noopener">http://www.voidcn.com/article/p-ntseiwvg-bqs.html</a></li>
 <li>[原创]阿里早期加固代码还原4.4-6.0:<br><a href="https://bbs.pediy.com/thread-215078.htm" target="_blank" rel="noopener">https://bbs.pediy.com/thread-215078.htm</a></li>
 <li>dex_file.h头文件<br><a href="http://androidxref.com/7.1.2_r36/xref/art/runtime/dex_file.h" target="_blank" rel="noopener">http://androidxref.com/7.1.2_r36/xref/art/runtime/dex_file.h</a></li>
+<li>dex_file.h头文件（Android P）<br><a href="https://android.googlesource.com/platform/art/+/android-p-preview-2/libdexfile/dex/dex_file.h" target="_blank" rel="noopener">https://android.googlesource.com/platform/art/+/android-p-preview-2/libdexfile/dex/dex_file.h</a></li>
 <li>dalvik_system_DexFile.h头文件<br><a href="http://androidxref.com/7.1.2_r36/xref/art/runtime/native/dalvik_system_DexFile.h" target="_blank" rel="noopener">http://androidxref.com/7.1.2_r36/xref/art/runtime/native/dalvik_system_DexFile.h</a></li>
 </ul>
 
@@ -552,6 +559,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/blog/43/" rel="prev" title="[笔记]Xposed框架加持下的Android应用ClassLoader变化">
+                [笔记]Xposed框架加持下的Android应用ClassLoader变化 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -625,7 +636,7 @@
                 
                   <a href="/archives">
                 
-                    <span class="site-state-item-count">42</span>
+                    <span class="site-state-item-count">43</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -699,7 +710,11 @@
                     
                       
                     
-                    <span class="site-state-item-count">8</span>
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">10</span>
                     <span class="site-state-item-name">tags</span>
                   
                 </div>
@@ -749,7 +764,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#稍微尝试"><span class="nav-number">1.</span> <span class="nav-text">稍微尝试</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#art虚拟机的mCookie"><span class="nav-number">2.</span> <span class="nav-text">art虚拟机的mCookie</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#art中的DexFile"><span class="nav-number">3.</span> <span class="nav-text">art中的DexFile</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#总结"><span class="nav-number">4.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#遇到的几个问题"><span class="nav-number">5.</span> <span class="nav-text">遇到的几个问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#关于C-对象的内存结构"><span class="nav-number">6.</span> <span class="nav-text">关于C++对象的内存结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#挫折"><span class="nav-number">7.</span> <span class="nav-text">挫折</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#出炉"><span class="nav-number">8.</span> <span class="nav-text">出炉</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#遗留问题"><span class="nav-number">9.</span> <span class="nav-text">遗留问题</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考"><span class="nav-number"></span> <span class="nav-text">参考</span></a></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#起因"><span class="nav-number">1.</span> <span class="nav-text">起因</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#稍微尝试"><span class="nav-number">2.</span> <span class="nav-text">稍微尝试</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#art虚拟机的mCookie"><span class="nav-number">3.</span> <span class="nav-text">art虚拟机的mCookie</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#art中的DexFile"><span class="nav-number">4.</span> <span class="nav-text">art中的DexFile</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#总结"><span class="nav-number">5.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#遇到的几个问题"><span class="nav-number">6.</span> <span class="nav-text">遇到的几个问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#关于C-对象的内存结构"><span class="nav-number">7.</span> <span class="nav-text">关于C++对象的内存结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#挫折"><span class="nav-number">8.</span> <span class="nav-text">挫折</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#出炉"><span class="nav-number">9.</span> <span class="nav-text">出炉</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#遗留问题"><span class="nav-number">10.</span> <span class="nav-text">遗留问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查看Android源码的网站"><span class="nav-number">11.</span> <span class="nav-text">查看Android源码的网站</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考"><span class="nav-number">12.</span> <span class="nav-text">参考</span></a></li></ol></div>
             
 
           </div>
