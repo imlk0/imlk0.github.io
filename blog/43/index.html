@@ -102,7 +102,7 @@
   <meta name="description" content="好久没写东西了，期末终于考完了，想起之前对Xposed开发的一些问题还没有解决，于是搬出来探索了一番。 Android应用ClassLoader再思考我们知道，Android应用以apk文件的形式存在于手机储存空间之中，而要运行这些应用，则需要用ClassLoader加载到虚拟机中去。除了应用的apk文件之外，还有一些Android框架层的类在/system/framework/文件夹下以jar包">
 <meta name="keywords" content="Android,笔记,Xposed,ClassLoader">
 <meta property="og:type" content="article">
-<meta property="og:title" content="[笔记]Xposed框架加持下的Android应用ClassLoader变化">
+<meta property="og:title" content="[笔记]Xposed框架加持下的Android应用ClassLoader的结构关系">
 <meta property="og:url" content="http://kb5201314.github.io/blog/43/index.html">
 <meta property="og:site_name" content="IMLK">
 <meta property="og:description" content="好久没写东西了，期末终于考完了，想起之前对Xposed开发的一些问题还没有解决，于是搬出来探索了一番。 Android应用ClassLoader再思考我们知道，Android应用以apk文件的形式存在于手机储存空间之中，而要运行这些应用，则需要用ClassLoader加载到虚拟机中去。除了应用的apk文件之外，还有一些Android框架层的类在/system/framework/文件夹下以jar包">
@@ -111,9 +111,9 @@
 <meta property="og:image" content="http://kb5201314.github.io/images/blog/43_1.png">
 <meta property="og:image" content="http://kb5201314.github.io/images/blog/43_2.png">
 <meta property="og:image" content="http://kb5201314.github.io/images/blog/43_3.png">
-<meta property="og:updated_time" content="2018-07-07T16:58:23.108Z">
+<meta property="og:updated_time" content="2018-07-07T17:15:45.823Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="[笔记]Xposed框架加持下的Android应用ClassLoader变化">
+<meta name="twitter:title" content="[笔记]Xposed框架加持下的Android应用ClassLoader的结构关系">
 <meta name="twitter:description" content="好久没写东西了，期末终于考完了，想起之前对Xposed开发的一些问题还没有解决，于是搬出来探索了一番。 Android应用ClassLoader再思考我们知道，Android应用以apk文件的形式存在于手机储存空间之中，而要运行这些应用，则需要用ClassLoader加载到虚拟机中去。除了应用的apk文件之外，还有一些Android框架层的类在/system/framework/文件夹下以jar包">
 <meta name="twitter:image" content="http://kb5201314.github.io/images/blog/43_0.png">
 
@@ -132,7 +132,7 @@
   };
 </script>
 
-  <title>[笔记]Xposed框架加持下的Android应用ClassLoader变化 | IMLK</title>
+  <title>[笔记]Xposed框架加持下的Android应用ClassLoader的结构关系 | IMLK</title>
   
 
 
@@ -347,7 +347,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">[笔记]Xposed框架加持下的Android应用ClassLoader变化</h1>
+          <h1 class="post-title" itemprop="name headline">[笔记]Xposed框架加持下的Android应用ClassLoader的结构关系</h1>
         
 
         <div class="post-meta">
@@ -502,6 +502,10 @@
 
           <div class="post-nav-prev post-nav-item">
             
+              <a href="/blog/44/" rel="prev" title="[Codeforces]Contest 1005 E2. Median on Segments (General Case Edition)">
+                [Codeforces]Contest 1005 E2. Median on Segments (General Case Edition) <i class="fa fa-chevron-right"></i>
+              </a>
+            
           </div>
         </div>
       
@@ -574,7 +578,7 @@
                 
                   <a href="/archives">
                 
-                    <span class="site-state-item-count">43</span>
+                    <span class="site-state-item-count">44</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -619,7 +623,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">16</span>
+                      
+                    
+                    <span class="site-state-item-count">17</span>
                     <span class="site-state-item-name">categories</span>
                   </a>
                 </div>
@@ -652,7 +658,17 @@
                     
                       
                     
-                    <span class="site-state-item-count">10</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">15</span>
                     <span class="site-state-item-name">tags</span>
                   
                 </div>
