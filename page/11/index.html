@@ -324,7 +324,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://kb5201314.github.io/blog/31/">
+    <link itemprop="mainEntityOfPage" href="http://kb5201314.github.io/blog/38/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="imlk">
@@ -343,7 +343,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/blog/31/" itemprop="url">[笔记]读Android中Service的Binder跨进程通信机制</a></h1>
+                <a class="post-title-link" href="/blog/38/" itemprop="url">[笔记]摘录自大佬口中的各种名词</a></h1>
         
 
         <div class="post-meta">
@@ -355,7 +355,7 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-04-11T22:38:50+08:00">2018-04-11</time>
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-04-25T20:29:25+08:00">2018-04-25</time>
             
 
             
@@ -376,7 +376,7 @@
                 <span class="post-meta-item-text">In</span>
               
               
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Android/" itemprop="url" rel="index"><span itemprop="name">Android</span></a></span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/笔记/" itemprop="url" rel="index"><span itemprop="name">笔记</span></a></span>
 
                 
                 
@@ -412,23 +412,19 @@
       
         
           
-            <p>今天拜读了姜维大神的<code>Android系统篇之----Binder机制和远程服务调用机制分析</code></p>
-<p><a href="https://blog.csdn.net/jiangwei0910410003/article/details/52467919" target="_blank" rel="noopener">Android系统篇之—-Binder机制和远程服务调用机制分析</a></p>
-<p>读完有一个疑惑，就是<br>文中</p>
-<blockquote>
-<p>6、最后返回的对象其实就是这个<code>Proxy</code>对象，而这个对象内部使用了静态代理方式，内部有一个来自远端的<code>mRemote</code>变量即<code>IBinder</code>对象。然后直接调用方法其实就是调用<code>mRemote</code>的<code>transact</code>方法进行通信了。</p>
-</blockquote>
-<p><code>IBinder</code>是一个接口，具体的实现类没有说明，一开始以为是<code>Binder</code>，看了一下<code>Binder</code>的<code>transact</code>方法实现，发现直接调用了<code>Stub</code>的<code>onTransact</code>，真是简直了，一脸懵逼啊，这不是就在自己的进程执行了嘛，<code>native</code>呢？后来上网查发现这里的<code>mRemote</code>实际上是<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">final class BinderProxy implements IBinder</span><br></pre></td></tr></table></figure></p>
-<p>但在as里面搜不到这个类，于是取出<code>framework.jar</code>用jadx开，果然看到<code>android.os.BinderProxy</code><br>其中有：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">public boolean transact(int code, Parcel data, Parcel reply, int flags) throws RemoteException &#123;</span><br><span class="line">    Binder.checkParcel(this, code, data, &quot;Unreasonably large binder buffer&quot;);</span><br><span class="line">    return transactNative(code, data, reply, flags);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>和</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">public native boolean transactNative(int i, Parcel parcel, Parcel parcel2, int i2) throws RemoteException;</span><br></pre></td></tr></table></figure>
-<p><img src="/images/blog/31_0.png" alt="jadx反编译的framework.jar"></p>
-<p>这里<code>Proxy</code>类中的<code>mRemote</code>类型是<code>BinderProxy</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mRemote.transact(Stub.TRANSACTION_getData, _data, _reply, 0);</span><br></pre></td></tr></table></figure></p>
-<p>这句实际上调用了<code>BinderProxy</code>的<code>transact</code>方法，上面看到它转而调用了一个<code>transactNative</code>的native方法实现和内核通信</p>
-<p>猜想这个因为是系统的实现，所以as里面搜不到这个类，真的是找了好久。终于明白了</p>
-<p><strong><code>BinderProxy</code>源码(Android 6.0.1)</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br></pre></td><td class="code"><pre><span class="line">package android.os;</span><br><span class="line"></span><br><span class="line">import android.os.IBinder.DeathRecipient;</span><br><span class="line">import android.util.Log;</span><br><span class="line">import java.io.FileDescriptor;</span><br><span class="line">import java.lang.ref.WeakReference;</span><br><span class="line"></span><br><span class="line">/* compiled from: Binder */</span><br><span class="line">final class BinderProxy implements IBinder &#123;</span><br><span class="line">    private long mObject;</span><br><span class="line">    private long mOrgue;</span><br><span class="line">    private final WeakReference mSelf = new WeakReference(this);</span><br><span class="line"></span><br><span class="line">    private final native void destroy();</span><br><span class="line"></span><br><span class="line">    public native String getInterfaceDescriptor() throws RemoteException;</span><br><span class="line"></span><br><span class="line">    public native boolean isBinderAlive();</span><br><span class="line"></span><br><span class="line">    public native void linkToDeath(DeathRecipient deathRecipient, int i) throws RemoteException;</span><br><span class="line"></span><br><span class="line">    public native boolean pingBinder();</span><br><span class="line"></span><br><span class="line">    public native boolean transactNative(int i, Parcel parcel, Parcel parcel2, int i2) throws RemoteException;</span><br><span class="line"></span><br><span class="line">    public native boolean unlinkToDeath(DeathRecipient deathRecipient, int i);</span><br><span class="line"></span><br><span class="line">    public IInterface queryLocalInterface(String descriptor) &#123;</span><br><span class="line">        return null;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public boolean transact(int code, Parcel data, Parcel reply, int flags) throws RemoteException &#123;</span><br><span class="line">        Binder.checkParcel(this, code, data, &quot;Unreasonably large binder buffer&quot;);</span><br><span class="line">        return transactNative(code, data, reply, flags);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void dump(FileDescriptor fd, String[] args) throws RemoteException &#123;</span><br><span class="line">        Parcel data = Parcel.obtain();</span><br><span class="line">        Parcel reply = Parcel.obtain();</span><br><span class="line">        data.writeFileDescriptor(fd);</span><br><span class="line">        data.writeStringArray(args);</span><br><span class="line">        try &#123;</span><br><span class="line">            transact(IBinder.DUMP_TRANSACTION, data, reply, 0);</span><br><span class="line">            reply.readException();</span><br><span class="line">        &#125; finally &#123;</span><br><span class="line">            data.recycle();</span><br><span class="line">            reply.recycle();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void dumpAsync(FileDescriptor fd, String[] args) throws RemoteException &#123;</span><br><span class="line">        Parcel data = Parcel.obtain();</span><br><span class="line">        Parcel reply = Parcel.obtain();</span><br><span class="line">        data.writeFileDescriptor(fd);</span><br><span class="line">        data.writeStringArray(args);</span><br><span class="line">        try &#123;</span><br><span class="line">            transact(IBinder.DUMP_TRANSACTION, data, reply, 1);</span><br><span class="line">        &#125; finally &#123;</span><br><span class="line">            data.recycle();</span><br><span class="line">            reply.recycle();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    BinderProxy() &#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    protected void finalize() throws Throwable &#123;</span><br><span class="line">        try &#123;</span><br><span class="line">            destroy();</span><br><span class="line">        &#125; finally &#123;</span><br><span class="line">            super.finalize();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    private static final void sendDeathNotice(DeathRecipient recipient) &#123;</span><br><span class="line">        try &#123;</span><br><span class="line">            recipient.binderDied();</span><br><span class="line">        &#125; catch (RuntimeException exc) &#123;</span><br><span class="line">            Log.w(&quot;BinderNative&quot;, &quot;Uncaught exception from death notification&quot;, exc);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>参考：<br>Android系统篇之—-Binder机制和远程服务调用机制分析<br><a href="https://blog.csdn.net/jiangwei0910410003/article/details/52467919" target="_blank" rel="noopener">https://blog.csdn.net/jiangwei0910410003/article/details/52467919</a><br>Android系统进程间通信Binder机制在应用程序框架层的Java接口源代码分析<br><a href="https://www.linuxidc.com/Linux/2011-07/39620p9.htm" target="_blank" rel="noopener">https://www.linuxidc.com/Linux/2011-07/39620p9.htm</a></p>
+            <h3 id="SpringBoot"><a href="#SpringBoot" class="headerlink" title="SpringBoot"></a>SpringBoot</h3><p><a href="http://projects.spring.io/spring-boot/" target="_blank" rel="noopener">http://projects.spring.io/spring-boot/</a></p>
+<p>SpringBoot入门:<br><a href="http://www.importnew.com/25761.html" target="_blank" rel="noopener">http://www.importnew.com/25761.html</a></p>
+<h3 id="Vert-x"><a href="#Vert-x" class="headerlink" title="Vert.x"></a>Vert.x</h3><p><a href="https://vertx.io/" target="_blank" rel="noopener">https://vertx.io/</a></p>
+<p>用惯了高大上SpringBoot不妨试试小清新Vert.x：<br><a href="https://segmentfault.com/a/1190000011763020" target="_blank" rel="noopener">https://segmentfault.com/a/1190000011763020</a></p>
+<h3 id="flow-js"><a href="#flow-js" class="headerlink" title="flow.js"></a>flow.js</h3><p>加入类型系统的js</p>
+<p><a href="https://flow.org/" target="_blank" rel="noopener">https://flow.org/</a></p>
+<p>Flow - JS静态类型检查工具:<br><a href="https://segmentfault.com/a/1190000008088489" target="_blank" rel="noopener">https://segmentfault.com/a/1190000008088489</a></p>
+<h3 id="socket-io"><a href="#socket-io" class="headerlink" title="socket.io"></a>socket.io</h3><p>js中的socket连接库</p>
+<p><a href="https://socket.io/" target="_blank" rel="noopener">https://socket.io/</a></p>
+<p>socket.io实现私聊：<br><a href="https://blog.csdn.net/koastal/article/details/53677766" target="_blank" rel="noopener">https://blog.csdn.net/koastal/article/details/53677766</a></p>
+<h3 id="零拷贝"><a href="#零拷贝" class="headerlink" title="零拷贝"></a>零拷贝</h3><p>零拷贝技术：<br><a href="https://blog.csdn.net/jeason29/article/details/46682381" target="_blank" rel="noopener">https://blog.csdn.net/jeason29/article/details/46682381</a></p>
+<p>通过零拷贝实现高效的数据传输：<br><a href="https://blog.csdn.net/xiaoduanayu/article/details/78108308" target="_blank" rel="noopener">https://blog.csdn.net/xiaoduanayu/article/details/78108308</a></p>
+<p>Linux 中的零拷贝技术：<br><a href="https://blog.csdn.net/hzrandd/article/details/51025341" target="_blank" rel="noopener">https://blog.csdn.net/hzrandd/article/details/51025341</a></p>
 
           
         
@@ -471,7 +467,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/10/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/10/">10</a><span class="page-number current">11</span><a class="page-number" href="/page/12/">12</a><span class="space">&hellip;</span><a class="page-number" href="/page/44/">44</a><a class="extend next" rel="next" href="/page/12/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <a class="extend prev" rel="prev" href="/page/10/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/10/">10</a><span class="page-number current">11</span><a class="page-number" href="/page/12/">12</a><span class="space">&hellip;</span><a class="page-number" href="/page/48/">48</a><a class="extend next" rel="next" href="/page/12/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 
@@ -514,7 +510,7 @@
                 
                   <a href="/archives">
                 
-                    <span class="site-state-item-count">44</span>
+                    <span class="site-state-item-count">48</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -561,7 +557,11 @@
                     
                       
                     
-                    <span class="site-state-item-count">17</span>
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">19</span>
                     <span class="site-state-item-name">categories</span>
                   </a>
                 </div>
@@ -604,7 +604,25 @@
                     
                       
                     
-                    <span class="site-state-item-count">15</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">24</span>
                     <span class="site-state-item-name">tags</span>
                   
                 </div>

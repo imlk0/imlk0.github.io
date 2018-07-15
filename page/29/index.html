@@ -324,7 +324,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://kb5201314.github.io/blog/21/">
+    <link itemprop="mainEntityOfPage" href="http://kb5201314.github.io/blog/16/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="imlk">
@@ -343,7 +343,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/blog/21/" itemprop="url">Java继承的覆盖与隐藏</a></h1>
+                <a class="post-title-link" href="/blog/16/" itemprop="url">HDU 2577 How To Type 动态规划</a></h1>
         
 
         <div class="post-meta">
@@ -355,7 +355,7 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-01-21T22:39:20+08:00">2018-01-21</time>
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-02-01T17:59:56+08:00">2018-02-01</time>
             
 
             
@@ -376,7 +376,7 @@
                 <span class="post-meta-item-text">In</span>
               
               
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Java/" itemprop="url" rel="index"><span itemprop="name">Java</span></a></span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/算法/" itemprop="url" rel="index"><span itemprop="name">算法</span></a></span>
 
                 
                 
@@ -412,19 +412,39 @@
       
         
           
-            <p>参考：<br><a href="https://www.cnblogs.com/it12345/p/5221673.html" target="_blank" rel="noopener">https://www.cnblogs.com/it12345/p/5221673.html</a></p>
-<h3 id="隐藏和覆盖的区别"><a href="#隐藏和覆盖的区别" class="headerlink" title="隐藏和覆盖的区别"></a>隐藏和覆盖的区别</h3><p><strong>隐藏：将类型转换为父类的类型 即可解除 隐藏<br>覆盖：将类型转换为父类的类型也 不能 解除覆盖</strong></p>
-<h3 id="成员变量"><a href="#成员变量" class="headerlink" title="成员变量"></a>成员变量</h3><p><strong>只可能被隐藏，不存在覆盖一说</strong></p>
-<p>父类的成员变量静态或非静态都可能被子类中同名的成员变量 隐藏 （不一定要匹配类型，同名即可隐藏）</p>
-<h4 id="处理"><a href="#处理" class="headerlink" title="处理"></a>处理</h4><p><strong>直接用圆点运算符父类中的成员变量的办法：将类型转换为父类的类型。</strong><br><strong>在子类的方法中调用父类中被隐藏的成员变量的办法：在子类方法中使用super关键字配合圆点运算符取父类中的成员变量。</strong></p>
-<h3 id="成员方法"><a href="#成员方法" class="headerlink" title="成员方法"></a>成员方法</h3><p>可以被隐藏，也可以被覆盖<br>同名的实例方法被覆盖 ，同名的静态方法被隐藏</p>
-<h4 id="补充：继承规则"><a href="#补充：继承规则" class="headerlink" title="补充：继承规则"></a>补充：继承规则</h4><p>子类中与父类同名同参的方法才会发生重写，<br>重写时：<br>1.要求重写的方法的静态与非静态属性相同，<br>2.要求重写的方法的返回值类型相同，<br>3.重写后方法的可访问性必须更开放或不变，例如：private-&gt;public<br>不满足这三条的程序将报错无法通过编译</p>
-<p><strong>若重写了实例方法，则发生覆盖</strong><br><strong> 若重写了静态方法，则发生隐藏</strong></p>
-<h4 id="处理-1"><a href="#处理-1" class="headerlink" title="处理"></a>处理</h4><p><strong>通过反射能直接调用被“覆盖”的父类的方法的目的</strong><br><strong>无法在外部调用被“覆盖”的父类方法，只能在子类的内部使用super关键字配合圆点运算符调用父类的方法</strong><br><strong>无法通过转换类型达到调用被“覆盖”的父类的方法的目的</strong></p>
-<h3 id="关于方法中使用到成员变量的问题"><a href="#关于方法中使用到成员变量的问题" class="headerlink" title="关于方法中使用到成员变量的问题"></a>关于方法中使用到成员变量的问题</h3><p><strong>所取用的成员变量是子类中的还是父类中的取决于实际被调用的方法是在父类中还是子类中，以实际被调用的方法所在位置来观察可以判断出使用的是哪里的成员变量。</strong></p>
-<p>例如：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">public class Main &#123;</span><br><span class="line">	public static void main(String[] args) &#123;</span><br><span class="line"></span><br><span class="line">		Ch ch = new Ch();</span><br><span class="line">		ch.show();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class Su&#123;</span><br><span class="line">	int a = 3;//被隐藏</span><br><span class="line">	String b =&quot;what&quot;;//被隐藏</span><br><span class="line">	void show() &#123;//被覆盖</span><br><span class="line">		System.out.println(a);</span><br><span class="line">		System.out.println(b);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line">class Ch extends Su&#123;</span><br><span class="line">	float a = 1.23f;//发生隐藏</span><br><span class="line">	boolean b = false;//发生隐藏</span><br><span class="line"></span><br><span class="line">	void show() &#123;//发生覆盖</span><br><span class="line">		System.out.println(a);</span><br><span class="line">		System.out.println(b);</span><br><span class="line">		super.show();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * 输出：</span><br><span class="line"> * 1.23</span><br><span class="line"> * false</span><br><span class="line"> * 3</span><br><span class="line"> * what</span><br><span class="line"> * </span><br><span class="line">*/</span><br></pre></td></tr></table></figure>
-
+            <blockquote>
+<p>How to Type</p>
+<p>  Time Limit: 2000/1000 MS (Java/Others)    Memory Limit: 32768/32768 K (Java/Others)</p>
+<p>  Total Submission(s): 7448    Accepted Submission(s): 3374</p>
+<p>  Problem Description</p>
+<p>  Pirates have finished developing the typing software. He called Cathy to test his typing software. She is good at thinking. After testing for several days, she finds that if she types a string by some ways, she will type the key at least. But she has a bad habit that if the caps lock is on, she must turn off it, after she finishes typing. Now she wants to know the smallest times of typing the key to finish typing a string.</p>
+<p>  Input</p>
+<p>  The first line is an integer t (t&lt;=100), which is the number of test case in the input file. For each test case, there is only one string which consists of lowercase letter and upper case letter. The length of the string is at most 100.</p>
+<p>  Output</p>
+<p>  For each test case, you must output the smallest times of typing the key to finish typing this string.</p>
+<p>  Sample Input</p>
+<p>  3</p>
+<p>  Pirates</p>
+<p>  HDUacm</p>
+<p>  HDUACM</p>
+<p>  Sample Output</p>
+<p>  8</p>
+<p>  8</p>
+<p>  8</p>
+<p>  Hint</p>
+<p>  The string “Pirates”, can type this way, Shift, p, i, r, a, t, e, s, the answer is 8.</p>
+<p>  The string “HDUacm”, can type this way, Caps lock, h, d, u, Caps lock, a, c, m, the answer is 8</p>
+<p>  The string “HDUACM”, can type this way Caps lock h, d, u, a, c, m, Caps lock, the answer is 8</p>
+<p>  Author</p>
+<p>  Dellenge</p>
+<p>  Source</p>
+<p>  HDU 2009-5 Programming Contest</p>
+<p>  Recommend</p>
+<p>  lcy</p>
+</blockquote>
+<p><strong>输入每个字符前的状态是：</strong><br><strong>大小写锁开启on或者关闭off</strong></p>
+<p><strong><em>注意开启锁时按shift可以输入小写</em></strong></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">isup</span><span class="params">(<span class="keyword">char</span> a)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> (a &amp;gt;= <span class="string">'A'</span> &amp;amp;&amp;amp; a &amp;lt;= <span class="string">'Z'</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> <span class="keyword">const</span> *argv[])</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> t;</span><br><span class="line">    <span class="keyword">char</span> data[<span class="number">105</span>];</span><br><span class="line">    <span class="keyword">int</span> off[<span class="number">105</span>];</span><br><span class="line">    <span class="keyword">int</span> on[<span class="number">105</span>];</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">"%d"</span>, &amp;amp;t);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> (t--) &#123;</span><br><span class="line">        <span class="keyword">int</span> capsLock = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> ans = <span class="number">0</span>;</span><br><span class="line">        <span class="built_in">scanf</span>(<span class="string">"%s"</span>, data);</span><br><span class="line">        <span class="keyword">int</span> i;</span><br><span class="line">        <span class="comment">// 每次输入之前锁有两种状态</span></span><br><span class="line">        off[<span class="number">0</span>] = <span class="number">0</span>;<span class="comment">//表示输入第i个字符前状态为off/on的按键最少次数</span></span><br><span class="line">        on[<span class="number">0</span>] = <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">for</span> (i = <span class="number">0</span>; data[i] != <span class="string">'\0'</span>; i++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (isup(data[i])) &#123;</span><br><span class="line">                <span class="comment">// 输入大写字母以后锁：on</span></span><br><span class="line">                <span class="comment">// 直接输入，按下caps再输入（原先锁off）</span></span><br><span class="line">                on[i + <span class="number">1</span>] = min(on[i] + <span class="number">1</span>, off[i] + <span class="number">2</span>);</span><br><span class="line">                <span class="comment">// 输入大写字母以后锁：off</span></span><br><span class="line">                <span class="comment">// 按下caps再输入（原先锁on）,按shift输入</span></span><br><span class="line">                off[i + <span class="number">1</span>] = min(on[i] + <span class="number">2</span>, off[i] + <span class="number">2</span>);</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line"></span><br><span class="line">                on[i + <span class="number">1</span>] = min(on[i] + <span class="number">2</span>, off[i] + <span class="number">2</span>);</span><br><span class="line">                off[i + <span class="number">1</span>] = min(on[i] + <span class="number">2</span>, off[i] + <span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"%d\n"</span>, min(on[i] + <span class="number">1</span>, off[i]));</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
           
         
       
@@ -466,7 +486,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/28/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/28/">28</a><span class="page-number current">29</span><a class="page-number" href="/page/30/">30</a><span class="space">&hellip;</span><a class="page-number" href="/page/44/">44</a><a class="extend next" rel="next" href="/page/30/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <a class="extend prev" rel="prev" href="/page/28/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/28/">28</a><span class="page-number current">29</span><a class="page-number" href="/page/30/">30</a><span class="space">&hellip;</span><a class="page-number" href="/page/48/">48</a><a class="extend next" rel="next" href="/page/30/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 
@@ -509,7 +529,7 @@
                 
                   <a href="/archives">
                 
-                    <span class="site-state-item-count">44</span>
+                    <span class="site-state-item-count">48</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -556,7 +576,11 @@
                     
                       
                     
-                    <span class="site-state-item-count">17</span>
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">19</span>
                     <span class="site-state-item-name">categories</span>
                   </a>
                 </div>
@@ -599,7 +623,25 @@
                     
                       
                     
-                    <span class="site-state-item-count">15</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">24</span>
                     <span class="site-state-item-name">tags</span>
                   
                 </div>
