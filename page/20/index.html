@@ -324,7 +324,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://kb5201314.github.io/blog/10/">
+    <link itemprop="mainEntityOfPage" href="http://kb5201314.github.io/blog/8/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="imlk">
@@ -343,7 +343,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/blog/10/" itemprop="url">Fragment != Fragment ? —— Xposed开发时遇到的关于ClassLoader的问题</a></h1>
+                <a class="post-title-link" href="/blog/8/" itemprop="url">CodeForces 891 A. Pride</a></h1>
         
 
         <div class="post-meta">
@@ -355,7 +355,7 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-02-25T18:02:56+08:00">2018-02-25</time>
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-02-27T10:30:47+08:00">2018-02-27</time>
             
 
             
@@ -376,7 +376,21 @@
                 <span class="post-meta-item-text">In</span>
               
               
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Xposed/" itemprop="url" rel="index"><span itemprop="name">Xposed</span></a></span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/算法/" itemprop="url" rel="index"><span itemprop="name">算法</span></a></span>
+
+                
+                
+                  , 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/动态规划/" itemprop="url" rel="index"><span itemprop="name">动态规划</span></a></span>
+
+                
+                
+                  , 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/CodeForces/" itemprop="url" rel="index"><span itemprop="name">CodeForces</span></a></span>
 
                 
                 
@@ -412,15 +426,8 @@
       
         
           
-            <p>今天在写Xposed模块的过程中，为了找到某个Field，需要判断Filed的某个祖先的类型是是Fragment类型</p>
-<p>但在做比较的时候出现了问题，发生了Fragment != Fragment的问题：</p>
-<p>注：这里的 Fragment 是 android.support.v4.app.Fragment 而不是 android.app.Fragment</p>
-<p>我们知道v4包是要额外导入的，<br><img src="/images/blog/10_1.png" alt=""></p>
-<p>所以说，一共出现了两份v4包，一份打包在宿主app里，一份打包在自己的模块里面，在加载的时候会出现因为ClassLoader不一致而导致两个class不同的情况</p>
-<p>如图：<br><img src="/images/blog/10_0.png" alt=""></p>
-<p><strong>在debug添加查看发现，两个Class虽然都是android.support.v4.app.Fragment但由于ClassLoader不一样，导致两个Class不相等；</strong></p>
-<p>查看其它的Class发现，系统自带的那些jar里面的Class都是由BootClassLoader加载的，<br><img src="/images/blog/10_2.png" alt=""><br>而BootClassLoader的实例在虚拟机中只有一个，所以模块中的Context.class和宿主app里的Context.class是一样的</p>
-
+            <p><a href="http://codeforces.com/problemset/problem/891/A" target="_blank" rel="noopener">http://codeforces.com/problemset/problem/891/A</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line">#include &lt;cstdio&gt;</span><br><span class="line">#include &lt;cstring&gt;</span><br><span class="line">#include &lt;cmath&gt;</span><br><span class="line"></span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">long long dp[2005][2005]; // dp[x][y]表示gcd(x...(x + y))</span><br><span class="line">/*</span><br><span class="line">x是起始点位置,y是距离</span><br><span class="line">a1, a2, a3, a4, a5, a6, a7, a8</span><br><span class="line">	↑	←	y	→	↑</span><br><span class="line">	x				x + y</span><br><span class="line">*/</span><br><span class="line"></span><br><span class="line">// gcd(a1, a2, a3) = gcd(gcd(a1, a2), a3) = gcd(gcd(a1, a2), gcd(a2, a3))</span><br><span class="line">// 所以</span><br><span class="line"></span><br><span class="line">// 状态方程</span><br><span class="line">// dp[x][y] = gcd(dp[x][y - 1], dp[x + 1][y - 1])</span><br><span class="line"></span><br><span class="line">long long gcd(long long a, long long b) &#123;</span><br><span class="line">	while (1) &#123;</span><br><span class="line">		a = a % b;</span><br><span class="line">		if (!a) &#123;</span><br><span class="line">			return b;</span><br><span class="line">		&#125;</span><br><span class="line">		b = b % a;</span><br><span class="line">		if (!b) &#123;</span><br><span class="line">			return a;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main(int argc, char const *argv[])</span><br><span class="line">&#123;</span><br><span class="line">	int n;</span><br><span class="line">	int ones = 0;</span><br><span class="line">	scanf(&quot;%d&quot;, &amp;n);</span><br><span class="line"></span><br><span class="line">	for (int x = 0; x &lt; n; x++) &#123;</span><br><span class="line">		scanf(&quot;%lld&quot;, dp[x]);</span><br><span class="line">		if (dp[x][0] == 1) &#123;</span><br><span class="line">			ones++;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		// printf(&quot;%lld\t&quot;, dp[x][0]);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	// printf(&quot;\n&quot;);</span><br><span class="line"></span><br><span class="line">	if (ones) &#123;</span><br><span class="line">		printf(&quot;%d\n&quot;, n - ones);</span><br><span class="line">		return 0;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	for (int y = 1; y &lt; n; y++) &#123;//跨度距离从1开始</span><br><span class="line">		for (int x = 0; x + y &lt; n; x++) &#123;//起始位置从x开始</span><br><span class="line"></span><br><span class="line">			dp[x][y] = gcd(dp[x][y - 1], dp[x + 1][y - 1]);</span><br><span class="line"></span><br><span class="line">			// printf(&quot;%lld\t&quot;, dp[x][y]);</span><br><span class="line"></span><br><span class="line">			if (dp[x][y] == 1) &#123;</span><br><span class="line">				// printf(&quot;\n&quot;);</span><br><span class="line">				printf(&quot;%d\n&quot;, n + y - 1);</span><br><span class="line">				return 0;</span><br><span class="line">			&#125;</span><br><span class="line"></span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	printf(&quot;-1\n&quot;);</span><br><span class="line">	return 0;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line">*	</span><br><span class="line">*	in:</span><br><span class="line">*	</span><br><span class="line">*	5</span><br><span class="line">*	2 2 3 4 6</span><br><span class="line">*	</span><br><span class="line">*	out:</span><br><span class="line">*	</span><br><span class="line">*	2		2		3		4		6</span><br><span class="line">*	↑↗		↑↗</span><br><span class="line">*	2		1</span><br><span class="line">*	</span><br><span class="line">*	result：</span><br><span class="line">*	</span><br><span class="line">*	5</span><br><span class="line">*	</span><br><span class="line">*	</span><br><span class="line">*/</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
           
         
       
@@ -462,7 +469,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/19/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/19/">19</a><span class="page-number current">20</span><a class="page-number" href="/page/21/">21</a><span class="space">&hellip;</span><a class="page-number" href="/page/48/">48</a><a class="extend next" rel="next" href="/page/21/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <a class="extend prev" rel="prev" href="/page/19/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/19/">19</a><span class="page-number current">20</span><a class="page-number" href="/page/21/">21</a><span class="space">&hellip;</span><a class="page-number" href="/page/50/">50</a><a class="extend next" rel="next" href="/page/21/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 
@@ -505,7 +512,7 @@
                 
                   <a href="/archives">
                 
-                    <span class="site-state-item-count">48</span>
+                    <span class="site-state-item-count">50</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -556,7 +563,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">19</span>
+                      
+                    
+                    <span class="site-state-item-count">20</span>
                     <span class="site-state-item-name">categories</span>
                   </a>
                 </div>
@@ -617,7 +626,17 @@
                     
                       
                     
-                    <span class="site-state-item-count">24</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">29</span>
                     <span class="site-state-item-name">tags</span>
                   
                 </div>

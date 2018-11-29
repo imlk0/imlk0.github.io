@@ -324,7 +324,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://kb5201314.github.io/blog/41/">
+    <link itemprop="mainEntityOfPage" href="http://kb5201314.github.io/blog/43/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="imlk">
@@ -343,7 +343,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/blog/41/" itemprop="url">[笔记]Android实现Multidex及指定主dex中的class</a></h1>
+                <a class="post-title-link" href="/blog/43/" itemprop="url">[笔记]Xposed框架加持下的Android应用ClassLoader的结构关系</a></h1>
         
 
         <div class="post-meta">
@@ -355,7 +355,7 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-04-29T11:19:47+08:00">2018-04-29</time>
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-07-07T21:52:37+08:00">2018-07-07</time>
             
 
             
@@ -376,7 +376,7 @@
                 <span class="post-meta-item-text">In</span>
               
               
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/笔记/" itemprop="url" rel="index"><span itemprop="name">笔记</span></a></span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Xposed/" itemprop="url" rel="index"><span itemprop="name">Xposed</span></a></span>
 
                 
                 
@@ -412,55 +412,45 @@
       
         
           
-            <h3 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h3><p>在编译ZjDroid源码的时候遇到了著名的方法数超出<code>65536</code>个的问题。</p>
-<p>我的<code>gradle</code>版本</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">classpath &apos;com.android.tools.build:gradle:3.1.2&apos;</span><br></pre></td></tr></table></figure>
-<h3 id="要解决的问题"><a href="#要解决的问题" class="headerlink" title="要解决的问题"></a>要解决的问题</h3><ol>
-<li><code>Xposed</code>模块中的方法数超过了<code>65536</code>个，需要进行分包操作</li>
-<li>分包以后如何在模块被加载执行前尽可能早的把其余的dex加载进来</li>
-<li>最后遇到的问题：把模块的入口类指定到第一个dex中</li>
-</ol>
-<h3 id="问题1"><a href="#问题1" class="headerlink" title="问题1"></a>问题1</h3><p>关于分包操作：</p>
-<p>搜了半天，搜到的解决办法是：<br><code>gradle.build</code>中在<code>defaultConfig</code>中添加<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">multiDexEnabled true</span><br></pre></td></tr></table></figure></p>
-<p>让编译脚本开启分包</p>
-<h3 id="问题2"><a href="#问题2" class="headerlink" title="问题2"></a>问题2</h3><p>关于分包后的加载问题：</p>
-<p>网上对于一般应用的解决办法是</p>
-<p>引入<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">implementation &apos;com.android.support:multidex:1.0.3&apos;</span><br></pre></td></tr></table></figure></p>
-<p>在<code>Application</code>中调用<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">MultiDex.install(this);</span><br></pre></td></tr></table></figure></p>
-<p>来实现分包应用的启动。</p>
-<p><strong>但是有一个问题是这个<code>Multidex</code>的<code>install</code>方法需要传入一个<code>Context</code>实例，而<code>Xposed</code>模块的启动是没有<code>Application</code>的，怎么办呢，如果要截获宿主的<code>Application</code>又比较麻烦，能不能直接一句话完成呢？</strong></p>
-<p>于是我决定去研究研究<code>MultiDex</code>的源码，尝试魔改出一个适用于<code>Xposed</code>模块的<code>MultiDex.install()</code>。</p>
-<h3 id="魔改之旅"><a href="#魔改之旅" class="headerlink" title="魔改之旅"></a>魔改之旅</h3><p>研究了一番发现，传入的<code>Context</code>的主要用途有：</p>
-<ol>
-<li>传入<code>getApplicationInfo</code>方法获取<code>ApplicationInfo</code></li>
-<li>获取应用的私有储存空间路径并往里面解压<code>dex</code>文件</li>
-<li>获取<code>SharedPreferences</code>储存一些和<code>dex</code>文件数量以及文件校验相关的信息（考虑的还挺周到）</li>
-</ol>
-<p>我发现在模块的</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">public void handleLoadPackage(LoadPackageParam lpparam) throws Throwable &#123;</span><br></pre></td></tr></table></figure>
-<p>这个入口函数的参数<code>lpparam</code>中，能获取到宿主的<code>ApplicationInfo</code>，从而获取到宿主应用的私有文件夹路径</p>
-<p>这样我就能往里面解压文件啦</p>
-<p>至于文件校验，这个就不做了，（原方案是一次启动的时候解压，然后以后启动的时候就去校验这个文件，再加载进来），我就干脆每次启动的时候都要解压，加载完再删掉就ok了。</p>
-<h3 id="魔改完成"><a href="#魔改完成" class="headerlink" title="魔改完成"></a>魔改完成</h3><p>项目地址：<br><a href="https://github.com/KB5201314/XposedModuleMultidex" target="_blank" rel="noopener">https://github.com/KB5201314/XposedModuleMultidex</a></p>
-<p>添加依赖<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">compile &apos;top.imlk.xpmodulemultidex:XposedModuleMultidex:1.0.0&apos;</span><br></pre></td></tr></table></figure></p>
-<p>删了一大堆，总算是魔改出来了一个，虽然只有两个文件。。。。但还是值得庆幸的！</p>
-<p>获取<code>module</code>的安装包路径：</p>
-<p>通过给入口类继承<code>IXposedHookZygoteInit</code>并实现<code>initZygote</code>方法<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">@Override</span><br><span class="line">public void initZygote(StartupParam startupParam) throws Throwable &#123;</span><br><span class="line">    MODULE_PATH = startupParam.modulePath;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>就能拿到模块的安装包路径啦。</p>
-<p>然后在<code>handleLoadPackage</code>中执行<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line">    @Override</span><br><span class="line">    public void handleLoadPackage(LoadPackageParam lpparam) throws Throwable &#123;</span><br><span class="line">        XMMultiDex.install(ReverseXposedModule.class.getClassLoader(),MODULE_PATH,lpparam.appInfo);</span><br><span class="line">...</span><br></pre></td></tr></table></figure></p>
-<p>其中<code>ReverseXposedModule</code>就是我这个模块的入口类的名称啦。</p>
-<h3 id="问题3"><a href="#问题3" class="headerlink" title="问题3"></a>问题3</h3><p><strong>指定主<code>dex</code>中的<code>class</code>文件的问题</strong></p>
-<p>这可废了我不少时间啊，网上的方法大多都过时了，唯一一个看着靠谱的插件<code>DexKnifePlugin</code>也用不了，搜了半天，终于找到一位仁兄的方法</p>
-<p>在<code>gradle.build</code>的<code>defaultConfig</code>中可以指定一个文件来表示要放在第一个<code>dex</code>中的<code>class</code></p>
-<p>加入<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">multiDexKeepFile file(&apos;maindexlist.txt&apos;)</span><br></pre></td></tr></table></figure></p>
-<p>然后在<code>gradle.build</code>的同级目录下新建一个文件<code>maindexlist.txt</code></p>
-<p>里面填上要放在第一个<code>dex</code>中的<code>class</code></p>
-<p>如：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">com/android/reverse/mod/ReverseXposedModule.class</span><br><span class="line">top/imlk/xpmodulemultidexer/XMMultiDex.class</span><br></pre></td></tr></table></figure></p>
-<p>也可以用<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">multiDexKeepProguard file(&apos;maindexlist.pro&apos;)</span><br></pre></td></tr></table></figure></p>
-<p>然后<br>新建<code>maindexlist.pro</code>文件，这样就可以用<code>proguard</code>语法来写</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">-keep class com.android.reverse.mod.ReverseXposedModule</span><br><span class="line">-keep class top.imlk.xpmodulemultidexer.*</span><br></pre></td></tr></table></figure>
-<p>可算是ok了</p>
-<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><p>gradle3.0.0分包把指定的class放到maindex里面:<br><a href="https://blog.csdn.net/qq_17265737/article/details/79074494" target="_blank" rel="noopener">https://blog.csdn.net/qq_17265737/article/details/79074494</a><br>理解 Multidex 生成：<br><a href="http://www.jkeabc.com/566905.html" target="_blank" rel="noopener">http://www.jkeabc.com/566905.html</a></p>
+            <p>好久没写东西了，期末终于考完了，想起之前对Xposed开发的一些问题还没有解决，于是搬出来探索了一番。</p>
+<h3 id="Android应用ClassLoader再思考"><a href="#Android应用ClassLoader再思考" class="headerlink" title="Android应用ClassLoader再思考"></a>Android应用ClassLoader再思考</h3><p>我们知道，Android应用以<code>apk</code>文件的形式存在于手机储存空间之中，而要运行这些应用，则需要用ClassLoader加载到虚拟机中去。<br>除了应用的apk文件之外，还有一些Android框架层的类在<code>/system/framework/</code>文件夹下以<code>jar</code>包的形式存在着</p>
+<p><img src="/images/blog/43_0.png" alt="/system/framework/中的类文件"></p>
+<p>对Android中各种类型的ClassLoader的使用的解释，网上已经已经很多了，这里就不再添乱。</p>
+<h3 id="未安装Xposed框架时的Android应用中的ClassLoader"><a href="#未安装Xposed框架时的Android应用中的ClassLoader" class="headerlink" title="未安装Xposed框架时的Android应用中的ClassLoader"></a>未安装Xposed框架时的Android应用中的ClassLoader</h3><p>通过调试找出了ClassLoader之间的关系（Sony z5，Android7 arm64）</p>
+<p><img src="/images/blog/43_1.png" alt="未安装Xposed框架时的Android应用中的ClassLoader关系图"></p>
+<p>可以看到有两个<code>PathClassLoader</code>，它们的<code>parent</code>都是<code>BootClassLoader</code>。</p>
+<p>左边那个<code>PathClassLoader</code>加载的就是我们的App，右边那个是<code>ClassLoader.getSystemClassLoader()</code>方法获取到的</p>
+<h4 id="ClassLoader-getSystemClassLoader"><a href="#ClassLoader-getSystemClassLoader" class="headerlink" title="ClassLoader.getSystemClassLoader()"></a>ClassLoader.getSystemClassLoader()</h4><p>翻看源码<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">@CallerSensitive</span><br><span class="line">public static ClassLoader getSystemClassLoader() &#123;</span><br><span class="line">    return SystemClassLoader.loader;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>发现是一个静态方法<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">public abstract class ClassLoader &#123;</span><br><span class="line"></span><br><span class="line">    static private class SystemClassLoader &#123;</span><br><span class="line">        public static ClassLoader loader = ClassLoader.createSystemClassLoader();</span><br><span class="line">    &#125;</span><br><span class="line">...</span><br></pre></td></tr></table></figure></p>
+<p>这个<code>SystemClassLoader</code>类是<code>ClassLoader</code>的一个静态内部类，并且静态初始化了一个<code>loader</code>成员变量<br>跟入<code>ClassLoader.createSystemClassLoader()</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">private static ClassLoader createSystemClassLoader() &#123;</span><br><span class="line">    String classPath = System.getProperty(&quot;java.class.path&quot;, &quot;.&quot;);</span><br><span class="line">    String librarySearchPath = System.getProperty(&quot;java.library.path&quot;, &quot;&quot;);</span><br><span class="line"></span><br><span class="line">    // String[] paths = classPath.split(&quot;:&quot;);</span><br><span class="line">    // URL[] urls = new URL[paths.length];</span><br><span class="line">    // for (int i = 0; i &lt; paths.length; i++) &#123;</span><br><span class="line">    // try &#123;</span><br><span class="line">    // urls[i] = new URL(&quot;file://&quot; + paths[i]);</span><br><span class="line">    // &#125;</span><br><span class="line">    // catch (Exception ex) &#123;</span><br><span class="line">    // ex.printStackTrace();</span><br><span class="line">    // &#125;</span><br><span class="line">    // &#125;</span><br><span class="line">    //</span><br><span class="line">    // return new java.net.URLClassLoader(urls, null);</span><br><span class="line"></span><br><span class="line">    // TODO Make this a java.net.URLClassLoader once we have those?</span><br><span class="line">    return new PathClassLoader(classPath, librarySearchPath, BootClassLoader.getInstance());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>原来这个<code>getSystemClassLoader()</code>返回的<code>ClassLoader</code>就是以系统的属性构建的一个<code>CLassLoader</code>啊</p>
+<p>在<code>System.initUnchangeableSystemProperties()</code>中找到了这个属性的初始化过程<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">private static Properties initUnchangeableSystemProperties() &#123;</span><br><span class="line">    VMRuntime runtime = VMRuntime.getRuntime();</span><br><span class="line">    Properties p = new Properties();</span><br><span class="line"></span><br><span class="line">    // Set non-static properties.</span><br><span class="line">    p.put(&quot;java.boot.class.path&quot;, runtime.bootClassPath());</span><br><span class="line">    p.put(&quot;java.class.path&quot;, runtime.classPath());</span><br><span class="line"></span><br><span class="line">    // TODO: does this make any sense? Should we just leave java.home unset?</span><br><span class="line">    String javaHome = getenv(&quot;JAVA_HOME&quot;);</span><br><span class="line">...</span><br></pre></td></tr></table></figure></p>
+<p>我们这里不去深究这个属性值的产生过程了，我们直接调用去获取属性，发现：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">System.getProperty(&quot;java.class.path&quot;)=&quot;.&quot;</span><br><span class="line">System.getProperty(&quot;java.library.path&quot;)=&quot;/system/lib64:/vendor/lib64&quot;</span><br></pre></td></tr></table></figure></p>
+<p>看起来并没有相关的线索，上网搜也没有找到什么有价值的东西，下断点发现在应用程序启动的过程中会被被调用一次。</p>
+<h4 id="BootClassLoader"><a href="#BootClassLoader" class="headerlink" title="BootClassLoader"></a>BootClassLoader</h4><p>这个类加载器很特殊了，<br><code>Integer.class.getClassLoader()</code>返回的就是这个<code>BootClassLoader</code>，可见这是基础的<code>ClassLoader</code>，<br>另外，调用<code>android.widget.TextView.class.getClassLoader()</code>得到的也是这个<code>BootClassLoader</code></p>
+<p>在<code>/init.rc</code>或<code>/init.environ.rc</code>中一条<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">export BOOTCLASSPATH /system/framework/org.dirtyunicorns.utils.jar</span><br><span class="line">					:/system/framework/telephony-ext.jar</span><br><span class="line">					:/system/framework/tcmiface.jar</span><br><span class="line">					:/system/framework/core-oj.jar</span><br><span class="line">					:/system/framework/core-libart.jar</span><br><span class="line">					:/system/framework/conscrypt.jar</span><br><span class="line">					:/system/framework/okhttp.jar</span><br><span class="line">					:/system/framework/core-junit.jar</span><br><span class="line">					:/system/framework/bouncycastle.jar</span><br><span class="line">					:/system/framework/ext.jar</span><br><span class="line">					:/system/framework/framework.jar</span><br><span class="line">					:/system/framework/telephony-common.jar</span><br><span class="line">					:/system/framework/voip-common.jar</span><br><span class="line">					:/system/framework/ims-common.jar</span><br><span class="line">					:/system/framework/apache-xml.jar</span><br><span class="line">					:/system/framework/org.apache.http.legacy.boot.jar</span><br></pre></td></tr></table></figure></p>
+<p>从字面意思上看，应该是指定了<code>BootClassLoader</code>加载的一些系统框架类的路径，其中<code>android.widget.TextView</code>这些就是在<code>/system/framework/framework.jar</code>里的。</p>
+<h3 id="Xposed框架加持以后"><a href="#Xposed框架加持以后" class="headerlink" title="Xposed框架加持以后"></a>Xposed框架加持以后</h3><p>写过xposed模块的都知道，hook逻辑是是写在宿主app之外的独立的一个app里面的，宿主app启动的时候，这个模块app就会被启动，而在<code>XposedInstaller</code>里能控制模块app的启用或禁用。</p>
+<p>既然要加载别的apk，那就意味着一定和ClassLoader有关系啦，<br>这里依然使用调试的方法，（rom：AEX Android7.1.2 arm）</p>
+<p><img src="/images/blog/43_2.png" alt="安装Xposed框架后的Android应用中的ClassLoader关系图"></p>
+<p>可以看到刷入了Xposed框架以后发生的变化：（这里使用的是Xposed89版）</p>
+<p>- <code>BootClassLoader</code>的下面多了一层<code>PathClassLoader</code><br>- 宿主app的<code>ClassLoader</code>和<code>ClassLoader.getSystemClassLoader()</code>的那个一同挂在中间层下面<br>- 各个模块各有独立的<code>PathClassLoader</code>加载，挂在那个<code>ClassLoader.getSystemClassLoader()</code>下面<br>- <code>ClassLoader.getSystemClassLoader()</code>的加载路径里似乎多了个<code>/system/framework/XposedBridge.jar</code></p>
+<h4 id="中间层"><a href="#中间层" class="headerlink" title="中间层"></a>中间层</h4><p>把中间层里的那个dex文件pull出来解开，发现里面只有一个类<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">package xposed.dummy;</span><br><span class="line"></span><br><span class="line">import android.content.res.Resources;</span><br><span class="line"></span><br><span class="line">public class XResourcesSuperClass extends Resources &#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>这个类的作用或许要拜读Xposed的源码才能知道了，看起来和资源加载有一点关系</p>
+<h4 id="各模块的ClassLoader"><a href="#各模块的ClassLoader" class="headerlink" title="各模块的ClassLoader"></a>各模块的ClassLoader</h4><p>将各个模块的加载用不同的<code>ClassLoader</code>进行，避免了模块之间类的冲突，<br>这也意味着<strong>模块不能直接用类似于<code>Class.forName()</code>的方式获取宿主app内的类以及成员<code>Member</code></strong>，<br>这是新手（也包括当时的我）容易犯的错误，所以Xposed提供了<code>XposedHelper</code>来提供相关操作，而且为了提高效率，内部会缓存获取到的<code>Member</code>对象。</p>
+<h4 id="ClassLoader-getSystemClassLoader-发生的变化"><a href="#ClassLoader-getSystemClassLoader-发生的变化" class="headerlink" title="ClassLoader.getSystemClassLoader()发生的变化"></a>ClassLoader.getSystemClassLoader()发生的变化</h4><p>注意到<code>ClassLoader.getSystemClassLoader()</code>获取到的<code>ClassLoader</code>（我们姑且称之为<code>SystemClassLoader</code>吧）的路径里面多了个<code>/system/framework/XposedBridge.jar</code></p>
+<p>另外，执行<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">System.getProperty(&quot;java.class.path&quot;)</span><br></pre></td></tr></table></figure></p>
+<p>将返回<code>/system/framework/XposedBridge.jar</code>，同样的，拖出来解开看看</p>
+<p><img src="/images/blog/43_3.png" alt="/system/framework/XposedBridge.jar"><br>可以看到这里有Xposed开发时我们熟悉的类，也有很多我们不熟悉的类，看起来这个jar里就是Xposed在Java层的一些实现相关的东西了(。・∀・)ノ</p>
+<p>让我们看看<code>de.robv.android.xposed.XposedBridge</code>这个我们开发时经常打交道的类是哪里加载来的<br>在调试时输出<code>de.robv.android.xposed.XposedBridge.class.getClassLoader()</code>的值<br>和<code>ClassLoader.getSystemClassLoader()</code>得到的对象进行比较，发现它们是同一个对象，就是那个<code>SystemClassLoader</code>（嘿，醒醒，只是我在这里把它这么叫而已，实际上它也是个<code>PathClassLoader</code>）</p>
+<h4 id="小错误"><a href="#小错误" class="headerlink" title="小错误"></a>小错误</h4><p>我写这篇文章之前在在这里犯了一个错误，<br>因为对Android Studio调试时的动态执行语句的环境不是很明确，</p>
+<p>在调试时执行<code>de.robv.android.xposed.XposedBridge.class.getClassLoader()</code>不会爆<code>Method threw &#39;java.lang.ClassNotFoundException&#39; exception.</code><br>然后我就以为这个<code>de.robv.android.xposed.XposedBridge</code>类应该是从app这个<code>PathClassLoader</code>向上找到的（根据双亲委托模型），但是app的<code>PathClassLoader</code>和<code>SystemClassLoader</code>没有父子关系，它们属于同一级，然后我就以为存在两个被加载的<code>XposedBridge.jar</code>。</p>
+<p>后来发现是Android Studio太聪明了，“帮我找到”了正确的ClassLoader<br>如果调试时改用<code>loadClass</code>的方法或<code>Class.forName</code>都会爆异常</p>
+<p><code>Method threw &#39;java.lang.ClassNotFoundException&#39; exception.</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">getApplicationContext().getClassLoader().loadClass(&quot;de.robv.android.xposed.XposedBridge&quot;)</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Class.forName(&quot;de.robv.android.xposed.XposedBridge&quot;)</span><br></pre></td></tr></table></figure>
+<h4 id="玩坏Xposed"><a href="#玩坏Xposed" class="headerlink" title="玩坏Xposed"></a>玩坏Xposed</h4><p>根据Xposed加持后的<code>ClassLoader</code>关系图可以看出，<code>XposedBridge.jar</code>被添加到了<code>SystemClassLoader</code>里面加载，那么普通应用可以获取这个<code>SystemClassLoader</code>，进而调用一些方法对自己做一些hook的操作了，能力和Xposed模块已经相当了，只是只能对自己hook而且没法像Xposed模块那样在应用启动之前就进行hook，<br>就我认识的有一位(nv)大(zhuang)佬突发奇想用把aide里Java显示运行输出结果的那个控制台界面hook换成了<code>WebView</code>来播放在线视频。</p>
+<p>所以说Xposed还是很好玩的，不仅要会用，还要学会它的原理，希望有一天我也能写出有价值的东西。</p>
 
           
         
@@ -503,7 +493,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/7/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><span class="page-number current">8</span><a class="page-number" href="/page/9/">9</a><span class="space">&hellip;</span><a class="page-number" href="/page/48/">48</a><a class="extend next" rel="next" href="/page/9/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <a class="extend prev" rel="prev" href="/page/7/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><span class="page-number current">8</span><a class="page-number" href="/page/9/">9</a><span class="space">&hellip;</span><a class="page-number" href="/page/50/">50</a><a class="extend next" rel="next" href="/page/9/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 
@@ -546,7 +536,7 @@
                 
                   <a href="/archives">
                 
-                    <span class="site-state-item-count">48</span>
+                    <span class="site-state-item-count">50</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -597,7 +587,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">19</span>
+                      
+                    
+                    <span class="site-state-item-count">20</span>
                     <span class="site-state-item-name">categories</span>
                   </a>
                 </div>
@@ -658,7 +650,17 @@
                     
                       
                     
-                    <span class="site-state-item-count">24</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">29</span>
                     <span class="site-state-item-name">tags</span>
                   
                 </div>

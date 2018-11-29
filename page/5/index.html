@@ -324,7 +324,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://kb5201314.github.io/blog/44/">
+    <link itemprop="mainEntityOfPage" href="http://kb5201314.github.io/blog/46/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="imlk">
@@ -343,7 +343,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/blog/44/" itemprop="url">[Codeforces]Contest 1005 E2. Median on Segments (General Case Edition)</a></h1>
+                <a class="post-title-link" href="/blog/46/" itemprop="url">[POJ]1061 青蛙的约会</a></h1>
         
 
         <div class="post-meta">
@@ -355,7 +355,7 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-07-11T16:58:32+08:00">2018-07-11</time>
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-07-13T16:08:54+08:00">2018-07-13</time>
             
 
             
@@ -383,7 +383,7 @@
                   , 
                 
               
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Codeforces/" itemprop="url" rel="index"><span itemprop="name">Codeforces</span></a></span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/POJ/" itemprop="url" rel="index"><span itemprop="name">POJ</span></a></span>
 
                 
                 
@@ -419,19 +419,12 @@
       
         
           
-            <h3 id="链接"><a href="#链接" class="headerlink" title="链接"></a>链接</h3><p><a href="http://codeforces.com/contest/1005/problem/E2" target="_blank" rel="noopener">Codeforces Round #496 (Div. 3) - E2. Median on Segments (General Case Edition)</a></p>
-<h3 id="0x00问题转化"><a href="#0x00问题转化" class="headerlink" title="0x00问题转化"></a>0x00问题转化</h3><p>为求得中位数为m的所有区间组合，可以将问题转化为两个更容易的问题</p>
-<blockquote>
-<p>“求&lt;中位数为大于等于m的数&gt;的所有组合数量 - &lt;中位数为大于等于m+1的数&gt;的所有组合数量”</p>
-</blockquote>
-<h3 id="0x00求解问题"><a href="#0x00求解问题" class="headerlink" title="0x00求解问题"></a>0x00求解问题</h3><p>求&lt;中位数为大于等于m的数&gt;的所有组合数量</p>
-<p>从左到右遍历输入数据，若遇到大于等于m的则+1，否则-1<br><strong>若某个区间[a,b]中+1 -1的和最终大于0(即大于等于m的数多于小于等于m的数)，则[a,b]区间的中位数大于等于m</strong></p>
-<p>统计这些区间的数目，就是答案<br>但是遍历区间复杂度是n^2，要计算每一个子区间的和值，可以采用类似于前缀数组的思想，<br>但是这样整体的复杂度至少是n^2，数据量n最多是20w，可能会出现TL，</p>
-<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p><a href="http://www.cnblogs.com/widsom/p/9290269.html" target="_blank" rel="noopener">http://www.cnblogs.com/widsom/p/9290269.html</a></p>
-<p>优化：<br>要统计[a,b]大于0出现的次数，也就是统计“[0,b]的值 &gt; [0,a-1]的值”这种情况出现的次数，<br>可以采用一次遍历输入数据，假设访问到第c个数，<a href="k=0,1,2...c">0,k</a>可采用类似于前缀数组的方式迭代计算，</p>
-<p>同时用数组或map来保存先前[0,k] (k=0,1,2…c-1)的值出现的次数，<br>将小于[0,c]的值出现的次数相加，所有的c都这样操作，加起来的就是答案<br>为将小于[0,c]的值出现的次数相加，可以采用类似于莫队算法的办法，边界一次移动一格</p>
-<p><img src="/images/blog/44_0.png" alt="举例某一时刻的状态"></p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstring&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cmath&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> MAXN 200005</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> an[MAXN];</span><br><span class="line"><span class="keyword">int</span> appear[MAXN * <span class="number">2</span>];<span class="comment">//数组开两倍，从中间开始用以满足加减</span></span><br><span class="line"><span class="keyword">int</span> n;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">long</span> <span class="keyword">long</span> <span class="title">solve</span><span class="params">(<span class="keyword">int</span> m)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">int</span> count = n;<span class="comment">// 使用数组从中间开始</span></span><br><span class="line">	appear[count]++;</span><br><span class="line">	<span class="keyword">long</span> <span class="keyword">long</span> mo = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">long</span> <span class="keyword">long</span> ans = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; ++i) &#123;</span><br><span class="line">		<span class="keyword">if</span> (an[i] &gt;= m) &#123;<span class="comment">// +1</span></span><br><span class="line">			mo += appear[count];</span><br><span class="line">			count++;</span><br><span class="line">			appear[count]++;</span><br><span class="line">		&#125; <span class="keyword">else</span> &#123;<span class="comment">// -1</span></span><br><span class="line">			count--;</span><br><span class="line">			mo -= appear[count];</span><br><span class="line">			appear[count]++;</span><br><span class="line">		&#125;</span><br><span class="line">		ans += mo;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> ans;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> <span class="keyword">const</span> *argv[])</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">int</span> m;</span><br><span class="line"></span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">"%d%d"</span>, &amp;n, &amp;m);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; ++i) &#123;</span><br><span class="line">		<span class="built_in">scanf</span>(<span class="string">"%d"</span>, an + i);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">long</span> <span class="keyword">long</span> ans = solve(m);</span><br><span class="line">	<span class="built_in">memset</span>(appear, <span class="number">0</span>, <span class="keyword">sizeof</span>(appear));</span><br><span class="line">	ans -= solve(m + <span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"%lld\n"</span>, ans);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+            <h3 id="原题"><a href="#原题" class="headerlink" title="原题"></a>原题</h3><p><a href="http://poj.org/problem?id=1061" target="_blank" rel="noopener">http://poj.org/problem?id=1061</a></p>
+<h3 id="解法"><a href="#解法" class="headerlink" title="解法"></a>解法</h3><p>此题用扩展欧几里得计算<br>(n-m) <em> X ≡ (x-y) (mod l) 的最小正整数解<br>即(n-m) </em> X + l * Y = (x-y)</p>
+<p>贝祖定理： <strong>ax + by = m 有整数解时当且仅当m是gcd(a,b)的倍数。</strong><br>用扩展欧几里得能算出<strong>ax + by = gcd(a,b)</strong>的一个特解<br>此特解乘上<strong>m / gcd(a,b)</strong>得到的就是<strong>ax + by = m</strong>的特解</p>
+<p><strong>所有的解x mod (b/gcd(a,b))同余</strong><br><strong>所有的解y mod (a/gcd(a,b))同余</strong></p>
+<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p><a href="https://blog.csdn.net/ccnuacmhdu/article/details/79415284" target="_blank" rel="noopener">https://blog.csdn.net/ccnuacmhdu/article/details/79415284</a><br><a href="https://www.cnblogs.com/xeoncdy/p/7265419.html" target="_blank" rel="noopener">https://www.cnblogs.com/xeoncdy/p/7265419.html</a><br><a href="https://blog.csdn.net/sun897949163/article/details/51894372" target="_blank" rel="noopener">https://blog.csdn.net/sun897949163/article/details/51894372</a><br><a href="https://blog.csdn.net/yoer77/article/details/69568676" target="_blank" rel="noopener">https://blog.csdn.net/yoer77/article/details/69568676</a></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstring&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cmath&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> LL long long</span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line">LL x, y, m, n, l;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// 扩展欧几里得求二元一次方程的一个解</span></span><br><span class="line"><span class="function">LL <span class="title">exGCD</span><span class="params">(LL a, LL b, LL&amp;x, LL&amp;y)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (b == <span class="number">0</span>) &#123;</span><br><span class="line">		x = <span class="number">1</span>;<span class="comment">// a * 1 + b * 0 = a</span></span><br><span class="line">		y = <span class="number">0</span>;</span><br><span class="line">		<span class="keyword">return</span> a;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	LL r = exGCD(b, a % b, x, y);</span><br><span class="line"></span><br><span class="line">	LL t_y = y;</span><br><span class="line">	y = x + (-a / b) * y;</span><br><span class="line">	x = t_y;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> r;<span class="comment">//返回值为gcd</span></span><br><span class="line">	<span class="comment">// 记法：该函数返回时满足 a * x + b * y = gcd; 调整x和y只是为了返回上一层调用后能重新调整x'和y'</span></span><br><span class="line">	<span class="comment">// x' = y</span></span><br><span class="line">	<span class="comment">// y' = x + (-a/b) * y</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> <span class="keyword">const</span> *argv[])</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">"%lld%lld%lld%lld%lld"</span>, &amp;x, &amp;y, &amp;m, &amp;n, &amp;l);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	LL a = ((n - m) % l + l ) % l;<span class="comment">//（将X的系数化为正的）</span></span><br><span class="line"></span><br><span class="line">	LL x0, y0;</span><br><span class="line"></span><br><span class="line">	LL gcd = exGCD(a, l, x0, y0);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> ((!a) || (x - y) % gcd) &#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"Impossible\n"</span>);</span><br><span class="line">		<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	x0 = x0 * (x - y) / gcd;<span class="comment">// x0原先是 (n-m) * X + l * Y = gcd 的一个特解，现在将它化为 (n-m) * X + l * Y = (x-y)的特解X0</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">// 找出最小的正整数解X0,所有X mod (b/gcd(a,b))同余</span></span><br><span class="line">	x0 = ((x0 % (l / gcd)) + (l / gcd)) % (l / gcd);<span class="comment">// 用%表示mod的办法</span></span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"%lld\n"</span>, x0);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
           
         
@@ -474,7 +467,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/4/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><span class="space">&hellip;</span><a class="page-number" href="/page/48/">48</a><a class="extend next" rel="next" href="/page/6/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <a class="extend prev" rel="prev" href="/page/4/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><span class="space">&hellip;</span><a class="page-number" href="/page/50/">50</a><a class="extend next" rel="next" href="/page/6/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 
@@ -517,7 +510,7 @@
                 
                   <a href="/archives">
                 
-                    <span class="site-state-item-count">48</span>
+                    <span class="site-state-item-count">50</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -568,7 +561,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">19</span>
+                      
+                    
+                    <span class="site-state-item-count">20</span>
                     <span class="site-state-item-name">categories</span>
                   </a>
                 </div>
@@ -629,7 +624,17 @@
                     
                       
                     
-                    <span class="site-state-item-count">24</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">29</span>
                     <span class="site-state-item-name">tags</span>
                   
                 </div>
