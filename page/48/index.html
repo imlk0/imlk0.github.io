@@ -324,7 +324,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://kb5201314.github.io/blog/30/">
+    <link itemprop="mainEntityOfPage" href="http://kb5201314.github.io/blog/26/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="imlk">
@@ -343,7 +343,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/blog/30/" itemprop="url">正在阅读</a></h1>
+                <a class="post-title-link" href="/blog/26/" itemprop="url">关于scanf的误区</a></h1>
         
 
         <div class="post-meta">
@@ -355,7 +355,7 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-11-29T14:51:46+08:00">2017-11-29</time>
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-12-06T18:43:21+08:00">2017-12-06</time>
             
 
             
@@ -376,7 +376,7 @@
                 <span class="post-meta-item-text">In</span>
               
               
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/阅读/" itemprop="url" rel="index"><span itemprop="name">阅读</span></a></span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/C-C/" itemprop="url" rel="index"><span itemprop="name">C/C++</span></a></span>
 
                 
                 
@@ -412,13 +412,8 @@
       
         
           
-            <p>Android Dex文件结构解析<br><a href="http://blog.csdn.net/feglass/article/details/51761902" target="_blank" rel="noopener">http://blog.csdn.net/feglass/article/details/51761902</a></p>
-<p>java动态加载jar包，并运行其中的类和方法<br><a href="http://blog.csdn.net/wawmg/article/details/17961815" target="_blank" rel="noopener">http://blog.csdn.net/wawmg/article/details/17961815</a></p>
-<p>如何判断两个整数相加减是否溢出<br><a href="http://blog.csdn.net/allen_ydc/article/details/50971385" target="_blank" rel="noopener">http://blog.csdn.net/allen_ydc/article/details/50971385</a></p>
-<p>python中not的用法<br><a href="http://blog.csdn.net/evan123mg/article/details/50174669" target="_blank" rel="noopener">http://blog.csdn.net/evan123mg/article/details/50174669</a></p>
-<p><a href="http://www.he11oworld.com/course/81" target="_blank" rel="noopener">http://www.he11oworld.com/course/81</a></p>
-<p>Python自省（反射）指南<br><a href="https://www.cnblogs.com/huxi/archive/2011/01/02/1924317.html" target="_blank" rel="noopener">https://www.cnblogs.com/huxi/archive/2011/01/02/1924317.html</a></p>
-<p>Java多线程编程：Callable、Future和FutureTask浅析（多线程编程之四）<br><a href="http://blog.csdn.net/javazejian/article/details/50896505" target="_blank" rel="noopener">http://blog.csdn.net/javazejian/article/details/50896505</a><br><a href="http://codeforces.com/contest/699/problem/B" target="_blank" rel="noopener">http://codeforces.com/contest/699/problem/B</a><br><a href="http://www.cnblogs.com/steven_oyj/archive/2010/05/22/1741370.html" target="_blank" rel="noopener">http://www.cnblogs.com/steven_oyj/archive/2010/05/22/1741370.html</a></p>
+            <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;stdio.h&gt;</span><br><span class="line"></span><br><span class="line">int main()&#123;</span><br><span class="line"></span><br><span class="line">	int a, b;</span><br><span class="line">	while(scanf(&quot;%d%d&quot;,&amp;a,&amp;b) == EOF)&#123;</span><br><span class="line">		printf(&quot;%d\n&quot;, a + b);	</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	return 0;	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>scanf()</code> 遇到文件末尾时，如果什么都没有读取到，就返回EOF(-1)，<br>如果有变量已经赋值那就返回赋值了的变量个数，而不会是EOF。</p>
 
           
         
@@ -461,7 +456,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/47/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/47/">47</a><span class="page-number current">48</span><a class="page-number" href="/page/49/">49</a><a class="page-number" href="/page/50/">50</a><a class="extend next" rel="next" href="/page/49/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <a class="extend prev" rel="prev" href="/page/47/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/47/">47</a><span class="page-number current">48</span><a class="page-number" href="/page/49/">49</a><span class="space">&hellip;</span><a class="page-number" href="/page/51/">51</a><a class="extend next" rel="next" href="/page/49/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 
@@ -504,7 +499,7 @@
                 
                   <a href="/archives">
                 
-                    <span class="site-state-item-count">50</span>
+                    <span class="site-state-item-count">51</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -628,7 +623,11 @@
                     
                       
                     
-                    <span class="site-state-item-count">29</span>
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">31</span>
                     <span class="site-state-item-name">tags</span>
                   
                 </div>
@@ -682,7 +681,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
   <span class="with-love" id="animate"> 
     <i class="fa fa-user"></i>
   </span>
