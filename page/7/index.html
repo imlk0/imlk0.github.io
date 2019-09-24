@@ -324,7 +324,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://kb5201314.github.io/blog/45/">
+    <link itemprop="mainEntityOfPage" href="http://kb5201314.github.io/blog/56/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="imlk">
@@ -343,7 +343,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/blog/45/" itemprop="url">[POJ]1150 The Last Non-zero Digit</a></h1>
+                <a class="post-title-link" href="/blog/56/" itemprop="url">自制玩具操作系统--week5</a></h1>
         
 
         <div class="post-meta">
@@ -355,7 +355,7 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-07-13T16:02:29+08:00">2018-07-13</time>
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-05-01T00:00:04+08:00">2019-05-01</time>
             
 
             
@@ -376,14 +376,7 @@
                 <span class="post-meta-item-text">In</span>
               
               
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/算法/" itemprop="url" rel="index"><span itemprop="name">算法</span></a></span>
-
-                
-                
-                  , 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/POJ/" itemprop="url" rel="index"><span itemprop="name">POJ</span></a></span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/OS/" itemprop="url" rel="index"><span itemprop="name">OS</span></a></span>
 
                 
                 
@@ -419,9 +412,20 @@
       
         
           
-            <h3 id="原题"><a href="#原题" class="headerlink" title="原题"></a>原题</h3><p><a href="http://poj.org/problem?id=1150" target="_blank" rel="noopener">http://poj.org/problem?id=1150</a></p>
-<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p><a href="https://blog.csdn.net/txl199106/article/details/40653579" target="_blank" rel="noopener">https://blog.csdn.net/txl199106/article/details/40653579</a></p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstring&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cmath&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> LL long long</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// 除了统计2，5的总因子数，还统计末尾位为3，7，9的数目</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">count</span><span class="params">(LL co[], <span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (n == <span class="number">0</span>) &#123;</span><br><span class="line">		<span class="keyword">return</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> m = n; m &gt; <span class="number">0</span>; m = m / <span class="number">5</span>) &#123;<span class="comment">// 处理1...n之间的奇数的末尾位</span></span><br><span class="line">		<span class="comment">// 末尾位可能为1, 3, 5, 7, 9</span></span><br><span class="line">		<span class="comment">// 1无需统计，3,7,9只要求统计出现在末位的次数</span></span><br><span class="line">		<span class="comment">// 5需要统计作为因子出现过的次数</span></span><br><span class="line"></span><br><span class="line">		<span class="comment">// 将这些奇数分为以5的倍数和非5的倍数</span></span><br><span class="line">		<span class="comment">// 例如1,3,5,7,9,11,13...,53,55,57,59</span></span><br><span class="line">		<span class="comment">// 分为1,3,7,9,11,13,17...,53,57,59和5*1，5*3，5*5...5*11，在for循环里每次m处以5来实现问题转换</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">		<span class="comment">// 先统计1...m的奇数中不含因子5的数中末尾3，7，9出现的次数</span></span><br><span class="line">		co[<span class="number">1</span>] += m / <span class="number">10</span> + ((m % <span class="number">10</span>) &gt;= <span class="number">3</span>); <span class="comment">// m[1] 统计3</span></span><br><span class="line">		co[<span class="number">3</span>] += m / <span class="number">10</span> + ((m % <span class="number">10</span>) &gt;= <span class="number">7</span>); <span class="comment">// m[1] 统计7</span></span><br><span class="line">		co[<span class="number">4</span>] += m / <span class="number">10</span> + ((m % <span class="number">10</span>) &gt;= <span class="number">9</span>); <span class="comment">// m[1] 统计9</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">		<span class="comment">// 开始问题转换（利用for循环）(其实也可像下面那样用递归)</span></span><br><span class="line">		<span class="comment">// 将1...m的奇数中含有因子5的（5，15，25，35...）(共有(m / 10 + ((m % 10) &gt;= 5))个)，先处以因子5，转化为统计（1，3，5，7...）</span></span><br><span class="line">		co[<span class="number">2</span>] += m / <span class="number">10</span> + ((m % <span class="number">10</span>) &gt;= <span class="number">5</span>);<span class="comment">//统计因子5</span></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// m[0] 统计2</span></span><br><span class="line">	co[<span class="number">0</span>] += n / <span class="number">2</span>;<span class="comment">// 处理1...n之间的偶数，每个先处以2，问题转换为统计1...(n/2)，采用递归</span></span><br><span class="line">	count(co, n / <span class="number">2</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> <span class="keyword">const</span> *argv[])</span> </span>&#123;</span><br><span class="line">	<span class="keyword">int</span> n, m;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">while</span> (~<span class="built_in">scanf</span>(<span class="string">"%d%d"</span>, &amp;n, &amp;m)) &#123;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">		<span class="keyword">if</span> (m == <span class="number">0</span>) &#123;</span><br><span class="line">			<span class="built_in">printf</span>(<span class="string">"1\n"</span>);</span><br><span class="line">			<span class="keyword">continue</span>;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		LL co_1[<span class="number">5</span>] = &#123;<span class="number">0</span>&#125;;<span class="comment">//依次统计2，3，5，7，9的数目</span></span><br><span class="line">		LL co_2[<span class="number">5</span>] = &#123;<span class="number">0</span>&#125;;</span><br><span class="line"></span><br><span class="line">		count(co_1, n);<span class="comment">// 统计1...n</span></span><br><span class="line">		count(co_2, n - m);<span class="comment">// 统计1...n-m</span></span><br><span class="line">		<span class="comment">// 统计完相减</span></span><br><span class="line">		<span class="comment">// for (int i = 0; i &lt; 5; ++i)</span></span><br><span class="line">		<span class="comment">// &#123;</span></span><br><span class="line">		<span class="comment">// 	printf("%d ", co_1[i]);</span></span><br><span class="line">		<span class="comment">// &#125;</span></span><br><span class="line">		<span class="comment">// printf("\n");</span></span><br><span class="line">		<span class="comment">// for (int i = 0; i &lt; 5; ++i)</span></span><br><span class="line">		<span class="comment">// &#123;</span></span><br><span class="line">		<span class="comment">// 	printf("%d ", co_2[i]);</span></span><br><span class="line">		<span class="comment">// &#125;</span></span><br><span class="line">		<span class="comment">// printf("\n");</span></span><br><span class="line"></span><br><span class="line">		<span class="keyword">int</span> ans = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">int</span> r_2[] = &#123;<span class="number">6</span>, <span class="number">2</span>, <span class="number">4</span>, <span class="number">8</span>&#125;; <span class="comment">// 观察发现，2^i的尾数循环出现（除了2^0尾数是1外，其余情况尾数都以6，2, 4, 8...出现）（例如 1，2，4，8，16，32，64）</span></span><br><span class="line">		<span class="keyword">int</span> r_3[] = &#123;<span class="number">1</span>, <span class="number">3</span>, <span class="number">9</span>, <span class="number">7</span>&#125;; <span class="comment">// 3^i的尾数循环出现</span></span><br><span class="line">		<span class="keyword">int</span> r_7[] = &#123;<span class="number">1</span>, <span class="number">7</span>, <span class="number">9</span>, <span class="number">3</span>&#125;; <span class="comment">// 7^i的尾数循环出现</span></span><br><span class="line">		<span class="keyword">int</span> r_9[] = &#123;<span class="number">1</span>, <span class="number">9</span>&#125;; <span class="comment">// 9^i的尾数循环出现</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">		ans = (ans * r_3[(co_1[<span class="number">1</span>] - co_2[<span class="number">1</span>]) % <span class="number">4</span>]) % <span class="number">10</span>;</span><br><span class="line">		ans = (ans * r_7[(co_1[<span class="number">3</span>] - co_2[<span class="number">3</span>]) % <span class="number">4</span>]) % <span class="number">10</span>;</span><br><span class="line">		ans = (ans * r_9[(co_1[<span class="number">4</span>] - co_2[<span class="number">4</span>]) % <span class="number">2</span>]) % <span class="number">10</span>;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">if</span> (co_1[<span class="number">0</span>] - co_2[<span class="number">0</span>] &gt; co_1[<span class="number">2</span>] - co_2[<span class="number">2</span>]) &#123;</span><br><span class="line">			<span class="comment">// 2的数目多于5</span></span><br><span class="line">			ans = (ans * r_2[((co_1[<span class="number">0</span>] - co_2[<span class="number">0</span>]) - (co_1[<span class="number">2</span>] - co_2[<span class="number">2</span>])) % <span class="number">4</span>]) % <span class="number">10</span>;</span><br><span class="line">		&#125; <span class="keyword">else</span> <span class="keyword">if</span> (co_1[<span class="number">0</span>] - co_2[<span class="number">0</span>] &lt; co_1[<span class="number">2</span>] - co_2[<span class="number">2</span>]) &#123;</span><br><span class="line">			<span class="comment">// 5的数目多于2</span></span><br><span class="line">			ans = <span class="number">5</span>;<span class="comment">// 奇数乘以5，尾数依然是5</span></span><br><span class="line">		&#125;<span class="comment">// 2的数目和5的数目相同时乘1，无需乘</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"%d\n"</span>, ans);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+            <h2 id="DAY-0x0C"><a href="#DAY-0x0C" class="headerlink" title="DAY 0x0C"></a>DAY 0x0C</h2><h4 id="PIT-Programmable-Interval-Timer-可编程的间隔型定时器"><a href="#PIT-Programmable-Interval-Timer-可编程的间隔型定时器" class="headerlink" title="PIT (Programmable Interval Timer 可编程的间隔型定时器)"></a>PIT (Programmable Interval Timer 可编程的间隔型定时器)</h4><p>查阅资料知道AT兼容机中PIT时钟频率为<code>1.19318MHz</code><br>中断周期设定的值的单位是一个时钟周期，因此要达到频率为<code>100Hz</code>的中断，中断周期应该设定为<code>1.19318*1000000/100=11931.8≈11932</code><br>在qemu上跑的时候,count是按照预想的速度增加的,而在bochs上面时,count的速度明显的降低,猜测是bochs的时钟的问题,google了一番发现很多用bochs的也遇到了类似的问题,但是好像并没有找到解决方案</p>
+<h2 id="DAY-0x0D"><a href="#DAY-0x0D" class="headerlink" title="DAY 0x0D"></a>DAY 0x0D</h2><h4 id="timerctl"><a href="#timerctl" class="headerlink" title="timerctl"></a>timerctl</h4><p>这里由于pit设置了100Hz的定时器,所以理想的情况下能够以0.01ms的整数倍的时间间隔来进行中断,作者在实现完成以后进行了先后三次优化,但是对于最后一次优化,我感觉作者在超时后将定时器指针数组整体移位的优化还不如不优化,所以我只实现了using变量,以确定一个循环检索的上界</p>
+<h4 id="fifo重用优化"><a href="#fifo重用优化" class="headerlink" title="fifo重用优化"></a>fifo重用优化</h4><p>这一段我没有使用作者的优化方式，因为将fifo重用会增加程序的复杂性，对于排错也不友好，另外，将数据按大小分层的话，如果后面增加了设备或者数据种类一多，又要去更改分层方式。</p>
+<h2 id="DAY-0x0E"><a href="#DAY-0x0E" class="headerlink" title="DAY 0x0E"></a>DAY 0x0E</h2><p>到这里遇到了一个小插曲，程序能够在qemu模拟器上运行，但是到了bochs，由于定时器的速度太快，而bochs比qemu忙，每轮循环中都有定时器事件发生，导致鼠标和键盘中断被定时器所抢先，键盘和鼠标的相应被“饿死”了，在这种情况下更换循环中if条件判断的先后顺序解决了问题</p>
+<h4 id="提高分辨率"><a href="#提高分辨率" class="headerlink" title="提高分辨率"></a>提高分辨率</h4><p>做到这一步的时候被作者坑到了，作者给的nas文件里面把<code>[INSTRSET &quot;i486p&quot;]</code>提前到了第一行但是却没有在书中说明，导致nask一直编译不通过，害我还以为哪里写错了。</p>
+<p>使用VBE时，显卡能利用的VBE信息写入到以ES:DI开始的512字节中。<br>视频缓冲区位置也变成了由VBE信息指定的区域（不再是VGA的0x0x000a0000）</p>
+<h4 id="键盘输入"><a href="#键盘输入" class="headerlink" title="键盘输入"></a>键盘输入</h4><p>做到这里的时候倒是发现了以前写下的好几个bug，本着自己写自己修的原则只好修复之。</p>
+<p>由于我之前将光标封装成了Cursor类，所以字符操作什么的用<code>Cursor::next()</code>和<code>Cursor::backspace()</code>还是很爽的。遗憾的是我封装的时候还是直接对varm区域进行操作，没有绑定到画板<code>Canvas</code>（也就是作者的SHEET）上面这样的话对于窗口边界的判断就很麻烦了，后面考虑改成和<code>Canvas</code>组合在一起。</p>
+<h4 id="改善log的性能"><a href="#改善log的性能" class="headerlink" title="改善log的性能"></a>改善log的性能</h4><p>为了改善log的性能，原先是每次来一条日志信息，当场就把数据给写到log拥有的那块画板上面，这样的话，如果一个主循环周期内产生了多条log，那么除了最后一次刷新操作，之前的操作全部都是浪费的，因此，给Canvas里面增加了一个函数指针callback字段，在每一轮主循环周期判别进行屏幕刷新前，首先调用所有canvas的callback函数，这样虽然会带来循环时的浪费，但是相比于多次log时的多次刷新来说，还是划得来的。<br>后面还可以考虑只对新增的log进行绘制，而对于旧的log绘制时只拷贝对应区域的图像数据</p>
+<h4 id="debug屏幕刷新"><a href="#debug屏幕刷新" class="headerlink" title="debug屏幕刷新"></a>debug屏幕刷新</h4><p>由于我刷新机制和作者的不太一样，是按分块刷新屏幕的，有时候也容易出bug，为了检验效果同时也使其更加直观，所以我用宏来做了一个显示屏幕刷新区域的debug功能，将每次刷新时进行的的分块用红色线条圈起来，如图所示<br><img src="/images/blog/os/5.png" alt="分块区域"></p>
+<h4 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h4><ul>
+<li>关于PIT<br><a href="http://webcache.googleusercontent.com/search?q=cache:http://oswiki.osask.jp/?(PIT)8254" target="_blank" rel="noopener">http://webcache.googleusercontent.com/search?q=cache:http://oswiki.osask.jp/?(PIT)8254</a></li>
+<li>关于输入键盘映射<br><a href="http://webcache.googleusercontent.com/search?q=cache:http://oswiki.osask.jp/?（AT）keyboard" target="_blank" rel="noopener">http://webcache.googleusercontent.com/search?q=cache:http://oswiki.osask.jp/?（AT）keyboard</a> </li>
+</ul>
 
           
         
@@ -464,7 +468,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/6/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><span class="page-number current">7</span><a class="page-number" href="/page/8/">8</a><span class="space">&hellip;</span><a class="page-number" href="/page/51/">51</a><a class="extend next" rel="next" href="/page/8/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <a class="extend prev" rel="prev" href="/page/6/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><span class="page-number current">7</span><a class="page-number" href="/page/8/">8</a><span class="space">&hellip;</span><a class="page-number" href="/page/61/">61</a><a class="extend next" rel="next" href="/page/8/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 
@@ -507,7 +511,7 @@
                 
                   <a href="/archives">
                 
-                    <span class="site-state-item-count">51</span>
+                    <span class="site-state-item-count">61</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -560,7 +564,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">20</span>
+                      
+                    
+                    <span class="site-state-item-count">21</span>
                     <span class="site-state-item-name">categories</span>
                   </a>
                 </div>
@@ -635,7 +641,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">31</span>
+                      
+                    
+                    <span class="site-state-item-count">32</span>
                     <span class="site-state-item-name">tags</span>
                   
                 </div>

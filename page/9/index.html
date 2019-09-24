@@ -324,7 +324,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://kb5201314.github.io/blog/43/">
+    <link itemprop="mainEntityOfPage" href="http://kb5201314.github.io/blog/54/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="imlk">
@@ -343,7 +343,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/blog/43/" itemprop="url">[笔记]Xposed框架加持下的Android应用ClassLoader的结构关系</a></h1>
+                <a class="post-title-link" href="/blog/54/" itemprop="url">自制玩具操作系统--week3</a></h1>
         
 
         <div class="post-meta">
@@ -355,7 +355,7 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-07-07T21:52:37+08:00">2018-07-07</time>
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-05-01T00:00:02+08:00">2019-05-01</time>
             
 
             
@@ -376,7 +376,7 @@
                 <span class="post-meta-item-text">In</span>
               
               
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Xposed/" itemprop="url" rel="index"><span itemprop="name">Xposed</span></a></span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/OS/" itemprop="url" rel="index"><span itemprop="name">OS</span></a></span>
 
                 
                 
@@ -412,45 +412,98 @@
       
         
           
-            <p>好久没写东西了，期末终于考完了，想起之前对Xposed开发的一些问题还没有解决，于是搬出来探索了一番。</p>
-<h3 id="Android应用ClassLoader再思考"><a href="#Android应用ClassLoader再思考" class="headerlink" title="Android应用ClassLoader再思考"></a>Android应用ClassLoader再思考</h3><p>我们知道，Android应用以<code>apk</code>文件的形式存在于手机储存空间之中，而要运行这些应用，则需要用ClassLoader加载到虚拟机中去。<br>除了应用的apk文件之外，还有一些Android框架层的类在<code>/system/framework/</code>文件夹下以<code>jar</code>包的形式存在着</p>
-<p><img src="/images/blog/43_0.png" alt="/system/framework/中的类文件"></p>
-<p>对Android中各种类型的ClassLoader的使用的解释，网上已经已经很多了，这里就不再添乱。</p>
-<h3 id="未安装Xposed框架时的Android应用中的ClassLoader"><a href="#未安装Xposed框架时的Android应用中的ClassLoader" class="headerlink" title="未安装Xposed框架时的Android应用中的ClassLoader"></a>未安装Xposed框架时的Android应用中的ClassLoader</h3><p>通过调试找出了ClassLoader之间的关系（Sony z5，Android7 arm64）</p>
-<p><img src="/images/blog/43_1.png" alt="未安装Xposed框架时的Android应用中的ClassLoader关系图"></p>
-<p>可以看到有两个<code>PathClassLoader</code>，它们的<code>parent</code>都是<code>BootClassLoader</code>。</p>
-<p>左边那个<code>PathClassLoader</code>加载的就是我们的App，右边那个是<code>ClassLoader.getSystemClassLoader()</code>方法获取到的</p>
-<h4 id="ClassLoader-getSystemClassLoader"><a href="#ClassLoader-getSystemClassLoader" class="headerlink" title="ClassLoader.getSystemClassLoader()"></a>ClassLoader.getSystemClassLoader()</h4><p>翻看源码<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">@CallerSensitive</span><br><span class="line">public static ClassLoader getSystemClassLoader() &#123;</span><br><span class="line">    return SystemClassLoader.loader;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>发现是一个静态方法<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">public abstract class ClassLoader &#123;</span><br><span class="line"></span><br><span class="line">    static private class SystemClassLoader &#123;</span><br><span class="line">        public static ClassLoader loader = ClassLoader.createSystemClassLoader();</span><br><span class="line">    &#125;</span><br><span class="line">...</span><br></pre></td></tr></table></figure></p>
-<p>这个<code>SystemClassLoader</code>类是<code>ClassLoader</code>的一个静态内部类，并且静态初始化了一个<code>loader</code>成员变量<br>跟入<code>ClassLoader.createSystemClassLoader()</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">private static ClassLoader createSystemClassLoader() &#123;</span><br><span class="line">    String classPath = System.getProperty(&quot;java.class.path&quot;, &quot;.&quot;);</span><br><span class="line">    String librarySearchPath = System.getProperty(&quot;java.library.path&quot;, &quot;&quot;);</span><br><span class="line"></span><br><span class="line">    // String[] paths = classPath.split(&quot;:&quot;);</span><br><span class="line">    // URL[] urls = new URL[paths.length];</span><br><span class="line">    // for (int i = 0; i &lt; paths.length; i++) &#123;</span><br><span class="line">    // try &#123;</span><br><span class="line">    // urls[i] = new URL(&quot;file://&quot; + paths[i]);</span><br><span class="line">    // &#125;</span><br><span class="line">    // catch (Exception ex) &#123;</span><br><span class="line">    // ex.printStackTrace();</span><br><span class="line">    // &#125;</span><br><span class="line">    // &#125;</span><br><span class="line">    //</span><br><span class="line">    // return new java.net.URLClassLoader(urls, null);</span><br><span class="line"></span><br><span class="line">    // TODO Make this a java.net.URLClassLoader once we have those?</span><br><span class="line">    return new PathClassLoader(classPath, librarySearchPath, BootClassLoader.getInstance());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>原来这个<code>getSystemClassLoader()</code>返回的<code>ClassLoader</code>就是以系统的属性构建的一个<code>CLassLoader</code>啊</p>
-<p>在<code>System.initUnchangeableSystemProperties()</code>中找到了这个属性的初始化过程<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">private static Properties initUnchangeableSystemProperties() &#123;</span><br><span class="line">    VMRuntime runtime = VMRuntime.getRuntime();</span><br><span class="line">    Properties p = new Properties();</span><br><span class="line"></span><br><span class="line">    // Set non-static properties.</span><br><span class="line">    p.put(&quot;java.boot.class.path&quot;, runtime.bootClassPath());</span><br><span class="line">    p.put(&quot;java.class.path&quot;, runtime.classPath());</span><br><span class="line"></span><br><span class="line">    // TODO: does this make any sense? Should we just leave java.home unset?</span><br><span class="line">    String javaHome = getenv(&quot;JAVA_HOME&quot;);</span><br><span class="line">...</span><br></pre></td></tr></table></figure></p>
-<p>我们这里不去深究这个属性值的产生过程了，我们直接调用去获取属性，发现：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">System.getProperty(&quot;java.class.path&quot;)=&quot;.&quot;</span><br><span class="line">System.getProperty(&quot;java.library.path&quot;)=&quot;/system/lib64:/vendor/lib64&quot;</span><br></pre></td></tr></table></figure></p>
-<p>看起来并没有相关的线索，上网搜也没有找到什么有价值的东西，下断点发现在应用程序启动的过程中会被被调用一次。</p>
-<h4 id="BootClassLoader"><a href="#BootClassLoader" class="headerlink" title="BootClassLoader"></a>BootClassLoader</h4><p>这个类加载器很特殊了，<br><code>Integer.class.getClassLoader()</code>返回的就是这个<code>BootClassLoader</code>，可见这是基础的<code>ClassLoader</code>，<br>另外，调用<code>android.widget.TextView.class.getClassLoader()</code>得到的也是这个<code>BootClassLoader</code></p>
-<p>在<code>/init.rc</code>或<code>/init.environ.rc</code>中一条<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">export BOOTCLASSPATH /system/framework/org.dirtyunicorns.utils.jar</span><br><span class="line">					:/system/framework/telephony-ext.jar</span><br><span class="line">					:/system/framework/tcmiface.jar</span><br><span class="line">					:/system/framework/core-oj.jar</span><br><span class="line">					:/system/framework/core-libart.jar</span><br><span class="line">					:/system/framework/conscrypt.jar</span><br><span class="line">					:/system/framework/okhttp.jar</span><br><span class="line">					:/system/framework/core-junit.jar</span><br><span class="line">					:/system/framework/bouncycastle.jar</span><br><span class="line">					:/system/framework/ext.jar</span><br><span class="line">					:/system/framework/framework.jar</span><br><span class="line">					:/system/framework/telephony-common.jar</span><br><span class="line">					:/system/framework/voip-common.jar</span><br><span class="line">					:/system/framework/ims-common.jar</span><br><span class="line">					:/system/framework/apache-xml.jar</span><br><span class="line">					:/system/framework/org.apache.http.legacy.boot.jar</span><br></pre></td></tr></table></figure></p>
-<p>从字面意思上看，应该是指定了<code>BootClassLoader</code>加载的一些系统框架类的路径，其中<code>android.widget.TextView</code>这些就是在<code>/system/framework/framework.jar</code>里的。</p>
-<h3 id="Xposed框架加持以后"><a href="#Xposed框架加持以后" class="headerlink" title="Xposed框架加持以后"></a>Xposed框架加持以后</h3><p>写过xposed模块的都知道，hook逻辑是是写在宿主app之外的独立的一个app里面的，宿主app启动的时候，这个模块app就会被启动，而在<code>XposedInstaller</code>里能控制模块app的启用或禁用。</p>
-<p>既然要加载别的apk，那就意味着一定和ClassLoader有关系啦，<br>这里依然使用调试的方法，（rom：AEX Android7.1.2 arm）</p>
-<p><img src="/images/blog/43_2.png" alt="安装Xposed框架后的Android应用中的ClassLoader关系图"></p>
-<p>可以看到刷入了Xposed框架以后发生的变化：（这里使用的是Xposed89版）</p>
-<p>- <code>BootClassLoader</code>的下面多了一层<code>PathClassLoader</code><br>- 宿主app的<code>ClassLoader</code>和<code>ClassLoader.getSystemClassLoader()</code>的那个一同挂在中间层下面<br>- 各个模块各有独立的<code>PathClassLoader</code>加载，挂在那个<code>ClassLoader.getSystemClassLoader()</code>下面<br>- <code>ClassLoader.getSystemClassLoader()</code>的加载路径里似乎多了个<code>/system/framework/XposedBridge.jar</code></p>
-<h4 id="中间层"><a href="#中间层" class="headerlink" title="中间层"></a>中间层</h4><p>把中间层里的那个dex文件pull出来解开，发现里面只有一个类<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">package xposed.dummy;</span><br><span class="line"></span><br><span class="line">import android.content.res.Resources;</span><br><span class="line"></span><br><span class="line">public class XResourcesSuperClass extends Resources &#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>这个类的作用或许要拜读Xposed的源码才能知道了，看起来和资源加载有一点关系</p>
-<h4 id="各模块的ClassLoader"><a href="#各模块的ClassLoader" class="headerlink" title="各模块的ClassLoader"></a>各模块的ClassLoader</h4><p>将各个模块的加载用不同的<code>ClassLoader</code>进行，避免了模块之间类的冲突，<br>这也意味着<strong>模块不能直接用类似于<code>Class.forName()</code>的方式获取宿主app内的类以及成员<code>Member</code></strong>，<br>这是新手（也包括当时的我）容易犯的错误，所以Xposed提供了<code>XposedHelper</code>来提供相关操作，而且为了提高效率，内部会缓存获取到的<code>Member</code>对象。</p>
-<h4 id="ClassLoader-getSystemClassLoader-发生的变化"><a href="#ClassLoader-getSystemClassLoader-发生的变化" class="headerlink" title="ClassLoader.getSystemClassLoader()发生的变化"></a>ClassLoader.getSystemClassLoader()发生的变化</h4><p>注意到<code>ClassLoader.getSystemClassLoader()</code>获取到的<code>ClassLoader</code>（我们姑且称之为<code>SystemClassLoader</code>吧）的路径里面多了个<code>/system/framework/XposedBridge.jar</code></p>
-<p>另外，执行<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">System.getProperty(&quot;java.class.path&quot;)</span><br></pre></td></tr></table></figure></p>
-<p>将返回<code>/system/framework/XposedBridge.jar</code>，同样的，拖出来解开看看</p>
-<p><img src="/images/blog/43_3.png" alt="/system/framework/XposedBridge.jar"><br>可以看到这里有Xposed开发时我们熟悉的类，也有很多我们不熟悉的类，看起来这个jar里就是Xposed在Java层的一些实现相关的东西了(。・∀・)ノ</p>
-<p>让我们看看<code>de.robv.android.xposed.XposedBridge</code>这个我们开发时经常打交道的类是哪里加载来的<br>在调试时输出<code>de.robv.android.xposed.XposedBridge.class.getClassLoader()</code>的值<br>和<code>ClassLoader.getSystemClassLoader()</code>得到的对象进行比较，发现它们是同一个对象，就是那个<code>SystemClassLoader</code>（嘿，醒醒，只是我在这里把它这么叫而已，实际上它也是个<code>PathClassLoader</code>）</p>
-<h4 id="小错误"><a href="#小错误" class="headerlink" title="小错误"></a>小错误</h4><p>我写这篇文章之前在在这里犯了一个错误，<br>因为对Android Studio调试时的动态执行语句的环境不是很明确，</p>
-<p>在调试时执行<code>de.robv.android.xposed.XposedBridge.class.getClassLoader()</code>不会爆<code>Method threw &#39;java.lang.ClassNotFoundException&#39; exception.</code><br>然后我就以为这个<code>de.robv.android.xposed.XposedBridge</code>类应该是从app这个<code>PathClassLoader</code>向上找到的（根据双亲委托模型），但是app的<code>PathClassLoader</code>和<code>SystemClassLoader</code>没有父子关系，它们属于同一级，然后我就以为存在两个被加载的<code>XposedBridge.jar</code>。</p>
-<p>后来发现是Android Studio太聪明了，“帮我找到”了正确的ClassLoader<br>如果调试时改用<code>loadClass</code>的方法或<code>Class.forName</code>都会爆异常</p>
-<p><code>Method threw &#39;java.lang.ClassNotFoundException&#39; exception.</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">getApplicationContext().getClassLoader().loadClass(&quot;de.robv.android.xposed.XposedBridge&quot;)</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Class.forName(&quot;de.robv.android.xposed.XposedBridge&quot;)</span><br></pre></td></tr></table></figure>
-<h4 id="玩坏Xposed"><a href="#玩坏Xposed" class="headerlink" title="玩坏Xposed"></a>玩坏Xposed</h4><p>根据Xposed加持后的<code>ClassLoader</code>关系图可以看出，<code>XposedBridge.jar</code>被添加到了<code>SystemClassLoader</code>里面加载，那么普通应用可以获取这个<code>SystemClassLoader</code>，进而调用一些方法对自己做一些hook的操作了，能力和Xposed模块已经相当了，只是只能对自己hook而且没法像Xposed模块那样在应用启动之前就进行hook，<br>就我认识的有一位(nv)大(zhuang)佬突发奇想用把aide里Java显示运行输出结果的那个控制台界面hook换成了<code>WebView</code>来播放在线视频。</p>
-<p>所以说Xposed还是很好玩的，不仅要会用，还要学会它的原理，希望有一天我也能写出有价值的东西。</p>
+            <h2 id="DAY-0x06"><a href="#DAY-0x06" class="headerlink" title="DAY 0x06"></a>DAY 0x06</h2><h4 id="Makefile"><a href="#Makefile" class="headerlink" title="Makefile"></a>Makefile</h4><ul>
+<li>make中可以使用一般规则（通配规则,依赖中:<code>%.cpp</code>,执行语句中:<code>$*.cpp</code>），但是普通规则比一般规则的优先级更高</li>
+</ul>
+<h4 id="汇编"><a href="#汇编" class="headerlink" title="汇编"></a>汇编</h4><ul>
+<li>GDTR寄存器有48位</li>
+<li><code>PUSHAD</code>将通用寄存器(EAX,ECX,EDX,EBX,ESP,EBP,ESI,EDI)按顺序双字压栈，对应的恢复指令为<code>POPAD</code>，该指令的单字版本为<code>POPA</code></li>
+<li>普通C程序返回时需要调用<code>RET</code>，但是中断返回时需要调用<code>IRETD</code></li>
+<li>C语言认为DS和ES和SS所指向的段都是一样的，因此在中断调用c程序前必须备份ES和DS的值并拷贝SS的值给DS、ES</li>
+</ul>
+<h4 id="关于调试"><a href="#关于调试" class="headerlink" title="关于调试"></a>关于调试</h4><p>可以在汇编中混入<code>INT 3</code>指令来断点调试,但是在中断向量表未准备好时,不能使用该方式<br>但是在使用bochsdbg时,可以在汇编中参入<code>MAGIC BREAKPOINT</code>,具体步骤是在bochs配置文件中加入<code>magic_break: enabled=1</code>,然后在汇编中加入<code>xchg bx,bx</code>,然后就能在该处断点</p>
+<h4 id="load-gdtr"><a href="#load-gdtr" class="headerlink" title="load_gdtr"></a>load_gdtr</h4><p><code>_load_gdtr</code>函数先取出第1个参数<code>limit</code>，地址为<code>ESP+4</code>,</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">MOV		AX,[ESP+4]		; limit</span><br></pre></td></tr></table></figure>
+<p>这是一个2字节指令,而因为之前分析过这个机器是小端模式,因此对于<code>0x0000ffff</code>,<code>WORD [ESP+4]</code>就是<code>0xffff</code>,把它放到了AX寄存器,然后<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">MOV		[ESP+6],AX</span><br></pre></td></tr></table></figure></p>
+<p>将<code>0xffff</code>放到了更高的两个byte上面,而<code>ESP+8</code>则是第二个参数<code>addr</code>的地址,这样一来,<code>limit</code>的低2字节和<code>addr</code>就连起来了,之后<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">LGDT	[ESP+6]</span><br></pre></td></tr></table></figure></p>
+<p>直接取了<code>ESP+6</code>为低位的6个byte的数据,放到<code>GDTR</code>寄存器,<br>这就是书上说的<code>GDTR</code>的6个字节的来源,<strong>低2个字节是limit,高4字节是addr</strong></p>
+<h4 id="GDT的访问权属性"><a href="#GDT的访问权属性" class="headerlink" title="GDT的访问权属性"></a>GDT的访问权属性</h4><p>段号记录表中的项中的段属性中有一个<code>Gbit</code>位，<br>当该位为1时，记录的<code>limit</code>的单位不是byte而是页的大小，<strong>一页是指4KB</strong></p>
+<p>段的访问权属性<code>ar(access_right)</code>,由8位+4位扩展组成，高4位扩展为<code>GD00</code>,其含义为：</p>
+<ul>
+<li>G:Gbit，段长度单位是byte还是页数</li>
+<li>D:32位模式(1),16位程序模式(不可用于调用BIOS)(0)</li>
+</ul>
+<p>低八位的部分组合的含义<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">00000000（0x00）：未使用的记录表（descriptor table）。</span><br><span class="line">10010010（0x92）：系统专用，可读写的段。不可执行。</span><br><span class="line">10011010（0x9a）：系统专用，可执行的段。可读不可写。</span><br><span class="line">11110010（0xf2）：应用程序用，可读写的段。不可执行。</span><br><span class="line">11111010（0xfa）：应用程序用，可执行的段。可读不可写。</span><br></pre></td></tr></table></figure></p>
+<p>x86的处理器通过ring0到ring4四个级别来进行访问控制<br><em>系统模式(ring0)和应用模式(ring3)取决于运行中的程序代码所在的段的访问权限属性低8位是0x9a还是0xfa</em></p>
+<h4 id="PIC-Programmable-interrupt-controller-可编程中断控制器"><a href="#PIC-Programmable-interrupt-controller-可编程中断控制器" class="headerlink" title="PIC(Programmable interrupt controller)可编程中断控制器"></a>PIC(Programmable interrupt controller)可编程中断控制器</h4><p><strong>用于将8个中断信号集合成一个中断信号</strong><br>每个PIC上面可以接收8个中断信号，主板上一共有两个PIC，一共有15个可用的中断信号，IRQ2被用于连接从PIC</p>
+<blockquote>
+<p>中断号码表<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">IRQ0 	计时器</span><br><span class="line">IRQ1 	键盘</span><br><span class="line">IRQ2 	用于与从站级联</span><br><span class="line">IRQ3 	串口（COM2）</span><br><span class="line">IRQ4 	串口（COM1）</span><br><span class="line">IRQ5 	主要用于ISA / PCI扩展设备</span><br><span class="line">IRQ6 	FDC</span><br><span class="line">IRQ7 	并行端口</span><br><span class="line">IRQ8 	RTC</span><br><span class="line">IRQ9 	主要用于ISA / PCI扩展设备</span><br><span class="line">IRQ10 	主要用于ISA / PCI扩展设备</span><br><span class="line">IRQ12 	鼠标</span><br><span class="line">IRQ13 	FPU（？）</span><br><span class="line">IRQ14 	ATA-0</span><br><span class="line">IRQ15 	ATA-1</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<p>PIC内部有多个寄存器:</p>
+<ul>
+<li>IMR(interrupt mask register 中断屏蔽寄存器)，PIC的IMR寄存器每一位表示是否允许中断请求(1表示禁止)</li>
+<li>ICW(initial control word 初始化控制数据)共有四个，ICW1-ICW4，与PIC主板配线方式、中断信号的电气特性也有关系<br>  ICW3的值用于设定主从PIC。对于主PIC,第几号的IRQ与从PIC相连，就将那位置为1;而对于从PIC,接在主PIC的第几号(0 based)位置上,这个寄存器的值就设置为多少。<br>  ICW2的值用于设定中断号</li>
+<li>OCW(操作命令字)</li>
+</ul>
+<blockquote>
+<p>CPU有一根中断型号，由IF中断许可标志位标志标识是否接受外部中断（1表示接受，STL指令置1，CTL指令置0），而PIC可以对它导出的一共8个RIQ端口分别控制是否接受中断</p>
+</blockquote>
+<h2 id="DAY-0x07"><a href="#DAY-0x07" class="headerlink" title="DAY 0x07"></a>DAY 0x07</h2><h4 id="中断处理"><a href="#中断处理" class="headerlink" title="中断处理"></a>中断处理</h4><ul>
+<li>中断触发后，需要通知PIC已经处理完中断，这样PIC才会继续接受中断。<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">io_out8(PIC0_OCW2, <span class="number">0x61</span>);<span class="comment">// 0x61=0x60+0x01，表示已经处理IRQ1上的中断</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<blockquote>
+<p>键盘触发的中断会在键盘按下和松开的时候都触发一次</p>
+<ul>
+<li>似乎<code>io_stihlt()</code>由于CPU规范的原因能保持原子性<br>根据CPU的规范，机器语言的STI指令之后，如果紧跟着HLT指令，那么就暂不受理这两条指令之间的中断，而要等到HLT指令之后才受理</li>
+<li>无缓冲的消息机制的键盘按键中断处理在中断密集时，会出现后续的中断来不及被处理（来不及关闭中断开关）的问题，解决办法是使用缓冲区<br>但是我实际操作调试中断时并没有看到传说中的被吞掉的E0数，只看到按下时的<code>0x1D</code>和松开时的<code>0x9D</code></li>
+<li>KBC(keyboard controller)键盘控制器，控制键盘和鼠标</li>
+</ul>
+</blockquote>
+<h4 id="关于C"><a href="#关于C" class="headerlink" title="关于C++"></a>关于C++</h4><ul>
+<li>为了方便显示，我在Cursor类里面加了个单例模式的static函数，但是C++实现函数内的static变量（局部静态变量）时，为了确保在多线程状态下只初始化一次，在编译时增加了同步锁，但是由于同步锁的实现函数在libstdc++内，而我们是没有链接这个库的，因此使用编译时的<code>-fno-threadsafe-statics</code>选项，禁用该功能。<blockquote>
+<p>C++静态局部变量对于基本类型的常量初始化时，采取直接定义一个隐藏的全局变量的方法，例如对于函数：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">ofEndLine</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="keyword">static</span> <span class="keyword">int</span> i = <span class="number">1</span>;</span><br><span class="line">	i++;</span><br><span class="line">	<span class="keyword">return</span> i;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</blockquote>
+</li>
+</ul>
+<p>其汇编为<br><img src="/images/blog/os/1.png" alt="用常量初始化静态局部变量"><br>而对于需要调用函数来进行初始化的静态局部变量，<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">ofEndLine</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="keyword">static</span> <span class="keyword">int</span> i = getValue();</span><br><span class="line">	i++;</span><br><span class="line">	<span class="keyword">return</span> i;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>则是<br><img src="/images/blog/os/0.png" alt="用函数初始化静态局部变量"><br>这其中就用到了<code>___cxa_guard_acquire</code>和<code>___cxa_guard_release</code>。</p>
+<h2 id="DAY-0x08"><a href="#DAY-0x08" class="headerlink" title="DAY 0x08"></a>DAY 0x08</h2><ul>
+<li>鼠标的数据除第一次发送的是0xfa(表示启动鼠标后的ACK)以外，其它数据按照3个字节一组发送。<blockquote>
+<p>每组中,第一个字节的高4位是对移动有反应的部分(在[0,3]的范围内),低4位是对点击有反应的部分(在[8,f]的范围内)<br>|    |7|6|5        |4        |3|2    |1            |0        |<br>|—|-|-|——-|——-|-|—–|———–|——-|<br>|0    |0|0|上移    |右移    |1|        |            |         |<br>|1    |0|0|下移    |左移    |1|右键    |中键(按下)    |左键    |<br>第二个字节和左右移动有关<br>第三个字节和上下移动有关<br>鼠标与屏幕的y方向正好相反,因此y使用前应该加负号</p>
+</blockquote>
+</li>
+<li>状态和控制寄存器<br>  <code>EFLAGS</code>、<code>EIP</code>、<code>CR0</code>、<code>CR1</code>、<code>CR2</code>、<code>CR3</code><br>  |寄存器    |作用|<br>  |—–    |—|<br>  |EFLAGS    |状态寄存器组|<br>  |EIP    |存储下一条指令的地址|<br>  |CR0|启用保护模式PE（分段机制）（Protection Enable）标志、分页PG（Paging）标志、等|<br>  |CR1|未定义|<br>  |CR2|页故障线性地址寄存器，保存最后一次出现页故障的全32位线性地址|<br>  |CR3|页目录基地址寄存器PDBR（Page-Directory Base address Register），保存页目录表的物理地址，页目录表总是放在以4K字节为单位的存储器边界上|</li>
+<li>保护模式状态切换之后，需要立即使用JMP指令刷新处理器执行管道</li>
+<li>在保护模式下，采用段表的方式，段寄存器中存放段表中目标项的偏移量（单位为Byte）<br>  例如：  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">MOV		AX,1*8			; 段寄存器DS为1*8，表示段表中的从0开始数起的第1个项</span><br><span class="line">MOV		DS,AX</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="asmhead-nas-之后所做的事情"><a href="#asmhead-nas-之后所做的事情" class="headerlink" title="asmhead.nas 之后所做的事情"></a>asmhead.nas 之后所做的事情</h4><ul>
+<li>PIC关闭一切中断</li>
+<li>设定A20GATE，使CPU能够访问1MB以上的存储器</li>
+<li>指定临时段表</li>
+<li>切换到保护模式PE，开启分页PG</li>
+<li>刷新流水线</li>
+<li>初始化除CS外的段寄存器</li>
+<li>拷贝<code>bootpack.hrm</code>到<code>0x00280000</code> <code>(512KB)</code></li>
+<li>拷贝<code>ipl</code>启动扇区到<code>0x00100000</code> <code>(512B)</code></li>
+<li>拷贝磁盘上之前加载到内存区的除了启动区的部分到<code>0x00100200</code></li>
+<li>(可能进行)拷贝<code>bootpack.hrm</code>的某块区域到<code>bootpack.hrm</code>指定的栈地址中</li>
+<li>初始化栈地址为<code>bootpack.hrm</code>指定的栈地址</li>
+<li>设置<code>CS</code>寄存器的值的同时<code>JMP</code>到<code>HariMain</code>函数执行</li>
+</ul>
+<h4 id="汇编-1"><a href="#汇编-1" class="headerlink" title="汇编"></a>汇编</h4><ul>
+<li><code>IMUL</code>，有符号整数乘法</li>
+<li><code>SHL</code>，逻辑左移，<code>SHR</code>，逻辑右移</li>
+<li><code>ALIGNB</code>表示填充0直到地址能被操作数整除</li>
+</ul>
+<h4 id="引用"><a href="#引用" class="headerlink" title="引用"></a>引用</h4><ul>
+<li>PIC 8259A<br><a href="https://webcache.googleusercontent.com/search?q=cache:http://oswiki.osask.jp/?(PIC" target="_blank" rel="noopener">http://webcache.googleusercontent.com/search?q=cache:http://oswiki.osask.jp/?(PIC)8259A</a>8259A)</li>
+<li>兼容PS/2键盘控制器<br><a href="https://webcache.googleusercontent.com/search?q=cache:http://oswiki.osask.jp/?(AT" target="_blank" rel="noopener">http://webcache.googleusercontent.com/search?q=cache:http://oswiki.osask.jp/?(AT)keyboard</a>keyboard)</li>
+<li>局部静态变量是如何做到只初始化一次的?<br><a href="www.voidcn.com/article/p-wdezklav-bms.html">www.voidcn.com/article/p-wdezklav-bms.html</a></li>
+<li>x86的控制寄存器CR0,CR1,CR2,CR3<br><a href="https://www.cnblogs.com/liubiyonge/p/9350494.html" target="_blank" rel="noopener">https://www.cnblogs.com/liubiyonge/p/9350494.html</a></li>
+</ul>
 
           
         
@@ -493,7 +546,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/8/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><span class="page-number current">9</span><a class="page-number" href="/page/10/">10</a><span class="space">&hellip;</span><a class="page-number" href="/page/51/">51</a><a class="extend next" rel="next" href="/page/10/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <a class="extend prev" rel="prev" href="/page/8/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><span class="page-number current">9</span><a class="page-number" href="/page/10/">10</a><span class="space">&hellip;</span><a class="page-number" href="/page/61/">61</a><a class="extend next" rel="next" href="/page/10/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 
@@ -536,7 +589,7 @@
                 
                   <a href="/archives">
                 
-                    <span class="site-state-item-count">51</span>
+                    <span class="site-state-item-count">61</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -589,7 +642,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">20</span>
+                      
+                    
+                    <span class="site-state-item-count">21</span>
                     <span class="site-state-item-name">categories</span>
                   </a>
                 </div>
@@ -664,7 +719,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">31</span>
+                      
+                    
+                    <span class="site-state-item-count">32</span>
                     <span class="site-state-item-name">tags</span>
                   
                 </div>

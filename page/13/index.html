@@ -324,7 +324,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://kb5201314.github.io/blog/39/">
+    <link itemprop="mainEntityOfPage" href="http://kb5201314.github.io/blog/49/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="imlk">
@@ -343,7 +343,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/blog/39/" itemprop="url">[笔记]hexo模块mdjsp的开发心得</a></h1>
+                <a class="post-title-link" href="/blog/49/" itemprop="url">[奇技淫巧]Android Studio免DDMS免configure快速调试Smali项目</a></h1>
         
 
         <div class="post-meta">
@@ -355,7 +355,7 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-04-26T22:48:26+08:00">2018-04-26</time>
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-07-19T01:11:30+08:00">2018-07-19</time>
             
 
             
@@ -376,7 +376,14 @@
                 <span class="post-meta-item-text">In</span>
               
               
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/笔记/" itemprop="url" rel="index"><span itemprop="name">笔记</span></a></span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Android/" itemprop="url" rel="index"><span itemprop="name">Android</span></a></span>
+
+                
+                
+                  , 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Reverse/" itemprop="url" rel="index"><span itemprop="name">Reverse</span></a></span>
 
                 
                 
@@ -412,20 +419,28 @@
       
         
           
-            <p>第一次写npm插件，有点小激动，下面是写插件的坎坷之路</p>
-<h2 id="0x00-开局错误"><a href="#0x00-开局错误" class="headerlink" title="0x00 开局错误"></a>0x00 开局错误</h2><ul>
-<li>在<code>node_modules</code>文件夹下新建<code>hexo-mdjsp-util</code>文件夹，</li>
-<li>新建<code>package.json</code>和<code>index.jsp</code>并填好内容<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &quot;name&quot;: &quot;hexo-mdjsp-util&quot;,</span><br><span class="line">  &quot;version&quot;: &quot;0.0.1&quot;,</span><br><span class="line">  &quot;main&quot;: &quot;index&quot;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>这是网上的教程中查到的步骤依葫芦画瓢，好像没啥问题了，执行<code>hexo g</code>，我在<code>index.js</code>中只写了<code>console.log(&quot;mdjsp_loaded&quot;);</code>，但并没有看到任何输出</p>
-<p>百度找遍了以后，遂上google<br>找到别人的博客：<br>编写Hexo插件<br><a href="http://xtutu.me/write-hexo-plugin/" target="_blank" rel="noopener">http://xtutu.me/write-hexo-plugin/</a></p>
-<p>看了下原来是没在hexo中加依赖。。。</p>
-<h2 id="0x01-祸不单行"><a href="#0x01-祸不单行" class="headerlink" title="0x01 祸不单行"></a>0x01 祸不单行</h2><p>加了依赖以后：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line">    &quot;hexo-renderer-marked&quot;: &quot;^0.3.0&quot;,</span><br><span class="line">    &quot;hexo-renderer-stylus&quot;: &quot;^0.3.1&quot;,</span><br><span class="line">    &quot;hexo-server&quot;: &quot;^0.2.0&quot;,</span><br><span class="line">    &quot;hexo-mdjsp-util&quot;: &quot;^0.0.1&quot;,</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">...</span><br></pre></td></tr></table></figure></p>
-<p>执行<code>hexo</code><br>直接：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ERROR Plugin load failed: hexo-mdjsp-util</span><br><span class="line">TypeError: this.log is not a function</span><br><span class="line">    at /mnt/d/hexo/node_modules/hexo-mdjsp-util/index.js:9:6</span><br><span class="line">...</span><br></pre></td></tr></table></figure></p>
-<p>google:</p>
-<p>Hexo：如何解决 FATAL Cannot read property ‘code’ of undefined：<br><a href="http://meiweiping.cn/Hexo%EF%BC%9A%E5%A6%82%E4%BD%95%E8%A7%A3%E5%86%B3-FATAL-Cannot-read-property-code-of-undefined/" target="_blank" rel="noopener">http://meiweiping.cn/Hexo%EF%BC%9A%E5%A6%82%E4%BD%95%E8%A7%A3%E5%86%B3-FATAL-Cannot-read-property-code-of-undefined/</a><br>原来是末尾多了个<code>,</code><br>真恶心的错误啊</p>
-<p>接下来的事情就是jsp语句匹配啦！<br>先找几个开源项目看看</p>
+            <h3 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h3><p>Android Studio是开发Android应用的一大利器，极大的提高了生产力（虽然比较臃肿），debug功能也非常好用，而且不止能debug Java代码，smali代码也能调试，配合apktool使用真的是爽的很（除了indexing花了老半天这个问题以外）。</p>
+<p>但是！这个利器在<strong>调试smali工程的时候</strong>，就表现得十分不友好啦，以前有DDMS的时候还好一些，能看到调试端口号，但是经常遇到DDMS和AndroidStudio的adb端口冲突的问题，水火不容，无奈之下只能<code>adb shell am start -D -n xxx.xxxx.xxxx/.xxxx</code>手动以debug模式启动应用，配合<code>adb forward tcp:xxxx jdwp:xxxx</code>，但是不知道咋回事经常遇到<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Unable to open debugger port (localhost:8603): java.io.IOException &quot;handshake failed - connection prematurally closed&quot;</span><br></pre></td></tr></table></figure></p>
+<p>每次遇到这种错误，我心中是一万只草泥马飞奔而过啊！这tm还让不让人debug啦！</p>
+<p><img src="/images/blog/49_0.png" alt="WTF!"></p>
+<h3 id="冷静分析"><a href="#冷静分析" class="headerlink" title="冷静分析"></a>冷静分析</h3><p>想起了Android Studio打开纯Android项目的时候，在顶部工具栏会有一个调试用的按钮<code>Attach debugger to Android process</code>,就是那个图标是竖着的长方形，右下角一只小虫子的按钮，点一下可以选择要attch的进程<br><img src="/images/blog/49_1.png" alt="Attach debugger to Android process"></p>
+<p>这个功能在开发的时候用起来很爽，但是当我们打开的不是Android项目时：<br><img src="/images/blog/49_2.png" alt="WTF!"></p>
+<p>这个按钮没了<br><img src="/images/blog/49_3.png" alt="假的Android Studio吧"></p>
+<h3 id="别着急"><a href="#别着急" class="headerlink" title="别着急"></a>别着急</h3><p>这应该是Android Studio 设计的问题，它被设计成了只要不是Android项目就不显示那些按钮，但是它忽略了调试smali的情况</p>
+<p>冷静，何必和一个小按钮过意不去呢，让我们来想想对策。</p>
+<p>Run -&gt; 没有<br>Help -&gt; Find Action -&gt; 搜不到</p>
+<p>就在这山穷水复无路之际，突然想出个点子：</p>
+<p><strong>快捷键！</strong><br><strong>快捷键！</strong><br><strong>快捷键！</strong></p>
+<h3 id="解决办法是快捷键"><a href="#解决办法是快捷键" class="headerlink" title="解决办法是快捷键"></a>解决办法是快捷键</h3><p><strong>Setting -&gt; 搜索 -&gt; Attach debugger to Android process -&gt; keymap</strong></p>
+<p><img src="/images/blog/49_4.png" alt="真·Attach debugger to Android process"></p>
+<p>不出所料真的搜到了，<strong>这里的快捷键是我添加的，原先没有快捷键</strong>，我设置的是<code>Ctrl + Alt + R</code><br>R就是<code>reverse</code>嘛，+D的都被占了没办法。</p>
+<p>确认，出来试试。</p>
+<p>果然功夫不负有心人！</p>
+<p><img src="/images/blog/49_5.png" alt="真·Choose Process"></p>
+<p>测试发现完全ok！</p>
+<h3 id="DDMS，再见"><a href="#DDMS，再见" class="headerlink" title="DDMS，再见"></a><del>DDMS，再见</del></h3><p>去你丫的DDMS，再见（丢）！<br><img src="/images/blog/49_6.png" alt="丢了"></p>
+<p>不行。。。</p>
+<p><img src="/images/blog/49_7.png" alt="捡起"><br>Android Studio 里还没有 Method Profiling 呢</p>
 
           
         
@@ -468,7 +483,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/12/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/12/">12</a><span class="page-number current">13</span><a class="page-number" href="/page/14/">14</a><span class="space">&hellip;</span><a class="page-number" href="/page/51/">51</a><a class="extend next" rel="next" href="/page/14/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <a class="extend prev" rel="prev" href="/page/12/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/12/">12</a><span class="page-number current">13</span><a class="page-number" href="/page/14/">14</a><span class="space">&hellip;</span><a class="page-number" href="/page/61/">61</a><a class="extend next" rel="next" href="/page/14/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 
@@ -511,7 +526,7 @@
                 
                   <a href="/archives">
                 
-                    <span class="site-state-item-count">51</span>
+                    <span class="site-state-item-count">61</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -564,7 +579,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">20</span>
+                      
+                    
+                    <span class="site-state-item-count">21</span>
                     <span class="site-state-item-name">categories</span>
                   </a>
                 </div>
@@ -639,7 +656,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">31</span>
+                      
+                    
+                    <span class="site-state-item-count">32</span>
                     <span class="site-state-item-name">tags</span>
                   
                 </div>

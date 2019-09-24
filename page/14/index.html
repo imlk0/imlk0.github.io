@@ -324,7 +324,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://kb5201314.github.io/blog/38/">
+    <link itemprop="mainEntityOfPage" href="http://kb5201314.github.io/blog/48/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="imlk">
@@ -343,7 +343,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/blog/38/" itemprop="url">[笔记]摘录自大佬口中的各种名词</a></h1>
+                <a class="post-title-link" href="/blog/48/" itemprop="url">[Codeforces]Contest 1009 E. Intercity Travelling</a></h1>
         
 
         <div class="post-meta">
@@ -355,7 +355,7 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-04-25T20:29:25+08:00">2018-04-25</time>
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-07-15T21:06:24+08:00">2018-07-15</time>
             
 
             
@@ -376,7 +376,14 @@
                 <span class="post-meta-item-text">In</span>
               
               
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/笔记/" itemprop="url" rel="index"><span itemprop="name">笔记</span></a></span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/算法/" itemprop="url" rel="index"><span itemprop="name">算法</span></a></span>
+
+                
+                
+                  , 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Codeforces/" itemprop="url" rel="index"><span itemprop="name">Codeforces</span></a></span>
 
                 
                 
@@ -412,19 +419,14 @@
       
         
           
-            <h3 id="SpringBoot"><a href="#SpringBoot" class="headerlink" title="SpringBoot"></a>SpringBoot</h3><p><a href="http://projects.spring.io/spring-boot/" target="_blank" rel="noopener">http://projects.spring.io/spring-boot/</a></p>
-<p>SpringBoot入门:<br><a href="http://www.importnew.com/25761.html" target="_blank" rel="noopener">http://www.importnew.com/25761.html</a></p>
-<h3 id="Vert-x"><a href="#Vert-x" class="headerlink" title="Vert.x"></a>Vert.x</h3><p><a href="https://vertx.io/" target="_blank" rel="noopener">https://vertx.io/</a></p>
-<p>用惯了高大上SpringBoot不妨试试小清新Vert.x：<br><a href="https://segmentfault.com/a/1190000011763020" target="_blank" rel="noopener">https://segmentfault.com/a/1190000011763020</a></p>
-<h3 id="flow-js"><a href="#flow-js" class="headerlink" title="flow.js"></a>flow.js</h3><p>加入类型系统的js</p>
-<p><a href="https://flow.org/" target="_blank" rel="noopener">https://flow.org/</a></p>
-<p>Flow - JS静态类型检查工具:<br><a href="https://segmentfault.com/a/1190000008088489" target="_blank" rel="noopener">https://segmentfault.com/a/1190000008088489</a></p>
-<h3 id="socket-io"><a href="#socket-io" class="headerlink" title="socket.io"></a>socket.io</h3><p>js中的socket连接库</p>
-<p><a href="https://socket.io/" target="_blank" rel="noopener">https://socket.io/</a></p>
-<p>socket.io实现私聊：<br><a href="https://blog.csdn.net/koastal/article/details/53677766" target="_blank" rel="noopener">https://blog.csdn.net/koastal/article/details/53677766</a></p>
-<h3 id="零拷贝"><a href="#零拷贝" class="headerlink" title="零拷贝"></a>零拷贝</h3><p>零拷贝技术：<br><a href="https://blog.csdn.net/jeason29/article/details/46682381" target="_blank" rel="noopener">https://blog.csdn.net/jeason29/article/details/46682381</a></p>
-<p>通过零拷贝实现高效的数据传输：<br><a href="https://blog.csdn.net/xiaoduanayu/article/details/78108308" target="_blank" rel="noopener">https://blog.csdn.net/xiaoduanayu/article/details/78108308</a></p>
-<p>Linux 中的零拷贝技术：<br><a href="https://blog.csdn.net/hzrandd/article/details/51025341" target="_blank" rel="noopener">https://blog.csdn.net/hzrandd/article/details/51025341</a></p>
+            <h3 id="链接"><a href="#链接" class="headerlink" title="链接"></a>链接</h3><p>Educational Codeforces Round 47 (Rated for Div. 2) - E. Intercity Travelling<br><a href="http://codeforces.com/contest/1009/problem/E" target="_blank" rel="noopener">http://codeforces.com/contest/1009/problem/E</a></p>
+<h3 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h3><p>n千米，有n段路，共有n-1个可能可以休息的地方，则共有2^(n-1)种可能的休息方式;<br>要计算 p⋅2^(n−1)，也就是计算所有的可能的休息方式下的消耗之和;<br>分解出来，就是要计算所有的可能的休息方式中所有的a[i]的和;<br>也就是求和 sum(a[i] * 消耗a[i]出现的总次数) (i-&gt;1,2,3,…n);</p>
+<p>我们可以按照这种思路，统计a[1]出现的总次数，a[2]出现的次数，这个应该是有规律的;<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">例如n=4的情况</span><br><span class="line"></span><br><span class="line">0  1  2  3  4</span><br><span class="line">#--#--#--#--#</span><br><span class="line">其中 1,2,3 这几个点既可以是休息，也可以是不休息两种状态</span><br></pre></td></tr></table></figure></p>
+<p>先考虑简单的，要使a[1]出现:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">若a[1]出现在 0-1 之间，显然这是必定的，和 1,2,3 休息与不休息都没关系，有所以在 0-1 出现a[1]的次数是 2^3 = 2^(n-1) 次</span><br><span class="line">若a[1]出现在 1-2 之间，则必须是在 1 点处休息了，而 2，3 处则没关系，那么所有在 1-2 出现a[1]的次数是 2^2 = 2^0 * 2^(n-2) = 2^(n-2) 次</span><br><span class="line">若a[1]出现在 2-3 之间，则必须是在 2 点休息了，和在 1，3 的状况没关系，那么所有在 2-3 出现a[1]的次数是 2^2 = 2^1 * 2^(n-3) = 2^(n-2) 次</span><br><span class="line">同理可得a[1]出现在 3-4 之间的次数是 2^2 = 2^2 * 2^(n-4) = 2^(n-2) 次</span><br><span class="line"></span><br><span class="line">则a[1]出现的总次数是 2^3 + 2^2 + 2^2 + 2^2</span><br></pre></td></tr></table></figure></p>
+<p>再考虑a[2],a[3],a[4]的情况，<br>a[2]出现的总次数是 2^2 + 2^1 + 2^1<br>a[3]出现的总次数是 2^1 + 2^0<br>a[4]出现的总次数是 2^0</p>
+<p>可以发现规律<br><strong>a[i]出现的次数是 2^(n-i) + 2^(n-i-1) * (n-i)</strong></p>
+<p>乘以a[i]加起来就是答案</p>
+<p>拙劣代码：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstring&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> MOD 998244353</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// n最大为100000, n^2算法不可取</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> n;</span><br><span class="line"><span class="comment">// long long an[1000005];</span></span><br><span class="line"><span class="keyword">long</span> <span class="keyword">long</span> _2n[<span class="number">1000005</span>];</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> <span class="keyword">const</span> *argv[])</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">"%d"</span>, &amp;n);</span><br><span class="line"></span><br><span class="line">	_2n[<span class="number">0</span>] = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	<span class="keyword">int</span> b = <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; n; ++i) &#123;</span><br><span class="line">		b = (b * <span class="number">2</span>) % MOD;</span><br><span class="line">		_2n[i] = b;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	<span class="keyword">long</span> <span class="keyword">long</span> a;</span><br><span class="line">	<span class="keyword">long</span> <span class="keyword">long</span> ans = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; ++i) &#123;</span><br><span class="line">		<span class="built_in">scanf</span>(<span class="string">"%lld"</span>, &amp;a);</span><br><span class="line">		ans = (ans + ((_2n[n - i] + ((n - i) * _2n[n - i - <span class="number">1</span>]) % MOD) * a) % MOD) % MOD;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"%lld\n"</span>, ans);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	<span class="comment">// TL旧代码</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">// for (int k = 1; k &lt;= n; ++k) &#123;</span></span><br><span class="line">	<span class="comment">// 	ans = (ans + ans) % MOD;</span></span><br><span class="line">	<span class="comment">// 	printf("x2\n");</span></span><br><span class="line">	<span class="comment">// 	for (int i = 1; i &lt; k; ++i) &#123;</span></span><br><span class="line">	<span class="comment">// 		ans = (ans + an[i] * _2n[k - i - 1]) % MOD;</span></span><br><span class="line">	<span class="comment">// 		printf("+a[%d] x 2^%d\n", i, k - i - 1);</span></span><br><span class="line">	<span class="comment">// 	&#125;</span></span><br><span class="line">	<span class="comment">// 	ans = (ans + an[k]) % MOD;</span></span><br><span class="line">	<span class="comment">// 	printf("+a[%d] x 2^0\n", k);</span></span><br><span class="line">	<span class="comment">// &#125;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 
           
         
@@ -467,7 +469,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/13/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/13/">13</a><span class="page-number current">14</span><a class="page-number" href="/page/15/">15</a><span class="space">&hellip;</span><a class="page-number" href="/page/51/">51</a><a class="extend next" rel="next" href="/page/15/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <a class="extend prev" rel="prev" href="/page/13/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/13/">13</a><span class="page-number current">14</span><a class="page-number" href="/page/15/">15</a><span class="space">&hellip;</span><a class="page-number" href="/page/61/">61</a><a class="extend next" rel="next" href="/page/15/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 
@@ -510,7 +512,7 @@
                 
                   <a href="/archives">
                 
-                    <span class="site-state-item-count">51</span>
+                    <span class="site-state-item-count">61</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -563,7 +565,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">20</span>
+                      
+                    
+                    <span class="site-state-item-count">21</span>
                     <span class="site-state-item-name">categories</span>
                   </a>
                 </div>
@@ -638,7 +642,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">31</span>
+                      
+                    
+                    <span class="site-state-item-count">32</span>
                     <span class="site-state-item-name">tags</span>
                   
                 </div>

@@ -324,7 +324,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://kb5201314.github.io/blog/41/">
+    <link itemprop="mainEntityOfPage" href="http://kb5201314.github.io/blog/52/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="imlk">
@@ -343,7 +343,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/blog/41/" itemprop="url">[笔记]Android实现Multidex及指定主dex中的class</a></h1>
+                <a class="post-title-link" href="/blog/52/" itemprop="url">自制玩具操作系统--week1</a></h1>
         
 
         <div class="post-meta">
@@ -355,7 +355,7 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-04-29T11:19:47+08:00">2018-04-29</time>
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-05-01T00:00:00+08:00">2019-05-01</time>
             
 
             
@@ -376,7 +376,7 @@
                 <span class="post-meta-item-text">In</span>
               
               
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/笔记/" itemprop="url" rel="index"><span itemprop="name">笔记</span></a></span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/OS/" itemprop="url" rel="index"><span itemprop="name">OS</span></a></span>
 
                 
                 
@@ -412,55 +412,166 @@
       
         
           
-            <h3 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h3><p>在编译ZjDroid源码的时候遇到了著名的方法数超出<code>65536</code>个的问题。</p>
-<p>我的<code>gradle</code>版本</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">classpath &apos;com.android.tools.build:gradle:3.1.2&apos;</span><br></pre></td></tr></table></figure>
-<h3 id="要解决的问题"><a href="#要解决的问题" class="headerlink" title="要解决的问题"></a>要解决的问题</h3><ol>
-<li><code>Xposed</code>模块中的方法数超过了<code>65536</code>个，需要进行分包操作</li>
-<li>分包以后如何在模块被加载执行前尽可能早的把其余的dex加载进来</li>
-<li>最后遇到的问题：把模块的入口类指定到第一个dex中</li>
-</ol>
-<h3 id="问题1"><a href="#问题1" class="headerlink" title="问题1"></a>问题1</h3><p>关于分包操作：</p>
-<p>搜了半天，搜到的解决办法是：<br><code>gradle.build</code>中在<code>defaultConfig</code>中添加<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">multiDexEnabled true</span><br></pre></td></tr></table></figure></p>
-<p>让编译脚本开启分包</p>
-<h3 id="问题2"><a href="#问题2" class="headerlink" title="问题2"></a>问题2</h3><p>关于分包后的加载问题：</p>
-<p>网上对于一般应用的解决办法是</p>
-<p>引入<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">implementation &apos;com.android.support:multidex:1.0.3&apos;</span><br></pre></td></tr></table></figure></p>
-<p>在<code>Application</code>中调用<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">MultiDex.install(this);</span><br></pre></td></tr></table></figure></p>
-<p>来实现分包应用的启动。</p>
-<p><strong>但是有一个问题是这个<code>Multidex</code>的<code>install</code>方法需要传入一个<code>Context</code>实例，而<code>Xposed</code>模块的启动是没有<code>Application</code>的，怎么办呢，如果要截获宿主的<code>Application</code>又比较麻烦，能不能直接一句话完成呢？</strong></p>
-<p>于是我决定去研究研究<code>MultiDex</code>的源码，尝试魔改出一个适用于<code>Xposed</code>模块的<code>MultiDex.install()</code>。</p>
-<h3 id="魔改之旅"><a href="#魔改之旅" class="headerlink" title="魔改之旅"></a>魔改之旅</h3><p>研究了一番发现，传入的<code>Context</code>的主要用途有：</p>
-<ol>
-<li>传入<code>getApplicationInfo</code>方法获取<code>ApplicationInfo</code></li>
-<li>获取应用的私有储存空间路径并往里面解压<code>dex</code>文件</li>
-<li>获取<code>SharedPreferences</code>储存一些和<code>dex</code>文件数量以及文件校验相关的信息（考虑的还挺周到）</li>
-</ol>
-<p>我发现在模块的</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">public void handleLoadPackage(LoadPackageParam lpparam) throws Throwable &#123;</span><br></pre></td></tr></table></figure>
-<p>这个入口函数的参数<code>lpparam</code>中，能获取到宿主的<code>ApplicationInfo</code>，从而获取到宿主应用的私有文件夹路径</p>
-<p>这样我就能往里面解压文件啦</p>
-<p>至于文件校验，这个就不做了，（原方案是一次启动的时候解压，然后以后启动的时候就去校验这个文件，再加载进来），我就干脆每次启动的时候都要解压，加载完再删掉就ok了。</p>
-<h3 id="魔改完成"><a href="#魔改完成" class="headerlink" title="魔改完成"></a>魔改完成</h3><p>项目地址：<br><a href="https://github.com/KB5201314/XposedModuleMultidex" target="_blank" rel="noopener">https://github.com/KB5201314/XposedModuleMultidex</a></p>
-<p>添加依赖<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">compile &apos;top.imlk.xpmodulemultidex:XposedModuleMultidex:1.0.0&apos;</span><br></pre></td></tr></table></figure></p>
-<p>删了一大堆，总算是魔改出来了一个，虽然只有两个文件。。。。但还是值得庆幸的！</p>
-<p>获取<code>module</code>的安装包路径：</p>
-<p>通过给入口类继承<code>IXposedHookZygoteInit</code>并实现<code>initZygote</code>方法<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">@Override</span><br><span class="line">public void initZygote(StartupParam startupParam) throws Throwable &#123;</span><br><span class="line">    MODULE_PATH = startupParam.modulePath;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>就能拿到模块的安装包路径啦。</p>
-<p>然后在<code>handleLoadPackage</code>中执行<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line">    @Override</span><br><span class="line">    public void handleLoadPackage(LoadPackageParam lpparam) throws Throwable &#123;</span><br><span class="line">        XMMultiDex.install(ReverseXposedModule.class.getClassLoader(),MODULE_PATH,lpparam.appInfo);</span><br><span class="line">...</span><br></pre></td></tr></table></figure></p>
-<p>其中<code>ReverseXposedModule</code>就是我这个模块的入口类的名称啦。</p>
-<h3 id="问题3"><a href="#问题3" class="headerlink" title="问题3"></a>问题3</h3><p><strong>指定主<code>dex</code>中的<code>class</code>文件的问题</strong></p>
-<p>这可废了我不少时间啊，网上的方法大多都过时了，唯一一个看着靠谱的插件<code>DexKnifePlugin</code>也用不了，搜了半天，终于找到一位仁兄的方法</p>
-<p>在<code>gradle.build</code>的<code>defaultConfig</code>中可以指定一个文件来表示要放在第一个<code>dex</code>中的<code>class</code></p>
-<p>加入<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">multiDexKeepFile file(&apos;maindexlist.txt&apos;)</span><br></pre></td></tr></table></figure></p>
-<p>然后在<code>gradle.build</code>的同级目录下新建一个文件<code>maindexlist.txt</code></p>
-<p>里面填上要放在第一个<code>dex</code>中的<code>class</code></p>
-<p>如：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">com/android/reverse/mod/ReverseXposedModule.class</span><br><span class="line">top/imlk/xpmodulemultidexer/XMMultiDex.class</span><br></pre></td></tr></table></figure></p>
-<p>也可以用<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">multiDexKeepProguard file(&apos;maindexlist.pro&apos;)</span><br></pre></td></tr></table></figure></p>
-<p>然后<br>新建<code>maindexlist.pro</code>文件，这样就可以用<code>proguard</code>语法来写</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">-keep class com.android.reverse.mod.ReverseXposedModule</span><br><span class="line">-keep class top.imlk.xpmodulemultidexer.*</span><br></pre></td></tr></table></figure>
-<p>可算是ok了</p>
-<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><p>gradle3.0.0分包把指定的class放到maindex里面:<br><a href="https://blog.csdn.net/qq_17265737/article/details/79074494" target="_blank" rel="noopener">https://blog.csdn.net/qq_17265737/article/details/79074494</a><br>理解 Multidex 生成：<br><a href="http://www.jkeabc.com/566905.html" target="_blank" rel="noopener">http://www.jkeabc.com/566905.html</a></p>
+            <h2 id="DAY-0x00"><a href="#DAY-0x00" class="headerlink" title="DAY 0x00"></a>DAY 0x00</h2><p>先装个翻译插件，装了半天找了个勉强能用的<br>然后考虑用git来做版本控制，方便和原版进行比较找出自己的修改，然后发现文字编码问题，于是乎捣鼓了个工具来批量转换文件编码（一大堆时间栽进去了）。</p>
+<p>第0天用16进制编辑器编辑出一个image文件</p>
+<h2 id="DAY-0x01"><a href="#DAY-0x01" class="headerlink" title="DAY 0x01"></a>DAY 0x01</h2><p>这张软盘共有1440KB大小，最高地址为0x168000-1</p>
+<h4 id="文件描述"><a href="#文件描述" class="headerlink" title="文件描述"></a>文件描述</h4><ul>
+<li>tolset\z_tools\qemu目录中的MakeFile启动qemu-win.bat，本质上是设置环境并带参数启动qemu.exe</li>
+<li>tolset\z_tools\qemu\vgabios.bin : <em>BIOS (ia32) ROM Ext.</em> (19*512)</li>
+<li>hellos0\helloos.img：<em>DOS/MBR boot sector</em>, code offset 0x4e+2, OEM-ID “HELLOIPL”, root entries 224, sectors 2880 (volumes &lt;=32 MB), sectors/FAT 9, sectors/track 18, sectors 2880 (volumes &gt; 32 MB), serial number 0xffffffff, label: “HELLO-OS   “, FAT (12 bit), followed by FAT</li>
+</ul>
+<h4 id="汇编"><a href="#汇编" class="headerlink" title="汇编"></a>汇编</h4><ul>
+<li>编译<code>.nas</code>文件用工具<code>nask</code>，<code>nask helloos.nas helloos.img</code></li>
+<li><code>DB</code>(define byte)用来以十六进制定义数据，一次一个Byte，多个之间逗号分割<br>DB后还可以直接接字符串，字符串用<code>&quot;包围&quot;</code>起来，<strong>编译器不在字符串后面自动加\0</strong></li>
+<li><code>RESB</code>(reserve byte)用来定义空的字节个数，后面接数字，等价于<code>DB</code>后面加一堆<code>0x00</code></li>
+<li>数字字面量的表示形式和c语言里面一样0x开头为16进制</li>
+<li><code>;</code>用于注释</li>
+<li><code>DW</code>(define word),定义两个字节的数据</li>
+<li><code>DD</code>(define double-word),定义4个字节的数据</li>
+<li>数据部分支持先执行<code>加减乘除</code>运算再将结果写入</li>
+<li><code>$</code>变量表示在<code>这个位置之前</code>已经写入的字节<strong>个数</strong></li>
+</ul>
+<h4 id="镜像文件格式"><a href="#镜像文件格式" class="headerlink" title="镜像文件格式"></a>镜像文件格式</h4><ul>
+<li>该软盘扇区大小为512字节，启动区在第一个扇区内，<strong>计算机首先从最初的一个扇区内开始读盘</strong>，启动区的末尾必须为<code>0x55AA</code>（无特别意义，仅仅作为启动区的标记）</li>
+<li>软盘的一次读写以一个扇区为单位</li>
+<li>IPL是initial program loader的意思，启动程序加载器</li>
+<li>操作系统和操作系统的加载程序在同一个地方的启动机制叫做bootstrap方式</li>
+</ul>
+<h2 id="DAY-0x02"><a href="#DAY-0x02" class="headerlink" title="DAY 0x02"></a>DAY 0x02</h2><h4 id="汇编-1"><a href="#汇编-1" class="headerlink" title="汇编"></a>汇编</h4><ul>
+<li><code>ORG</code>指令指定程序装载到内存中的指定地址(这里一开始没看懂)</li>
+<li><code>JMP</code>指令跳转到标签处</li>
+<li>作者的nask汇编中指令遵循Intel汇编，第一个是目标操作数，第二个是源操作数</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>寄存器名</th>
+<th>全称</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>AX</td>
+<td>accumulator</td>
+<td>累加寄存器</td>
+</tr>
+<tr>
+<td>CX</td>
+<td>counter</td>
+<td>计数寄存器</td>
+</tr>
+<tr>
+<td>DX</td>
+<td>data</td>
+<td>数据寄存器</td>
+</tr>
+<tr>
+<td>BX</td>
+<td>base</td>
+<td>基址寄存器（例如用于指向数组起始位置）</td>
+</tr>
+<tr>
+<td>SP</td>
+<td>stack pointer</td>
+<td>栈指针寄存器</td>
+</tr>
+<tr>
+<td>BP</td>
+<td>base pointer</td>
+<td>基址指针寄存器（栈帧的基地址）</td>
+</tr>
+<tr>
+<td>SI</td>
+<td>source index</td>
+<td>源变址寄存器</td>
+</tr>
+<tr>
+<td>DI</td>
+<td>destination index</td>
+<td>目的变址寄存器</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>寄存器名</th>
+<th>全称</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ES</td>
+<td>extra segment</td>
+<td>附加段寄存器</td>
+</tr>
+<tr>
+<td>CS</td>
+<td>code segment</td>
+<td>代码段寄存器</td>
+</tr>
+<tr>
+<td>SS</td>
+<td>stack segment</td>
+<td>（栈指针寄存器的）段寄存器</td>
+</tr>
+<tr>
+<td>DS</td>
+<td>data segment</td>
+<td>数据段寄存器</td>
+</tr>
+<tr>
+<td>FS</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr>
+<td>GS</td>
+<td>-</td>
+<td>-</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><code>AH/AL</code>,<code>AX</code>,<code>EAX</code>,<code>RAX</code>分别为8，16，32，64位寄存器</li>
+<li>标签<code>label</code>等价于地址，每个标签的地址是按照ORG指令加上偏移量计算得出的</li>
+<li><code>[]</code>表示多一层寻址</li>
+<li><code>BYTE</code>、<code>WORD</code>、<code>DWORD</code>这些汇编保留字和<code>[地址]</code>的组合，表示以给出的地址为低地址的一块数据</li>
+<li><code>CMP</code>比较指令</li>
+<li><code>JE</code>结果相等时的条件跳转</li>
+<li><code>INT</code>是软件中断指令，可以调用BIOS里预设的函数，后面接一个数字表示调用不同的函数。<br>调用前先将数据存到指定的寄存器</li>
+<li><code>HLT</code>，(halt)让CPU停止动作，进入待机状态</li>
+</ul>
+<p>##未完待续</p>
+<p>先睡觉了，天气冷，折腾一天了。</p>
+<ul>
+<li>Linux 汇编器：对比 GAS 和 NASM：<br><a href="https://www.ibm.com/developerworks/cn/linux/l-gas-nasm.html" target="_blank" rel="noopener">https://www.ibm.com/developerworks/cn/linux/l-gas-nasm.html</a></li>
+<li>各种编译器的区别 ASM: MASM, NASM, FASM?<br><a href="https://stackoverflow.com/questions/10179933/asm-masm-nasm-fasm/10180015" target="_blank" rel="noopener">https://stackoverflow.com/questions/10179933/asm-masm-nasm-fasm/10180015</a></li>
+</ul>
+<h2 id="DAY-0x02-续"><a href="#DAY-0x02-续" class="headerlink" title="DAY 0x02 续"></a>DAY 0x02 续</h2><p>上网搜了一下，发现原来的info地址已经变成了<a href="http://oswiki.osask.jp/" target="_blank" rel="noopener">http://oswiki.osask.jp/</a>但是依然不能用，最后在google快照里面找到了踪迹<code>http://webcache.googleusercontent.com/search?q=cache:</code>后面接网页url即可<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://webcache.googleusercontent.com/search?q=cache:http://oswiki.osask.jp/?(AT)memorymap</span><br></pre></td></tr></table></figure></p>
+<p>helloos4中只取了helloos.nas的前半部分作为<code>ipl.nas</code></p>
+<h4 id="汇编-2"><a href="#汇编-2" class="headerlink" title="汇编"></a>汇编</h4><ul>
+<li>nask编译时第三个参数为编译输出的列表文件，描述每个指令如何翻译成机器语言</li>
+<li><code>ORG</code>指令编译不产生字节</li>
+</ul>
+<h4 id="Makefile"><a href="#Makefile" class="headerlink" title="Makefile"></a>Makefile</h4><ul>
+<li><code>#</code>注释，<code>\</code>续行符号</li>
+</ul>
+<figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">目标: 依赖文件</span></span><br><span class="line">	命令... \</span><br></pre></td></tr></table></figure>
+<ul>
+<li>第一个目标是默认目标</li>
+<li>目标可以是一个文件，也可以是一个标签，称为伪目标</li>
+</ul>
+<ul>
+<li><code>eding</code>能编辑img文件，将其它img文件放到指定的位置</li>
+<li><code>ipl.bin</code>就是<code>helloos.img</code>的前0x00200个字节</li>
+</ul>
+<p>启动时，首先执行BIOS，然后BIOS加载软盘的启动区，并在一些列操作之后跳转到启动区起始处的第一条<code>JMP</code>指令。<br><strong>启动区内容的装载地址为 0x00007c00-0x00007dff</strong>，这不是操作系统规定的，也不是img镜像文件中指定的，镜像文件得遵循这一规定，这一过程由BIOS进行<br>day1和day2的最终镜像文件没有区别，在helloos2中作者故意将程序区不以汇编代码形式展示，是因为其中要用到标签的地址，而这个地址要结合<code>ORG</code>指令计算得出，到helloos3时才加入<code>ORG</code>指令<br>参考FAT12启动区的定义，软盘的信息描述在0x62处截止，作者填充了18个字节的内容，然后在偏移量为0x50处写入代码</p>
+<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><ul>
+<li>FAT12文件系统之引导扇区结构：\<br><a href="http://xitongbangshou.com/?p=41" target="_blank" rel="noopener">http://xitongbangshou.com/?p=41</a></li>
+</ul>
 
           
         
@@ -503,7 +614,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/10/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/10/">10</a><span class="page-number current">11</span><a class="page-number" href="/page/12/">12</a><span class="space">&hellip;</span><a class="page-number" href="/page/51/">51</a><a class="extend next" rel="next" href="/page/12/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <a class="extend prev" rel="prev" href="/page/10/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/10/">10</a><span class="page-number current">11</span><a class="page-number" href="/page/12/">12</a><span class="space">&hellip;</span><a class="page-number" href="/page/61/">61</a><a class="extend next" rel="next" href="/page/12/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 
@@ -546,7 +657,7 @@
                 
                   <a href="/archives">
                 
-                    <span class="site-state-item-count">51</span>
+                    <span class="site-state-item-count">61</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -599,7 +710,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">20</span>
+                      
+                    
+                    <span class="site-state-item-count">21</span>
                     <span class="site-state-item-name">categories</span>
                   </a>
                 </div>
@@ -674,7 +787,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">31</span>
+                      
+                    
+                    <span class="site-state-item-count">32</span>
                     <span class="site-state-item-name">tags</span>
                   
                 </div>

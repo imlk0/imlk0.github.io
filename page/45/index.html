@@ -324,7 +324,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://kb5201314.github.io/blog/20/">
+    <link itemprop="mainEntityOfPage" href="http://kb5201314.github.io/blog/29/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="imlk">
@@ -343,7 +343,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/blog/20/" itemprop="url">Java Thread的一些误区</a></h1>
+                <a class="post-title-link" href="/blog/29/" itemprop="url">树莓派指令集合</a></h1>
         
 
         <div class="post-meta">
@@ -355,7 +355,7 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-12-09T16:56:54+08:00">2017-12-09</time>
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-01-27T22:08:59+08:00">2018-01-27</time>
             
 
             
@@ -376,7 +376,7 @@
                 <span class="post-meta-item-text">In</span>
               
               
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Java/" itemprop="url" rel="index"><span itemprop="name">Java</span></a></span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/raspberry-pi/" itemprop="url" rel="index"><span itemprop="name">raspberry pi</span></a></span>
 
                 
                 
@@ -412,30 +412,10 @@
       
         
           
-            <h2 id="Thread"><a href="#Thread" class="headerlink" title="Thread"></a>Thread</h2><h3 id="interrupt"><a href="#interrupt" class="headerlink" title="interrupt()"></a>interrupt()</h3><blockquote>
-<p>1.这个方法只会给线程设置一个为true的中断标志。<br>2.该方法可在需要中断的线程内自己调用，也可在其他线程中调用需要中断的线程对象的这个方法。</p>
+            <h2 id="获取温度："><a href="#获取温度：" class="headerlink" title="获取温度："></a>获取温度：</h2><blockquote>
+<p>cat /sys/class/thermal/thermal_zone0/temp<br>温度要除以1000</p>
 </blockquote>
-<blockquote>
-<p>Java doc:</p>
-<p>public void interrupt()Interrupts this thread.<br>Unless the current thread is interrupting itself, which is always permitted, the checkAccess method of this thread is invoked, which may cause a SecurityException to be thrown. </p>
-<p>If this thread is blocked in an invocation of the wait(), wait(long), or wait(long, int) methods of the Object class, or of the join(), join(long), join(long, int), sleep(long), or sleep(long, int), methods of this class, then its interrupt status will be cleared and it will receive an InterruptedException. </p>
-<p>If this thread is blocked in an I/O operation upon an InterruptibleChannel then the channel will be closed, the thread’s interrupt status will be set, and the thread will receive a ClosedByInterruptException. </p>
-<p>If this thread is blocked in a Selector then the thread’s interrupt status will be set and it will return immediately from the selection operation, possibly with a non-zero value, just as if the selector’s wakeup method were invoked. </p>
-<p>If none of the previous conditions hold then this thread’s interrupt status will be set. </p>
-<p>Interrupting a thread that is not alive need not have any effect.</p>
-<p>Throws:<br>SecurityException - if the current thread cannot modify this thread </p>
-</blockquote>
-<h3 id="join"><a href="#join" class="headerlink" title="join()"></a>join()</h3><blockquote>
-<p>调用“目标Thread对象”的join方法，把当前线程加入到该对象对应的线程中，等该对象对应的线程执行完毕再执行后加入的线程。</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">public final void join()</span><br><span class="line">                throws InterruptedExceptionWaits for this thread to die. </span><br><span class="line">An invocation of this method behaves in exactly the same way as the invocation </span><br><span class="line"></span><br><span class="line">join(0) </span><br><span class="line">Throws: </span><br><span class="line">InterruptedException - if any thread has interrupted the current thread. The interrupted status of the current thread is cleared when this exception is thrown.</span><br></pre></td></tr></table></figure>
-<h3 id="static-sleep"><a href="#static-sleep" class="headerlink" title="static sleep()"></a>static sleep()</h3><blockquote>
-<p>此方法的“调用者”所在线程进入休眠，谁调用谁睡觉。 </p>
-</blockquote>
-<blockquote>
-<p>与wait()的区别：<br>1.sleep来自Thread类，和wait来自Object类。<br>2.sleep方法没有释放锁，而wait方法释放了锁，使得其他线程可以使用同步控制块或者方法。<br>3.wait，notify和notifyAll只能在同步控制方法或者同步控制块里面使用，而sleep可以在任何地方使用。</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">public static void sleep(long millis)</span><br><span class="line">                  throws InterruptedExceptionCauses the currently executing thread to sleep (temporarily cease execution) for the specified number of milliseconds, subject to the precision and accuracy of system timers and schedulers. The thread does not lose ownership of any monitors.</span><br><span class="line">Parameters: </span><br><span class="line">millis - the length of time to sleep in milliseconds </span><br><span class="line">Throws: </span><br><span class="line">IllegalArgumentException - if the value of millis is negative </span><br><span class="line">InterruptedException - if any thread has interrupted the current thread. The interrupted status of the current thread is cleared when this exception is thrown.</span><br></pre></td></tr></table></figure>
+
           
         
       
@@ -477,7 +457,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/44/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/44/">44</a><span class="page-number current">45</span><a class="page-number" href="/page/46/">46</a><span class="space">&hellip;</span><a class="page-number" href="/page/51/">51</a><a class="extend next" rel="next" href="/page/46/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <a class="extend prev" rel="prev" href="/page/44/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/44/">44</a><span class="page-number current">45</span><a class="page-number" href="/page/46/">46</a><span class="space">&hellip;</span><a class="page-number" href="/page/61/">61</a><a class="extend next" rel="next" href="/page/46/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 
@@ -520,7 +500,7 @@
                 
                   <a href="/archives">
                 
-                    <span class="site-state-item-count">51</span>
+                    <span class="site-state-item-count">61</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -573,7 +553,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">20</span>
+                      
+                    
+                    <span class="site-state-item-count">21</span>
                     <span class="site-state-item-name">categories</span>
                   </a>
                 </div>
@@ -648,7 +630,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">31</span>
+                      
+                    
+                    <span class="site-state-item-count">32</span>
                     <span class="site-state-item-name">tags</span>
                   
                 </div>

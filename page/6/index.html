@@ -324,7 +324,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://kb5201314.github.io/blog/46/">
+    <link itemprop="mainEntityOfPage" href="http://kb5201314.github.io/blog/57/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="imlk">
@@ -343,7 +343,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/blog/46/" itemprop="url">[POJ]1061 青蛙的约会</a></h1>
+                <a class="post-title-link" href="/blog/57/" itemprop="url">自制玩具操作系统--week6</a></h1>
         
 
         <div class="post-meta">
@@ -355,7 +355,7 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-07-13T16:08:54+08:00">2018-07-13</time>
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-05-01T00:00:05+08:00">2019-05-01</time>
             
 
             
@@ -376,14 +376,7 @@
                 <span class="post-meta-item-text">In</span>
               
               
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/算法/" itemprop="url" rel="index"><span itemprop="name">算法</span></a></span>
-
-                
-                
-                  , 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/POJ/" itemprop="url" rel="index"><span itemprop="name">POJ</span></a></span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/OS/" itemprop="url" rel="index"><span itemprop="name">OS</span></a></span>
 
                 
                 
@@ -419,12 +412,14 @@
       
         
           
-            <h3 id="原题"><a href="#原题" class="headerlink" title="原题"></a>原题</h3><p><a href="http://poj.org/problem?id=1061" target="_blank" rel="noopener">http://poj.org/problem?id=1061</a></p>
-<h3 id="解法"><a href="#解法" class="headerlink" title="解法"></a>解法</h3><p>此题用扩展欧几里得计算<br>(n-m) <em> X ≡ (x-y) (mod l) 的最小正整数解<br>即(n-m) </em> X + l * Y = (x-y)</p>
-<p>贝祖定理： <strong>ax + by = m 有整数解时当且仅当m是gcd(a,b)的倍数。</strong><br>用扩展欧几里得能算出<strong>ax + by = gcd(a,b)</strong>的一个特解<br>此特解乘上<strong>m / gcd(a,b)</strong>得到的就是<strong>ax + by = m</strong>的特解</p>
-<p><strong>所有的解x mod (b/gcd(a,b))同余</strong><br><strong>所有的解y mod (a/gcd(a,b))同余</strong></p>
-<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p><a href="https://blog.csdn.net/ccnuacmhdu/article/details/79415284" target="_blank" rel="noopener">https://blog.csdn.net/ccnuacmhdu/article/details/79415284</a><br><a href="https://www.cnblogs.com/xeoncdy/p/7265419.html" target="_blank" rel="noopener">https://www.cnblogs.com/xeoncdy/p/7265419.html</a><br><a href="https://blog.csdn.net/sun897949163/article/details/51894372" target="_blank" rel="noopener">https://blog.csdn.net/sun897949163/article/details/51894372</a><br><a href="https://blog.csdn.net/yoer77/article/details/69568676" target="_blank" rel="noopener">https://blog.csdn.net/yoer77/article/details/69568676</a></p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstring&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cmath&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> LL long long</span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line">LL x, y, m, n, l;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// 扩展欧几里得求二元一次方程的一个解</span></span><br><span class="line"><span class="function">LL <span class="title">exGCD</span><span class="params">(LL a, LL b, LL&amp;x, LL&amp;y)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (b == <span class="number">0</span>) &#123;</span><br><span class="line">		x = <span class="number">1</span>;<span class="comment">// a * 1 + b * 0 = a</span></span><br><span class="line">		y = <span class="number">0</span>;</span><br><span class="line">		<span class="keyword">return</span> a;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	LL r = exGCD(b, a % b, x, y);</span><br><span class="line"></span><br><span class="line">	LL t_y = y;</span><br><span class="line">	y = x + (-a / b) * y;</span><br><span class="line">	x = t_y;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> r;<span class="comment">//返回值为gcd</span></span><br><span class="line">	<span class="comment">// 记法：该函数返回时满足 a * x + b * y = gcd; 调整x和y只是为了返回上一层调用后能重新调整x'和y'</span></span><br><span class="line">	<span class="comment">// x' = y</span></span><br><span class="line">	<span class="comment">// y' = x + (-a/b) * y</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> <span class="keyword">const</span> *argv[])</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">"%lld%lld%lld%lld%lld"</span>, &amp;x, &amp;y, &amp;m, &amp;n, &amp;l);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	LL a = ((n - m) % l + l ) % l;<span class="comment">//（将X的系数化为正的）</span></span><br><span class="line"></span><br><span class="line">	LL x0, y0;</span><br><span class="line"></span><br><span class="line">	LL gcd = exGCD(a, l, x0, y0);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> ((!a) || (x - y) % gcd) &#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"Impossible\n"</span>);</span><br><span class="line">		<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	x0 = x0 * (x - y) / gcd;<span class="comment">// x0原先是 (n-m) * X + l * Y = gcd 的一个特解，现在将它化为 (n-m) * X + l * Y = (x-y)的特解X0</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">// 找出最小的正整数解X0,所有X mod (b/gcd(a,b))同余</span></span><br><span class="line">	x0 = ((x0 % (l / gcd)) + (l / gcd)) % (l / gcd);<span class="comment">// 用%表示mod的办法</span></span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"%lld\n"</span>, x0);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+            <h2 id="DAY-0x0F"><a href="#DAY-0x0F" class="headerlink" title="DAY 0x0F"></a>DAY 0x0F</h2><h4 id="两种JMP指令"><a href="#两种JMP指令" class="headerlink" title="两种JMP指令"></a>两种JMP指令</h4><p><code>near jmp</code>只修改IP寄存器的值，而<code>far jmp</code>同时修改<code>IP</code>寄存器和<code>CS</code>寄存器的值(用<code>:</code>隔开)<br>用于任务切换的JMP命令就属于far-JMP命令，用于任务切换的JMP命令在切换回这个任务后，会从这条JMP命令后继续执行。</p>
+<h4 id="GDT中的TSS段"><a href="#GDT中的TSS段" class="headerlink" title="GDT中的TSS段"></a>GDT中的TSS段</h4><p>TSS(task status segment)，全称任务状态段<br>CPU在执行带有段地址的指令时，会去确认GDT中对应项的配置，可用此判断是JMP指令还是far-JMP，</p>
+<h4 id="TR-task-register-寄存器"><a href="#TR-task-register-寄存器" class="headerlink" title="TR(task register)寄存器"></a>TR(task register)寄存器</h4><p><code>TR</code>寄存器记录当前正在运行的是哪一个任务，任务切换时，寄存器的值会自动变化，每次给<code>TR</code>寄存器赋值的时候，需要将其在GDT中的序号乘以8。</p>
+<p>两个任务交替进行输出：<br><img src="/images/blog/os/6.png" alt="两个任务交替进行输出"></p>
+<h2 id="DAY-0x10"><a href="#DAY-0x10" class="headerlink" title="DAY 0x10"></a>DAY 0x10</h2><p>作者原先只定义了两个任务，并且只是在超时之后将其强行进行切换，但是实际中的场景比这样的复杂得多，因而封装了切换任务的的逻辑，并且在这样的基础上实现任务增减、任务优先级设置，因此我这里模仿CanvasCtl的结构去实现task的管理</p>
+<h4 id="多窗口"><a href="#多窗口" class="headerlink" title="多窗口"></a>多窗口</h4><p>多任务建立起来以后，窗口（window）的数量也相应增加，为此实现了窗口和任务的绑定关系、窗口焦点的变化。</p>
+<h4 id="优先级"><a href="#优先级" class="headerlink" title="优先级"></a>优先级</h4><p>原先的task切换时，采用的是公平竞争的方式，每个任务被执行的几率相等，但是在实际的操作系统中，往往需要让某些进程拥有更高的优先级。要实现这样的功能，只要在task中加入priority字段，然后在切换任务时考虑这个字段即可。<br><img src="/images/blog/os/7.png" alt="task不同的优先级"></p>
+<h2 id="DAY-0x11"><a href="#DAY-0x11" class="headerlink" title="DAY 0x11"></a>DAY 0x11</h2><h4 id="命令行窗口"><a href="#命令行窗口" class="headerlink" title="命令行窗口"></a>命令行窗口</h4><p>这一天的内容基本上是对现有知识的应用，读取键盘输入、keytable的转换、按键的不同情况的响应等。<br>由于我之前写了log输出模块，可以像命令行那样一行一行显示日志文本，所以这个命令行窗口其实和我之前的那个日志模块有些类似，因此我直接将原先的代码进行修改，结合作者的实现，加入读取键盘输入的逻辑。<br>对各种按键锁的支持其实就是获取锁的状态，并进行记录，然后在触发按键响应过程中判断锁的状态，以此进行过滤。<br><img src="/images/blog/os/8.png" alt=""><br>但是一些组合键的响应支持还不够完善，期待下一天的相关内容。</p>
 
           
         
@@ -467,7 +462,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/5/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><span class="page-number current">6</span><a class="page-number" href="/page/7/">7</a><span class="space">&hellip;</span><a class="page-number" href="/page/51/">51</a><a class="extend next" rel="next" href="/page/7/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <a class="extend prev" rel="prev" href="/page/5/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><span class="page-number current">6</span><a class="page-number" href="/page/7/">7</a><span class="space">&hellip;</span><a class="page-number" href="/page/61/">61</a><a class="extend next" rel="next" href="/page/7/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 
@@ -510,7 +505,7 @@
                 
                   <a href="/archives">
                 
-                    <span class="site-state-item-count">51</span>
+                    <span class="site-state-item-count">61</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -563,7 +558,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">20</span>
+                      
+                    
+                    <span class="site-state-item-count">21</span>
                     <span class="site-state-item-name">categories</span>
                   </a>
                 </div>
@@ -638,7 +635,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">31</span>
+                      
+                    
+                    <span class="site-state-item-count">32</span>
                     <span class="site-state-item-name">tags</span>
                   
                 </div>

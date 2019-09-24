@@ -324,7 +324,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://kb5201314.github.io/blog/44/">
+    <link itemprop="mainEntityOfPage" href="http://kb5201314.github.io/blog/55/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="imlk">
@@ -343,7 +343,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/blog/44/" itemprop="url">[Codeforces]Contest 1005 E2. Median on Segments (General Case Edition)</a></h1>
+                <a class="post-title-link" href="/blog/55/" itemprop="url">自制玩具操作系统--week4</a></h1>
         
 
         <div class="post-meta">
@@ -355,7 +355,7 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-07-11T16:58:32+08:00">2018-07-11</time>
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-05-01T00:00:03+08:00">2019-05-01</time>
             
 
             
@@ -376,14 +376,7 @@
                 <span class="post-meta-item-text">In</span>
               
               
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/算法/" itemprop="url" rel="index"><span itemprop="name">算法</span></a></span>
-
-                
-                
-                  , 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Codeforces/" itemprop="url" rel="index"><span itemprop="name">Codeforces</span></a></span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/OS/" itemprop="url" rel="index"><span itemprop="name">OS</span></a></span>
 
                 
                 
@@ -419,19 +412,24 @@
       
         
           
-            <h3 id="链接"><a href="#链接" class="headerlink" title="链接"></a>链接</h3><p><a href="http://codeforces.com/contest/1005/problem/E2" target="_blank" rel="noopener">Codeforces Round #496 (Div. 3) - E2. Median on Segments (General Case Edition)</a></p>
-<h3 id="0x00问题转化"><a href="#0x00问题转化" class="headerlink" title="0x00问题转化"></a>0x00问题转化</h3><p>为求得中位数为m的所有区间组合，可以将问题转化为两个更容易的问题</p>
-<blockquote>
-<p>“求&lt;中位数为大于等于m的数&gt;的所有组合数量 - &lt;中位数为大于等于m+1的数&gt;的所有组合数量”</p>
-</blockquote>
-<h3 id="0x00求解问题"><a href="#0x00求解问题" class="headerlink" title="0x00求解问题"></a>0x00求解问题</h3><p>求&lt;中位数为大于等于m的数&gt;的所有组合数量</p>
-<p>从左到右遍历输入数据，若遇到大于等于m的则+1，否则-1<br><strong>若某个区间[a,b]中+1 -1的和最终大于0(即大于等于m的数多于小于等于m的数)，则[a,b]区间的中位数大于等于m</strong></p>
-<p>统计这些区间的数目，就是答案<br>但是遍历区间复杂度是n^2，要计算每一个子区间的和值，可以采用类似于前缀数组的思想，<br>但是这样整体的复杂度至少是n^2，数据量n最多是20w，可能会出现TL，</p>
-<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p><a href="http://www.cnblogs.com/widsom/p/9290269.html" target="_blank" rel="noopener">http://www.cnblogs.com/widsom/p/9290269.html</a></p>
-<p>优化：<br>要统计[a,b]大于0出现的次数，也就是统计“[0,b]的值 &gt; [0,a-1]的值”这种情况出现的次数，<br>可以采用一次遍历输入数据，假设访问到第c个数，<a href="k=0,1,2...c">0,k</a>可采用类似于前缀数组的方式迭代计算，</p>
-<p>同时用数组或map来保存先前[0,k] (k=0,1,2…c-1)的值出现的次数，<br>将小于[0,c]的值出现的次数相加，所有的c都这样操作，加起来的就是答案<br>为将小于[0,c]的值出现的次数相加，可以采用类似于莫队算法的办法，边界一次移动一格</p>
-<p><img src="/images/blog/44_0.png" alt="举例某一时刻的状态"></p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstring&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cmath&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> MAXN 200005</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> an[MAXN];</span><br><span class="line"><span class="keyword">int</span> appear[MAXN * <span class="number">2</span>];<span class="comment">//数组开两倍，从中间开始用以满足加减</span></span><br><span class="line"><span class="keyword">int</span> n;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">long</span> <span class="keyword">long</span> <span class="title">solve</span><span class="params">(<span class="keyword">int</span> m)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">int</span> count = n;<span class="comment">// 使用数组从中间开始</span></span><br><span class="line">	appear[count]++;</span><br><span class="line">	<span class="keyword">long</span> <span class="keyword">long</span> mo = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">long</span> <span class="keyword">long</span> ans = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; ++i) &#123;</span><br><span class="line">		<span class="keyword">if</span> (an[i] &gt;= m) &#123;<span class="comment">// +1</span></span><br><span class="line">			mo += appear[count];</span><br><span class="line">			count++;</span><br><span class="line">			appear[count]++;</span><br><span class="line">		&#125; <span class="keyword">else</span> &#123;<span class="comment">// -1</span></span><br><span class="line">			count--;</span><br><span class="line">			mo -= appear[count];</span><br><span class="line">			appear[count]++;</span><br><span class="line">		&#125;</span><br><span class="line">		ans += mo;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> ans;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> <span class="keyword">const</span> *argv[])</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">int</span> m;</span><br><span class="line"></span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">"%d%d"</span>, &amp;n, &amp;m);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; ++i) &#123;</span><br><span class="line">		<span class="built_in">scanf</span>(<span class="string">"%d"</span>, an + i);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">long</span> <span class="keyword">long</span> ans = solve(m);</span><br><span class="line">	<span class="built_in">memset</span>(appear, <span class="number">0</span>, <span class="keyword">sizeof</span>(appear));</span><br><span class="line">	ans -= solve(m + <span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"%lld\n"</span>, ans);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+            <h2 id="DAY-0x09"><a href="#DAY-0x09" class="headerlink" title="DAY 0x09"></a>DAY 0x09</h2><h4 id="内存检查"><a href="#内存检查" class="headerlink" title="内存检查"></a>内存检查</h4><ul>
+<li>内存检查前需要先禁用缓存，通过修改CR0寄存器实现这一点</li>
+<li>内存检查是通过对内存单元进行<code>写、反转、判断、反转、判断</code>，来确定一个内存单元的可用性的</li>
+</ul>
+<h4 id="内存管理"><a href="#内存管理" class="headerlink" title="内存管理"></a>内存管理</h4><ul>
+<li>内存的使用情况的表示方法多样，可以用一个bit标记一页的状态，也可以用内存区域的起始地址和长度来表示一个空的区域。</li>
+<li>memman_free时，由于按地址有序，于是改用二分查找的方式寻找插入位置，以提高效率</li>
+</ul>
+<h4 id="日志"><a href="#日志" class="headerlink" title="日志"></a>日志</h4><p>为了方便调试，手撸了一个<code>log.cpp</code>，输出时只需构建字符串然后调用<code>log::info()</code>，能够在屏幕上滚动输出，就像终端一样，还支持不同日志等级，不同颜色显示<br><img src="/images/blog/os/2.png" alt="日志"></p>
+<h2 id="DAY-0x0A"><a href="#DAY-0x0A" class="headerlink" title="DAY 0x0A"></a>DAY 0x0A</h2><p>这一天的几乎全是软件层面的事情了。<br>    实验中跟随作者实现了图层，但是我把SHEET重新命名为了Canvas，并且将结构体改成了类，把那些操作函数改成了成员函数，因为我实在是受不了作者的代码结构了，把一堆函数分散开而且每一次调用都要在参数里加上ctl这种做法实在是啰嗦，而且一改动的话几乎全部都要改，按照类来设计的话，可以把代码很好的组织起来，这种逻辑最适合设计成面向对象的程序。</p>
+<p>​    而最让我头疼的是屏幕刷新的问题，因为作者只用了两个图层，而我还加了一个滚动的日志层，一共三个层，这样导致每次鼠标来一下中断都要滚动输出一下，屏幕闪烁得不行，不知道后面到定时器的时候有没有其它的办法<br><img src="/images/blog/os/3.gif" alt="卡顿的屏幕"></p>
+<p>​    在将直接写入改成写入到图层的过程中，经常遇到一些问题，但是在机器码层面不方便调试，因此，将之前我找到的<code>bochsdbg</code>支持的断点魔法<code>xchg    bx,bx</code>，封装成<code>void bochsdbg()</code>函数加到naskfunc里头，然后在不同的地方调用该函数，这样就能找出代码是在那个地方跑飞的了。</p>
+<p>​    作者对屏幕的刷新策略是，从底部到顶部逐层刷新，我尝试过另外一种方法，外层循环是整个屏幕的所有位置，对于每一个位置，按高度从顶部向下遍历，直至找到非透明像素，但是这种方法效率不高，可能是因为有些时候虽然图层很多但是顶部的图层面积较小，导致要么不再图层边界内，要么遇到透明像素的情况。</p>
+<h2 id="DAY-0x0B"><a href="#DAY-0x0B" class="headerlink" title="DAY 0x0B"></a>DAY 0x0B</h2><p>​    由于自己写的东西魔改的太多，作者是在每次界面改动之后就立刻调用<code>fresh_map</code>和<code>fresh_sub</code>刷新，但是这样会导致一轮循环中重复刷新某一区域（过度绘制）的问题，在大面积更新时势必遇到卡顿。而我由于多了一层log图层，该图层背景透明且每次输出都会整个刷新，因此我考虑采用另外的方式，为了解决这一问题，我决定在主while循环中进行真正的刷新操作，其他时候调用<code>notifyRefresh()</code>进行标志位的设置。<br>​    另外，将刷新map的操作也进行优化，窗口位置移动时，如果对新旧窗口分别刷新，实际上在移动区域不大的情况下，是有一部分区域重叠了的，对于这一情况，将图像分割成多个不重叠的区域，分别进行刷新，可以节省大量刷新操作。<br>​    作者的函数需要传入图层高度，作者提到，它不能适应把窗口变成透明或者把不透明变成透明的情况，为了避免这种状况，我每次map刷新都从最底部的图层开始，这在一定程度上影响了效率。<br>​    为了避免多处代码对同一区域进行刷新map的操作，我借鉴了网上一道求解<code>n个矩形重叠覆盖的面积</code>的算法题的思想，先将所有待刷新的区域矩形记录下来，先不刷新map，而在刷新屏幕之前，对这些区域进行划分，分块进行map的刷新操作，</p>
+<p>左边作者的，右边我的，可以看到，我的速度慢了十倍多，但是并不卡顿<br><img src="/images/blog/os/4.gif" alt=""></p>
+<h4 id="引用"><a href="#引用" class="headerlink" title="引用"></a>引用</h4><ul>
+<li>UVA 11345 Rectangles(n个矩形重叠覆盖的面积)<br><a href="https://blog.csdn.net/u013480600/article/details/39481243" target="_blank" rel="noopener">https://blog.csdn.net/u013480600/article/details/39481243</a></li>
+</ul>
 
           
         
@@ -474,7 +472,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/7/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><span class="page-number current">8</span><a class="page-number" href="/page/9/">9</a><span class="space">&hellip;</span><a class="page-number" href="/page/51/">51</a><a class="extend next" rel="next" href="/page/9/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <a class="extend prev" rel="prev" href="/page/7/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><span class="page-number current">8</span><a class="page-number" href="/page/9/">9</a><span class="space">&hellip;</span><a class="page-number" href="/page/61/">61</a><a class="extend next" rel="next" href="/page/9/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 
@@ -517,7 +515,7 @@
                 
                   <a href="/archives">
                 
-                    <span class="site-state-item-count">51</span>
+                    <span class="site-state-item-count">61</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -570,7 +568,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">20</span>
+                      
+                    
+                    <span class="site-state-item-count">21</span>
                     <span class="site-state-item-name">categories</span>
                   </a>
                 </div>
@@ -645,7 +645,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">31</span>
+                      
+                    
+                    <span class="site-state-item-count">32</span>
                     <span class="site-state-item-name">tags</span>
                   
                 </div>
