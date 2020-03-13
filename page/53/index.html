@@ -324,7 +324,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://kb5201314.github.io/blog/22/">
+    <link itemprop="mainEntityOfPage" href="http://kb5201314.github.io/blog/32/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="imlk">
@@ -343,7 +343,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/blog/22/" itemprop="url">Xposed模块开发——在hook之后使用module的drawable资源</a></h1>
+                <a class="post-title-link" href="/blog/32/" itemprop="url">算法文章收集</a></h1>
         
 
         <div class="post-meta">
@@ -355,7 +355,7 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-12-30T16:52:36+08:00">2017-12-30</time>
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-01-06T16:44:51+08:00">2018-01-06</time>
             
 
             
@@ -376,7 +376,7 @@
                 <span class="post-meta-item-text">In</span>
               
               
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Xposed/" itemprop="url" rel="index"><span itemprop="name">Xposed</span></a></span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/算法/" itemprop="url" rel="index"><span itemprop="name">算法</span></a></span>
 
                 
                 
@@ -385,6 +385,16 @@
           
 
           
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/blog/32/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">Comments:</span> <span class="post-comments-count valine-comment-count" data-xid="/blog/32/" itemprop="commentCount"></span>
+                </a>
+              </span>
             
           
 
@@ -412,19 +422,10 @@
       
         
           
-            <p>在xposed开发过程中遇到了直接使用模块内置资源失效的问题，而且这个问题很诡异，有时候失效，有时候有效果，没效果的时候一般是显示一把叉叉</p>
-<p>在上网搜索后发现，hook函数是在被hook应用内部执行的，环境不一样，所以直接用R.drawable.xxx的方式使用会出现问题。</p>
-<h3 id="解决办法："><a href="#解决办法：" class="headerlink" title="解决办法："></a>解决办法：</h3><p><a href="https://forum.xda-developers.com/xposed/access-resources-module-t2805276" target="_blank" rel="noopener">https://forum.xda-developers.com/xposed/access-resources-module-t2805276</a></p>
-<p>参考了rovo89大神在xda上面的回复，改用<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">private static String MODULE_PATH = null;</span><br><span class="line">private int mFakeId = 0;</span><br><span class="line"></span><br><span class="line">public void initZygote(StartupParam startupParam) throws Throwable &#123;</span><br><span class="line">	MODULE_PATH = startupParam.modulePath;//获取模块apk文件在储存中的位置</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public void handleInitPackageResources(InitPackageResourcesParam resparam) throws Throwable &#123;</span><br><span class="line">	if (!resparam.packageName.equals(&quot;your.target.app&quot;))</span><br><span class="line">	return;</span><br><span class="line"></span><br><span class="line">	XModuleResources modRes = XModuleResources.createInstance(MODULE_PATH, resparam.res);</span><br><span class="line">	mFakeId = resparam.res.addResource(modRes, R.drawable.ic_launcher);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p><a href="http://api.xposed.info/reference/android/content/res/XResources.html#addResource" target="_blank" rel="noopener">http://api.xposed.info/reference/android/content/res/XResources.html#addResource</a>(android.content.res.Resources, int)</p>
-<p>获得<code>mFakeld</code>变量，它储存的是在被hook应用内植入的一个假id，这个id对应的是module里面的<code>R.drawable.ic_launcher</code>这个资源，通过这个假id就可以使用到我们的module内的drawable资源。</p>
-<h3 id="再次遇到问题"><a href="#再次遇到问题" class="headerlink" title="再次遇到问题"></a>再次遇到问题</h3><p>在实际使用中<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">view.setBackgroundResource(mFakeId);</span><br><span class="line">//导致异常</span><br><span class="line">//No known package when getting value for resource number 0x7e73c7c7&lt;/pre&gt;</span><br></pre></td></tr></table></figure></p>
-<h3 id="再次解决"><a href="#再次解决" class="headerlink" title="再次解决"></a>再次解决</h3><p>搜索到一段代码</p>
-<p><a href="https://github.com/neverweep/xStatusbarLunarDate/blob/master/src/de/xiaoxia/xstatusbarlunardate/Main.java" target="_blank" rel="noopener">https://github.com/neverweep/xStatusbarLunarDate/blob/master/src/de/xiaoxia/xstatusbarlunardate/Main.java</a></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">@Override</span><br><span class="line">public void handleInitPackageResources(InitPackageResourcesParam resparam)&#123;</span><br><span class="line"></span><br><span class="line">	if (!resparam.packageName.equals(PACKAGE_NAME))</span><br><span class="line"></span><br><span class="line">	return; //如果不是UI则跳过</span><br><span class="line"></span><br><span class="line">	//这里将自带的图标资源插入到systemui中，并获取到一个资源id</span><br><span class="line"></span><br><span class="line">	XModuleResources modRes = XModuleResources.createInstance(MODULE_PATH, resparam.res); //创建一个插入资源的实例</span><br><span class="line"></span><br><span class="line">	ic_toast_bg_fest = resparam.res.addResource(modRes, R.drawable.ic_toast_bg_fest);</span><br><span class="line"></span><br><span class="line">	ic_toast_bg = resparam.res.addResource(modRes, R.drawable.ic_toast_bg);</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>使用：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">if(_notify_icon)&#123;</span><br><span class="line"></span><br><span class="line">	//为Toast加入背景</span><br><span class="line">	</span><br><span class="line">	toastView.setBackground((context.getResources().getDrawable(isFest ? ic_toast_bg_fest : ic_toast_bg)));</span><br><span class="line">	</span><br><span class="line">	toastView.setGravity(Gravity.CENTER);</span><br><span class="line">	</span><br><span class="line">	if(toastTextView != null)&#123;</span><br><span class="line">	</span><br><span class="line">	toastTextView.setTextColor(0xFF000000);</span><br><span class="line">	</span><br><span class="line">	toastTextView.setPadding(0, 15, 0, 0);</span><br><span class="line">	</span><br><span class="line">	toastTextView.setShadowLayer(0, 0, 0, 0X00FFFFFF);</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>这段代码里面使用的是配合<code>context</code>获得<code>drawable</code>，使用<code>setBackground()</code>方法</p>
-<p>经过检验，这种写法正确。</p>
+            <h3 id="0x00-OJ网站"><a href="#0x00-OJ网站" class="headerlink" title="0x00 OJ网站"></a>0x00 OJ网站</h3><p>projecteuler<br><a href="https://projecteuler.net/archives" target="_blank" rel="noopener">https://projecteuler.net/archives</a></p>
+<h3 id="0x01-算法集合"><a href="#0x01-算法集合" class="headerlink" title="0x01 算法集合"></a>0x01 算法集合</h3><p><a href="http://blog.51cto.com/ahalei/p2" target="_blank" rel="noopener">http://blog.51cto.com/ahalei/p2</a></p>
+<h3 id="0x02-动态规划"><a href="#0x02-动态规划" class="headerlink" title="0x02 动态规划"></a>0x02 动态规划</h3><h4 id="题集"><a href="#题集" class="headerlink" title="题集"></a>题集</h4><p><a href="http://blog.csdn.net/eagle_or_snail/article/details/50987044" target="_blank" rel="noopener">http://blog.csdn.net/eagle_or_snail/article/details/50987044</a><br>最长公共子序列（LCS）问题<br><a href="http://blog.csdn.net/lisonglisonglisong/article/details/4154855" target="_blank" rel="noopener">http://blog.csdn.net/lisonglisonglisong/article/details/4154855</a><br><a href="http://blog.csdn.net/lisonglisonglisong/article/details/41596309" target="_blank" rel="noopener">http://blog.csdn.net/lisonglisonglisong/article/details/41596309</a><br>最长递增子序列<br><a href="http://blog.csdn.net/u013074465/article/details/45442067" target="_blank" rel="noopener">http://blog.csdn.net/u013074465/article/details/45442067</a></p>
+<h3 id="0x03-图算法"><a href="#0x03-图算法" class="headerlink" title="0x03 图算法"></a>0x03 图算法</h3><p>图算法之最短路径（Dijkstra）<br><a href="https://www.cnblogs.com/nigang/p/3658990.html" target="_blank" rel="noopener">https://www.cnblogs.com/nigang/p/3658990.html</a></p>
 
           
         
@@ -467,7 +468,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/52/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/52/">52</a><span class="page-number current">53</span><a class="page-number" href="/page/54/">54</a><span class="space">&hellip;</span><a class="page-number" href="/page/61/">61</a><a class="extend next" rel="next" href="/page/54/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <a class="extend prev" rel="prev" href="/page/52/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/52/">52</a><span class="page-number current">53</span><a class="page-number" href="/page/54/">54</a><span class="space">&hellip;</span><a class="page-number" href="/page/62/">62</a><a class="extend next" rel="next" href="/page/54/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 
@@ -510,7 +511,7 @@
                 
                   <a href="/archives">
                 
-                    <span class="site-state-item-count">61</span>
+                    <span class="site-state-item-count">62</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -565,7 +566,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">21</span>
+                      
+                    
+                    <span class="site-state-item-count">22</span>
                     <span class="site-state-item-name">categories</span>
                   </a>
                 </div>
@@ -642,7 +645,13 @@
                     
                       
                     
-                    <span class="site-state-item-count">32</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">35</span>
                     <span class="site-state-item-name">tags</span>
                   
                 </div>
@@ -696,7 +705,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
   <span class="with-love" id="animate"> 
     <i class="fa fa-user"></i>
   </span>
@@ -841,6 +850,30 @@
 
 
 
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  
+  
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(function (item) {
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: true,
+        notify: true,
+        appId: 'pPIiFQjO1RTMg6A6ANqP5qN7-gzGzoHsz',
+        appKey: 'XaPR8xbkykCRQYhjj0K7jozz',
+        placeholder: 'come on ヾﾉ≧∀≦)o!!',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+  </script>
 
 
 

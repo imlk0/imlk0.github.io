@@ -324,7 +324,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://kb5201314.github.io/blog/21/">
+    <link itemprop="mainEntityOfPage" href="http://kb5201314.github.io/blog/29/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="imlk">
@@ -343,7 +343,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/blog/21/" itemprop="url">Java继承的覆盖与隐藏</a></h1>
+                <a class="post-title-link" href="/blog/29/" itemprop="url">树莓派指令集合</a></h1>
         
 
         <div class="post-meta">
@@ -355,7 +355,7 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-01-21T22:39:20+08:00">2018-01-21</time>
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-01-27T22:08:59+08:00">2018-01-27</time>
             
 
             
@@ -376,7 +376,7 @@
                 <span class="post-meta-item-text">In</span>
               
               
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Java/" itemprop="url" rel="index"><span itemprop="name">Java</span></a></span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/raspberry-pi/" itemprop="url" rel="index"><span itemprop="name">raspberry pi</span></a></span>
 
                 
                 
@@ -385,6 +385,16 @@
           
 
           
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/blog/29/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">Comments:</span> <span class="post-comments-count valine-comment-count" data-xid="/blog/29/" itemprop="commentCount"></span>
+                </a>
+              </span>
             
           
 
@@ -412,18 +422,9 @@
       
         
           
-            <p>参考：<br><a href="https://www.cnblogs.com/it12345/p/5221673.html" target="_blank" rel="noopener">https://www.cnblogs.com/it12345/p/5221673.html</a></p>
-<h3 id="隐藏和覆盖的区别"><a href="#隐藏和覆盖的区别" class="headerlink" title="隐藏和覆盖的区别"></a>隐藏和覆盖的区别</h3><p><strong>隐藏：将类型转换为父类的类型 即可解除 隐藏<br>覆盖：将类型转换为父类的类型也 不能 解除覆盖</strong></p>
-<h3 id="成员变量"><a href="#成员变量" class="headerlink" title="成员变量"></a>成员变量</h3><p><strong>只可能被隐藏，不存在覆盖一说</strong></p>
-<p>父类的成员变量静态或非静态都可能被子类中同名的成员变量 隐藏 （不一定要匹配类型，同名即可隐藏）</p>
-<h4 id="处理"><a href="#处理" class="headerlink" title="处理"></a>处理</h4><p><strong>直接用圆点运算符父类中的成员变量的办法：将类型转换为父类的类型。</strong><br><strong>在子类的方法中调用父类中被隐藏的成员变量的办法：在子类方法中使用super关键字配合圆点运算符取父类中的成员变量。</strong></p>
-<h3 id="成员方法"><a href="#成员方法" class="headerlink" title="成员方法"></a>成员方法</h3><p>可以被隐藏，也可以被覆盖<br>同名的实例方法被覆盖 ，同名的静态方法被隐藏</p>
-<h4 id="补充：继承规则"><a href="#补充：继承规则" class="headerlink" title="补充：继承规则"></a>补充：继承规则</h4><p>子类中与父类同名同参的方法才会发生重写，<br>重写时：<br>1.要求重写的方法的静态与非静态属性相同，<br>2.要求重写的方法的返回值类型相同，<br>3.重写后方法的可访问性必须更开放或不变，例如：private-&gt;public<br>不满足这三条的程序将报错无法通过编译</p>
-<p><strong>若重写了实例方法，则发生覆盖</strong><br><strong> 若重写了静态方法，则发生隐藏</strong></p>
-<h4 id="处理-1"><a href="#处理-1" class="headerlink" title="处理"></a>处理</h4><p><strong>通过反射能直接调用被“覆盖”的父类的方法的目的</strong><br><strong>无法在外部调用被“覆盖”的父类方法，只能在子类的内部使用super关键字配合圆点运算符调用父类的方法</strong><br><strong>无法通过转换类型达到调用被“覆盖”的父类的方法的目的</strong></p>
-<h3 id="关于方法中使用到成员变量的问题"><a href="#关于方法中使用到成员变量的问题" class="headerlink" title="关于方法中使用到成员变量的问题"></a>关于方法中使用到成员变量的问题</h3><p><strong>所取用的成员变量是子类中的还是父类中的取决于实际被调用的方法是在父类中还是子类中，以实际被调用的方法所在位置来观察可以判断出使用的是哪里的成员变量。</strong></p>
-<p>例如：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">public class Main &#123;</span><br><span class="line">	public static void main(String[] args) &#123;</span><br><span class="line"></span><br><span class="line">		Ch ch = new Ch();</span><br><span class="line">		ch.show();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">class Su&#123;</span><br><span class="line">	int a = 3;//被隐藏</span><br><span class="line">	String b =&quot;what&quot;;//被隐藏</span><br><span class="line">	void show() &#123;//被覆盖</span><br><span class="line">		System.out.println(a);</span><br><span class="line">		System.out.println(b);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line">class Ch extends Su&#123;</span><br><span class="line">	float a = 1.23f;//发生隐藏</span><br><span class="line">	boolean b = false;//发生隐藏</span><br><span class="line"></span><br><span class="line">	void show() &#123;//发生覆盖</span><br><span class="line">		System.out.println(a);</span><br><span class="line">		System.out.println(b);</span><br><span class="line">		super.show();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * 输出：</span><br><span class="line"> * 1.23</span><br><span class="line"> * false</span><br><span class="line"> * 3</span><br><span class="line"> * what</span><br><span class="line"> * </span><br><span class="line">*/</span><br></pre></td></tr></table></figure>
+            <h2 id="获取温度："><a href="#获取温度：" class="headerlink" title="获取温度："></a>获取温度：</h2><blockquote>
+<p>cat /sys/class/thermal/thermal_zone0/temp<br>温度要除以1000</p>
+</blockquote>
 
           
         
@@ -466,7 +467,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/45/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/45/">45</a><span class="page-number current">46</span><a class="page-number" href="/page/47/">47</a><span class="space">&hellip;</span><a class="page-number" href="/page/61/">61</a><a class="extend next" rel="next" href="/page/47/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <a class="extend prev" rel="prev" href="/page/45/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/45/">45</a><span class="page-number current">46</span><a class="page-number" href="/page/47/">47</a><span class="space">&hellip;</span><a class="page-number" href="/page/62/">62</a><a class="extend next" rel="next" href="/page/47/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 
@@ -509,7 +510,7 @@
                 
                   <a href="/archives">
                 
-                    <span class="site-state-item-count">61</span>
+                    <span class="site-state-item-count">62</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -564,7 +565,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">21</span>
+                      
+                    
+                    <span class="site-state-item-count">22</span>
                     <span class="site-state-item-name">categories</span>
                   </a>
                 </div>
@@ -641,7 +644,13 @@
                     
                       
                     
-                    <span class="site-state-item-count">32</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">35</span>
                     <span class="site-state-item-name">tags</span>
                   
                 </div>
@@ -695,7 +704,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
   <span class="with-love" id="animate"> 
     <i class="fa fa-user"></i>
   </span>
@@ -840,6 +849,30 @@
 
 
 
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  
+  
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(function (item) {
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: true,
+        notify: true,
+        appId: 'pPIiFQjO1RTMg6A6ANqP5qN7-gzGzoHsz',
+        appKey: 'XaPR8xbkykCRQYhjj0K7jozz',
+        placeholder: 'come on ヾﾉ≧∀≦)o!!',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+  </script>
 
 
 
