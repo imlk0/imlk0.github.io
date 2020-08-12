@@ -1,0 +1,1365 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+<link href="https://cdn.jsdelivr.net/npm/font-awesome@4/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.0.6" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.0.6">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.0.6">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.0.6">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.0.6" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '6.0.6',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="好久没写东西了，期末终于考完了，想起之前对Xposed开发的一些问题还没有解决，于是搬出来探索了一番。 Android应用ClassLoader再思考我们知道，Android应用以apk文件的形式存在于手机储存空间之中，而要运行这些应用，则需要用ClassLoader加载到虚拟机中去。除了应用的apk文件之外，还有一些Android框架层的类在/system/framework/文件夹下以jar包">
+<meta name="keywords" content="Android,笔记,Xposed,ClassLoader">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[笔记]Xposed框架加持下的Android应用ClassLoader的结构关系">
+<meta property="og:url" content="http://blog.imlk.top/blog/43/index.html">
+<meta property="og:site_name" content="IMLK">
+<meta property="og:description" content="好久没写东西了，期末终于考完了，想起之前对Xposed开发的一些问题还没有解决，于是搬出来探索了一番。 Android应用ClassLoader再思考我们知道，Android应用以apk文件的形式存在于手机储存空间之中，而要运行这些应用，则需要用ClassLoader加载到虚拟机中去。除了应用的apk文件之外，还有一些Android框架层的类在/system/framework/文件夹下以jar包">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://blog.imlk.top/images/blog/43_0.png">
+<meta property="og:image" content="http://blog.imlk.top/images/blog/43_1.png">
+<meta property="og:image" content="http://blog.imlk.top/images/blog/43_2.png">
+<meta property="og:image" content="http://blog.imlk.top/images/blog/43_3.png">
+<meta property="og:updated_time" content="2018-07-07T17:15:45.823Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="[笔记]Xposed框架加持下的Android应用ClassLoader的结构关系">
+<meta name="twitter:description" content="好久没写东西了，期末终于考完了，想起之前对Xposed开发的一些问题还没有解决，于是搬出来探索了一番。 Android应用ClassLoader再思考我们知道，Android应用以apk文件的形式存在于手机储存空间之中，而要运行这些应用，则需要用ClassLoader加载到虚拟机中去。除了应用的apk文件之外，还有一些Android框架层的类在/system/framework/文件夹下以jar包">
+<meta name="twitter:image" content="http://blog.imlk.top/images/blog/43_0.png">
+
+
+
+
+
+
+  <link rel="canonical" href="http://blog.imlk.top/blog/43/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>[笔记]Xposed框架加持下的Android应用ClassLoader的结构关系 | IMLK</title>
+  
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css">
+<script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js"></script>
+<meting-js server="netease" type="playlist" id="377484398" autoplay="false" fixed ="true"> </meting-js>
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"> 
+
+<div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">IMLK</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">一条咸鱼</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+          
+  <li class="menu-item menu-item-主页">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />主页</a>
+</li>
+
+      
+        
+        
+          
+  <li class="menu-item menu-item-关于">
+    <a href="/about/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-user"></i> <br />关于</a>
+</li>
+
+      
+        
+        
+          
+  <li class="menu-item menu-item-目录">
+    <a href="/categories/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-th"></i> <br />目录</a>
+</li>
+
+      
+        
+        
+          
+  <li class="menu-item menu-item-文章">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />文章</a>
+</li>
+
+      
+        
+        
+          
+  <li class="menu-item menu-item-友链">
+    <a href="/links/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-link"></i> <br />友链</a>
+</li>
+
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />Search</a>
+        </li>
+      
+    </ul>
+  
+
+  
+    
+
+    
+    
+      
+      
+    
+      
+      
+    
+      
+      
+    
+      
+      
+    
+      
+      
+    
+    
+
+  
+
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="Searching..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+  
+
+
+
+ </div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://blog.imlk.top/blog/43/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="imlk">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="IMLK">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">[笔记]Xposed框架加持下的Android应用ClassLoader的结构关系</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-07-07T21:52:37+08:00">2018-07-07</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Xposed/" itemprop="url" rel="index"><span itemprop="name">Xposed</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/blog/43/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">Comments:</span> <span class="post-comments-count valine-comment-count" data-xid="/blog/43/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>好久没写东西了，期末终于考完了，想起之前对Xposed开发的一些问题还没有解决，于是搬出来探索了一番。</p>
+<h3 id="Android应用ClassLoader再思考"><a href="#Android应用ClassLoader再思考" class="headerlink" title="Android应用ClassLoader再思考"></a>Android应用ClassLoader再思考</h3><p>我们知道，Android应用以<code>apk</code>文件的形式存在于手机储存空间之中，而要运行这些应用，则需要用ClassLoader加载到虚拟机中去。<br>除了应用的apk文件之外，还有一些Android框架层的类在<code>/system/framework/</code>文件夹下以<code>jar</code>包的形式存在着</p>
+<p><img src="/images/blog/43_0.png" alt="/system/framework/中的类文件"></p>
+<p>对Android中各种类型的ClassLoader的使用的解释，网上已经已经很多了，这里就不再添乱。</p>
+<h3 id="未安装Xposed框架时的Android应用中的ClassLoader"><a href="#未安装Xposed框架时的Android应用中的ClassLoader" class="headerlink" title="未安装Xposed框架时的Android应用中的ClassLoader"></a>未安装Xposed框架时的Android应用中的ClassLoader</h3><p>通过调试找出了ClassLoader之间的关系（Sony z5，Android7 arm64）</p>
+<p><img src="/images/blog/43_1.png" alt="未安装Xposed框架时的Android应用中的ClassLoader关系图"></p>
+<p>可以看到有两个<code>PathClassLoader</code>，它们的<code>parent</code>都是<code>BootClassLoader</code>。</p>
+<p>左边那个<code>PathClassLoader</code>加载的就是我们的App，右边那个是<code>ClassLoader.getSystemClassLoader()</code>方法获取到的</p>
+<h4 id="ClassLoader-getSystemClassLoader"><a href="#ClassLoader-getSystemClassLoader" class="headerlink" title="ClassLoader.getSystemClassLoader()"></a>ClassLoader.getSystemClassLoader()</h4><p>翻看源码<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">@CallerSensitive</span><br><span class="line">public static ClassLoader getSystemClassLoader() &#123;</span><br><span class="line">    return SystemClassLoader.loader;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>发现是一个静态方法<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">public abstract class ClassLoader &#123;</span><br><span class="line"></span><br><span class="line">    static private class SystemClassLoader &#123;</span><br><span class="line">        public static ClassLoader loader = ClassLoader.createSystemClassLoader();</span><br><span class="line">    &#125;</span><br><span class="line">...</span><br></pre></td></tr></table></figure></p>
+<p>这个<code>SystemClassLoader</code>类是<code>ClassLoader</code>的一个静态内部类，并且静态初始化了一个<code>loader</code>成员变量<br>跟入<code>ClassLoader.createSystemClassLoader()</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">private static ClassLoader createSystemClassLoader() &#123;</span><br><span class="line">    String classPath = System.getProperty(&quot;java.class.path&quot;, &quot;.&quot;);</span><br><span class="line">    String librarySearchPath = System.getProperty(&quot;java.library.path&quot;, &quot;&quot;);</span><br><span class="line"></span><br><span class="line">    // String[] paths = classPath.split(&quot;:&quot;);</span><br><span class="line">    // URL[] urls = new URL[paths.length];</span><br><span class="line">    // for (int i = 0; i &lt; paths.length; i++) &#123;</span><br><span class="line">    // try &#123;</span><br><span class="line">    // urls[i] = new URL(&quot;file://&quot; + paths[i]);</span><br><span class="line">    // &#125;</span><br><span class="line">    // catch (Exception ex) &#123;</span><br><span class="line">    // ex.printStackTrace();</span><br><span class="line">    // &#125;</span><br><span class="line">    // &#125;</span><br><span class="line">    //</span><br><span class="line">    // return new java.net.URLClassLoader(urls, null);</span><br><span class="line"></span><br><span class="line">    // TODO Make this a java.net.URLClassLoader once we have those?</span><br><span class="line">    return new PathClassLoader(classPath, librarySearchPath, BootClassLoader.getInstance());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>原来这个<code>getSystemClassLoader()</code>返回的<code>ClassLoader</code>就是以系统的属性构建的一个<code>CLassLoader</code>啊</p>
+<p>在<code>System.initUnchangeableSystemProperties()</code>中找到了这个属性的初始化过程<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">private static Properties initUnchangeableSystemProperties() &#123;</span><br><span class="line">    VMRuntime runtime = VMRuntime.getRuntime();</span><br><span class="line">    Properties p = new Properties();</span><br><span class="line"></span><br><span class="line">    // Set non-static properties.</span><br><span class="line">    p.put(&quot;java.boot.class.path&quot;, runtime.bootClassPath());</span><br><span class="line">    p.put(&quot;java.class.path&quot;, runtime.classPath());</span><br><span class="line"></span><br><span class="line">    // TODO: does this make any sense? Should we just leave java.home unset?</span><br><span class="line">    String javaHome = getenv(&quot;JAVA_HOME&quot;);</span><br><span class="line">...</span><br></pre></td></tr></table></figure></p>
+<p>我们这里不去深究这个属性值的产生过程了，我们直接调用去获取属性，发现：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">System.getProperty(&quot;java.class.path&quot;)=&quot;.&quot;</span><br><span class="line">System.getProperty(&quot;java.library.path&quot;)=&quot;/system/lib64:/vendor/lib64&quot;</span><br></pre></td></tr></table></figure></p>
+<p>看起来并没有相关的线索，上网搜也没有找到什么有价值的东西，下断点发现在应用程序启动的过程中会被被调用一次。</p>
+<h4 id="BootClassLoader"><a href="#BootClassLoader" class="headerlink" title="BootClassLoader"></a>BootClassLoader</h4><p>这个类加载器很特殊了，<br><code>Integer.class.getClassLoader()</code>返回的就是这个<code>BootClassLoader</code>，可见这是基础的<code>ClassLoader</code>，<br>另外，调用<code>android.widget.TextView.class.getClassLoader()</code>得到的也是这个<code>BootClassLoader</code></p>
+<p>在<code>/init.rc</code>或<code>/init.environ.rc</code>中一条<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">export BOOTCLASSPATH /system/framework/org.dirtyunicorns.utils.jar</span><br><span class="line">					:/system/framework/telephony-ext.jar</span><br><span class="line">					:/system/framework/tcmiface.jar</span><br><span class="line">					:/system/framework/core-oj.jar</span><br><span class="line">					:/system/framework/core-libart.jar</span><br><span class="line">					:/system/framework/conscrypt.jar</span><br><span class="line">					:/system/framework/okhttp.jar</span><br><span class="line">					:/system/framework/core-junit.jar</span><br><span class="line">					:/system/framework/bouncycastle.jar</span><br><span class="line">					:/system/framework/ext.jar</span><br><span class="line">					:/system/framework/framework.jar</span><br><span class="line">					:/system/framework/telephony-common.jar</span><br><span class="line">					:/system/framework/voip-common.jar</span><br><span class="line">					:/system/framework/ims-common.jar</span><br><span class="line">					:/system/framework/apache-xml.jar</span><br><span class="line">					:/system/framework/org.apache.http.legacy.boot.jar</span><br></pre></td></tr></table></figure></p>
+<p>从字面意思上看，应该是指定了<code>BootClassLoader</code>加载的一些系统框架类的路径，其中<code>android.widget.TextView</code>这些就是在<code>/system/framework/framework.jar</code>里的。</p>
+<h3 id="Xposed框架加持以后"><a href="#Xposed框架加持以后" class="headerlink" title="Xposed框架加持以后"></a>Xposed框架加持以后</h3><p>写过xposed模块的都知道，hook逻辑是是写在宿主app之外的独立的一个app里面的，宿主app启动的时候，这个模块app就会被启动，而在<code>XposedInstaller</code>里能控制模块app的启用或禁用。</p>
+<p>既然要加载别的apk，那就意味着一定和ClassLoader有关系啦，<br>这里依然使用调试的方法，（rom：AEX Android7.1.2 arm）</p>
+<p><img src="/images/blog/43_2.png" alt="安装Xposed框架后的Android应用中的ClassLoader关系图"></p>
+<p>可以看到刷入了Xposed框架以后发生的变化：（这里使用的是Xposed89版）</p>
+<p>- <code>BootClassLoader</code>的下面多了一层<code>PathClassLoader</code><br>- 宿主app的<code>ClassLoader</code>和<code>ClassLoader.getSystemClassLoader()</code>的那个一同挂在中间层下面<br>- 各个模块各有独立的<code>PathClassLoader</code>加载，挂在那个<code>ClassLoader.getSystemClassLoader()</code>下面<br>- <code>ClassLoader.getSystemClassLoader()</code>的加载路径里似乎多了个<code>/system/framework/XposedBridge.jar</code></p>
+<h4 id="中间层"><a href="#中间层" class="headerlink" title="中间层"></a>中间层</h4><p>把中间层里的那个dex文件pull出来解开，发现里面只有一个类<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">package xposed.dummy;</span><br><span class="line"></span><br><span class="line">import android.content.res.Resources;</span><br><span class="line"></span><br><span class="line">public class XResourcesSuperClass extends Resources &#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>这个类的作用或许要拜读Xposed的源码才能知道了，看起来和资源加载有一点关系</p>
+<h4 id="各模块的ClassLoader"><a href="#各模块的ClassLoader" class="headerlink" title="各模块的ClassLoader"></a>各模块的ClassLoader</h4><p>将各个模块的加载用不同的<code>ClassLoader</code>进行，避免了模块之间类的冲突，<br>这也意味着<strong>模块不能直接用类似于<code>Class.forName()</code>的方式获取宿主app内的类以及成员<code>Member</code></strong>，<br>这是新手（也包括当时的我）容易犯的错误，所以Xposed提供了<code>XposedHelper</code>来提供相关操作，而且为了提高效率，内部会缓存获取到的<code>Member</code>对象。</p>
+<h4 id="ClassLoader-getSystemClassLoader-发生的变化"><a href="#ClassLoader-getSystemClassLoader-发生的变化" class="headerlink" title="ClassLoader.getSystemClassLoader()发生的变化"></a>ClassLoader.getSystemClassLoader()发生的变化</h4><p>注意到<code>ClassLoader.getSystemClassLoader()</code>获取到的<code>ClassLoader</code>（我们姑且称之为<code>SystemClassLoader</code>吧）的路径里面多了个<code>/system/framework/XposedBridge.jar</code></p>
+<p>另外，执行<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">System.getProperty(&quot;java.class.path&quot;)</span><br></pre></td></tr></table></figure></p>
+<p>将返回<code>/system/framework/XposedBridge.jar</code>，同样的，拖出来解开看看</p>
+<p><img src="/images/blog/43_3.png" alt="/system/framework/XposedBridge.jar"><br>可以看到这里有Xposed开发时我们熟悉的类，也有很多我们不熟悉的类，看起来这个jar里就是Xposed在Java层的一些实现相关的东西了(。・∀・)ノ</p>
+<p>让我们看看<code>de.robv.android.xposed.XposedBridge</code>这个我们开发时经常打交道的类是哪里加载来的<br>在调试时输出<code>de.robv.android.xposed.XposedBridge.class.getClassLoader()</code>的值<br>和<code>ClassLoader.getSystemClassLoader()</code>得到的对象进行比较，发现它们是同一个对象，就是那个<code>SystemClassLoader</code>（嘿，醒醒，只是我在这里把它这么叫而已，实际上它也是个<code>PathClassLoader</code>）</p>
+<h4 id="小错误"><a href="#小错误" class="headerlink" title="小错误"></a>小错误</h4><p>我写这篇文章之前在在这里犯了一个错误，<br>因为对Android Studio调试时的动态执行语句的环境不是很明确，</p>
+<p>在调试时执行<code>de.robv.android.xposed.XposedBridge.class.getClassLoader()</code>不会爆<code>Method threw &#39;java.lang.ClassNotFoundException&#39; exception.</code><br>然后我就以为这个<code>de.robv.android.xposed.XposedBridge</code>类应该是从app这个<code>PathClassLoader</code>向上找到的（根据双亲委托模型），但是app的<code>PathClassLoader</code>和<code>SystemClassLoader</code>没有父子关系，它们属于同一级，然后我就以为存在两个被加载的<code>XposedBridge.jar</code>。</p>
+<p>后来发现是Android Studio太聪明了，“帮我找到”了正确的ClassLoader<br>如果调试时改用<code>loadClass</code>的方法或<code>Class.forName</code>都会爆异常</p>
+<p><code>Method threw &#39;java.lang.ClassNotFoundException&#39; exception.</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">getApplicationContext().getClassLoader().loadClass(&quot;de.robv.android.xposed.XposedBridge&quot;)</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Class.forName(&quot;de.robv.android.xposed.XposedBridge&quot;)</span><br></pre></td></tr></table></figure>
+<h4 id="玩坏Xposed"><a href="#玩坏Xposed" class="headerlink" title="玩坏Xposed"></a>玩坏Xposed</h4><p>根据Xposed加持后的<code>ClassLoader</code>关系图可以看出，<code>XposedBridge.jar</code>被添加到了<code>SystemClassLoader</code>里面加载，那么普通应用可以获取这个<code>SystemClassLoader</code>，进而调用一些方法对自己做一些hook的操作了，能力和Xposed模块已经相当了，只是只能对自己hook而且没法像Xposed模块那样在应用启动之前就进行hook，<br>就我认识的有一位(nv)大(zhuang)佬突发奇想用把aide里Java显示运行输出结果的那个控制台界面hook换成了<code>WebView</code>来播放在线视频。</p>
+<p>所以说Xposed还是很好玩的，不仅要会用，还要学会它的原理，希望有一天我也能写出有价值的东西。</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Android/" rel="tag"># Android</a>
+          
+            <a href="/tags/笔记/" rel="tag"># 笔记</a>
+          
+            <a href="/tags/Xposed/" rel="tag"># Xposed</a>
+          
+            <a href="/tags/ClassLoader/" rel="tag"># ClassLoader</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/42/" rel="next" title="[笔记]ZjDroid适配art虚拟机的尝试">
+                <i class="fa fa-chevron-left"></i> [笔记]ZjDroid适配art虚拟机的尝试
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/blog/44/" rel="prev" title="[Codeforces]Contest 1005 E2. Median on Segments (General Case Edition)">
+                [Codeforces]Contest 1005 E2. Median on Segments (General Case Edition) <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">imlk</p>
+              <p class="site-description motion-element" itemprop="description">勿在浮沙铸高台</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives">
+                
+                    <span class="site-state-item-count">62</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">22</span>
+                    <span class="site-state-item-name">categories</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">35</span>
+                    <span class="site-state-item-name">tags</span>
+                  
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/KB5201314" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:1789778853@qq.com" target="_blank" title="E-Mail"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  
+                </span>
+              
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Android应用ClassLoader再思考"><span class="nav-number">1.</span> <span class="nav-text">Android应用ClassLoader再思考</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#未安装Xposed框架时的Android应用中的ClassLoader"><span class="nav-number">2.</span> <span class="nav-text">未安装Xposed框架时的Android应用中的ClassLoader</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#ClassLoader-getSystemClassLoader"><span class="nav-number">2.1.</span> <span class="nav-text">ClassLoader.getSystemClassLoader()</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#BootClassLoader"><span class="nav-number">2.2.</span> <span class="nav-text">BootClassLoader</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Xposed框架加持以后"><span class="nav-number">3.</span> <span class="nav-text">Xposed框架加持以后</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#中间层"><span class="nav-number">3.1.</span> <span class="nav-text">中间层</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#各模块的ClassLoader"><span class="nav-number">3.2.</span> <span class="nav-text">各模块的ClassLoader</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ClassLoader-getSystemClassLoader-发生的变化"><span class="nav-number">3.3.</span> <span class="nav-text">ClassLoader.getSystemClassLoader()发生的变化</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#小错误"><span class="nav-number">3.4.</span> <span class="nav-text">小错误</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#玩坏Xposed"><span class="nav-number">3.5.</span> <span class="nav-text">玩坏Xposed</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love" id="animate"> 
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">imlk</span>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/theme-next/hexo-theme-next">NexT.Mist</a> v6.0.6</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.0.6"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.0.6"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.0.6"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.0.6"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.0.6"></script>
+
+
+
+  
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  
+  
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(function (item) {
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: true,
+        notify: true,
+        appId: 'pPIiFQjO1RTMg6A6ANqP5qN7-gzGzoHsz',
+        appKey: 'XaPR8xbkykCRQYhjj0K7jozz',
+        placeholder: 'come on ヾﾉ≧∀≦)o!!',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+  </script>
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
