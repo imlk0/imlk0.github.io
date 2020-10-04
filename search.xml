@@ -2427,49 +2427,6 @@
       </tags>
   </entry>
   <entry>
-    <title>newifi 3 刷老毛子固件</title>
-    <url>/blog/63/</url>
-    <content><![CDATA[<p>新路由器到了两星期了，期间总是出现突然wan网络不通的情况，而且信号也没有上一台强（严重影响蹲坑时玩手机的体验）。参考网友们的建议，准备给newifi3刷老毛子固件玩。</p>
-<h3 id="连接路由器"><a href="#连接路由器" class="headerlink" title="连接路由器"></a>连接路由器</h3><p>这里连接路由器有两种方法</p>
-<ul>
-<li><p>telnet</p>
-<p>这玩意虽然默认没有开ssh端口，竟然默认开了telnet，把我给看傻了，直接telnet连上去就好了：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[imlk@imlk-pc ~]$ telnet 192.168.99.1</span><br><span class="line">Trying 192.168.99.1...</span><br><span class="line">Connected to 192.168.99.1.</span><br><span class="line">Escape character is &apos;^]&apos;.</span><br><span class="line"> ================================================================</span><br><span class="line"> |                   Welecome to PandoraBox !                   |</span><br><span class="line"> |                    Copyright 2013-2016                       |</span><br><span class="line"> |              D-Team Technology Co.,Ltd. ShenZhen             |</span><br><span class="line"> ================================================================ </span><br><span class="line">newifi_B4C7 login: root</span><br><span class="line">Password:</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>ssh</p>
-<p>上面说过，官方固件没开ssh，但是访问一下这个链接：</p>
-<p><a href="http://192.168.99.1/newifi/ifiwen_hss.html" target="_blank" rel="noopener">http://192.168.99.1/newifi/ifiwen_hss.html</a></p>
-<p>看到success后你会发现奇迹般地ssh也开放了。</p>
-</li>
-</ul>
-<p>上了路由器先看看，mips架构，可能是基于PandoraBox的固件改的吧，登录文字里写的是PandoraBox。</p>
-<p>比较有意思的是<code>/dev/root</code>挂载到<code>/rom</code>，<code>/dev/mtdblock5</code>挂载到<code>/overlay</code>，然后似乎是结合这俩整了个overlayfs直接给挂载到<code>/</code>。得了，又是没见过的操作：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">overlayfs:/overlay on / type overlayfs (rw,noatime,lowerdir=/,upperdir=/overlay)</span><br></pre></td></tr></table></figure>
-<h3 id="breed"><a href="#breed" class="headerlink" title="breed"></a>breed</h3><p>这里下载的<a href="https://breed.hackpascal.net/是一个固件，需要解锁路由器才能刷入。breed的作者提供了一种加载内核模块`newifi-d2-jail-break.ko`刷入的方法，用这种方法似乎是“免解锁”的，具体作者的帖子在这：https://www.right.com.cn/forum/thread-342918-1-1.html" target="_blank" rel="noopener">https://breed.hackpascal.net/是一个固件，需要解锁路由器才能刷入。breed的作者提供了一种加载内核模块`newifi-d2-jail-break.ko`刷入的方法，用这种方法似乎是“免解锁”的，具体作者的帖子在这：https://www.right.com.cn/forum/thread-342918-1-1.html</a></p>
-<p>解压后用scp上传到路由器的<code>/tmp/</code>目录加载内核模块</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">insmod &apos;解压后的.ko文件&apos;</span><br></pre></td></tr></table></figure>
-<p>之后会卡住一段时间重启，重启后还是官方固件。</p>
-<p>接下来要进入恢复模式，断电后按住reset键插入电源启动，注意需要用数据线直连路由器。</p>
-<p><img src="../images/blog/2020-03-12 23-13-30屏幕截图.png" alt="Breed web 恢复控制台"></p>
-<h3 id="padavan"><a href="#padavan" class="headerlink" title="padavan"></a>padavan</h3><p>这里我选择的是hiboy制作的padavan固件</p>
-<p>相关帖子：<a href="https://www.right.com.cn/forum/thread-2110335-1-1.html" target="_blank" rel="noopener">https://www.right.com.cn/forum/thread-2110335-1-1.html</a></p>
-<p>下载地址：<a href="https://opt.cn2qq.com/padavan/" target="_blank" rel="noopener">https://opt.cn2qq.com/padavan/</a></p>
-<p>固件更新界面选择固件，安装该固件即可，很简单。</p>
-<p><img src="../images/blog/2020-03-12 23-20-23屏幕截图.png" alt=""></p>
-<p>重启后进入192.168.123.1就是熟悉的界面了，默认账号密码是admin和admin。比较可惜的是它只认440M内存，而总内存应该是512M的。最后测试信号强度要明显比原来的好，一些没网络的角落也能有2.4G信号了。</p>
-<p><img src="../images/blog/2020-03-13 12-57-28屏幕截图.png" alt="padavan界面"></p>
-<p>后面广告拦截啥的就看个人喜好啦。</p>
-]]></content>
-      <categories>
-        <category>路由器</category>
-      </categories>
-      <tags>
-        <tag>路由器</tag>
-        <tag>老毛子</tag>
-        <tag>固件</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>网络启动树莓派</title>
     <url>/blog/64/</url>
     <content><![CDATA[<p>最近从同学那里拿到了几个闲置的树莓派，外加一个路由器和一块2T的硬盘，于是乎想用这些派来搭建一个简单的集群。但是发现SD卡实在是不够，遂尝试使用nfs的方式来启动树莓派。</p>
@@ -2579,9 +2536,52 @@
         <category>树莓派</category>
       </categories>
       <tags>
-        <tag>路由器</tag>
         <tag>树莓派</tag>
+        <tag>路由器</tag>
         <tag>NFS</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>newifi 3 刷老毛子固件</title>
+    <url>/blog/63/</url>
+    <content><![CDATA[<p>新路由器到了两星期了，期间总是出现突然wan网络不通的情况，而且信号也没有上一台强（严重影响蹲坑时玩手机的体验）。参考网友们的建议，准备给newifi3刷老毛子固件玩。</p>
+<h3 id="连接路由器"><a href="#连接路由器" class="headerlink" title="连接路由器"></a>连接路由器</h3><p>这里连接路由器有两种方法</p>
+<ul>
+<li><p>telnet</p>
+<p>这玩意虽然默认没有开ssh端口，竟然默认开了telnet，把我给看傻了，直接telnet连上去就好了：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[imlk@imlk-pc ~]$ telnet 192.168.99.1</span><br><span class="line">Trying 192.168.99.1...</span><br><span class="line">Connected to 192.168.99.1.</span><br><span class="line">Escape character is &apos;^]&apos;.</span><br><span class="line"> ================================================================</span><br><span class="line"> |                   Welecome to PandoraBox !                   |</span><br><span class="line"> |                    Copyright 2013-2016                       |</span><br><span class="line"> |              D-Team Technology Co.,Ltd. ShenZhen             |</span><br><span class="line"> ================================================================ </span><br><span class="line">newifi_B4C7 login: root</span><br><span class="line">Password:</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>ssh</p>
+<p>上面说过，官方固件没开ssh，但是访问一下这个链接：</p>
+<p><a href="http://192.168.99.1/newifi/ifiwen_hss.html" target="_blank" rel="noopener">http://192.168.99.1/newifi/ifiwen_hss.html</a></p>
+<p>看到success后你会发现奇迹般地ssh也开放了。</p>
+</li>
+</ul>
+<p>上了路由器先看看，mips架构，可能是基于PandoraBox的固件改的吧，登录文字里写的是PandoraBox。</p>
+<p>比较有意思的是<code>/dev/root</code>挂载到<code>/rom</code>，<code>/dev/mtdblock5</code>挂载到<code>/overlay</code>，然后似乎是结合这俩整了个overlayfs直接给挂载到<code>/</code>。得了，又是没见过的操作：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">overlayfs:/overlay on / type overlayfs (rw,noatime,lowerdir=/,upperdir=/overlay)</span><br></pre></td></tr></table></figure>
+<h3 id="breed"><a href="#breed" class="headerlink" title="breed"></a>breed</h3><p>这里下载的<a href="https://breed.hackpascal.net/是一个固件，需要解锁路由器才能刷入。breed的作者提供了一种加载内核模块`newifi-d2-jail-break.ko`刷入的方法，用这种方法似乎是“免解锁”的，具体作者的帖子在这：https://www.right.com.cn/forum/thread-342918-1-1.html" target="_blank" rel="noopener">https://breed.hackpascal.net/是一个固件，需要解锁路由器才能刷入。breed的作者提供了一种加载内核模块`newifi-d2-jail-break.ko`刷入的方法，用这种方法似乎是“免解锁”的，具体作者的帖子在这：https://www.right.com.cn/forum/thread-342918-1-1.html</a></p>
+<p>解压后用scp上传到路由器的<code>/tmp/</code>目录加载内核模块</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">insmod &apos;解压后的.ko文件&apos;</span><br></pre></td></tr></table></figure>
+<p>之后会卡住一段时间重启，重启后还是官方固件。</p>
+<p>接下来要进入恢复模式，断电后按住reset键插入电源启动，注意需要用数据线直连路由器。</p>
+<p><img src="../images/blog/2020-03-12 23-13-30屏幕截图.png" alt="Breed web 恢复控制台"></p>
+<h3 id="padavan"><a href="#padavan" class="headerlink" title="padavan"></a>padavan</h3><p>这里我选择的是hiboy制作的padavan固件</p>
+<p>相关帖子：<a href="https://www.right.com.cn/forum/thread-2110335-1-1.html" target="_blank" rel="noopener">https://www.right.com.cn/forum/thread-2110335-1-1.html</a></p>
+<p>下载地址：<a href="https://opt.cn2qq.com/padavan/" target="_blank" rel="noopener">https://opt.cn2qq.com/padavan/</a></p>
+<p>固件更新界面选择固件，安装该固件即可，很简单。</p>
+<p><img src="../images/blog/2020-03-12 23-20-23屏幕截图.png" alt=""></p>
+<p>重启后进入192.168.123.1就是熟悉的界面了，默认账号密码是admin和admin。比较可惜的是它只认440M内存，而总内存应该是512M的。最后测试信号强度要明显比原来的好，一些没网络的角落也能有2.4G信号了。</p>
+<p><img src="../images/blog/2020-03-13 12-57-28屏幕截图.png" alt="padavan界面"></p>
+<p>后面广告拦截啥的就看个人喜好啦。</p>
+]]></content>
+      <categories>
+        <category>路由器</category>
+      </categories>
+      <tags>
+        <tag>路由器</tag>
+        <tag>老毛子</tag>
+        <tag>固件</tag>
       </tags>
   </entry>
 </search>
