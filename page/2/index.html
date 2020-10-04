@@ -363,7 +363,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://blog.imlk.top/blog/51/">
+    <link itemprop="mainEntityOfPage" href="http://blog.imlk.top/blog/63/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="imlk">
@@ -382,7 +382,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/blog/51/" itemprop="url">AVD_7.1_x86 安装微信经历</a></h1>
+                <a class="post-title-link" href="/blog/63/" itemprop="url">newifi 3 刷老毛子固件</a></h1>
         
 
         <div class="post-meta">
@@ -394,7 +394,7 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-06-13T16:35:07+08:00">2019-06-13</time>
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-03-12T17:26:11+08:00">2020-03-12</time>
             
 
             
@@ -415,7 +415,7 @@
                 <span class="post-meta-item-text">In</span>
               
               
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Android/" itemprop="url" rel="index"><span itemprop="name">Android</span></a></span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/路由器/" itemprop="url" rel="index"><span itemprop="name">路由器</span></a></span>
 
                 
                 
@@ -430,8 +430,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/blog/51/#comments" itemprop="discussionUrl">
-                  <span class="post-meta-item-text">Comments:</span> <span class="post-comments-count valine-comment-count" data-xid="/blog/51/" itemprop="commentCount"></span>
+                <a href="/blog/63/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">Comments:</span> <span class="post-comments-count valine-comment-count" data-xid="/blog/63/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -461,86 +461,36 @@
       
         
           
-            <h3 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h3><p>好久没有写博客了，并不是其中没有折腾2333，作业太多好多事情都没写（其实就是懒）</p>
-<p>那啥，手头有两台手机，一台太烂但是7.1.1 root过（曾经的主力机，依然坚挺），另一台是7.0 垃圾索大法，au定制机，没法root。<br>前一台没有运动传感器，想拿来计步都不行，第二台有传感器但是不能root，就不能微信刷步数啦23333（真是贪婪的人类）</p>
-<p>寻思着在avd上装微信刷步数。于是有了下面的折腾记录，同时也是做个笔记，避免以后绕弯路，毕竟，博客都是给以后的自己看的23333。</p>
-<h3 id="AVD-4-4"><a href="#AVD-4-4" class="headerlink" title="AVD_4.4"></a>AVD_4.4</h3><p>原先我就有一台Android 4.4的虚拟设备，已经root而且装了xp，接着安装微信和模块打算开刷的时候，我点开微信，悲剧发生了，闪退！！！！<br>看一下logcat，傻逼微信在新版用了一个sdk21之后才加入的函数，但是自己又声称最低支持Android4.4，我真是dnlm！！！！</p>
-<p>没办法，看来4.4上是没法折腾的，索性再开一台Android 7.1的AVD吧，说不定以后还要用上呢。</p>
-<h3 id="AVD-7-1"><a href="#AVD-7-1" class="headerlink" title="AVD_7.1"></a>AVD_7.1</h3><p>怎么安装这个就不用我多说啦，困难的地方主要就是root和安装微信这两个。</p>
-<h4 id="root"><a href="#root" class="headerlink" title="root"></a>root</h4><p>root的话，就参考这个了：<br>把supersu官网的那一套东西下载下来（虽然各个版本方案不同，但是文件都在里头）<br><a href="https://blog.csdn.net/luvsnow/article/details/79963025" target="_blank" rel="noopener">android emulator 获取 Root权限</a></p>
-<p>注意启动的时候加上<code>-writable-system</code><br>可惜的是，这种root好像是短时期的，不能按电源键重启设备，也不能adb reboot重启虚拟设备，这样再开之后root就会没。不过恢复也很简单，只要再走一遍</p>
+            <p>新路由器到了两星期了，期间总是出现突然wan网络不通的情况，而且信号也没有上一台强（严重影响蹲坑时玩手机的体验）。参考网友们的建议，准备给newifi3刷老毛子固件玩。</p>
+<h3 id="连接路由器"><a href="#连接路由器" class="headerlink" title="连接路由器"></a>连接路由器</h3><p>这里连接路由器有两种方法</p>
 <ul>
-<li>adb root</li>
-<li>adb remount</li>
-<li>adb shell</li>
-<li>su –install</li>
-<li>su -d&amp;</li>
-<li>setenforce 0<br>然后授权管理里面root又有啦</li>
-</ul>
-<h4 id="装微信"><a href="#装微信" class="headerlink" title="装微信"></a>装微信</h4><p>装微信可没那么简单，毕竟这里可是AVD_x86，要是简单的话你也不会来这里了。</p>
-<p>微信只给了arm的lib，但是AVD普遍是x86的，会发生安装不上提示ABI不兼容的情况，对于这种问题有两个解决办法：</p>
-<ul>
-<li>安装arm的AVD（×）<br>  缺点：不是一般的慢，看不到开机完成</li>
-<li>ARM-Translation（√）<br>  这个东西似乎是intel搞个一个闭源的层，能把apk里的arm用的so库在运行时动态地转换成x86的指令，所有x86的Android设备里都有这个，Android-x86和Genymotion据说都内置这个东西，总之牛逼就对了。</li>
-</ul>
-<h5 id="ARM-Translation"><a href="#ARM-Translation" class="headerlink" title="ARM-Translation"></a>ARM-Translation</h5><p>先贴一堆参考前人的资料</p>
-<ol>
-<li><a href="https://testerhome.com/topics/14231" target="_blank" rel="noopener">移动测试基础 Android 模拟器 Genymotion 安装配置与 ARM 支持</a></li>
-<li><a href="https://android.stackexchange.com/questions/179482/android-emulator-install-failed-no-matching-abis-failed-to-extract-native-lib" target="_blank" rel="noopener">Android Emulator - INSTALL_FAILED_NO_MATCHING_ABIS: Failed to extract native libraries, res=-113</a></li>
-<li><a href="https://blog.csdn.net/Roland_Sun/article/details/49735601" target="_blank" rel="noopener">如何打开Android X86对houdini的支持</a></li>
-<li><a href="https://blog.csdn.net/wangkai0681080/article/details/79523003" target="_blank" rel="noopener">Android模拟器知识以及改造</a></li>
-<li><a href="https://github.com/Rprop/libhoudini" target="_blank" rel="noopener">Github/Rprop/libhoudini</a></li>
-<li><a href="http://baba.zhaoxiuyuan.com/2017/11/126_android_x86_houdini/" target="_blank" rel="noopener">Android-X86集成houdini(Arm兼容工具)</a></li>
-</ol>
-<p>资料这么多，我来梳理一下下吧：<br>要使用这个ARM-Translation其实不麻烦。主要下面几个步骤：</p>
-<ul>
-<li>改<code>build.prop</code>里的<code>ro.product.cpu.abilist</code>和<code>ro.product.cpu.abilist32</code>为<code>x86,armeabi-v7a,armeabi</code>，骗过包安装器，让它能把微信装上(参考第4篇文章)</li>
-<li><p>改<code>default.prop</code>里的<code>ro.dalvik.vm.native.bridge=0</code>为<code>ro.dalvik.vm.native.bridge=libhoudini.so</code>，开启系统内的NativeBridge(参考第4篇文章)<br>  这里必须说一下，这个<code>default.prop</code>不在<code>system.img</code>里面，在<code>ramdisk.img</code>里面，<code>ramdisk.img</code>是只读的，只在启动的时候读一次到内存里。所以对<code>default.prop</code>的修改重启后会丢失，唯一的办法是手动编辑一个<code>ramdisk.img</code>，然后用emulator的<code>-ramdisk</code>选项指定修改后的<code>ramdisk.img</code>文件。</p>
-<p>  编辑的方法也不难，参考这个里面的第二种方法<a href="https://blog.csdn.net/linuxdriverdeveloper/article/details/8124319" target="_blank" rel="noopener">制作/解压android ramdisk.img镜像</a></p>
-<ul>
-<li>从SDK目录里找到ramdisk.img，备份一份到自己的avd目录里，</li>
-<li>用gunzip解压它，再用cpio解包到一个目录里</li>
-<li>在这目录里找到<code>default.prop</code>进行修改</li>
-<li>注意回package的时候，不要用cpio打包，可能会有问题导致开机不了，用<code>mkbootfs ./你之前解包到的目录 | gzip &gt; ramdisk-new.img</code>制作修改后的镜像（可以从这下载mkbootfs <a href="https://github.com/shenyuanv/mkboot-tools" target="_blank" rel="noopener">https://github.com/shenyuanv/mkboot-tools</a> ）</li>
-<li>最后的<code>ramdisk-new.img</code>就是修改过的<code>ramdisk.img</code>了，在启动avd时用emulator的<code>-ramdisk</code>选项指定它即可。</li>
-</ul>
+<li><p>telnet</p>
+<p>这玩意虽然默认没有开ssh端口，竟然默认开了telnet，把我给看傻了，直接telnet连上去就好了：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">[imlk@imlk-pc ~]$ telnet 192.168.99.1</span><br><span class="line">Trying 192.168.99.1...</span><br><span class="line">Connected to 192.168.99.1.</span><br><span class="line">Escape character is &apos;^]&apos;.</span><br><span class="line"> ================================================================</span><br><span class="line"> |                   Welecome to PandoraBox !                   |</span><br><span class="line"> |                    Copyright 2013-2016                       |</span><br><span class="line"> |              D-Team Technology Co.,Ltd. ShenZhen             |</span><br><span class="line"> ================================================================ </span><br><span class="line">newifi_B4C7 login: root</span><br><span class="line">Password:</span><br></pre></td></tr></table></figure>
 </li>
-<li><p>第3篇文章里面设置里那个叫<code>Enable native bridge</code>的选项我一直没有找到，它说效果只是<code>persist.sys.nativebridge</code>从0改成了1，保险起见，我在<code>build.prop</code>里加了<code>persist.sys.nativebridge=1</code></p>
-</li>
-<li><p>执行enable_nativebridge<br>  这几篇文章里都提到了<code>enable_nativebridge</code>这个东西，但是我找了一番，我的AVD里面没有这个脚本啊啊，真的服了，为什么google做了这个东西又不拿出来给我们用呢？？？？咱啥也不知道，咱也不敢问</p>
-<p>  不过还好，在万能的github上面找到了一段<code>enable_nativebridge</code>，大概读一读能发现，恰好是Android7用的，而且考虑了各种情况，甚至还可以在线下载文件（显然访问不了，不过有办法解决的），<a href="https://gist.github.com/41a5d8ba498ceecca28e9d1069a32ede" target="_blank" rel="noopener">https://gist.github.com/41a5d8ba498ceecca28e9d1069a32ede</a>，访问不了gist的可以用google快照看。方便大家我就贴在下面了：</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/system/bin/sh</span></span><br><span class="line"></span><br><span class="line">PATH=/system/bin:/system/xbin</span><br><span class="line"></span><br><span class="line">houdini_bin=0</span><br><span class="line">dest_dir=/system/lib<span class="variable">$1</span>/arm<span class="variable">$1</span></span><br><span class="line">binfmt_misc_dir=/proc/sys/fs/binfmt_misc</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> [ -z <span class="string">"<span class="variable">$1</span>"</span> ]; <span class="keyword">then</span></span><br><span class="line">	<span class="keyword">if</span> [ <span class="string">"`uname -m`"</span> = <span class="string">"x86_64"</span> ]; <span class="keyword">then</span></span><br><span class="line">		v=7_y</span><br><span class="line">		url=http://goo.gl/SBU3is</span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">		v=7_x</span><br><span class="line">		url=http://goo.gl/0IJs40</span><br><span class="line">	<span class="keyword">fi</span></span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">	v=7_z</span><br><span class="line">	url=http://goo.gl/FDrxVN</span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> [ -s /system/lib<span class="variable">$1</span>/libhoudini.so ]; <span class="keyword">then</span></span><br><span class="line">	<span class="built_in">log</span> -pi -thoudini <span class="string">"found /system/lib<span class="variable">$1</span>/libhoudini.so"</span></span><br><span class="line"><span class="keyword">elif</span> [ -e /system/etc/houdini<span class="variable">$v</span>.sfs ]; <span class="keyword">then</span></span><br><span class="line">	mount /system/etc/houdini<span class="variable">$v</span>.sfs <span class="variable">$dest_dir</span></span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">	<span class="keyword">if</span> mountpoint -q <span class="variable">$dest_dir</span>; <span class="keyword">then</span></span><br><span class="line">		<span class="built_in">kill</span> -9 `fuser -m <span class="variable">$dest_dir</span>`</span><br><span class="line">		umount -f <span class="variable">$dest_dir</span></span><br><span class="line">	<span class="keyword">fi</span></span><br><span class="line">	mkdir -p /data/arm</span><br><span class="line">	<span class="built_in">cd</span> /data/arm</span><br><span class="line">	<span class="keyword">while</span> ! mount houdini<span class="variable">$v</span>.sfs <span class="variable">$dest_dir</span>; <span class="keyword">do</span></span><br><span class="line">		<span class="keyword">while</span> [ <span class="string">"<span class="variable">$(getprop net.dns1)</span>"</span> = <span class="string">""</span> ]; <span class="keyword">do</span></span><br><span class="line">			sleep 10</span><br><span class="line">		<span class="keyword">done</span></span><br><span class="line">		wget <span class="variable">$url</span> -cO houdini<span class="variable">$v</span>.sfs &amp;&amp; <span class="built_in">continue</span></span><br><span class="line">		rm -f houdini<span class="variable">$v</span>.sfs</span><br><span class="line">		sleep 30</span><br><span class="line">	<span class="keyword">done</span></span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"></span><br><span class="line">[ -s /system/lib<span class="variable">$1</span>/libhoudini.so ] || mount --<span class="built_in">bind</span> <span class="variable">$dest_dir</span>/libhoudini.so /system/lib<span class="variable">$1</span>/libhoudini.so</span><br><span class="line"></span><br><span class="line"><span class="comment"># this is to add the supported binary formats via binfmt_misc</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> [ ! -e <span class="variable">$binfmt_misc_dir</span>/register ]; <span class="keyword">then</span></span><br><span class="line">	mount -t binfmt_misc none <span class="variable">$binfmt_misc_dir</span></span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">cd</span> <span class="variable">$binfmt_misc_dir</span></span><br><span class="line"><span class="keyword">if</span> [ -e register ]; <span class="keyword">then</span></span><br><span class="line">	[ -e /system/bin/houdini<span class="variable">$1</span> ] &amp;&amp; dest_dir=/system/bin</span><br><span class="line">	<span class="comment"># register Houdini for arm binaries</span></span><br><span class="line">	<span class="keyword">if</span> [ -z <span class="string">"<span class="variable">$1</span>"</span> ]; <span class="keyword">then</span></span><br><span class="line">		<span class="built_in">echo</span> <span class="string">':arm_exe:M::\\x7f\\x45\\x4c\\x46\\x01\\x01\\x01\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x02\\x00\\x28::'</span><span class="string">"<span class="variable">$dest_dir</span>/houdini:P"</span> &gt; register</span><br><span class="line">		<span class="built_in">echo</span> <span class="string">':arm_dyn:M::\\x7f\\x45\\x4c\\x46\\x01\\x01\\x01\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x03\\x00\\x28::'</span><span class="string">"<span class="variable">$dest_dir</span>/houdini:P"</span> &gt; register</span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">		<span class="built_in">echo</span> <span class="string">':arm64_exe:M::\\x7f\\x45\\x4c\\x46\\x02\\x01\\x01\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x02\\x00\\xb7::'</span><span class="string">"<span class="variable">$dest_dir</span>/houdini64:P"</span> &gt; register</span><br><span class="line">		<span class="built_in">echo</span> <span class="string">':arm64_dyn:M::\\x7f\\x45\\x4c\\x46\\x02\\x01\\x01\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x03\\x00\\xb7::'</span><span class="string">"<span class="variable">$dest_dir</span>/houdini64:P"</span> &gt; register</span><br><span class="line">	<span class="keyword">fi</span></span><br><span class="line">	<span class="keyword">if</span> [ -e arm<span class="variable">$&#123;1&#125;</span>_exe ]; <span class="keyword">then</span></span><br><span class="line">		houdini_bin=1</span><br><span class="line">	<span class="keyword">fi</span></span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">	<span class="built_in">log</span> -pe -thoudini <span class="string">"No binfmt_misc support"</span></span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> [ <span class="variable">$houdini_bin</span> -eq 0 ]; <span class="keyword">then</span></span><br><span class="line">	<span class="built_in">log</span> -pe -thoudini <span class="string">"houdini<span class="variable">$1</span> enabling failed!"</span></span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">	<span class="built_in">log</span> -pi -thoudini <span class="string">"houdini<span class="variable">$1</span> enabled"</span></span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"></span><br><span class="line">[ <span class="string">"<span class="variable">$(getprop ro.zygote)</span>"</span> = <span class="string">"zygote64_32"</span> -a -z <span class="string">"<span class="variable">$1</span>"</span> ] &amp;&amp; <span class="built_in">exec</span> <span class="variable">$0</span> 64</span><br><span class="line"></span><br><span class="line"><span class="built_in">exit</span> 0</span><br></pre></td></tr></table></figure>
+<li><p>ssh</p>
+<p>上面说过，官方固件没开ssh，但是访问一下这个链接：</p>
+<p><a href="http://192.168.99.1/newifi/ifiwen_hss.html" target="_blank" rel="noopener">http://192.168.99.1/newifi/ifiwen_hss.html</a></p>
+<p>看到success后你会发现奇迹般地ssh也开放了。</p>
 </li>
 </ul>
-<p>把这个脚本放到avd里的<code>/system/bin/</code>目录下，记得把<code>log -pi -thoudini</code>改成<code>echo</code>方便我们最后观察是否成功了。</p>
-<h6 id="houdini-sfs"><a href="#houdini-sfs" class="headerlink" title="houdini.sfs"></a>houdini.sfs</h6><p>其中最核心的是那个houdini.sfs文件，当然各个Android版本的文件名不太一样，国内要下载的话，第6篇文章里的作者给了短网址还原的办法，不过我还发现另外一个仓库 <a href="https://github.com/Rprop/libhoudini" target="_blank" rel="noopener">https://github.com/Rprop/libhoudini</a> ，这里面各个版本的sfs文件都有，阅读脚本发现，可以<strong>手动下载这个文件</strong>然后放到<code>/system/etc/</code>下面。</p>
-<p>这个sfs文件其实是<code>squashfs</code>格式的一个影像，脚本里把它挂载到<code>/system/lib/arm</code>文件夹里（64位的情况是另一个文件夹，这里的描述都以x86为准，x86_64看上面的脚本进行变通）。</p>
-<p><strong>一些意外</strong></p>
-<ul>
-<li><p>中途mount这个houdini.sfs的过程发生了一些意外，首先提示<code>No such file or directory</code>，手动<code>mkdir /system/lib/arm</code>解决了这个问题。</p>
-</li>
-<li><p>之后说<code>mount: losetup failed 1</code>，改为手动mount加上<code>-v</code>选项后说</p>
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">try &apos;/system/etc/houdini7_x.sfs&apos; type &apos;ext3&apos; on &apos;/system/lib/arm/&apos;</span><br></pre></td></tr></table></figure>
-<p>  显然它把我文件格式搞错了，这个sfs文件应该是<code>squashfs</code>而不是<code>ext3</code>，加<code>-t</code>选项强制指定<code>squashfs</code>格式后告诉我<code>No such device</code>，你说你马呢，我文件好端端在这你告诉我没有。无奈之下想到了<code>strace</code>大法，给这条命令前加上<code>strace</code>，查看系统调用过程，发现其中调用了<code>mount()</code>函数：</p>
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mount(&quot;/system/etc/houdini7_x.sfs&quot;, &quot;/system/lib/arm/&quot;, &quot;squashfs&quot;, MS_SILENT, NULL) = -1 ENODEV (No such device)</span><br></pre></td></tr></table></figure>
-<p>  man查mount()的手册发现，<code>ENODEV</code>表示不支持的文件系统格式，也就是说<strong>这个avd它丫的不支持<code>squashfs</code>这个文件系统</strong>，网上说可以在编译的时候加选项，但是显然我们是不会去编译的，费力不讨好。解决办法很简单，在宿主机上mount一下，把里面的文件拿出来<code>adb push</code>到avd的<code>/system/lib/arm</code>这个目录，大功告成。</p>
-</li>
-<li><p>之后还有个</p>
-  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mount --bind $dest_dir/libhoudini.so /system/lib$1/libhoudini.so</span><br></pre></td></tr></table></figure>
-<p>  又失败了（Android终端里的命令好像就没几个好使的），目的主要是把<code>libhoudini.so</code>从<code>/system/lib/arm</code>文件夹引到<code>/system/lib</code>下面去，这个用<code>ln -s</code>搞一下就好。</p>
-</li>
-</ul>
-<p>这么搞一通，终于等来了输出<code>houdini enabled</code>。至此<code>houdini</code>就算是迁进去了。</p>
-<h5 id="装微信-1"><a href="#装微信-1" class="headerlink" title="装微信"></a>装微信</h5><p>微信还是那样装，打开也能登陆，看起来甚至没有任何问题，但是打开微信小程序的时候就出现问题了，直接崩掉。<br>logcat里冒出<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">houdini : [17913] Unsupported feature (ID:0x20e000b2).</span><br></pre></td></tr></table></figure></p>
-<p>在这之前的一个日志是houdini加载了微信里面的一个<code>libj2v8.so</code>文件，也许是因为这个文件里面的指令有点特殊所以崩的吧。</p>
-<p>上网找了找，发现不少人遇到类似的这种<code>Unsupported feature</code>问题，尝试过ida开<code>libhoudini.so</code>找这个字符串，发现这样的错误一共有六类，字符串好像是<code>Unsupported feature (ID:0x20e%05x)</code>，也就是说后面的<code>0x000b2</code>是变化的，但是字符串引用的地方没找到，因为ida反汇编的时候很多函数没有反汇编成功，再加上我ida用的不太熟，就没看了。最后瞅了一眼<code>houdini.sys</code>里面有个<code>houdini</code>可执行文件，执行一下输出：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[18097] </span><br><span class="line">[18097] Please don&apos;t use this program directly!</span><br><span class="line">[18097] Use to check version only.</span><br><span class="line">[18097] Usage: --version        output version information and exit!</span><br><span class="line">[18097]</span><br></pre></td></tr></table></figure></p>
-<p>看了一下我的–version输出是<code>Houdini version: 6.1.2d_x.48748</code>。它强调<code>don&#39;t use this program directly</code>，我就纳闷了，难不成这个程序除了输出version，里面还有东西？？？<br>索性拿ida开了一下，不出我所料，里面甚至有完整的<code>libhoudini.so</code>里面的内容，关键是这个文件ida反汇编得比较完善，按字符串找出错地方，发现是落入了一个switch语句的default区域，无奈代码太复杂，看不懂，放弃了。</p>
-<h5 id="现有的其它方案"><a href="#现有的其它方案" class="headerlink" title="现有的其它方案"></a>现有的其它方案</h5><p>参考了现有的Android x86项目，发现它也使用到了houdini这个东西来实现arm架构支持，在它的Android7.1.1(sdk 25)版本中，同样也发现了<code>enable_nativebridge</code>这个脚本文件，在pc上u盘启动Android x86能够完美打开微信小程序，但是奇怪的是，根据脚本语句，它内部使用的不是对应的houdini7_x，而是houdini6_y，下面贴出<code>enable_nativebridge</code>的内容：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/system/bin/sh</span></span><br><span class="line"></span><br><span class="line">PATH=/system/bin:/system/xbin</span><br><span class="line"></span><br><span class="line">houdini_bin=0</span><br><span class="line">dest_dir=/system/lib$1/arm$1</span><br><span class="line">binfmt_misc_dir=/proc/sys/fs/binfmt_misc</span><br><span class="line"></span><br><span class="line">cd /data/arm</span><br><span class="line">if [ -e /system/lib$1/libhoudini.so ]; then</span><br><span class="line">	log -pi -thoudini "found /system/lib$1/libhoudini.so"</span><br><span class="line">elif [ -e /system/etc/houdini$1.sfs ]; then</span><br><span class="line">	busybox mount /system/etc/houdini$1.sfs $dest_dir</span><br><span class="line">else</span><br><span class="line">	if mountpoint -q $dest_dir; then</span><br><span class="line">		kill -9 `fuser -m $dest_dir`</span><br><span class="line">		umount -f $dest_dir</span><br><span class="line">	fi</span><br><span class="line">	while ! busybox mount houdini$1.sfs $dest_dir; do</span><br><span class="line">		while [ "$(getprop net.dns1)" = "" ]; do</span><br><span class="line">			sleep 10</span><br><span class="line">		done</span><br><span class="line">		if [ -z "$1" ]; then</span><br><span class="line">			[ "`uname -m`" = "x86_64" ] &amp;&amp; url=http://goo.gl/Knnmyl || url=http://goo.gl/JsoX2C</span><br><span class="line">		else</span><br><span class="line">			url=http://goo.gl/n6KtQa</span><br><span class="line">		fi</span><br><span class="line">		wget $url -cO houdini$1.sfs &amp;&amp; continue</span><br><span class="line">		rm -f houdini$1.sfs</span><br><span class="line">		sleep 30</span><br><span class="line">	done</span><br><span class="line">fi</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> <span class="keyword">if</span> you don<span class="string">'t see the files '</span>register<span class="string">' and '</span>status<span class="string">' in /proc/sys/fs/binfmt_misc</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> <span class="keyword">then</span> run the following <span class="built_in">command</span>:</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> mount -t binfmt_misc none /proc/sys/fs/binfmt_misc</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> this is to add the supported binary formats via binfmt_misc</span></span><br><span class="line"></span><br><span class="line">if [ ! -e $binfmt_misc_dir/register ]; then</span><br><span class="line">	mount -t binfmt_misc none $binfmt_misc_dir</span><br><span class="line">fi</span><br><span class="line"></span><br><span class="line">cd $binfmt_misc_dir</span><br><span class="line">if [ -e register ]; then</span><br><span class="line">	[ -e /system/bin/houdini$1 ] &amp;&amp; dest_dir=/system/bin</span><br><span class="line"><span class="meta">	#</span><span class="bash"> register Houdini <span class="keyword">for</span> arm binaries</span></span><br><span class="line">	if [ -z "$1" ]; then</span><br><span class="line">		echo ':arm_exe:M::\\x7f\\x45\\x4c\\x46\\x01\\x01\\x01\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x02\\x00\\x28::'"$dest_dir/houdini:P" &gt; register</span><br><span class="line">		echo ':arm_dyn:M::\\x7f\\x45\\x4c\\x46\\x01\\x01\\x01\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x03\\x00\\x28::'"$dest_dir/houdini:P" &gt; register</span><br><span class="line">	else</span><br><span class="line">		echo ':arm64_exe:M::\\x7f\\x45\\x4c\\x46\\x02\\x01\\x01\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x02\\x00\\xb7::'"$dest_dir/houdini64:P" &gt; register</span><br><span class="line">		echo ':arm64_dyn:M::\\x7f\\x45\\x4c\\x46\\x02\\x01\\x01\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x03\\x00\\xb7::'"$dest_dir/houdini64:P" &gt; register</span><br><span class="line">	fi</span><br><span class="line">	if [ -e arm$&#123;1&#125;_exe ]; then</span><br><span class="line">		houdini_bin=1</span><br><span class="line">	fi</span><br><span class="line">else</span><br><span class="line">	log -pe -thoudini "No binfmt_misc support"</span><br><span class="line">fi</span><br><span class="line"></span><br><span class="line">if [ $houdini_bin -eq 0 ]; then</span><br><span class="line">	log -pe -thoudini "houdini$1 enabling failed!"</span><br><span class="line">else</span><br><span class="line">	log -pi -thoudini "houdini$1 enabled"</span><br><span class="line">fi</span><br><span class="line"></span><br><span class="line">[ "$(getprop ro.zygote)" = "zygote64_32" -a -z "$1" ] &amp;&amp; exec $0 64</span><br><span class="line"></span><br><span class="line">exit 0</span><br></pre></td></tr></table></figure>
-<p>之后有尝试将houdini6_x安装到模拟器（选择x而不是y是因为x86的avd模拟器是32位的而不是64位）中，情况比houdini7_x要糟糕，这次是大概意思是是模拟器缺少x86的某些feature，程序都不能跑起来了，具体情况没有再深究了，后继想要继续弄的话，我想，可以从这个方面继续考虑。另外，houdini的原理可以探究一番，比如试试替代品什么的</p>
-<h5 id="放弃装微信"><a href="#放弃装微信" class="headerlink" title="放弃装微信"></a>放弃装微信</h5><p>似乎模拟器里微信开不了小程序是现在的一种通病，夜神啥的也开不了，据说得上旧版本微信，我这里尝试安装微信7.0前的最后一个版本，但是登录之后就一直给我闪退了，日志也啥都没，emmmm，比较烦躁。</p>
-<p>最后结局是：老老实实买新手机刷步数吧！</p>
-<h3 id="其它"><a href="#其它" class="headerlink" title="其它"></a>其它</h3><h4 id="INSTALL-FAILED-CONTAINER-ERROR"><a href="#INSTALL-FAILED-CONTAINER-ERROR" class="headerlink" title="INSTALL_FAILED_CONTAINER_ERROR"></a>INSTALL_FAILED_CONTAINER_ERROR</h4><p>如果adb安装微信的时候提示<code>INSTALL_FAILED_CONTAINER_ERROR</code>，不是网上说的那种因为<code>Manifest.xml</code>里面写的安装位置不对的原因，多半是一些玄学问题，只要在<code>adb install</code>加上<code>-r</code>这个选项就好了。</p>
+<p>上了路由器先看看，mips架构，可能是基于PandoraBox的固件改的吧，登录文字里写的是PandoraBox。</p>
+<p>比较有意思的是<code>/dev/root</code>挂载到<code>/rom</code>，<code>/dev/mtdblock5</code>挂载到<code>/overlay</code>，然后似乎是结合这俩整了个overlayfs直接给挂载到<code>/</code>。得了，又是没见过的操作：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">overlayfs:/overlay on / type overlayfs (rw,noatime,lowerdir=/,upperdir=/overlay)</span><br></pre></td></tr></table></figure>
+<h3 id="breed"><a href="#breed" class="headerlink" title="breed"></a>breed</h3><p>这里下载的<a href="https://breed.hackpascal.net/是一个固件，需要解锁路由器才能刷入。breed的作者提供了一种加载内核模块`newifi-d2-jail-break.ko`刷入的方法，用这种方法似乎是“免解锁”的，具体作者的帖子在这：https://www.right.com.cn/forum/thread-342918-1-1.html" target="_blank" rel="noopener">https://breed.hackpascal.net/是一个固件，需要解锁路由器才能刷入。breed的作者提供了一种加载内核模块`newifi-d2-jail-break.ko`刷入的方法，用这种方法似乎是“免解锁”的，具体作者的帖子在这：https://www.right.com.cn/forum/thread-342918-1-1.html</a></p>
+<p>解压后用scp上传到路由器的<code>/tmp/</code>目录加载内核模块</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">insmod &apos;解压后的.ko文件&apos;</span><br></pre></td></tr></table></figure>
+<p>之后会卡住一段时间重启，重启后还是官方固件。</p>
+<p>接下来要进入恢复模式，断电后按住reset键插入电源启动，注意需要用数据线直连路由器。</p>
+<p><img src="../images/blog/2020-03-12 23-13-30屏幕截图.png" alt="Breed web 恢复控制台"></p>
+<h3 id="padavan"><a href="#padavan" class="headerlink" title="padavan"></a>padavan</h3><p>这里我选择的是hiboy制作的padavan固件</p>
+<p>相关帖子：<a href="https://www.right.com.cn/forum/thread-2110335-1-1.html" target="_blank" rel="noopener">https://www.right.com.cn/forum/thread-2110335-1-1.html</a></p>
+<p>下载地址：<a href="https://opt.cn2qq.com/padavan/" target="_blank" rel="noopener">https://opt.cn2qq.com/padavan/</a></p>
+<p>固件更新界面选择固件，安装该固件即可，很简单。</p>
+<p><img src="../images/blog/2020-03-12 23-20-23屏幕截图.png" alt=""></p>
+<p>重启后进入192.168.123.1就是熟悉的界面了，默认账号密码是admin和admin。比较可惜的是它只认440M内存，而总内存应该是512M的。最后测试信号强度要明显比原来的好，一些没网络的角落也能有2.4G信号了。</p>
+<p><img src="../images/blog/2020-03-13 12-57-28屏幕截图.png" alt="padavan界面"></p>
+<p>后面广告拦截啥的就看个人喜好啦。</p>
 
           
         
@@ -583,7 +533,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/62/">62</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/61/">61</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 
@@ -626,7 +576,7 @@
                 
                   <a href="/archives">
                 
-                    <span class="site-state-item-count">62</span>
+                    <span class="site-state-item-count">61</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -766,7 +716,11 @@
                     
                       
                     
-                    <span class="site-state-item-count">35</span>
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">37</span>
                     <span class="site-state-item-name">tags</span>
                   
                 </div>
