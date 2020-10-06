@@ -426,7 +426,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/blog/64/" itemprop="url">网络启动树莓派</a></h1>
+                <a class="post-title-link" href="/blog/64/" itemprop="url">树莓派集群——无盘启动树莓派</a></h1>
         
 
         <div class="post-meta">
@@ -537,7 +537,7 @@
 <p>（序列号可以通过<code>cat /proc/cpuinfo</code>命令的<code>Serial</code>字段找到）</p>
 <p>然后使用rsync命令将镜像的<code>rootfs</code>分区内容拷贝到子目录下的rootfs目录中（注意目录末尾的<code>/</code>不能忽略，否则语义不同）：</p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo rsync -a /run/media/imlk/rootfs/ /mnt/cluster/system/000000008a4232c8/rootfs/</span><br></pre></td></tr></table></figure>
-<p>接着，我们将<code>boot</code>分区的内容拷贝到rootfs目录下的boot子目录中：</p>
+<p>接着，我们将<code>boot</code>分区的内容拷贝到rootfs目录下的boot子目录中（其实也可以放在一个单独的目录下，但是这样的话我们就还需要在<code>/etc/fstab</code>下配置一条<code>/boot</code>的nfs条目）：</p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo rsync -a /run/media/imlk/boot/ /mnt/cluster/system/000000008a4232c8/rootfs/boot/</span><br></pre></td></tr></table></figure>
 <p>为了方便，我们在rootfs的父目录下创建一个软链接，指向<code>rootfs/boot</code>:</p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo ln -s rootfs/boot /mnt/cluster/system/000000008a4232c8/boot</span><br></pre></td></tr></table></figure>
