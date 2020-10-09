@@ -146,7 +146,7 @@
 
 
   <meta name="description" content="最近从同学那里拿到了几个闲置的树莓派，外加一个路由器和一块2T的硬盘，于是乎想用这些派来搭建一个简单的集群。但是发现SD卡实在是不够，遂尝试使用nfs的方式来启动树莓派。 实验中用到的东西主要有：  树莓派3B v1.2 刷有openwrt固件的路由器（竞斗云2.0） 挂载在路由器上的移动硬盘（U盘应该也可以，不过要足够大） 一张烧录了Raspberry Pi OS的SD卡（只在配置过程中会用到一">
-<meta name="keywords" content="路由器,树莓派,NFS">
+<meta name="keywords" content="树莓派,路由器,NFS">
 <meta property="og:type" content="article">
 <meta property="og:title" content="树莓派集群——无盘启动树莓派">
 <meta property="og:url" content="http://blog.imlk.top/blog/64/index.html">
@@ -157,7 +157,7 @@
 <meta property="og:image" content="http://blog.imlk.top/blog/images/blog/64/image-20201004200646054.png">
 <meta property="og:image" content="http://blog.imlk.top/blog/images/blog/64/image-20201004200744633.png">
 <meta property="og:image" content="http://blog.imlk.top/blog/images/blog/64/IMG_20201004_201311.jpg">
-<meta property="og:updated_time" content="2020-10-06T17:07:59.260Z">
+<meta property="og:updated_time" content="2020-10-09T07:45:02.324Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="树莓派集群——无盘启动树莓派">
 <meta name="twitter:description" content="最近从同学那里拿到了几个闲置的树莓派，外加一个路由器和一块2T的硬盘，于是乎想用这些派来搭建一个简单的集群。但是发现SD卡实在是不够，遂尝试使用nfs的方式来启动树莓派。 实验中用到的东西主要有：  树莓派3B v1.2 刷有openwrt固件的路由器（竞斗云2.0） 挂载在路由器上的移动硬盘（U盘应该也可以，不过要足够大） 一张烧录了Raspberry Pi OS的SD卡（只在配置过程中会用到一">
@@ -595,6 +595,15 @@
 <p>接下来内核会初始化dhcp客户端，然后通过nfs挂载rootfs。</p>
 <p>成功启动：</p>
 <p><img src="../images/blog/64/IMG_20201004_201311.jpg" alt="IMG_20201004_201311"></p>
+<h2 id="故障排除"><a href="#故障排除" class="headerlink" title="故障排除"></a>故障排除</h2><ul>
+<li><p>内核启动后卡住，显示类似于下面的内容</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">IP-Config: Complete:</span><br><span class="line">...</span><br><span class="line">random: crng init done</span><br></pre></td></tr></table></figure>
+<p>原因：内核挂载rootfs失败，请检查<code>boot/cmdlime.txt</code>中填写的内容</p>
+</li>
+<li><p>启动或关机时卡卡住，屏幕上的systemd日志显示<code>[***] A start job is running for LSB: raise network interfaces</code></p>
+<p><code>/etc/network/interfaces</code>配置问题，由于rootfs是通过nfs挂载的，因此系统启动后不应改变<code>eth0</code>接口的状态，否则已挂载的根文件系统会宕掉。</p>
+</li>
+</ul>
 <h2 id="相关文献"><a href="#相关文献" class="headerlink" title="相关文献"></a>相关文献</h2><ul>
 <li><p>树莓派的两种USB启动模式</p>
 <p><a href="https://www.raspberrypi.org/documentation/hardware/raspberrypi/bootmodes/usb.md" target="_blank" rel="noopener">https://www.raspberrypi.org/documentation/hardware/raspberrypi/bootmodes/usb.md</a></p>
@@ -629,9 +638,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/路由器/" rel="tag"># 路由器</a>
-          
             <a href="/tags/树莓派/" rel="tag"># 树莓派</a>
+          
+            <a href="/tags/路由器/" rel="tag"># 路由器</a>
           
             <a href="/tags/NFS/" rel="tag"># NFS</a>
           
@@ -925,7 +934,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#树莓派开启USB-network启动"><span class="nav-number">1.</span> <span class="nav-text">树莓派开启USB/network启动</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置文件系统"><span class="nav-number">2.</span> <span class="nav-text">配置文件系统</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#准备系统文件"><span class="nav-number">2.0.1.</span> <span class="nav-text">准备系统文件</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置路由器"><span class="nav-number">3.</span> <span class="nav-text">配置路由器</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#在路由器上挂载移动硬盘"><span class="nav-number">3.0.1.</span> <span class="nav-text">在路由器上挂载移动硬盘</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#配置PXE引导服务器"><span class="nav-number">3.0.2.</span> <span class="nav-text">配置PXE引导服务器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#配置nfs服务器"><span class="nav-number">3.0.3.</span> <span class="nav-text">配置nfs服务器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#最后一点点配置"><span class="nav-number">3.0.4.</span> <span class="nav-text">最后一点点配置</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#配置内核命令行-boot-cmdline-txt"><span class="nav-number">3.0.4.1.</span> <span class="nav-text">配置内核命令行/boot/cmdline.txt</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#配置自动挂载-etc-fstab"><span class="nav-number">3.0.4.2.</span> <span class="nav-text">配置自动挂载/etc/fstab</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#配置网络接口初始化-etc-network-interfaces"><span class="nav-number">3.0.4.3.</span> <span class="nav-text">配置网络接口初始化/etc/network/interfaces</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#启动"><span class="nav-number">3.1.</span> <span class="nav-text">启动</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#相关文献"><span class="nav-number">4.</span> <span class="nav-text">相关文献</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#树莓派开启USB-network启动"><span class="nav-number">1.</span> <span class="nav-text">树莓派开启USB/network启动</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置文件系统"><span class="nav-number">2.</span> <span class="nav-text">配置文件系统</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#准备系统文件"><span class="nav-number">2.0.1.</span> <span class="nav-text">准备系统文件</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置路由器"><span class="nav-number">3.</span> <span class="nav-text">配置路由器</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#在路由器上挂载移动硬盘"><span class="nav-number">3.0.1.</span> <span class="nav-text">在路由器上挂载移动硬盘</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#配置PXE引导服务器"><span class="nav-number">3.0.2.</span> <span class="nav-text">配置PXE引导服务器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#配置nfs服务器"><span class="nav-number">3.0.3.</span> <span class="nav-text">配置nfs服务器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#最后一点点配置"><span class="nav-number">3.0.4.</span> <span class="nav-text">最后一点点配置</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#配置内核命令行-boot-cmdline-txt"><span class="nav-number">3.0.4.1.</span> <span class="nav-text">配置内核命令行/boot/cmdline.txt</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#配置自动挂载-etc-fstab"><span class="nav-number">3.0.4.2.</span> <span class="nav-text">配置自动挂载/etc/fstab</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#配置网络接口初始化-etc-network-interfaces"><span class="nav-number">3.0.4.3.</span> <span class="nav-text">配置网络接口初始化/etc/network/interfaces</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#启动"><span class="nav-number">3.1.</span> <span class="nav-text">启动</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#故障排除"><span class="nav-number">4.</span> <span class="nav-text">故障排除</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#相关文献"><span class="nav-number">5.</span> <span class="nav-text">相关文献</span></a></li></ol></div>
             
 
           </div>
