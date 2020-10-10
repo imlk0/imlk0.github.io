@@ -407,7 +407,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://blog.imlk.top/blog/36/">
+    <link itemprop="mainEntityOfPage" href="http://blog.imlk.top/blog/37/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="imlk">
@@ -426,7 +426,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/blog/36/" itemprop="url">[笔记]JavaScript入门啦</a></h1>
+                <a class="post-title-link" href="/blog/37/" itemprop="url">[文章集]数据结构</a></h1>
         
 
         <div class="post-meta">
@@ -438,7 +438,7 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-04-17T21:19:19+08:00">2018-04-17</time>
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-04-19T19:22:18+08:00">2018-04-19</time>
             
 
             
@@ -459,7 +459,7 @@
                 <span class="post-meta-item-text">In</span>
               
               
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/JavaScript/" itemprop="url" rel="index"><span itemprop="name">JavaScript</span></a></span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/数据结构/" itemprop="url" rel="index"><span itemprop="name">数据结构</span></a></span>
 
                 
                 
@@ -474,8 +474,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/blog/36/#comments" itemprop="discussionUrl">
-                  <span class="post-meta-item-text">Comments:</span> <span class="post-comments-count valine-comment-count" data-xid="/blog/36/" itemprop="commentCount"></span>
+                <a href="/blog/37/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">Comments:</span> <span class="post-comments-count valine-comment-count" data-xid="/blog/37/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -505,80 +505,9 @@
       
         
           
-            <p>参考资料：<br>ECMAScript 6 入门:<br><a href="http://es6.ruanyifeng.com/" target="_blank" rel="noopener">http://es6.ruanyifeng.com/</a></p>
-<p><strong>以下所有代码示例均为在nodejs交互模式下进行的，环境：Linux</strong></p>
-<ul>
-<li>JavaScript不区分整数和浮点数，统一用Number表示;</li>
-<li><p>js注释</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 注释</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">注释</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>js等号比较运算符</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">== <span class="comment">// 会自动转换数据类型再比较，很多时候会得到非常诡异的结果</span></span><br><span class="line"></span><br><span class="line">=== <span class="comment">// 不会自动转换数据类型，如果数据类型不一致，直接返回false，一致的话再比较</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>实际时常用<code>===</code>而不用<code>==</code></p>
-</li>
-<li>使用<code>isNaN()</code>函数判断是否为<code>NaN</code></li>
-<li>浮点数运算有误差</li>
-<li><code>%</code>求余运算</li>
-<li><code>node</code>交互模式中，<code>_</code>表示上一次语句执行成功后的结果</li>
-<li><p><code>null</code>不等于<code>0</code>也不等于<code>&#39;&#39;</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&gt; null == 0</span><br><span class="line">false</span><br><span class="line">&gt; null === 0</span><br><span class="line">false</span><br><span class="line">&gt; null == &apos;&apos;</span><br><span class="line">false</span><br><span class="line">&gt; null === &apos;&apos;</span><br><span class="line">false</span><br><span class="line">&gt; null == null</span><br><span class="line">true</span><br><span class="line">&gt; null === null</span><br><span class="line">true</span><br><span class="line">&gt; 0 == &apos;&apos;</span><br><span class="line">true</span><br><span class="line">&gt; 0 === &apos;&apos;</span><br><span class="line">false</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>js中还有一个特殊的元素<code>undefined</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt; undefined === undefined</span><br><span class="line">true</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>js中<code>var</code>与不加<code>var</code>的区别：<a href="https://www.cnblogs.com/liuna/p/6140901.html" target="_blank" rel="noopener">https://www.cnblogs.com/liuna/p/6140901.html</a></p>
-</li>
-<li>js中<code>typeof</code>关键字的使用：<a href="https://blog.csdn.net/z18842589113/article/details/53315910" target="_blank" rel="noopener">https://blog.csdn.net/z18842589113/article/details/53315910</a></li>
-<li><p><code>typeof</code>运算符把类型信息当作字符串返回</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">&gt; i = 1</span><br><span class="line">1</span><br><span class="line">&gt; typeof(i)</span><br><span class="line">&apos;number&apos;</span><br><span class="line"></span><br><span class="line">&gt; i = &quot;imlk&quot;</span><br><span class="line">&apos;imlk&apos;</span><br><span class="line">&gt; typeof(i)</span><br><span class="line">&apos;string&apos;</span><br><span class="line"></span><br><span class="line">&gt; i = true</span><br><span class="line">true</span><br><span class="line">&gt; typeof(i)</span><br><span class="line">&apos;boolean&apos;</span><br><span class="line"></span><br><span class="line">&gt; typeof(this)</span><br><span class="line">&apos;object&apos;</span><br><span class="line"></span><br><span class="line">&gt; i = function()&#123;</span><br><span class="line">... this.console.log(&quot;imlk&quot;);</span><br><span class="line">... &#125;</span><br><span class="line">[Function: i]</span><br><span class="line">&gt; typeof(i)</span><br><span class="line">&apos;function&apos;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>Javascript的<code>delete</code>与C++不同，它不会删除i指向的对象，而是删除i这个属性本身。</p>
-</li>
-<li>Javascript中的对象都有一个方法<code>toString()</code>。</li>
-<li><p>对类型为<code>Function</code>的对象执行<code>toString()</code>方法将打印函数的内容。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&gt; i = function(e)&#123;</span><br><span class="line">... console.log(e)</span><br><span class="line">... &#125;</span><br><span class="line">[Function: i]</span><br><span class="line">&gt; i</span><br><span class="line">[Function: i]</span><br><span class="line">&gt; i.toString()</span><br><span class="line">&apos;function (e)&#123;\nconsole.log(e)\n&#125;&apos;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>js中的函数对象本身代表一个函数</p>
-</li>
-<li><p>js中构造一个函数对象（函数）</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">&gt; function f1()&#123;&#125;;</span><br><span class="line">undefined</span><br><span class="line">&gt; var f2 = function()&#123;&#125;;</span><br><span class="line">undefined</span><br><span class="line">&gt; var f3 = new Function(&apos;str&apos;,&apos;console.log(str)&apos;);//anonymous匿名函数</span><br><span class="line">undefined</span><br><span class="line"></span><br><span class="line">&gt; f1</span><br><span class="line">[Function: f1]</span><br><span class="line">&gt; f2</span><br><span class="line">[Function: f2]</span><br><span class="line">&gt; f3</span><br><span class="line">[Function: anonymous]</span><br><span class="line"></span><br><span class="line">&gt; f1.toString()</span><br><span class="line">&apos;function f1()&#123;&#125;&apos;</span><br><span class="line">&gt; f2.toString()</span><br><span class="line">&apos;function ()&#123;&#125;&apos;</span><br><span class="line">&gt; f3.toString()</span><br><span class="line">&apos;function anonymous(str\n/*``*/) &#123;\nconsole.log(str)\n&#125;&apos;</span><br><span class="line"></span><br><span class="line">&gt; f1.name</span><br><span class="line">&apos;f1&apos;</span><br><span class="line">&gt; f2.name</span><br><span class="line">&apos;f2&apos;</span><br><span class="line">&gt; f3.name</span><br><span class="line">&apos;anonymous&apos;</span><br><span class="line"></span><br><span class="line">&gt; f1.prototype</span><br><span class="line">f1 &#123;&#125;</span><br><span class="line">&gt; f2.prototype</span><br><span class="line">f2 &#123;&#125;</span><br><span class="line">&gt; f3.prototype</span><br><span class="line">anonymous &#123;&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>JS所有内置对象属性和方法汇总：<a href="https://segmentfault.com/a/1190000011467723" target="_blank" rel="noopener">https://segmentfault.com/a/1190000011467723</a></p>
-</li>
-<li><p>JavaScript 的 valueOf() 方法，返回<code>对象</code>的<code>原始值</code>。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">&gt; b = new Boolean(true)</span><br><span class="line">[Boolean: true]</span><br><span class="line">&gt; typeof b</span><br><span class="line">&apos;object&apos;</span><br><span class="line">&gt; b.valueOf()</span><br><span class="line">true</span><br><span class="line">&gt; typeof b.valueOf()</span><br><span class="line">&apos;boolean&apos;</span><br><span class="line"></span><br><span class="line">&gt; s = new String(&apos;imlk&apos;)</span><br><span class="line">[String: &apos;imlk&apos;]</span><br><span class="line">&gt; typeof s</span><br><span class="line">&apos;object&apos;</span><br><span class="line">&gt; s.valueOf()</span><br><span class="line">&apos;imlk&apos;</span><br><span class="line">&gt; typeof s.valueOf()</span><br><span class="line">&apos;string&apos;</span><br><span class="line"></span><br><span class="line">&gt; n = new Number(2333)</span><br><span class="line">[Number: 2333]</span><br><span class="line">&gt; typeof n</span><br><span class="line">&apos;object&apos;</span><br><span class="line">&gt; n.valueOf()</span><br><span class="line">2333</span><br><span class="line">&gt; typeof n.valueOf()</span><br><span class="line">&apos;number&apos;</span><br><span class="line">......</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>与<code>valueOf()</code>之相反的则是<code>new Object(obj)</code>，它将原始值转化为对应的对象</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&gt; a = 1;</span><br><span class="line">1</span><br><span class="line">&gt; b = new Object(a)</span><br><span class="line">[Number: 1]</span><br><span class="line">&gt; a == b</span><br><span class="line">true</span><br><span class="line">&gt; a === b</span><br><span class="line">false</span><br></pre></td></tr></table></figure>
-</li>
-<li><p><strong>js中没有类</strong></p>
-</li>
-<li>js中创建对象的7种方式：<a href="http://www.jb51.net/article/106325.htm" target="_blank" rel="noopener">http://www.jb51.net/article/106325.htm</a><br>  1.工厂模式(在函数中构造对象并返回)<br>  2.构造函数模式(对函数使用<code>new</code>操作符，生成的对象的<code>constructor</code>属性指向构造函数)<br>  3.原型模式(每一个函数都有一个<code>prototype</code>(原型)属性，它指向一个<strong>对象</strong>，可以理解为共享的一个对象，这个对象是与构造函数挂钩的，所有实例共享它所包含的属性和方法，注意此时所有生成的对象所访问的原型中定义的对象都是同一个东西)<br>  4.组合使用构造函数模式和原型模式<br>  5.动态原型模式<br>  6.寄生构造函数模式<br>  7.稳妥构造函数模式</li>
-<li><p>js中的对象,我们可以把ECMAScript的对象想象成散列表：无非就是一组名对值，其中值可以是数据或函数。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&gt; b = &#123;&apos;one&apos;: &apos;emmm&apos;,&apos;t&apos;:23333&#125;</span><br><span class="line">&#123; one: &apos;emmm&apos;, t: 23333 &#125;</span><br><span class="line">&gt; for (var key in b)&#123;</span><br><span class="line">... console.log(key);</span><br><span class="line">... console.log(b[key]);</span><br><span class="line">... &#125;</span><br><span class="line">one</span><br><span class="line">emmm</span><br><span class="line">t</span><br><span class="line">23333</span><br><span class="line">undefined</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>js的函数中有一个特殊的关键字<code>arguments</code>，因此可以支持可变长参数传递，这个<code>arguments</code>变量只可在函数中使用，是一个特殊的对象，与一个普通的对象相比，可以读取<code>arguments.length</code>属性</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&gt; f1 = function(e)&#123;</span><br><span class="line">... console.log(typeof arguments);</span><br><span class="line">... console.log(arguments.length);</span><br><span class="line">... console.log(arguments);</span><br><span class="line">... &#125;</span><br><span class="line">[Function: f1]</span><br><span class="line">&gt; f1(1,2);</span><br><span class="line">object</span><br><span class="line">2</span><br><span class="line">&#123; &apos;0&apos;: 1, &apos;1&apos;: 2 &#125;</span><br><span class="line">undefined</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>js中的<code>instanceof</code>关键字</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&gt; c = new f1(1,2);</span><br><span class="line">object</span><br><span class="line">2</span><br><span class="line">&#123; &apos;0&apos;: 1, &apos;1&apos;: 2 &#125;</span><br><span class="line">f1 &#123;&#125;</span><br><span class="line">&gt; c.constructor</span><br><span class="line">[Function: f1]</span><br><span class="line">&gt; c.constructor === f1</span><br><span class="line">true</span><br><span class="line">&gt; c instanceof f1</span><br><span class="line">true</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>exports 和 module.exports 的区别<br><a href="http://cnodejs.org/topic/5231a630101e574521e45ef8" target="_blank" rel="noopener">http://cnodejs.org/topic/5231a630101e574521e45ef8</a></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">module.exports 初始值为一个空对象 &#123;&#125;</span><br><span class="line">exports 是指向的 module.exports 的引用</span><br><span class="line">require() 返回的是 module.exports 而不是 exports</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>exports 快捷方式<br><a href="http://nodejs.cn/api/modules.html#modules_exports_shortcut" target="_blank" rel="noopener">http://nodejs.cn/api/modules.html#modules_exports_shortcut</a><br><code>exports</code>变量是在模块的文件级别作用域内有效的，它在模块被执行前被赋予<code>module.exports</code>的值。</p>
-</li>
-<li><p>js定义常量语法糖<code>const { PI }</code><br><a href="https://segmentfault.com/q/1010000011190967" target="_blank" rel="noopener">https://segmentfault.com/q/1010000011190967</a></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">const &#123; PI &#125; = Math;</span><br><span class="line">实际上是语法糖，等价于：</span><br><span class="line">const PI = Math.PI</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>js模块包装器<br><a href="http://nodejs.cn/api/modules.html#modules_the_module_wrapper" target="_blank" rel="noopener">http://nodejs.cn/api/modules.html#modules_the_module_wrapper</a><br>在执行模块代码之前，Node.js 会使用一个如下的函数包装器将其包装：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">(function(exports, require, module, __filename, __dirname) &#123;</span><br><span class="line">// 模块的代码实际上在这里</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>export<br>模块是独立的文件，该文件内部的所有的变量外部都无法获取。如果希望获取某个变量，必须通过export输出，</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">export var firstName = &apos;Michael&apos;;</span><br><span class="line">export var lastName = &apos;Jackson&apos;;</span><br><span class="line">export var year = 1958;</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
+            <h2 id="串"><a href="#串" class="headerlink" title="串"></a>串</h2><h3 id="模式匹配"><a href="#模式匹配" class="headerlink" title="模式匹配"></a>模式匹配</h3><p>从头到尾彻底理解KMP：<br><a href="https://www.cnblogs.com/zhangtianq/p/5839909.html" target="_blank" rel="noopener">https://www.cnblogs.com/zhangtianq/p/5839909.html</a></p>
+<h2 id="树"><a href="#树" class="headerlink" title="树"></a>树</h2><h3 id="二叉树"><a href="#二叉树" class="headerlink" title="二叉树"></a>二叉树</h3><p>搜索二叉树的旋转操作和平衡判断：<br><a href="https://www.cnblogs.com/zhanghaiba/p/3537221.html" target="_blank" rel="noopener">https://www.cnblogs.com/zhanghaiba/p/3537221.html</a></p>
+<p>数据结构—平衡二叉树，树的平衡旋转：<br><a href="https://www.cnblogs.com/PerkinsZhu/p/5824015.html" target="_blank" rel="noopener">https://www.cnblogs.com/PerkinsZhu/p/5824015.html</a></p>
 
           
         
@@ -621,7 +550,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/26/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/26/">26</a><span class="page-number current">27</span><a class="page-number" href="/page/28/">28</a><span class="space">&hellip;</span><a class="page-number" href="/page/61/">61</a><a class="extend next" rel="next" href="/page/28/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <a class="extend prev" rel="prev" href="/page/26/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/26/">26</a><span class="page-number current">27</span><a class="page-number" href="/page/28/">28</a><span class="space">&hellip;</span><a class="page-number" href="/page/62/">62</a><a class="extend next" rel="next" href="/page/28/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 
@@ -664,7 +593,7 @@
                 
                   <a href="/archives">
                 
-                    <span class="site-state-item-count">61</span>
+                    <span class="site-state-item-count">62</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -721,7 +650,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">22</span>
+                      
+                    
+                    <span class="site-state-item-count">23</span>
                     <span class="site-state-item-name">categories</span>
                   </a>
                 </div>
@@ -808,7 +739,13 @@
                     
                       
                     
-                    <span class="site-state-item-count">37</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">40</span>
                     <span class="site-state-item-name">tags</span>
                   
                 </div>

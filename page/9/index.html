@@ -407,7 +407,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://blog.imlk.top/blog/56/">
+    <link itemprop="mainEntityOfPage" href="http://blog.imlk.top/blog/57/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="imlk">
@@ -426,7 +426,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/blog/56/" itemprop="url">自制玩具操作系统--week5</a></h1>
+                <a class="post-title-link" href="/blog/57/" itemprop="url">自制玩具操作系统--week6</a></h1>
         
 
         <div class="post-meta">
@@ -438,7 +438,7 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-05-01T00:00:04+08:00">2019-05-01</time>
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-05-01T00:00:05+08:00">2019-05-01</time>
             
 
             
@@ -474,8 +474,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/blog/56/#comments" itemprop="discussionUrl">
-                  <span class="post-meta-item-text">Comments:</span> <span class="post-comments-count valine-comment-count" data-xid="/blog/56/" itemprop="commentCount"></span>
+                <a href="/blog/57/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">Comments:</span> <span class="post-comments-count valine-comment-count" data-xid="/blog/57/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -505,20 +505,14 @@
       
         
           
-            <h2 id="DAY-0x0C"><a href="#DAY-0x0C" class="headerlink" title="DAY 0x0C"></a>DAY 0x0C</h2><h4 id="PIT-Programmable-Interval-Timer-可编程的间隔型定时器"><a href="#PIT-Programmable-Interval-Timer-可编程的间隔型定时器" class="headerlink" title="PIT (Programmable Interval Timer 可编程的间隔型定时器)"></a>PIT (Programmable Interval Timer 可编程的间隔型定时器)</h4><p>查阅资料知道AT兼容机中PIT时钟频率为<code>1.19318MHz</code><br>中断周期设定的值的单位是一个时钟周期，因此要达到频率为<code>100Hz</code>的中断，中断周期应该设定为<code>1.19318*1000000/100=11931.8≈11932</code><br>在qemu上跑的时候,count是按照预想的速度增加的,而在bochs上面时,count的速度明显的降低,猜测是bochs的时钟的问题,google了一番发现很多用bochs的也遇到了类似的问题,但是好像并没有找到解决方案</p>
-<h2 id="DAY-0x0D"><a href="#DAY-0x0D" class="headerlink" title="DAY 0x0D"></a>DAY 0x0D</h2><h4 id="timerctl"><a href="#timerctl" class="headerlink" title="timerctl"></a>timerctl</h4><p>这里由于pit设置了100Hz的定时器,所以理想的情况下能够以0.01ms的整数倍的时间间隔来进行中断,作者在实现完成以后进行了先后三次优化,但是对于最后一次优化,我感觉作者在超时后将定时器指针数组整体移位的优化还不如不优化,所以我只实现了using变量,以确定一个循环检索的上界</p>
-<h4 id="fifo重用优化"><a href="#fifo重用优化" class="headerlink" title="fifo重用优化"></a>fifo重用优化</h4><p>这一段我没有使用作者的优化方式，因为将fifo重用会增加程序的复杂性，对于排错也不友好，另外，将数据按大小分层的话，如果后面增加了设备或者数据种类一多，又要去更改分层方式。</p>
-<h2 id="DAY-0x0E"><a href="#DAY-0x0E" class="headerlink" title="DAY 0x0E"></a>DAY 0x0E</h2><p>到这里遇到了一个小插曲，程序能够在qemu模拟器上运行，但是到了bochs，由于定时器的速度太快，而bochs比qemu忙，每轮循环中都有定时器事件发生，导致鼠标和键盘中断被定时器所抢先，键盘和鼠标的相应被“饿死”了，在这种情况下更换循环中if条件判断的先后顺序解决了问题</p>
-<h4 id="提高分辨率"><a href="#提高分辨率" class="headerlink" title="提高分辨率"></a>提高分辨率</h4><p>做到这一步的时候被作者坑到了，作者给的nas文件里面把<code>[INSTRSET &quot;i486p&quot;]</code>提前到了第一行但是却没有在书中说明，导致nask一直编译不通过，害我还以为哪里写错了。</p>
-<p>使用VBE时，显卡能利用的VBE信息写入到以ES:DI开始的512字节中。<br>视频缓冲区位置也变成了由VBE信息指定的区域（不再是VGA的0x0x000a0000）</p>
-<h4 id="键盘输入"><a href="#键盘输入" class="headerlink" title="键盘输入"></a>键盘输入</h4><p>做到这里的时候倒是发现了以前写下的好几个bug，本着自己写自己修的原则只好修复之。</p>
-<p>由于我之前将光标封装成了Cursor类，所以字符操作什么的用<code>Cursor::next()</code>和<code>Cursor::backspace()</code>还是很爽的。遗憾的是我封装的时候还是直接对varm区域进行操作，没有绑定到画板<code>Canvas</code>（也就是作者的SHEET）上面这样的话对于窗口边界的判断就很麻烦了，后面考虑改成和<code>Canvas</code>组合在一起。</p>
-<h4 id="改善log的性能"><a href="#改善log的性能" class="headerlink" title="改善log的性能"></a>改善log的性能</h4><p>为了改善log的性能，原先是每次来一条日志信息，当场就把数据给写到log拥有的那块画板上面，这样的话，如果一个主循环周期内产生了多条log，那么除了最后一次刷新操作，之前的操作全部都是浪费的，因此，给Canvas里面增加了一个函数指针callback字段，在每一轮主循环周期判别进行屏幕刷新前，首先调用所有canvas的callback函数，这样虽然会带来循环时的浪费，但是相比于多次log时的多次刷新来说，还是划得来的。<br>后面还可以考虑只对新增的log进行绘制，而对于旧的log绘制时只拷贝对应区域的图像数据</p>
-<h4 id="debug屏幕刷新"><a href="#debug屏幕刷新" class="headerlink" title="debug屏幕刷新"></a>debug屏幕刷新</h4><p>由于我刷新机制和作者的不太一样，是按分块刷新屏幕的，有时候也容易出bug，为了检验效果同时也使其更加直观，所以我用宏来做了一个显示屏幕刷新区域的debug功能，将每次刷新时进行的的分块用红色线条圈起来，如图所示<br><img src="/images/blog/os/5.png" alt="分块区域"></p>
-<h4 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h4><ul>
-<li>关于PIT<br><a href="http://webcache.googleusercontent.com/search?q=cache:http://oswiki.osask.jp/?(PIT)8254" target="_blank" rel="noopener">http://webcache.googleusercontent.com/search?q=cache:http://oswiki.osask.jp/?(PIT)8254</a></li>
-<li>关于输入键盘映射<br><a href="http://webcache.googleusercontent.com/search?q=cache:http://oswiki.osask.jp/?（AT）keyboard" target="_blank" rel="noopener">http://webcache.googleusercontent.com/search?q=cache:http://oswiki.osask.jp/?（AT）keyboard</a> </li>
-</ul>
+            <h2 id="DAY-0x0F"><a href="#DAY-0x0F" class="headerlink" title="DAY 0x0F"></a>DAY 0x0F</h2><h4 id="两种JMP指令"><a href="#两种JMP指令" class="headerlink" title="两种JMP指令"></a>两种JMP指令</h4><p><code>near jmp</code>只修改IP寄存器的值，而<code>far jmp</code>同时修改<code>IP</code>寄存器和<code>CS</code>寄存器的值(用<code>:</code>隔开)<br>用于任务切换的JMP命令就属于far-JMP命令，用于任务切换的JMP命令在切换回这个任务后，会从这条JMP命令后继续执行。</p>
+<h4 id="GDT中的TSS段"><a href="#GDT中的TSS段" class="headerlink" title="GDT中的TSS段"></a>GDT中的TSS段</h4><p>TSS(task status segment)，全称任务状态段<br>CPU在执行带有段地址的指令时，会去确认GDT中对应项的配置，可用此判断是JMP指令还是far-JMP，</p>
+<h4 id="TR-task-register-寄存器"><a href="#TR-task-register-寄存器" class="headerlink" title="TR(task register)寄存器"></a>TR(task register)寄存器</h4><p><code>TR</code>寄存器记录当前正在运行的是哪一个任务，任务切换时，寄存器的值会自动变化，每次给<code>TR</code>寄存器赋值的时候，需要将其在GDT中的序号乘以8。</p>
+<p>两个任务交替进行输出：<br><img src="/images/blog/os/6.png" alt="两个任务交替进行输出"></p>
+<h2 id="DAY-0x10"><a href="#DAY-0x10" class="headerlink" title="DAY 0x10"></a>DAY 0x10</h2><p>作者原先只定义了两个任务，并且只是在超时之后将其强行进行切换，但是实际中的场景比这样的复杂得多，因而封装了切换任务的的逻辑，并且在这样的基础上实现任务增减、任务优先级设置，因此我这里模仿CanvasCtl的结构去实现task的管理</p>
+<h4 id="多窗口"><a href="#多窗口" class="headerlink" title="多窗口"></a>多窗口</h4><p>多任务建立起来以后，窗口（window）的数量也相应增加，为此实现了窗口和任务的绑定关系、窗口焦点的变化。</p>
+<h4 id="优先级"><a href="#优先级" class="headerlink" title="优先级"></a>优先级</h4><p>原先的task切换时，采用的是公平竞争的方式，每个任务被执行的几率相等，但是在实际的操作系统中，往往需要让某些进程拥有更高的优先级。要实现这样的功能，只要在task中加入priority字段，然后在切换任务时考虑这个字段即可。<br><img src="/images/blog/os/7.png" alt="task不同的优先级"></p>
+<h2 id="DAY-0x11"><a href="#DAY-0x11" class="headerlink" title="DAY 0x11"></a>DAY 0x11</h2><h4 id="命令行窗口"><a href="#命令行窗口" class="headerlink" title="命令行窗口"></a>命令行窗口</h4><p>这一天的内容基本上是对现有知识的应用，读取键盘输入、keytable的转换、按键的不同情况的响应等。<br>由于我之前写了log输出模块，可以像命令行那样一行一行显示日志文本，所以这个命令行窗口其实和我之前的那个日志模块有些类似，因此我直接将原先的代码进行修改，结合作者的实现，加入读取键盘输入的逻辑。<br>对各种按键锁的支持其实就是获取锁的状态，并进行记录，然后在触发按键响应过程中判断锁的状态，以此进行过滤。<br><img src="/images/blog/os/8.png" alt=""><br>但是一些组合键的响应支持还不够完善，期待下一天的相关内容。</p>
 
           
         
@@ -561,7 +555,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/8/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><span class="page-number current">9</span><a class="page-number" href="/page/10/">10</a><span class="space">&hellip;</span><a class="page-number" href="/page/61/">61</a><a class="extend next" rel="next" href="/page/10/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <a class="extend prev" rel="prev" href="/page/8/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><span class="page-number current">9</span><a class="page-number" href="/page/10/">10</a><span class="space">&hellip;</span><a class="page-number" href="/page/62/">62</a><a class="extend next" rel="next" href="/page/10/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 
@@ -604,7 +598,7 @@
                 
                   <a href="/archives">
                 
-                    <span class="site-state-item-count">61</span>
+                    <span class="site-state-item-count">62</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -661,7 +655,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">22</span>
+                      
+                    
+                    <span class="site-state-item-count">23</span>
                     <span class="site-state-item-name">categories</span>
                   </a>
                 </div>
@@ -748,7 +744,13 @@
                     
                       
                     
-                    <span class="site-state-item-count">37</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">40</span>
                     <span class="site-state-item-name">tags</span>
                   
                 </div>

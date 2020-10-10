@@ -407,7 +407,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://blog.imlk.top/blog/55/">
+    <link itemprop="mainEntityOfPage" href="http://blog.imlk.top/blog/56/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="imlk">
@@ -426,7 +426,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/blog/55/" itemprop="url">自制玩具操作系统--week4</a></h1>
+                <a class="post-title-link" href="/blog/56/" itemprop="url">自制玩具操作系统--week5</a></h1>
         
 
         <div class="post-meta">
@@ -438,7 +438,7 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-05-01T00:00:03+08:00">2019-05-01</time>
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-05-01T00:00:04+08:00">2019-05-01</time>
             
 
             
@@ -474,8 +474,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/blog/55/#comments" itemprop="discussionUrl">
-                  <span class="post-meta-item-text">Comments:</span> <span class="post-comments-count valine-comment-count" data-xid="/blog/55/" itemprop="commentCount"></span>
+                <a href="/blog/56/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">Comments:</span> <span class="post-comments-count valine-comment-count" data-xid="/blog/56/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -505,23 +505,19 @@
       
         
           
-            <h2 id="DAY-0x09"><a href="#DAY-0x09" class="headerlink" title="DAY 0x09"></a>DAY 0x09</h2><h4 id="内存检查"><a href="#内存检查" class="headerlink" title="内存检查"></a>内存检查</h4><ul>
-<li>内存检查前需要先禁用缓存，通过修改CR0寄存器实现这一点</li>
-<li>内存检查是通过对内存单元进行<code>写、反转、判断、反转、判断</code>，来确定一个内存单元的可用性的</li>
-</ul>
-<h4 id="内存管理"><a href="#内存管理" class="headerlink" title="内存管理"></a>内存管理</h4><ul>
-<li>内存的使用情况的表示方法多样，可以用一个bit标记一页的状态，也可以用内存区域的起始地址和长度来表示一个空的区域。</li>
-<li>memman_free时，由于按地址有序，于是改用二分查找的方式寻找插入位置，以提高效率</li>
-</ul>
-<h4 id="日志"><a href="#日志" class="headerlink" title="日志"></a>日志</h4><p>为了方便调试，手撸了一个<code>log.cpp</code>，输出时只需构建字符串然后调用<code>log::info()</code>，能够在屏幕上滚动输出，就像终端一样，还支持不同日志等级，不同颜色显示<br><img src="/images/blog/os/2.png" alt="日志"></p>
-<h2 id="DAY-0x0A"><a href="#DAY-0x0A" class="headerlink" title="DAY 0x0A"></a>DAY 0x0A</h2><p>这一天的几乎全是软件层面的事情了。<br>    实验中跟随作者实现了图层，但是我把SHEET重新命名为了Canvas，并且将结构体改成了类，把那些操作函数改成了成员函数，因为我实在是受不了作者的代码结构了，把一堆函数分散开而且每一次调用都要在参数里加上ctl这种做法实在是啰嗦，而且一改动的话几乎全部都要改，按照类来设计的话，可以把代码很好的组织起来，这种逻辑最适合设计成面向对象的程序。</p>
-<p>​    而最让我头疼的是屏幕刷新的问题，因为作者只用了两个图层，而我还加了一个滚动的日志层，一共三个层，这样导致每次鼠标来一下中断都要滚动输出一下，屏幕闪烁得不行，不知道后面到定时器的时候有没有其它的办法<br><img src="/images/blog/os/3.gif" alt="卡顿的屏幕"></p>
-<p>​    在将直接写入改成写入到图层的过程中，经常遇到一些问题，但是在机器码层面不方便调试，因此，将之前我找到的<code>bochsdbg</code>支持的断点魔法<code>xchg    bx,bx</code>，封装成<code>void bochsdbg()</code>函数加到naskfunc里头，然后在不同的地方调用该函数，这样就能找出代码是在那个地方跑飞的了。</p>
-<p>​    作者对屏幕的刷新策略是，从底部到顶部逐层刷新，我尝试过另外一种方法，外层循环是整个屏幕的所有位置，对于每一个位置，按高度从顶部向下遍历，直至找到非透明像素，但是这种方法效率不高，可能是因为有些时候虽然图层很多但是顶部的图层面积较小，导致要么不再图层边界内，要么遇到透明像素的情况。</p>
-<h2 id="DAY-0x0B"><a href="#DAY-0x0B" class="headerlink" title="DAY 0x0B"></a>DAY 0x0B</h2><p>​    由于自己写的东西魔改的太多，作者是在每次界面改动之后就立刻调用<code>fresh_map</code>和<code>fresh_sub</code>刷新，但是这样会导致一轮循环中重复刷新某一区域（过度绘制）的问题，在大面积更新时势必遇到卡顿。而我由于多了一层log图层，该图层背景透明且每次输出都会整个刷新，因此我考虑采用另外的方式，为了解决这一问题，我决定在主while循环中进行真正的刷新操作，其他时候调用<code>notifyRefresh()</code>进行标志位的设置。<br>​    另外，将刷新map的操作也进行优化，窗口位置移动时，如果对新旧窗口分别刷新，实际上在移动区域不大的情况下，是有一部分区域重叠了的，对于这一情况，将图像分割成多个不重叠的区域，分别进行刷新，可以节省大量刷新操作。<br>​    作者的函数需要传入图层高度，作者提到，它不能适应把窗口变成透明或者把不透明变成透明的情况，为了避免这种状况，我每次map刷新都从最底部的图层开始，这在一定程度上影响了效率。<br>​    为了避免多处代码对同一区域进行刷新map的操作，我借鉴了网上一道求解<code>n个矩形重叠覆盖的面积</code>的算法题的思想，先将所有待刷新的区域矩形记录下来，先不刷新map，而在刷新屏幕之前，对这些区域进行划分，分块进行map的刷新操作，</p>
-<p>左边作者的，右边我的，可以看到，我的速度慢了十倍多，但是并不卡顿<br><img src="/images/blog/os/4.gif" alt=""></p>
-<h4 id="引用"><a href="#引用" class="headerlink" title="引用"></a>引用</h4><ul>
-<li>UVA 11345 Rectangles(n个矩形重叠覆盖的面积)<br><a href="https://blog.csdn.net/u013480600/article/details/39481243" target="_blank" rel="noopener">https://blog.csdn.net/u013480600/article/details/39481243</a></li>
+            <h2 id="DAY-0x0C"><a href="#DAY-0x0C" class="headerlink" title="DAY 0x0C"></a>DAY 0x0C</h2><h4 id="PIT-Programmable-Interval-Timer-可编程的间隔型定时器"><a href="#PIT-Programmable-Interval-Timer-可编程的间隔型定时器" class="headerlink" title="PIT (Programmable Interval Timer 可编程的间隔型定时器)"></a>PIT (Programmable Interval Timer 可编程的间隔型定时器)</h4><p>查阅资料知道AT兼容机中PIT时钟频率为<code>1.19318MHz</code><br>中断周期设定的值的单位是一个时钟周期，因此要达到频率为<code>100Hz</code>的中断，中断周期应该设定为<code>1.19318*1000000/100=11931.8≈11932</code><br>在qemu上跑的时候,count是按照预想的速度增加的,而在bochs上面时,count的速度明显的降低,猜测是bochs的时钟的问题,google了一番发现很多用bochs的也遇到了类似的问题,但是好像并没有找到解决方案</p>
+<h2 id="DAY-0x0D"><a href="#DAY-0x0D" class="headerlink" title="DAY 0x0D"></a>DAY 0x0D</h2><h4 id="timerctl"><a href="#timerctl" class="headerlink" title="timerctl"></a>timerctl</h4><p>这里由于pit设置了100Hz的定时器,所以理想的情况下能够以0.01ms的整数倍的时间间隔来进行中断,作者在实现完成以后进行了先后三次优化,但是对于最后一次优化,我感觉作者在超时后将定时器指针数组整体移位的优化还不如不优化,所以我只实现了using变量,以确定一个循环检索的上界</p>
+<h4 id="fifo重用优化"><a href="#fifo重用优化" class="headerlink" title="fifo重用优化"></a>fifo重用优化</h4><p>这一段我没有使用作者的优化方式，因为将fifo重用会增加程序的复杂性，对于排错也不友好，另外，将数据按大小分层的话，如果后面增加了设备或者数据种类一多，又要去更改分层方式。</p>
+<h2 id="DAY-0x0E"><a href="#DAY-0x0E" class="headerlink" title="DAY 0x0E"></a>DAY 0x0E</h2><p>到这里遇到了一个小插曲，程序能够在qemu模拟器上运行，但是到了bochs，由于定时器的速度太快，而bochs比qemu忙，每轮循环中都有定时器事件发生，导致鼠标和键盘中断被定时器所抢先，键盘和鼠标的相应被“饿死”了，在这种情况下更换循环中if条件判断的先后顺序解决了问题</p>
+<h4 id="提高分辨率"><a href="#提高分辨率" class="headerlink" title="提高分辨率"></a>提高分辨率</h4><p>做到这一步的时候被作者坑到了，作者给的nas文件里面把<code>[INSTRSET &quot;i486p&quot;]</code>提前到了第一行但是却没有在书中说明，导致nask一直编译不通过，害我还以为哪里写错了。</p>
+<p>使用VBE时，显卡能利用的VBE信息写入到以ES:DI开始的512字节中。<br>视频缓冲区位置也变成了由VBE信息指定的区域（不再是VGA的0x0x000a0000）</p>
+<h4 id="键盘输入"><a href="#键盘输入" class="headerlink" title="键盘输入"></a>键盘输入</h4><p>做到这里的时候倒是发现了以前写下的好几个bug，本着自己写自己修的原则只好修复之。</p>
+<p>由于我之前将光标封装成了Cursor类，所以字符操作什么的用<code>Cursor::next()</code>和<code>Cursor::backspace()</code>还是很爽的。遗憾的是我封装的时候还是直接对varm区域进行操作，没有绑定到画板<code>Canvas</code>（也就是作者的SHEET）上面这样的话对于窗口边界的判断就很麻烦了，后面考虑改成和<code>Canvas</code>组合在一起。</p>
+<h4 id="改善log的性能"><a href="#改善log的性能" class="headerlink" title="改善log的性能"></a>改善log的性能</h4><p>为了改善log的性能，原先是每次来一条日志信息，当场就把数据给写到log拥有的那块画板上面，这样的话，如果一个主循环周期内产生了多条log，那么除了最后一次刷新操作，之前的操作全部都是浪费的，因此，给Canvas里面增加了一个函数指针callback字段，在每一轮主循环周期判别进行屏幕刷新前，首先调用所有canvas的callback函数，这样虽然会带来循环时的浪费，但是相比于多次log时的多次刷新来说，还是划得来的。<br>后面还可以考虑只对新增的log进行绘制，而对于旧的log绘制时只拷贝对应区域的图像数据</p>
+<h4 id="debug屏幕刷新"><a href="#debug屏幕刷新" class="headerlink" title="debug屏幕刷新"></a>debug屏幕刷新</h4><p>由于我刷新机制和作者的不太一样，是按分块刷新屏幕的，有时候也容易出bug，为了检验效果同时也使其更加直观，所以我用宏来做了一个显示屏幕刷新区域的debug功能，将每次刷新时进行的的分块用红色线条圈起来，如图所示<br><img src="/images/blog/os/5.png" alt="分块区域"></p>
+<h4 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h4><ul>
+<li>关于PIT<br><a href="http://webcache.googleusercontent.com/search?q=cache:http://oswiki.osask.jp/?(PIT)8254" target="_blank" rel="noopener">http://webcache.googleusercontent.com/search?q=cache:http://oswiki.osask.jp/?(PIT)8254</a></li>
+<li>关于输入键盘映射<br><a href="http://webcache.googleusercontent.com/search?q=cache:http://oswiki.osask.jp/?（AT）keyboard" target="_blank" rel="noopener">http://webcache.googleusercontent.com/search?q=cache:http://oswiki.osask.jp/?（AT）keyboard</a> </li>
 </ul>
 
           
@@ -565,7 +561,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/9/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/9/">9</a><span class="page-number current">10</span><a class="page-number" href="/page/11/">11</a><span class="space">&hellip;</span><a class="page-number" href="/page/61/">61</a><a class="extend next" rel="next" href="/page/11/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <a class="extend prev" rel="prev" href="/page/9/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/9/">9</a><span class="page-number current">10</span><a class="page-number" href="/page/11/">11</a><span class="space">&hellip;</span><a class="page-number" href="/page/62/">62</a><a class="extend next" rel="next" href="/page/11/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 
@@ -608,7 +604,7 @@
                 
                   <a href="/archives">
                 
-                    <span class="site-state-item-count">61</span>
+                    <span class="site-state-item-count">62</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -665,7 +661,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">22</span>
+                      
+                    
+                    <span class="site-state-item-count">23</span>
                     <span class="site-state-item-name">categories</span>
                   </a>
                 </div>
@@ -752,7 +750,13 @@
                     
                       
                     
-                    <span class="site-state-item-count">37</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">40</span>
                     <span class="site-state-item-name">tags</span>
                   
                 </div>

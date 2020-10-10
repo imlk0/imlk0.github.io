@@ -407,7 +407,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://blog.imlk.top/blog/27/">
+    <link itemprop="mainEntityOfPage" href="http://blog.imlk.top/blog/26/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="imlk">
@@ -426,7 +426,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/blog/27/" itemprop="url">对比学习Java和C++时关于方法覆盖Override后外部调用父类方法的区别</a></h1>
+                <a class="post-title-link" href="/blog/26/" itemprop="url">关于scanf的误区</a></h1>
         
 
         <div class="post-meta">
@@ -438,7 +438,7 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-11-21T17:30:03+08:00">2017-11-21</time>
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-12-06T18:43:21+08:00">2017-12-06</time>
             
 
             
@@ -463,13 +463,6 @@
 
                 
                 
-                  , 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Java/" itemprop="url" rel="index"><span itemprop="name">Java</span></a></span>
-
-                
-                
               
             </span>
           
@@ -481,8 +474,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/blog/27/#comments" itemprop="discussionUrl">
-                  <span class="post-meta-item-text">Comments:</span> <span class="post-comments-count valine-comment-count" data-xid="/blog/27/" itemprop="commentCount"></span>
+                <a href="/blog/26/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">Comments:</span> <span class="post-comments-count valine-comment-count" data-xid="/blog/26/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -512,19 +505,8 @@
       
         
           
-            <p>以Java语法示范：</p>
-<p><img src="/images/blog/27_0.png" alt=""></p>
-<p>面向对象中，B extends A</p>
-<blockquote>
-<p>// Java中</p>
-<p>B objectB = new B();</p>
-<p>objectB.foo();//输出 from Child Class</p>
-<p>A objectA = new B();</p>
-<p>objectA.foo();//依然输出 from Child Class</p>
-<p>//类型转换不会导致父类方法被调用</p>
-<p>//而，C++中，通过类型转换，可以达到调用父类被覆盖的方法的效果</p>
-</blockquote>
-<p>参考：<a href="http://bbs.csdn.net/wap/topics/390171251" target="_blank" rel="noopener">http://bbs.csdn.net/wap/topics/390171251</a></p>
+            <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;stdio.h&gt;</span><br><span class="line"></span><br><span class="line">int main()&#123;</span><br><span class="line"></span><br><span class="line">	int a, b;</span><br><span class="line">	while(scanf(&quot;%d%d&quot;,&amp;a,&amp;b) == EOF)&#123;</span><br><span class="line">		printf(&quot;%d\n&quot;, a + b);	</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	return 0;	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>scanf()</code> 遇到文件末尾时，如果什么都没有读取到，就返回EOF(-1)，<br>如果有变量已经赋值那就返回赋值了的变量个数，而不会是EOF。</p>
 
           
         
@@ -567,7 +549,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/59/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/59/">59</a><span class="page-number current">60</span><a class="page-number" href="/page/61/">61</a><a class="extend next" rel="next" href="/page/61/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <a class="extend prev" rel="prev" href="/page/59/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/59/">59</a><span class="page-number current">60</span><a class="page-number" href="/page/61/">61</a><a class="page-number" href="/page/62/">62</a><a class="extend next" rel="next" href="/page/61/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 
@@ -610,7 +592,7 @@
                 
                   <a href="/archives">
                 
-                    <span class="site-state-item-count">61</span>
+                    <span class="site-state-item-count">62</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -667,7 +649,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">22</span>
+                      
+                    
+                    <span class="site-state-item-count">23</span>
                     <span class="site-state-item-name">categories</span>
                   </a>
                 </div>
@@ -754,7 +738,13 @@
                     
                       
                     
-                    <span class="site-state-item-count">37</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">40</span>
                     <span class="site-state-item-name">tags</span>
                   
                 </div>
