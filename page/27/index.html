@@ -407,7 +407,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://blog.imlk.top/blog/37/">
+    <link itemprop="mainEntityOfPage" href="http://blog.imlk.top/blog/39/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="imlk">
@@ -426,7 +426,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/blog/37/" itemprop="url">[文章集]数据结构</a></h1>
+                <a class="post-title-link" href="/blog/39/" itemprop="url">[笔记]hexo模块mdjsp的开发心得</a></h1>
         
 
         <div class="post-meta">
@@ -438,7 +438,7 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-04-19T19:22:18+08:00">2018-04-19</time>
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-04-26T22:48:26+08:00">2018-04-26</time>
             
 
             
@@ -459,7 +459,7 @@
                 <span class="post-meta-item-text">In</span>
               
               
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/数据结构/" itemprop="url" rel="index"><span itemprop="name">数据结构</span></a></span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/笔记/" itemprop="url" rel="index"><span itemprop="name">笔记</span></a></span>
 
                 
                 
@@ -474,8 +474,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/blog/37/#comments" itemprop="discussionUrl">
-                  <span class="post-meta-item-text">Comments:</span> <span class="post-comments-count valine-comment-count" data-xid="/blog/37/" itemprop="commentCount"></span>
+                <a href="/blog/39/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">Comments:</span> <span class="post-comments-count valine-comment-count" data-xid="/blog/39/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -505,9 +505,20 @@
       
         
           
-            <h2 id="串"><a href="#串" class="headerlink" title="串"></a>串</h2><h3 id="模式匹配"><a href="#模式匹配" class="headerlink" title="模式匹配"></a>模式匹配</h3><p>从头到尾彻底理解KMP：<br><a href="https://www.cnblogs.com/zhangtianq/p/5839909.html" target="_blank" rel="noopener">https://www.cnblogs.com/zhangtianq/p/5839909.html</a></p>
-<h2 id="树"><a href="#树" class="headerlink" title="树"></a>树</h2><h3 id="二叉树"><a href="#二叉树" class="headerlink" title="二叉树"></a>二叉树</h3><p>搜索二叉树的旋转操作和平衡判断：<br><a href="https://www.cnblogs.com/zhanghaiba/p/3537221.html" target="_blank" rel="noopener">https://www.cnblogs.com/zhanghaiba/p/3537221.html</a></p>
-<p>数据结构—平衡二叉树，树的平衡旋转：<br><a href="https://www.cnblogs.com/PerkinsZhu/p/5824015.html" target="_blank" rel="noopener">https://www.cnblogs.com/PerkinsZhu/p/5824015.html</a></p>
+            <p>第一次写npm插件，有点小激动，下面是写插件的坎坷之路</p>
+<h2 id="0x00-开局错误"><a href="#0x00-开局错误" class="headerlink" title="0x00 开局错误"></a>0x00 开局错误</h2><ul>
+<li>在<code>node_modules</code>文件夹下新建<code>hexo-mdjsp-util</code>文件夹，</li>
+<li>新建<code>package.json</code>和<code>index.jsp</code>并填好内容<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &quot;name&quot;: &quot;hexo-mdjsp-util&quot;,</span><br><span class="line">  &quot;version&quot;: &quot;0.0.1&quot;,</span><br><span class="line">  &quot;main&quot;: &quot;index&quot;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>这是网上的教程中查到的步骤依葫芦画瓢，好像没啥问题了，执行<code>hexo g</code>，我在<code>index.js</code>中只写了<code>console.log(&quot;mdjsp_loaded&quot;);</code>，但并没有看到任何输出</p>
+<p>百度找遍了以后，遂上google<br>找到别人的博客：<br>编写Hexo插件<br><a href="http://xtutu.me/write-hexo-plugin/" target="_blank" rel="noopener">http://xtutu.me/write-hexo-plugin/</a></p>
+<p>看了下原来是没在hexo中加依赖。。。</p>
+<h2 id="0x01-祸不单行"><a href="#0x01-祸不单行" class="headerlink" title="0x01 祸不单行"></a>0x01 祸不单行</h2><p>加了依赖以后：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line">    &quot;hexo-renderer-marked&quot;: &quot;^0.3.0&quot;,</span><br><span class="line">    &quot;hexo-renderer-stylus&quot;: &quot;^0.3.1&quot;,</span><br><span class="line">    &quot;hexo-server&quot;: &quot;^0.2.0&quot;,</span><br><span class="line">    &quot;hexo-mdjsp-util&quot;: &quot;^0.0.1&quot;,</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">...</span><br></pre></td></tr></table></figure></p>
+<p>执行<code>hexo</code><br>直接：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ERROR Plugin load failed: hexo-mdjsp-util</span><br><span class="line">TypeError: this.log is not a function</span><br><span class="line">    at /mnt/d/hexo/node_modules/hexo-mdjsp-util/index.js:9:6</span><br><span class="line">...</span><br></pre></td></tr></table></figure></p>
+<p>google:</p>
+<p>Hexo：如何解决 FATAL Cannot read property ‘code’ of undefined：<br><a href="http://meiweiping.cn/Hexo%EF%BC%9A%E5%A6%82%E4%BD%95%E8%A7%A3%E5%86%B3-FATAL-Cannot-read-property-code-of-undefined/" target="_blank" rel="noopener">http://meiweiping.cn/Hexo%EF%BC%9A%E5%A6%82%E4%BD%95%E8%A7%A3%E5%86%B3-FATAL-Cannot-read-property-code-of-undefined/</a><br>原来是末尾多了个<code>,</code><br>真恶心的错误啊</p>
+<p>接下来的事情就是jsp语句匹配啦！<br>先找几个开源项目看看</p>
 
           
         
@@ -550,7 +561,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/26/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/26/">26</a><span class="page-number current">27</span><a class="page-number" href="/page/28/">28</a><span class="space">&hellip;</span><a class="page-number" href="/page/62/">62</a><a class="extend next" rel="next" href="/page/28/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <a class="extend prev" rel="prev" href="/page/26/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/26/">26</a><span class="page-number current">27</span><a class="page-number" href="/page/28/">28</a><span class="space">&hellip;</span><a class="page-number" href="/page/63/">63</a><a class="extend next" rel="next" href="/page/28/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 
@@ -593,7 +604,7 @@
                 
                   <a href="/archives">
                 
-                    <span class="site-state-item-count">62</span>
+                    <span class="site-state-item-count">63</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -652,7 +663,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">23</span>
+                      
+                    
+                    <span class="site-state-item-count">24</span>
                     <span class="site-state-item-name">categories</span>
                   </a>
                 </div>
@@ -745,7 +758,11 @@
                     
                       
                     
-                    <span class="site-state-item-count">40</span>
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">42</span>
                     <span class="site-state-item-name">tags</span>
                   
                 </div>

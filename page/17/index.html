@@ -407,7 +407,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://blog.imlk.top/blog/48/">
+    <link itemprop="mainEntityOfPage" href="http://blog.imlk.top/blog/49/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="imlk">
@@ -426,7 +426,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/blog/48/" itemprop="url">[Codeforces]Contest 1009 E. Intercity Travelling</a></h1>
+                <a class="post-title-link" href="/blog/49/" itemprop="url">[奇技淫巧]Android Studio免DDMS免configure快速调试Smali项目</a></h1>
         
 
         <div class="post-meta">
@@ -438,7 +438,7 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-07-15T21:06:24+08:00">2018-07-15</time>
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-07-19T01:11:30+08:00">2018-07-19</time>
             
 
             
@@ -459,14 +459,14 @@
                 <span class="post-meta-item-text">In</span>
               
               
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/算法/" itemprop="url" rel="index"><span itemprop="name">算法</span></a></span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Android/" itemprop="url" rel="index"><span itemprop="name">Android</span></a></span>
 
                 
                 
                   , 
                 
               
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Codeforces/" itemprop="url" rel="index"><span itemprop="name">Codeforces</span></a></span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Reverse/" itemprop="url" rel="index"><span itemprop="name">Reverse</span></a></span>
 
                 
                 
@@ -481,8 +481,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/blog/48/#comments" itemprop="discussionUrl">
-                  <span class="post-meta-item-text">Comments:</span> <span class="post-comments-count valine-comment-count" data-xid="/blog/48/" itemprop="commentCount"></span>
+                <a href="/blog/49/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">Comments:</span> <span class="post-comments-count valine-comment-count" data-xid="/blog/49/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -512,14 +512,28 @@
       
         
           
-            <h3 id="链接"><a href="#链接" class="headerlink" title="链接"></a>链接</h3><p>Educational Codeforces Round 47 (Rated for Div. 2) - E. Intercity Travelling<br><a href="http://codeforces.com/contest/1009/problem/E" target="_blank" rel="noopener">http://codeforces.com/contest/1009/problem/E</a></p>
-<h3 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h3><p>n千米，有n段路，共有n-1个可能可以休息的地方，则共有2^(n-1)种可能的休息方式;<br>要计算 p⋅2^(n−1)，也就是计算所有的可能的休息方式下的消耗之和;<br>分解出来，就是要计算所有的可能的休息方式中所有的a[i]的和;<br>也就是求和 sum(a[i] * 消耗a[i]出现的总次数) (i-&gt;1,2,3,…n);</p>
-<p>我们可以按照这种思路，统计a[1]出现的总次数，a[2]出现的次数，这个应该是有规律的;<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">例如n=4的情况</span><br><span class="line"></span><br><span class="line">0  1  2  3  4</span><br><span class="line">#--#--#--#--#</span><br><span class="line">其中 1,2,3 这几个点既可以是休息，也可以是不休息两种状态</span><br></pre></td></tr></table></figure></p>
-<p>先考虑简单的，要使a[1]出现:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">若a[1]出现在 0-1 之间，显然这是必定的，和 1,2,3 休息与不休息都没关系，有所以在 0-1 出现a[1]的次数是 2^3 = 2^(n-1) 次</span><br><span class="line">若a[1]出现在 1-2 之间，则必须是在 1 点处休息了，而 2，3 处则没关系，那么所有在 1-2 出现a[1]的次数是 2^2 = 2^0 * 2^(n-2) = 2^(n-2) 次</span><br><span class="line">若a[1]出现在 2-3 之间，则必须是在 2 点休息了，和在 1，3 的状况没关系，那么所有在 2-3 出现a[1]的次数是 2^2 = 2^1 * 2^(n-3) = 2^(n-2) 次</span><br><span class="line">同理可得a[1]出现在 3-4 之间的次数是 2^2 = 2^2 * 2^(n-4) = 2^(n-2) 次</span><br><span class="line"></span><br><span class="line">则a[1]出现的总次数是 2^3 + 2^2 + 2^2 + 2^2</span><br></pre></td></tr></table></figure></p>
-<p>再考虑a[2],a[3],a[4]的情况，<br>a[2]出现的总次数是 2^2 + 2^1 + 2^1<br>a[3]出现的总次数是 2^1 + 2^0<br>a[4]出现的总次数是 2^0</p>
-<p>可以发现规律<br><strong>a[i]出现的次数是 2^(n-i) + 2^(n-i-1) * (n-i)</strong></p>
-<p>乘以a[i]加起来就是答案</p>
-<p>拙劣代码：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstring&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> MOD 998244353</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// n最大为100000, n^2算法不可取</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> n;</span><br><span class="line"><span class="comment">// long long an[1000005];</span></span><br><span class="line"><span class="keyword">long</span> <span class="keyword">long</span> _2n[<span class="number">1000005</span>];</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> <span class="keyword">const</span> *argv[])</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">"%d"</span>, &amp;n);</span><br><span class="line"></span><br><span class="line">	_2n[<span class="number">0</span>] = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	<span class="keyword">int</span> b = <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; n; ++i) &#123;</span><br><span class="line">		b = (b * <span class="number">2</span>) % MOD;</span><br><span class="line">		_2n[i] = b;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	<span class="keyword">long</span> <span class="keyword">long</span> a;</span><br><span class="line">	<span class="keyword">long</span> <span class="keyword">long</span> ans = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; ++i) &#123;</span><br><span class="line">		<span class="built_in">scanf</span>(<span class="string">"%lld"</span>, &amp;a);</span><br><span class="line">		ans = (ans + ((_2n[n - i] + ((n - i) * _2n[n - i - <span class="number">1</span>]) % MOD) * a) % MOD) % MOD;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"%lld\n"</span>, ans);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	<span class="comment">// TL旧代码</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">// for (int k = 1; k &lt;= n; ++k) &#123;</span></span><br><span class="line">	<span class="comment">// 	ans = (ans + ans) % MOD;</span></span><br><span class="line">	<span class="comment">// 	printf("x2\n");</span></span><br><span class="line">	<span class="comment">// 	for (int i = 1; i &lt; k; ++i) &#123;</span></span><br><span class="line">	<span class="comment">// 		ans = (ans + an[i] * _2n[k - i - 1]) % MOD;</span></span><br><span class="line">	<span class="comment">// 		printf("+a[%d] x 2^%d\n", i, k - i - 1);</span></span><br><span class="line">	<span class="comment">// 	&#125;</span></span><br><span class="line">	<span class="comment">// 	ans = (ans + an[k]) % MOD;</span></span><br><span class="line">	<span class="comment">// 	printf("+a[%d] x 2^0\n", k);</span></span><br><span class="line">	<span class="comment">// &#125;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+            <h3 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h3><p>Android Studio是开发Android应用的一大利器，极大的提高了生产力（虽然比较臃肿），debug功能也非常好用，而且不止能debug Java代码，smali代码也能调试，配合apktool使用真的是爽的很（除了indexing花了老半天这个问题以外）。</p>
+<p>但是！这个利器在<strong>调试smali工程的时候</strong>，就表现得十分不友好啦，以前有DDMS的时候还好一些，能看到调试端口号，但是经常遇到DDMS和AndroidStudio的adb端口冲突的问题，水火不容，无奈之下只能<code>adb shell am start -D -n xxx.xxxx.xxxx/.xxxx</code>手动以debug模式启动应用，配合<code>adb forward tcp:xxxx jdwp:xxxx</code>，但是不知道咋回事经常遇到<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Unable to open debugger port (localhost:8603): java.io.IOException &quot;handshake failed - connection prematurally closed&quot;</span><br></pre></td></tr></table></figure></p>
+<p>每次遇到这种错误，我心中是一万只草泥马飞奔而过啊！这tm还让不让人debug啦！</p>
+<p><img src="/images/blog/49_0.png" alt="WTF!"></p>
+<h3 id="冷静分析"><a href="#冷静分析" class="headerlink" title="冷静分析"></a>冷静分析</h3><p>想起了Android Studio打开纯Android项目的时候，在顶部工具栏会有一个调试用的按钮<code>Attach debugger to Android process</code>,就是那个图标是竖着的长方形，右下角一只小虫子的按钮，点一下可以选择要attch的进程<br><img src="/images/blog/49_1.png" alt="Attach debugger to Android process"></p>
+<p>这个功能在开发的时候用起来很爽，但是当我们打开的不是Android项目时：<br><img src="/images/blog/49_2.png" alt="WTF!"></p>
+<p>这个按钮没了<br><img src="/images/blog/49_3.png" alt="假的Android Studio吧"></p>
+<h3 id="别着急"><a href="#别着急" class="headerlink" title="别着急"></a>别着急</h3><p>这应该是Android Studio 设计的问题，它被设计成了只要不是Android项目就不显示那些按钮，但是它忽略了调试smali的情况</p>
+<p>冷静，何必和一个小按钮过意不去呢，让我们来想想对策。</p>
+<p>Run -&gt; 没有<br>Help -&gt; Find Action -&gt; 搜不到</p>
+<p>就在这山穷水复无路之际，突然想出个点子：</p>
+<p><strong>快捷键！</strong><br><strong>快捷键！</strong><br><strong>快捷键！</strong></p>
+<h3 id="解决办法是快捷键"><a href="#解决办法是快捷键" class="headerlink" title="解决办法是快捷键"></a>解决办法是快捷键</h3><p><strong>Setting -&gt; 搜索 -&gt; Attach debugger to Android process -&gt; keymap</strong></p>
+<p><img src="/images/blog/49_4.png" alt="真·Attach debugger to Android process"></p>
+<p>不出所料真的搜到了，<strong>这里的快捷键是我添加的，原先没有快捷键</strong>，我设置的是<code>Ctrl + Alt + R</code><br>R就是<code>reverse</code>嘛，+D的都被占了没办法。</p>
+<p>确认，出来试试。</p>
+<p>果然功夫不负有心人！</p>
+<p><img src="/images/blog/49_5.png" alt="真·Choose Process"></p>
+<p>测试发现完全ok！</p>
+<h3 id="DDMS，再见"><a href="#DDMS，再见" class="headerlink" title="DDMS，再见"></a><del>DDMS，再见</del></h3><p>去你丫的DDMS，再见（丢）！<br><img src="/images/blog/49_6.png" alt="丢了"></p>
+<p>不行。。。</p>
+<p><img src="/images/blog/49_7.png" alt="捡起"><br>Android Studio 里还没有 Method Profiling 呢</p>
 
           
         
@@ -562,7 +576,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/16/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/16/">16</a><span class="page-number current">17</span><a class="page-number" href="/page/18/">18</a><span class="space">&hellip;</span><a class="page-number" href="/page/62/">62</a><a class="extend next" rel="next" href="/page/18/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <a class="extend prev" rel="prev" href="/page/16/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/16/">16</a><span class="page-number current">17</span><a class="page-number" href="/page/18/">18</a><span class="space">&hellip;</span><a class="page-number" href="/page/63/">63</a><a class="extend next" rel="next" href="/page/18/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 
@@ -605,7 +619,7 @@
                 
                   <a href="/archives">
                 
-                    <span class="site-state-item-count">62</span>
+                    <span class="site-state-item-count">63</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -664,7 +678,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">23</span>
+                      
+                    
+                    <span class="site-state-item-count">24</span>
                     <span class="site-state-item-name">categories</span>
                   </a>
                 </div>
@@ -757,7 +773,11 @@
                     
                       
                     
-                    <span class="site-state-item-count">40</span>
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">42</span>
                     <span class="site-state-item-name">tags</span>
                   
                 </div>

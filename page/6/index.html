@@ -407,7 +407,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://blog.imlk.top/blog/61/">
+    <link itemprop="mainEntityOfPage" href="http://blog.imlk.top/blog/62/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="imlk">
@@ -426,7 +426,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/blog/61/" itemprop="url">自制玩具操作系统--week9</a></h1>
+                <a class="post-title-link" href="/blog/62/" itemprop="url">自制玩具操作系统--week10</a></h1>
         
 
         <div class="post-meta">
@@ -438,7 +438,7 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-05-01T00:00:08+08:00">2019-05-01</time>
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-05-01T00:00:09+08:00">2019-05-01</time>
             
 
             
@@ -474,8 +474,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/blog/61/#comments" itemprop="discussionUrl">
-                  <span class="post-meta-item-text">Comments:</span> <span class="post-comments-count valine-comment-count" data-xid="/blog/61/" itemprop="commentCount"></span>
+                <a href="/blog/62/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">Comments:</span> <span class="post-comments-count valine-comment-count" data-xid="/blog/62/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -505,44 +505,23 @@
       
         
           
-            <h2 id="DAY-0x18"><a href="#DAY-0x18" class="headerlink" title="DAY 0x18"></a>DAY 0x18</h2><h4 id="分页前的准备"><a href="#分页前的准备" class="headerlink" title="分页前的准备"></a>分页前的准备</h4><p>Linux并没有非常依赖于段表，而是采用的分页结构，将内核和用户程序的段设置为覆盖整个内存区域以此来绕过分段结构，但是显然这个30天操作系统的作者并不打算这样做，它把内核数据段设置为整个内存区域，但是却把代码段设置成0x00280000开始的空间。这对于之后加入类似于Linux的分页模式造成了不便，首先我们想办法把内核数据段改为覆盖整个内存区。</p>
-<p>先看一下内存区域图：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">|-------------------------------------------------------|0x00280000</span><br><span class="line">|	512KB	0x00080000Byte								|</span><br><span class="line">|	bootpack.hrb内容被asmhead.nas整体加载到此区域执行		|0x002fffff</span><br><span class="line">|-------------------------------------------------------|0x00300000</span><br><span class="line">|	64KB	0x00010000Byte								|</span><br><span class="line">|	内核栈												|0x0030ffff</span><br><span class="line">|-------------------------------------------------------|0x00310000</span><br><span class="line">|	960KB	0x000f0000Byte								|</span><br><span class="line">|	bootpack.hrb中的数据区域								|</span><br><span class="line">|	0x003c0000存放了MEMMAN(大小大约0x8000Byte)				|0x003fffff</span><br><span class="line">|-------------------------------------------------------|0x00400000(4M)</span><br></pre></td></tr></table></figure></p>
-<p>作者将bootpack.hrb放到了0x00280000处，然后通过farjmp指令<code>JMP DWORD 2*8:0x0000001b</code>（注意作者的第二个段的base是0x00280000），跳到bootpack.hrb的头部的一个写有jmp指令的跳板（一个根据相对pc的偏移量跳转的jmp指令）,然后继续跳入bootpack.hrb的代码段。</p>
-<p>那么我们首先要解决逻辑地址的问题，原先bootpack.hrb逻辑地址是从0开始的，但是现在我们把第二个段的base从0x00280000改到0，相应的逻辑地址应该加上0x00280000，结合之前分析作者的obj2bim和bim2hrb的逻辑知道，在.rul文件中可以修改链接时代码段的逻辑基地址，我们这里在原来的基础上加上0x00280000，asmhead.nas中的临时段表和dsctbl.cpp根据段表的结构相应的改成覆盖全部内存区域<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">set_segmdesc(gdt + ((<span class="keyword">unsigned</span> <span class="keyword">int</span>)__KERNEL_DS &gt;&gt; <span class="number">3</span>), <span class="number">0xffffffff</span>, <span class="number">0x00000000</span>, AR_DATA32_RW);</span><br><span class="line">set_segmdesc(gdt + ((<span class="keyword">unsigned</span> <span class="keyword">int</span>)__KERNEL_CS &gt;&gt; <span class="number">3</span>), <span class="number">0xffffffff</span>, <span class="number">0x00000000</span>, AR_CODE32_ER);</span><br></pre></td></tr></table></figure></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">; limit 0xffffffff base:0x00000000 ar:0xc092 </span><br><span class="line">DW		0xffff,0x0000,0x9200,0x00cf</span><br><span class="line">; limit 0xffffffff base:0x00000000 ar:0x409a</span><br><span class="line">DW		0xffff,0x0000,0x9a00,0x00cf</span><br></pre></td></tr></table></figure>
-<p>然后这里要将bootpack.hrb的头部的跳板jmp指令进行修改，在内存中先将jmp指令的偏移量减去0x00280000再set回去<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">MOV		EBX,0x0028001c</span><br><span class="line">MOV		EAX,[EBX]</span><br><span class="line">SUB		EAX,0x00280000</span><br><span class="line">MOV		[EBX],EAX</span><br><span class="line">JMP		DWORD 2*8:0x0028001b</span><br></pre></td></tr></table></figure></p>
-<p>效果如下，能够成功启动，但是执行用户程序hello的时候有一点问题，显然是因为我们动了.rul文件的原因，得把用户程序链接用的.rul文件和和内核程序的分开来<br><img src="/images/blog/os/17.png" alt=""></p>
-<h4 id="内核代码二级分页"><a href="#内核代码二级分页" class="headerlink" title="内核代码二级分页"></a>内核代码二级分页</h4><h5 id="准备"><a href="#准备" class="headerlink" title="准备"></a>准备</h5><p>这是网上找的Linux的线性地址到物理地址映射的图<br><img src="/images/blog/os/16.png" alt=""></p>
-<p>我们这里准备在内核中先做两个映射</p>
-<ul>
-<li>这部分512MB空间直接通过偏移量的方式给内核程序用<br>0xc0000000-0xdfffffff -&gt; 0x000000000000-0x00001fffffff</li>
-<li>这部分最高的512MB空间由于开启了VBE画面模式，图像缓冲存在这里，因此避免麻烦我们直接映射<br>0xe0000000-0xffffffff -&gt; 0x0000e0000000-0x0000ffffffff</li>
-</ul>
-<h5 id="调逻辑地址"><a href="#调逻辑地址" class="headerlink" title="调逻辑地址"></a>调逻辑地址</h5><p>首先，我们要再次调整逻辑地址，这次调整的是bootpack数据段（包括栈区域）和bootpack代码段的地址，在.rul文件中改成这样<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">code(align:1, logic:0xC0280024,      file:0x24);</span><br><span class="line">data(align:4, logic:0xC0310000, file:code_end);</span><br></pre></td></tr></table></figure></p>
-<p>asmhead中加载bootpack的地址要做一些修改使它保持在原来的地方，之后我们分页开启后用高逻辑地址来进行访问这部分低物理地址空间<br>然后就是在jmp到bootpack之前，用汇编来填充我们的页目录和页表了</p>
-<h5 id="写入页表"><a href="#写入页表" class="headerlink" title="写入页表"></a>写入页表</h5><p>页目录项的结构<br><img src="/images/blog/os/15.png" alt=""><br>页表项的结构<br><img src="/images/blog/os/18.png" alt=""><br>要注意的是，页目录项中存储的地址应该是页表的物理地址而不是页表的线性地址。</p>
-<p>线性地址中10位对应页目录项索引，10位对应页表项索引，一个页目录项和一个页表项的大小都是4字节，所以一张页目录大小和一张页表大小都是<code>4*2^10B = 4KB</code>，也就是要占用掉0x1000大小的地址空间。<br>我们将<code>0x00400000</code>作为页目录起始位置，页目录之后放置页表<br>这些表一共耗费了<code>1GB/4KB*4+4KB=1MB+4KB</code>的空间，分配了高1G的线性地址，低位的地址在进入bootpack后再进行动态分配。</p>
-<h5 id="启用页表"><a href="#启用页表" class="headerlink" title="启用页表"></a>启用页表</h5><p>让CR3存储页目录的物理地址，再在R0中设置pg标志位为1。由于x86默认是二级页表，如果想启用其他类型的页表需要先给CR4寄存器的某些位赋值。<br>开启页表后出现的一个问题是，由于CPU取指也依赖于段表和页表这两级的地址转换。<br>在执行<code>MOV CR0,EAX</code>后，我们的代码只能用线性地址来访问了，但是现在我们的EIP寄存器中的依然是物理地址（之所以是物理地址是因为我们已经绕过了段表），在我们的设计中，bootpack的线性地址和物理地址是不同的。</p>
-<p>为解决这个问题，我们将计就计，在内存的高物理地址区（和bootpack的线性地址数值上相同的那里，写入<code>MOV CR0,EAX</code>这条开启分页的指令的机器码(仅3个字节)，然后从asmhead里面jmp到这个地方执行。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(0) [0x0000c0280000] 0010:00000000c0280000 (unk. ctxt): mov cr0, eax              ; 0f22c0</span><br></pre></td></tr></table></figure></p>
-<p>执行完这条指令后分页已经开启，EIP采用线性地址，经过页表的转换，实际上执行的代码落在了内存的低物理地址区域里，也就是我们加载的bootpack代码入口<code>0x00280003</code>处。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;bochs:4&gt; n</span><br><span class="line">Next at t=34870451</span><br><span class="line">(0) [0x000000280003] 0010:00000000c0280003 (unk. ctxt): nop                       ; 90</span><br></pre></td></tr></table></figure></p>
-<p>为了方便编写，加载bootpack后，把前头部前0x1b个字节全部改写成nop指令，这样在高地址开启分页后，下一条指令会落回在一堆nop指令组成的“滑板”上，一直滑到bootpack开头0x1b处的那个jmp指令那里，最终会成功舶入bootpack.cpp的HariMain函数。</p>
-<p>通过在HariMain函数的开始加上一条bochsdbg()语句断点来进行验证<br><img src="/images/blog/os/19.png" alt=""></p>
-<h5 id="修改c层代码"><a href="#修改c层代码" class="headerlink" title="修改c层代码"></a>修改c层代码</h5><p>进入bootpack只是开启分页之后的第一步，现在的c层代码是不能使用的，直接continue会立刻崩掉，原因有好几个：</p>
-<ul>
-<li>代码中硬编码了太多的低地址，像binfo什么的，还有作者随便拿来存储变量的一部分低地址，都要加上一个偏移量，可以用宏的方式来实现</li>
-<li>memtest函数的范围问题</li>
-<li>load_gdtr和load_idtr的地址问题（一开始以为得加载物理地址），后面总是莫名其妙页错误，然后发现开启分页以后去load的话应该load线性地址</li>
-<li>代码不规范存在取用null指针的bug，我们还没有映射低地址区域所以会直接页错误PE</li>
-<li>TASK结构体里面的cr3字段要处理</li>
-</ul>
-<p>注意几点：</p>
-<ul>
-<li>页错误的中断号是0x0e</li>
-<li>改完bug前先不要允许任何中断，否则可能在发生中断时突然crash，导致在调试时会把正确的代码误以为是错误的</li>
-<li>结合.map文件和静态分析工具分析错误位置</li>
-</ul>
-<p><img src="/images/blog/os/20.png" alt=""></p>
-<p>用户态分页表需要为每一个task建立一个页目录，在task切换的时候赋值cr3，时间关系我们下周再做这个了。</p>
+            <h2 id="DAY-0x1B"><a href="#DAY-0x1B" class="headerlink" title="DAY 0x1B"></a>DAY 0x1B</h2><p>回顾<code>TSS</code>结构体，其中有一<code>CR3</code>字段，该字段在task切换的时候会自动赋值给<code>CR3</code>寄存器，我们可以在这里给用户程序设置额外的页目录地址（物理地址），</p>
+<p>首先需要分配一张页表</p>
+<p>按照内存中的结构来构造页目录结构体和页表结构体<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">PAGE_DE</span> &#123;</span></span><br><span class="line">	<span class="keyword">unsigned</span> <span class="keyword">int</span> entrys[PAGE_DE_ENTRY_NUM];</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function">PAGE_DE* <span class="title">alloc_page_de</span><span class="params">(MEMMAN* memman)</span> </span>&#123;</span><br><span class="line">	PAGE_DE* p = (PAGE_DE*)memman_alloc_4k(memman, <span class="keyword">sizeof</span>(PAGE_DE));</span><br><span class="line">	utils::<span class="built_in">memset</span>(p, <span class="number">0</span>, <span class="keyword">sizeof</span>(PAGE_DE));</span><br><span class="line">	<span class="keyword">return</span> p;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>获得页表以后，可以分配一定的内存区域来存放用户程序数据，作者在运行用户程序时，采用新增一项段表的方法将逻辑地址映射到物理地址，但是我们这里依然绕过段表，直接用页表映射到物理地址。<br>所以，我们将从<code>0x00000000</code>开始的线性地址区域映射到我们刚刚分配的用户程序区域的物理地址：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">map_page_addr2addr(sys::memman, pagede, <span class="number">0</span>, segsiz, (<span class="keyword">unsigned</span> <span class="keyword">int</span>)q - LADDR_K_BASE, <span class="number">7</span>, <span class="number">7</span>); <span class="comment">// user access | write | present</span></span><br></pre></td></tr></table></figure></p>
+<p>注意flag设置为“用户态可访问、可写、该页存在”</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">// 映射地址到页目录，要求start_laddr和start_paddr低12位相同</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">map_page_addr2addr</span><span class="params">(MEMMAN* memman, PAGE_DE* pagede, <span class="keyword">unsigned</span> <span class="keyword">int</span> start_laddr, <span class="keyword">unsigned</span> <span class="keyword">int</span> size,</span></span></span><br><span class="line"><span class="function"><span class="params">                        <span class="keyword">unsigned</span> <span class="keyword">int</span> start_paddr, <span class="keyword">unsigned</span> <span class="keyword">int</span> demode, <span class="keyword">unsigned</span> <span class="keyword">int</span> tamode)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">unsigned</span> <span class="keyword">int</span> end_laddr = start_laddr + size;</span><br><span class="line">	end_laddr = (end_laddr - <span class="number">1</span> + <span class="number">0x1000</span>) / <span class="number">0x1000</span>  * <span class="number">0x1000</span>;<span class="comment">// 4k向上对齐</span></span><br><span class="line">	start_laddr = start_laddr / <span class="number">0x1000</span> * <span class="number">0x1000</span>;<span class="comment">// 4k向下对齐</span></span><br><span class="line">	start_paddr = start_paddr / <span class="number">0x1000</span> * <span class="number">0x1000</span>;<span class="comment">// 4k向下对齐</span></span><br><span class="line"></span><br><span class="line">	<span class="keyword">unsigned</span> <span class="keyword">int</span> start_entry = start_laddr &gt;&gt; <span class="number">22</span>;</span><br><span class="line">	<span class="keyword">unsigned</span> <span class="keyword">int</span> end_entry = ((end_laddr - <span class="number">1</span> + <span class="number">0x400000</span>) / <span class="number">0x400000</span>  * <span class="number">0x400000</span>) &gt;&gt; <span class="number">22</span>;<span class="comment">// 4MB对齐</span></span><br><span class="line">	<span class="keyword">unsigned</span> <span class="keyword">int</span> sub_start_laddr = start_laddr;</span><br><span class="line">	<span class="keyword">unsigned</span> <span class="keyword">int</span> sub_end_laddr = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">unsigned</span> <span class="keyword">int</span> sub_start_paddr = start_paddr;</span><br><span class="line">	<span class="keyword">unsigned</span> <span class="keyword">int</span> sub_size = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = start_entry; i &lt; end_entry &amp;&amp; i &lt; PAGE_DE_ENTRY_NUM; ++i) &#123;</span><br><span class="line">		PAGE_TA* pta = (PAGE_TA*)((pagede-&gt;entrys[i]) &amp; <span class="number">0xFFFFF000</span>);</span><br><span class="line">		<span class="keyword">if</span> (pta == <span class="literal">nullptr</span>) &#123;</span><br><span class="line">			pta = alloc_page_ta(memman);</span><br><span class="line">		&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">			pta = (PAGE_TA*)(((<span class="keyword">unsigned</span> <span class="keyword">int</span>)pta) + LADDR_K_BASE);</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		sub_end_laddr = utils::min(end_laddr, (i + <span class="number">1</span>) &lt;&lt; <span class="number">22</span>);</span><br><span class="line">		sub_size = utils::max(<span class="number">0</span>, sub_end_laddr - sub_start_laddr);</span><br><span class="line">		map_page_addr2addr(pta, sub_start_laddr, sub_size, sub_start_paddr, tamode);<span class="comment">// 填充pta指向的页表</span></span><br><span class="line">		sub_start_paddr += sub_size;</span><br><span class="line">		sub_start_laddr += sub_size;</span><br><span class="line">		set_page_ta2de(pagede, pta, i, demode);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>需要注意的是，分页结构要求页表映射的内存是按4k对齐的，即线性地址的一页映射物理内存一帧。而作者之前编写的<code>memman_alloc_4k</code>函数仅仅保证了内存区域大小4k对齐，因此我们要对该函数进行修改，让它分配的空间在初始地址和内存大小都按4k对齐。</p>
+<p>除了用户程序的页表外，我们还需要把内核程序的页表加入到用户态页目录里面，这样的话，用户态程序调用内核中的api执行内核程序时，就不用更变CR3,直接从当前的task（带有我们准备的用户态页目录）里面映射到内核态的代码了</p>
+<p>用户态task的分页：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">cr3: 0x00000077e000</span><br><span class="line">0x00000000-0x00000fff -&gt; 0x000020000000-0x000020000fff  /* 低线性地址区域用户程序 */</span><br><span class="line">0xc0000000-0xdfffffff -&gt; 0x000000000000-0x00001fffffff  /* 高线性地址区域内核程序 */</span><br><span class="line">0xe0000000-0xffffffff -&gt; 0x0000e0000000-0x0000ffffffff  /* 高线性地址区域硬件区域 */</span><br></pre></td></tr></table></figure></p>
+<p>编写函数执行这一拷贝过程<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">copy_page_de2de</span><span class="params">(PAGE_DE* fromde, <span class="keyword">int</span> fromstart, PAGE_DE* tode, <span class="keyword">int</span> tostart, <span class="keyword">int</span> count)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; count &amp;&amp; fromstart + i &lt; PAGE_DE_ENTRY_NUM &amp;&amp; tostart + i &lt; PAGE_DE_ENTRY_NUM; ++i) &#123;</span><br><span class="line">		tode-&gt;entrys[tostart + i] = fromde-&gt;entrys[fromstart + i];</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>增加两项用户态的gdt<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">set_segmdesc(gdt + ((<span class="keyword">unsigned</span> <span class="keyword">int</span>)__USER_CS &gt;&gt; <span class="number">3</span>), <span class="number">0xFFFFFFFF</span>, <span class="number">0</span>, AR_CODE32_ER + <span class="number">0x60</span>);</span><br><span class="line">set_segmdesc(gdt + ((<span class="keyword">unsigned</span> <span class="keyword">int</span>)__USER_DS &gt;&gt; <span class="number">3</span>), <span class="number">0xFFFFFFFF</span>, <span class="number">0</span>, AR_DATA32_RW + <span class="number">0x60</span>);</span><br></pre></td></tr></table></figure></p>
+<p>以用户态运行我们加载的程序<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">start_app(<span class="number">0x1b</span>, __USER_CS, esp, __USER_DS, &amp;(task-&gt;tss.esp0));<span class="comment">// 入口地址0x1b,那里是一个jmp跳板</span></span><br></pre></td></tr></table></figure></p>
+<p>运行hello<br><img src="/images/blog/os/21.png" alt=""></p>
+<p>可能会质疑如果将内核的页表放到用户态程序的页目录里面会不会导致从用户态直接访问内核数据，毕竟我们绕过了段表，段表的limit已经不能起保护作用了。<br>实际上是不用担心的，因为内核页表的flag中设定了User位为0，只允许内核态代码访问。</p>
+<p>编写以下程序<code>touch_kernel.cpp</code>来测试：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">HariMain</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="keyword">int</span>* kp = (<span class="keyword">int</span>*)<span class="number">0xC0000000</span>;</span><br><span class="line">	(*kp) = <span class="number">0xFFFFFFFF</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><img src="/images/blog/os/22.png" alt=""><br>bochs检测到了页错误PE<br><img src="/images/blog/os/23.png" alt=""></p>
+<p>至此，不考虑虚拟内存的用户态分页实现完成</p>
 
           
         
@@ -585,7 +564,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/5/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><span class="page-number current">6</span><a class="page-number" href="/page/7/">7</a><span class="space">&hellip;</span><a class="page-number" href="/page/62/">62</a><a class="extend next" rel="next" href="/page/7/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <a class="extend prev" rel="prev" href="/page/5/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><span class="page-number current">6</span><a class="page-number" href="/page/7/">7</a><span class="space">&hellip;</span><a class="page-number" href="/page/63/">63</a><a class="extend next" rel="next" href="/page/7/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 
@@ -628,7 +607,7 @@
                 
                   <a href="/archives">
                 
-                    <span class="site-state-item-count">62</span>
+                    <span class="site-state-item-count">63</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -687,7 +666,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">23</span>
+                      
+                    
+                    <span class="site-state-item-count">24</span>
                     <span class="site-state-item-name">categories</span>
                   </a>
                 </div>
@@ -780,7 +761,11 @@
                     
                       
                     
-                    <span class="site-state-item-count">40</span>
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">42</span>
                     <span class="site-state-item-name">tags</span>
                   
                 </div>

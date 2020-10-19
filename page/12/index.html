@@ -407,7 +407,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://blog.imlk.top/blog/54/">
+    <link itemprop="mainEntityOfPage" href="http://blog.imlk.top/blog/55/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="imlk">
@@ -426,7 +426,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/blog/54/" itemprop="url">自制玩具操作系统--week3</a></h1>
+                <a class="post-title-link" href="/blog/55/" itemprop="url">自制玩具操作系统--week4</a></h1>
         
 
         <div class="post-meta">
@@ -438,7 +438,7 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-05-01T00:00:02+08:00">2019-05-01</time>
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-05-01T00:00:03+08:00">2019-05-01</time>
             
 
             
@@ -474,8 +474,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/blog/54/#comments" itemprop="discussionUrl">
-                  <span class="post-meta-item-text">Comments:</span> <span class="post-comments-count valine-comment-count" data-xid="/blog/54/" itemprop="commentCount"></span>
+                <a href="/blog/55/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">Comments:</span> <span class="post-comments-count valine-comment-count" data-xid="/blog/55/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -505,97 +505,23 @@
       
         
           
-            <h2 id="DAY-0x06"><a href="#DAY-0x06" class="headerlink" title="DAY 0x06"></a>DAY 0x06</h2><h4 id="Makefile"><a href="#Makefile" class="headerlink" title="Makefile"></a>Makefile</h4><ul>
-<li>make中可以使用一般规则（通配规则,依赖中:<code>%.cpp</code>,执行语句中:<code>$*.cpp</code>），但是普通规则比一般规则的优先级更高</li>
+            <h2 id="DAY-0x09"><a href="#DAY-0x09" class="headerlink" title="DAY 0x09"></a>DAY 0x09</h2><h4 id="内存检查"><a href="#内存检查" class="headerlink" title="内存检查"></a>内存检查</h4><ul>
+<li>内存检查前需要先禁用缓存，通过修改CR0寄存器实现这一点</li>
+<li>内存检查是通过对内存单元进行<code>写、反转、判断、反转、判断</code>，来确定一个内存单元的可用性的</li>
 </ul>
-<h4 id="汇编"><a href="#汇编" class="headerlink" title="汇编"></a>汇编</h4><ul>
-<li>GDTR寄存器有48位</li>
-<li><code>PUSHAD</code>将通用寄存器(EAX,ECX,EDX,EBX,ESP,EBP,ESI,EDI)按顺序双字压栈，对应的恢复指令为<code>POPAD</code>，该指令的单字版本为<code>POPA</code></li>
-<li>普通C程序返回时需要调用<code>RET</code>，但是中断返回时需要调用<code>IRETD</code></li>
-<li>C语言认为DS和ES和SS所指向的段都是一样的，因此在中断调用c程序前必须备份ES和DS的值并拷贝SS的值给DS、ES</li>
+<h4 id="内存管理"><a href="#内存管理" class="headerlink" title="内存管理"></a>内存管理</h4><ul>
+<li>内存的使用情况的表示方法多样，可以用一个bit标记一页的状态，也可以用内存区域的起始地址和长度来表示一个空的区域。</li>
+<li>memman_free时，由于按地址有序，于是改用二分查找的方式寻找插入位置，以提高效率</li>
 </ul>
-<h4 id="关于调试"><a href="#关于调试" class="headerlink" title="关于调试"></a>关于调试</h4><p>可以在汇编中混入<code>INT 3</code>指令来断点调试,但是在中断向量表未准备好时,不能使用该方式<br>但是在使用bochsdbg时,可以在汇编中参入<code>MAGIC BREAKPOINT</code>,具体步骤是在bochs配置文件中加入<code>magic_break: enabled=1</code>,然后在汇编中加入<code>xchg bx,bx</code>,然后就能在该处断点</p>
-<h4 id="load-gdtr"><a href="#load-gdtr" class="headerlink" title="load_gdtr"></a>load_gdtr</h4><p><code>_load_gdtr</code>函数先取出第1个参数<code>limit</code>，地址为<code>ESP+4</code>,</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">MOV		AX,[ESP+4]		; limit</span><br></pre></td></tr></table></figure>
-<p>这是一个2字节指令,而因为之前分析过这个机器是小端模式,因此对于<code>0x0000ffff</code>,<code>WORD [ESP+4]</code>就是<code>0xffff</code>,把它放到了AX寄存器,然后<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">MOV		[ESP+6],AX</span><br></pre></td></tr></table></figure></p>
-<p>将<code>0xffff</code>放到了更高的两个byte上面,而<code>ESP+8</code>则是第二个参数<code>addr</code>的地址,这样一来,<code>limit</code>的低2字节和<code>addr</code>就连起来了,之后<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">LGDT	[ESP+6]</span><br></pre></td></tr></table></figure></p>
-<p>直接取了<code>ESP+6</code>为低位的6个byte的数据,放到<code>GDTR</code>寄存器,<br>这就是书上说的<code>GDTR</code>的6个字节的来源,<strong>低2个字节是limit,高4字节是addr</strong></p>
-<h4 id="GDT的访问权属性"><a href="#GDT的访问权属性" class="headerlink" title="GDT的访问权属性"></a>GDT的访问权属性</h4><p>段号记录表中的项中的段属性中有一个<code>Gbit</code>位，<br>当该位为1时，记录的<code>limit</code>的单位不是byte而是页的大小，<strong>一页是指4KB</strong></p>
-<p>段的访问权属性<code>ar(access_right)</code>,由8位+4位扩展组成，高4位扩展为<code>GD00</code>,其含义为：</p>
-<ul>
-<li>G:Gbit，段长度单位是byte还是页数</li>
-<li>D:32位模式(1),16位程序模式(不可用于调用BIOS)(0)</li>
-</ul>
-<p>低八位的部分组合的含义<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">00000000（0x00）：未使用的记录表（descriptor table）。</span><br><span class="line">10010010（0x92）：系统专用，可读写的段。不可执行。</span><br><span class="line">10011010（0x9a）：系统专用，可执行的段。可读不可写。</span><br><span class="line">11110010（0xf2）：应用程序用，可读写的段。不可执行。</span><br><span class="line">11111010（0xfa）：应用程序用，可执行的段。可读不可写。</span><br></pre></td></tr></table></figure></p>
-<p>x86的处理器通过ring0到ring4四个级别来进行访问控制<br><em>系统模式(ring0)和应用模式(ring3)取决于运行中的程序代码所在的段的访问权限属性低8位是0x9a还是0xfa</em></p>
-<h4 id="PIC-Programmable-interrupt-controller-可编程中断控制器"><a href="#PIC-Programmable-interrupt-controller-可编程中断控制器" class="headerlink" title="PIC(Programmable interrupt controller)可编程中断控制器"></a>PIC(Programmable interrupt controller)可编程中断控制器</h4><p><strong>用于将8个中断信号集合成一个中断信号</strong><br>每个PIC上面可以接收8个中断信号，主板上一共有两个PIC，一共有15个可用的中断信号，IRQ2被用于连接从PIC</p>
-<blockquote>
-<p>中断号码表<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">IRQ0 	计时器</span><br><span class="line">IRQ1 	键盘</span><br><span class="line">IRQ2 	用于与从站级联</span><br><span class="line">IRQ3 	串口（COM2）</span><br><span class="line">IRQ4 	串口（COM1）</span><br><span class="line">IRQ5 	主要用于ISA / PCI扩展设备</span><br><span class="line">IRQ6 	FDC</span><br><span class="line">IRQ7 	并行端口</span><br><span class="line">IRQ8 	RTC</span><br><span class="line">IRQ9 	主要用于ISA / PCI扩展设备</span><br><span class="line">IRQ10 	主要用于ISA / PCI扩展设备</span><br><span class="line">IRQ12 	鼠标</span><br><span class="line">IRQ13 	FPU（？）</span><br><span class="line">IRQ14 	ATA-0</span><br><span class="line">IRQ15 	ATA-1</span><br></pre></td></tr></table></figure></p>
-</blockquote>
-<p>PIC内部有多个寄存器:</p>
-<ul>
-<li>IMR(interrupt mask register 中断屏蔽寄存器)，PIC的IMR寄存器每一位表示是否允许中断请求(1表示禁止)</li>
-<li>ICW(initial control word 初始化控制数据)共有四个，ICW1-ICW4，与PIC主板配线方式、中断信号的电气特性也有关系<br>  ICW3的值用于设定主从PIC。对于主PIC,第几号的IRQ与从PIC相连，就将那位置为1;而对于从PIC,接在主PIC的第几号(0 based)位置上,这个寄存器的值就设置为多少。<br>  ICW2的值用于设定中断号</li>
-<li>OCW(操作命令字)</li>
-</ul>
-<blockquote>
-<p>CPU有一根中断型号，由IF中断许可标志位标志标识是否接受外部中断（1表示接受，STL指令置1，CTL指令置0），而PIC可以对它导出的一共8个RIQ端口分别控制是否接受中断</p>
-</blockquote>
-<h2 id="DAY-0x07"><a href="#DAY-0x07" class="headerlink" title="DAY 0x07"></a>DAY 0x07</h2><h4 id="中断处理"><a href="#中断处理" class="headerlink" title="中断处理"></a>中断处理</h4><ul>
-<li>中断触发后，需要通知PIC已经处理完中断，这样PIC才会继续接受中断。<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">io_out8(PIC0_OCW2, <span class="number">0x61</span>);<span class="comment">// 0x61=0x60+0x01，表示已经处理IRQ1上的中断</span></span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<blockquote>
-<p>键盘触发的中断会在键盘按下和松开的时候都触发一次</p>
-<ul>
-<li>似乎<code>io_stihlt()</code>由于CPU规范的原因能保持原子性<br>根据CPU的规范，机器语言的STI指令之后，如果紧跟着HLT指令，那么就暂不受理这两条指令之间的中断，而要等到HLT指令之后才受理</li>
-<li>无缓冲的消息机制的键盘按键中断处理在中断密集时，会出现后续的中断来不及被处理（来不及关闭中断开关）的问题，解决办法是使用缓冲区<br>但是我实际操作调试中断时并没有看到传说中的被吞掉的E0数，只看到按下时的<code>0x1D</code>和松开时的<code>0x9D</code></li>
-<li>KBC(keyboard controller)键盘控制器，控制键盘和鼠标</li>
-</ul>
-</blockquote>
-<h4 id="关于C"><a href="#关于C" class="headerlink" title="关于C++"></a>关于C++</h4><ul>
-<li>为了方便显示，我在Cursor类里面加了个单例模式的static函数，但是C++实现函数内的static变量（局部静态变量）时，为了确保在多线程状态下只初始化一次，在编译时增加了同步锁，但是由于同步锁的实现函数在libstdc++内，而我们是没有链接这个库的，因此使用编译时的<code>-fno-threadsafe-statics</code>选项，禁用该功能。<blockquote>
-<p>C++静态局部变量对于基本类型的常量初始化时，采取直接定义一个隐藏的全局变量的方法，例如对于函数：</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">ofEndLine</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="keyword">static</span> <span class="keyword">int</span> i = <span class="number">1</span>;</span><br><span class="line">	i++;</span><br><span class="line">	<span class="keyword">return</span> i;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</blockquote>
-</li>
-</ul>
-<p>其汇编为<br><img src="/images/blog/os/1.png" alt="用常量初始化静态局部变量"><br>而对于需要调用函数来进行初始化的静态局部变量，<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">ofEndLine</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="keyword">static</span> <span class="keyword">int</span> i = getValue();</span><br><span class="line">	i++;</span><br><span class="line">	<span class="keyword">return</span> i;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>则是<br><img src="/images/blog/os/0.png" alt="用函数初始化静态局部变量"><br>这其中就用到了<code>___cxa_guard_acquire</code>和<code>___cxa_guard_release</code>。</p>
-<h2 id="DAY-0x08"><a href="#DAY-0x08" class="headerlink" title="DAY 0x08"></a>DAY 0x08</h2><ul>
-<li>鼠标的数据除第一次发送的是0xfa(表示启动鼠标后的ACK)以外，其它数据按照3个字节一组发送。<blockquote>
-<p>每组中,第一个字节的高4位是对移动有反应的部分(在[0,3]的范围内),低4位是对点击有反应的部分(在[8,f]的范围内)<br>|    |7|6|5        |4        |3|2    |1            |0        |<br>|—|-|-|——-|——-|-|—–|———–|——-|<br>|0    |0|0|上移    |右移    |1|        |            |         |<br>|1    |0|0|下移    |左移    |1|右键    |中键(按下)    |左键    |<br>第二个字节和左右移动有关<br>第三个字节和上下移动有关<br>鼠标与屏幕的y方向正好相反,因此y使用前应该加负号</p>
-</blockquote>
-</li>
-<li>状态和控制寄存器<br>  <code>EFLAGS</code>、<code>EIP</code>、<code>CR0</code>、<code>CR1</code>、<code>CR2</code>、<code>CR3</code><br>  |寄存器    |作用|<br>  |—–    |—|<br>  |EFLAGS    |状态寄存器组|<br>  |EIP    |存储下一条指令的地址|<br>  |CR0|启用保护模式PE（分段机制）（Protection Enable）标志、分页PG（Paging）标志、等|<br>  |CR1|未定义|<br>  |CR2|页故障线性地址寄存器，保存最后一次出现页故障的全32位线性地址|<br>  |CR3|页目录基地址寄存器PDBR（Page-Directory Base address Register），保存页目录表的物理地址，页目录表总是放在以4K字节为单位的存储器边界上|</li>
-<li>保护模式状态切换之后，需要立即使用JMP指令刷新处理器执行管道</li>
-<li>在保护模式下，采用段表的方式，段寄存器中存放段表中目标项的偏移量（单位为Byte）<br>  例如：  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">MOV		AX,1*8			; 段寄存器DS为1*8，表示段表中的从0开始数起的第1个项</span><br><span class="line">MOV		DS,AX</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<h4 id="asmhead-nas-之后所做的事情"><a href="#asmhead-nas-之后所做的事情" class="headerlink" title="asmhead.nas 之后所做的事情"></a>asmhead.nas 之后所做的事情</h4><ul>
-<li>PIC关闭一切中断</li>
-<li>设定A20GATE，使CPU能够访问1MB以上的存储器</li>
-<li>指定临时段表</li>
-<li>切换到保护模式PE，开启分页PG</li>
-<li>刷新流水线</li>
-<li>初始化除CS外的段寄存器</li>
-<li>拷贝<code>bootpack.hrm</code>到<code>0x00280000</code> <code>(512KB)</code></li>
-<li>拷贝<code>ipl</code>启动扇区到<code>0x00100000</code> <code>(512B)</code></li>
-<li>拷贝磁盘上之前加载到内存区的除了启动区的部分到<code>0x00100200</code></li>
-<li>(可能进行)拷贝<code>bootpack.hrm</code>的某块区域到<code>bootpack.hrm</code>指定的栈地址中</li>
-<li>初始化栈地址为<code>bootpack.hrm</code>指定的栈地址</li>
-<li>设置<code>CS</code>寄存器的值的同时<code>JMP</code>到<code>HariMain</code>函数执行</li>
-</ul>
-<h4 id="汇编-1"><a href="#汇编-1" class="headerlink" title="汇编"></a>汇编</h4><ul>
-<li><code>IMUL</code>，有符号整数乘法</li>
-<li><code>SHL</code>，逻辑左移，<code>SHR</code>，逻辑右移</li>
-<li><code>ALIGNB</code>表示填充0直到地址能被操作数整除</li>
-</ul>
+<h4 id="日志"><a href="#日志" class="headerlink" title="日志"></a>日志</h4><p>为了方便调试，手撸了一个<code>log.cpp</code>，输出时只需构建字符串然后调用<code>log::info()</code>，能够在屏幕上滚动输出，就像终端一样，还支持不同日志等级，不同颜色显示<br><img src="/images/blog/os/2.png" alt="日志"></p>
+<h2 id="DAY-0x0A"><a href="#DAY-0x0A" class="headerlink" title="DAY 0x0A"></a>DAY 0x0A</h2><p>这一天的几乎全是软件层面的事情了。<br>    实验中跟随作者实现了图层，但是我把SHEET重新命名为了Canvas，并且将结构体改成了类，把那些操作函数改成了成员函数，因为我实在是受不了作者的代码结构了，把一堆函数分散开而且每一次调用都要在参数里加上ctl这种做法实在是啰嗦，而且一改动的话几乎全部都要改，按照类来设计的话，可以把代码很好的组织起来，这种逻辑最适合设计成面向对象的程序。</p>
+<p>​    而最让我头疼的是屏幕刷新的问题，因为作者只用了两个图层，而我还加了一个滚动的日志层，一共三个层，这样导致每次鼠标来一下中断都要滚动输出一下，屏幕闪烁得不行，不知道后面到定时器的时候有没有其它的办法<br><img src="/images/blog/os/3.gif" alt="卡顿的屏幕"></p>
+<p>​    在将直接写入改成写入到图层的过程中，经常遇到一些问题，但是在机器码层面不方便调试，因此，将之前我找到的<code>bochsdbg</code>支持的断点魔法<code>xchg    bx,bx</code>，封装成<code>void bochsdbg()</code>函数加到naskfunc里头，然后在不同的地方调用该函数，这样就能找出代码是在那个地方跑飞的了。</p>
+<p>​    作者对屏幕的刷新策略是，从底部到顶部逐层刷新，我尝试过另外一种方法，外层循环是整个屏幕的所有位置，对于每一个位置，按高度从顶部向下遍历，直至找到非透明像素，但是这种方法效率不高，可能是因为有些时候虽然图层很多但是顶部的图层面积较小，导致要么不再图层边界内，要么遇到透明像素的情况。</p>
+<h2 id="DAY-0x0B"><a href="#DAY-0x0B" class="headerlink" title="DAY 0x0B"></a>DAY 0x0B</h2><p>​    由于自己写的东西魔改的太多，作者是在每次界面改动之后就立刻调用<code>fresh_map</code>和<code>fresh_sub</code>刷新，但是这样会导致一轮循环中重复刷新某一区域（过度绘制）的问题，在大面积更新时势必遇到卡顿。而我由于多了一层log图层，该图层背景透明且每次输出都会整个刷新，因此我考虑采用另外的方式，为了解决这一问题，我决定在主while循环中进行真正的刷新操作，其他时候调用<code>notifyRefresh()</code>进行标志位的设置。<br>​    另外，将刷新map的操作也进行优化，窗口位置移动时，如果对新旧窗口分别刷新，实际上在移动区域不大的情况下，是有一部分区域重叠了的，对于这一情况，将图像分割成多个不重叠的区域，分别进行刷新，可以节省大量刷新操作。<br>​    作者的函数需要传入图层高度，作者提到，它不能适应把窗口变成透明或者把不透明变成透明的情况，为了避免这种状况，我每次map刷新都从最底部的图层开始，这在一定程度上影响了效率。<br>​    为了避免多处代码对同一区域进行刷新map的操作，我借鉴了网上一道求解<code>n个矩形重叠覆盖的面积</code>的算法题的思想，先将所有待刷新的区域矩形记录下来，先不刷新map，而在刷新屏幕之前，对这些区域进行划分，分块进行map的刷新操作，</p>
+<p>左边作者的，右边我的，可以看到，我的速度慢了十倍多，但是并不卡顿<br><img src="/images/blog/os/4.gif" alt=""></p>
 <h4 id="引用"><a href="#引用" class="headerlink" title="引用"></a>引用</h4><ul>
-<li>PIC 8259A<br><a href="https://webcache.googleusercontent.com/search?q=cache:http://oswiki.osask.jp/?(PIC" target="_blank" rel="noopener">http://webcache.googleusercontent.com/search?q=cache:http://oswiki.osask.jp/?(PIC)8259A</a>8259A)</li>
-<li>兼容PS/2键盘控制器<br><a href="https://webcache.googleusercontent.com/search?q=cache:http://oswiki.osask.jp/?(AT" target="_blank" rel="noopener">http://webcache.googleusercontent.com/search?q=cache:http://oswiki.osask.jp/?(AT)keyboard</a>keyboard)</li>
-<li>局部静态变量是如何做到只初始化一次的?<br><a href="www.voidcn.com/article/p-wdezklav-bms.html">www.voidcn.com/article/p-wdezklav-bms.html</a></li>
-<li>x86的控制寄存器CR0,CR1,CR2,CR3<br><a href="https://www.cnblogs.com/liubiyonge/p/9350494.html" target="_blank" rel="noopener">https://www.cnblogs.com/liubiyonge/p/9350494.html</a></li>
+<li>UVA 11345 Rectangles(n个矩形重叠覆盖的面积)<br><a href="https://blog.csdn.net/u013480600/article/details/39481243" target="_blank" rel="noopener">https://blog.csdn.net/u013480600/article/details/39481243</a></li>
 </ul>
 
           
@@ -639,7 +565,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/11/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/11/">11</a><span class="page-number current">12</span><a class="page-number" href="/page/13/">13</a><span class="space">&hellip;</span><a class="page-number" href="/page/62/">62</a><a class="extend next" rel="next" href="/page/13/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <a class="extend prev" rel="prev" href="/page/11/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/11/">11</a><span class="page-number current">12</span><a class="page-number" href="/page/13/">13</a><span class="space">&hellip;</span><a class="page-number" href="/page/63/">63</a><a class="extend next" rel="next" href="/page/13/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 
@@ -682,7 +608,7 @@
                 
                   <a href="/archives">
                 
-                    <span class="site-state-item-count">62</span>
+                    <span class="site-state-item-count">63</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -741,7 +667,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">23</span>
+                      
+                    
+                    <span class="site-state-item-count">24</span>
                     <span class="site-state-item-name">categories</span>
                   </a>
                 </div>
@@ -834,7 +762,11 @@
                     
                       
                     
-                    <span class="site-state-item-count">40</span>
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">42</span>
                     <span class="site-state-item-name">tags</span>
                   
                 </div>
