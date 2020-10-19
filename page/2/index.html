@@ -524,18 +524,18 @@
 <p>其中<code>&lt;your-serial-port-name&gt;</code>取决于你的电脑和你的板子，比如在我的电脑上是：</p>
 <p><code>/dev/serial/by-id/usb-MakerDiary_nRF52840_MDK_USB_Dongle_0E648D428B58FE7A-if00</code></p>
 <p>刷完之后会出现一个名为<code>MDK-Dongle</code>的U盘设备<code>/dev/sdc</code>：</p>
-<p><img src="../images/blog/65/image-20201009202108347.png" alt="image-20201009202108347"></p>
-<p><img src="../images/blog/65/image-20201009190411324.png" alt="image-20201009190411324"></p>
+<p><img src="/images/blog/65/image-20201009202108347.png" alt="image-20201009202108347"></p>
+<p><img src="/images/blog/65/image-20201009190411324.png" alt="image-20201009190411324"></p>
 <h3 id="刷入OpenSK"><a href="#刷入OpenSK" class="headerlink" title="刷入OpenSK"></a>刷入OpenSK</h3><p>从github上<a href="https://github.com/makerdiary/nrf52840-mdk-usb-dongle/raw/master/firmware/OpenSK/opensk_nrf52840_mdk_usb_dongle_gece14d7.uf2" target="_blank" rel="noopener">下载</a>预编译好的OpenSK固件：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget https://github.com/makerdiary/nrf52840-mdk-usb-dongle/raw/master/firmware/OpenSK/opensk_nrf52840_mdk_usb_dongle_gece14d7.uf2</span><br></pre></td></tr></table></figure>
 <p>长按reset键讲板子插入PC，挂载出现的名为<code>MDK-Dongle</code>的U盘设备：</p>
 <p>将我们的固件拷贝进去</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cp ./opensk_nrf52840_mdk_usb_dongle_gece14d7.uf2 /run/media/imlk/MDK-DONGLE/</span><br></pre></td></tr></table></figure>
-<p><img src="../images/blog/65/image-20201009192646793.png" alt="image-20201009192646793"></p>
+<p><img src="/images/blog/65/image-20201009192646793.png" alt="image-20201009192646793"></p>
 <p>拷贝过程约20s，期间指示灯会变成闪烁的红色：</p>
-<p><img src="../images/blog/65/IMG_20201009_200214.jpg" alt="IMG_20201009_200214"></p>
+<p><img src="/images/blog/65/IMG_20201009_200214.jpg" alt="IMG_20201009_200214"></p>
 <p>命令结束之后红灯变绿并熄灭，用<code>lsusb</code>可以看到该设备：</p>
-<p><img src="../images/blog/65/image-20201009202912460.png" alt="image-20201009202912460"></p>
+<p><img src="/images/blog/65/image-20201009202912460.png" alt="image-20201009202912460"></p>
 <p>现在我们的固件已经写好了，可以在<a href="https://webauthn.io/上或者Windows10登录选项中进行测试了。" target="_blank" rel="noopener">https://webauthn.io/上或者Windows10登录选项中进行测试了。</a></p>
 <h2 id="编译OpenSK固件"><a href="#编译OpenSK固件" class="headerlink" title="编译OpenSK固件"></a>编译OpenSK固件</h2><p>店铺的GitHub仓库（<a href="https://github.com/makerdiary/OpenSK）是基于老版本的OpenSK做的适配，店家说新版本修复了不少bug，而OpenSK官方仓库（https://github.com/google/OpenSK）对于makerdiary家的这款nRF52840-MDK" target="_blank" rel="noopener">https://github.com/makerdiary/OpenSK）是基于老版本的OpenSK做的适配，店家说新版本修复了不少bug，而OpenSK官方仓库（https://github.com/google/OpenSK）对于makerdiary家的这款nRF52840-MDK</a> USB Dongle已经做了适配了，因此我们直接用google的仓库编译：</p>
 <p>参考官方教程：<a href="https://github.com/google/OpenSK/blob/master/docs/install.md" target="_blank" rel="noopener">https://github.com/google/OpenSK/blob/master/docs/install.md</a></p>
@@ -560,19 +560,19 @@
 <p>按住reset按钮，将板子插入PC，拷贝uf2到板子中</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cp ./target/nrf52840_mdk_dfu_merged.uf2 /run/media/imlk/MDK-DONGLE/</span><br></pre></td></tr></table></figure>
 <p>等上面的程序结束后，红灯变绿并熄灭，<code>lsusb</code>查看到新的设备</p>
-<p><img src="../images/blog/65/image-20201010130247171.png" alt="image-20201010130247171"></p>
+<p><img src="/images/blog/65/image-20201010130247171.png" alt="image-20201010130247171"></p>
 <p>至此刷写完成</p>
 <h2 id="用J-Link给nRF52840刷BootLoader"><a href="#用J-Link给nRF52840刷BootLoader" class="headerlink" title="用J-Link给nRF52840刷BootLoader"></a>用J-Link给nRF52840刷BootLoader</h2><p>在刷固件的过程中，我们可能会因为填错基地址而无意中覆盖掉flash中重要的部分，此时可以进入dfu模式使用<code>nRF Connect</code>中的Programmer工具刷写固件，但是有时候我们把BootLoader刷掉了，而板子上的App又覆盖了rest按钮的逻辑，或者其他原因导致我们进不去dfu模式，我们还是有办法救回来的。nRF52840这颗SoC包含<code>SWD</code>接口，我们可以用一个J-Link编程器连接板子和pc，然后使用<code>nRF Connect</code>对其进行编程。</p>
 <p>连接方式如图所示，右侧是一个J-Link编程器，我们将它的外壳拆下，找到里面的一组swd接口（3.3VCC）、DIO、CLK、GND），对应将其连接到左边的板子上的（VIN、SWDIO、SWDCLK、GND）：</p>
-<p><img src="../images/blog/65/image-20201011000341491.png" alt="image-20201011000341491"></p>
+<p><img src="/images/blog/65/image-20201011000341491.png" alt="image-20201011000341491"></p>
 <p>板子的引脚图（源自<a href="https://wiki.makerdiary.com/nrf52840-mdk-usb-dongle/#software-resource）" target="_blank" rel="noopener">https://wiki.makerdiary.com/nrf52840-mdk-usb-dongle/#software-resource）</a></p>
-<p><img src="../images/blog/65/nrf52840-mdk-usb-dongle-pinout.png" alt="img"></p>
+<p><img src="/images/blog/65/nrf52840-mdk-usb-dongle-pinout.png" alt="img"></p>
 <p>将J-Link连接到PC，可以看到我们连接到了J-Link设备。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[imlk@imlk-pc ~]$ lsusb</span><br><span class="line">...</span><br><span class="line">Bus 001 Device 087: ID 1366:0101 SEGGER J-Link PLUS</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
 <p>此时打开<code>nRF Connect</code>中的Programmer工具，左上角应该能够看到我们的设备了：</p>
 <p>在当前页面中，你可以读取、擦除设备中的数据，具体的内存布局可以从NORDIC的官方文档中找到：<a href="https://infocenter.nordicsemi.com/index.jsp?topic=%2Fcom.nordic.infocenter.sdk5.v15.3.0%2Flib_bootloader.html&amp;cp=5_0_3_5_0_7&amp;anchor=lib_bootloader_memory。" target="_blank" rel="noopener">https://infocenter.nordicsemi.com/index.jsp?topic=%2Fcom.nordic.infocenter.sdk5.v15.3.0%2Flib_bootloader.html&amp;cp=5_0_3_5_0_7&amp;anchor=lib_bootloader_memory。</a></p>
 <p>通过导入BootLoader的hex文件，然后点击Erase &amp; Write，可以擦除全部数据并写入BootLoader。</p>
-<p><img src="../images/blog/65/image-20201011001219508.png" alt="image-20201011001219508"></p>
+<p><img src="/images/blog/65/image-20201011001219508.png" alt="image-20201011001219508"></p>
 <p>可以在这里下载makerdiary预编译的UF2BootLoader的hex文件：<a href="https://github.com/makerdiary/nrf52840-mdk-usb-dongle/tree/master/firmware/uf2_bootloader" target="_blank" rel="noopener">https://github.com/makerdiary/nrf52840-mdk-usb-dongle/tree/master/firmware/uf2_bootloader</a></p>
 <h2 id="用OpenSK实现Linux登录（失败）"><a href="#用OpenSK实现Linux登录（失败）" class="headerlink" title="用OpenSK实现Linux登录（失败）"></a>用OpenSK实现Linux登录（失败）</h2><p>遇到的问题是执行<code>pamu2fcfg</code>命令后，按下板子上的按钮会出现<code>error: fido_cred_verify (-7) FIDO_ERR_INVALID_ARGUMENT</code>的错误，没找到解决办法</p>
 <p>暂时把找到的资料堆在这里，等成功了再更新：</p>

@@ -515,7 +515,7 @@
 <li>一条网线（连接派和路由器）</li>
 <li>测试过程用的：HDMI转VGA线、USB键盘、USB鼠标</li>
 </ul>
-<p><img src="../images/blog/64/image-20201004200939893.png" alt="树莓派3B"></p>
+<p><img src="/images/blog/64/image-20201004200939893.png" alt="树莓派3B"></p>
 <h2 id="树莓派开启USB-network启动"><a href="#树莓派开启USB-network启动" class="headerlink" title="树莓派开启USB/network启动"></a>树莓派开启USB/network启动</h2><p>为了让树莓派支持从nfs启动，我们需要给树莓派的OTP写入一个标志位。我们需要先准备一张烧录了Raspberry Pi OS的SD卡，插入树莓派启动。</p>
 <p>首先进行系统更新，让树莓派更新到最新的bootloader</p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt update &amp;&amp; sudo apt full-upgrade</span><br></pre></td></tr></table></figure>
@@ -587,12 +587,12 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"># Ethernet</span><br><span class="line">#allow-hotplug eth0</span><br><span class="line">#iface eth0 inet dhcp</span><br><span class="line">#address 192.168.0.100</span><br><span class="line">#netmask 255.255.255.0</span><br><span class="line">#gateway 192.168.0.1</span><br><span class="line">#dns-nameservers 9.9.9.9 149.112.112.112</span><br></pre></td></tr></table></figure>
 <h3 id="启动"><a href="#启动" class="headerlink" title="启动"></a>启动</h3><p>拔掉树莓派的SD卡，用网线连接树莓派的网口和路由器，如果有HDMI和键盘也都可以接上，然后通电。等待10秒左右，树莓派会fallback到USB/Network方式启动。</p>
 <p>查看dnsmasq的日志文件，第一阶段树莓派向dnsmasq请求<code>bootcode.bin</code>：</p>
-<p><img src="../images/blog/64/image-20201004200646054.png" alt="image-20201004200646054"></p>
+<p><img src="/images/blog/64/image-20201004200646054.png" alt="image-20201004200646054"></p>
 <p>第二阶段向dnsmasq请求内核和其它文件：</p>
-<p><img src="../images/blog/64/image-20201004200744633.png" alt="image-20201004200744633"></p>
+<p><img src="/images/blog/64/image-20201004200744633.png" alt="image-20201004200744633"></p>
 <p>接下来内核会初始化dhcp客户端，然后通过nfs挂载rootfs。</p>
 <p>成功启动：</p>
-<p><img src="../images/blog/64/IMG_20201004_201311.jpg" alt="IMG_20201004_201311"></p>
+<p><img src="/images/blog/64/IMG_20201004_201311.jpg" alt="IMG_20201004_201311"></p>
 <h2 id="故障排除"><a href="#故障排除" class="headerlink" title="故障排除"></a>故障排除</h2><ul>
 <li><p>内核启动后卡住，显示类似于下面的内容</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">IP-Config: Complete:</span><br><span class="line">...</span><br><span class="line">random: crng init done</span><br></pre></td></tr></table></figure>
