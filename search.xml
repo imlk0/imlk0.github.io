@@ -105,22 +105,6 @@
       </categories>
   </entry>
   <entry>
-    <title>Fragment != Fragment ? —— Xposed开发时遇到的关于ClassLoader的问题</title>
-    <url>/blog/10/</url>
-    <content><![CDATA[<p>今天在写Xposed模块的过程中，为了找到某个Field，需要判断Filed的某个祖先的类型是是Fragment类型</p>
-<p>但在做比较的时候出现了问题，发生了Fragment != Fragment的问题：</p>
-<p>注：这里的 Fragment 是 android.support.v4.app.Fragment 而不是 android.app.Fragment</p>
-<p>我们知道v4包是要额外导入的，<br><img src="/images/blog/10_1.png" alt=""></p>
-<p>所以说，一共出现了两份v4包，一份打包在宿主app里，一份打包在自己的模块里面，在加载的时候会出现因为ClassLoader不一致而导致两个class不同的情况</p>
-<p>如图：<br><img src="/images/blog/10_0.png" alt=""></p>
-<p><strong>在debug添加查看发现，两个Class虽然都是android.support.v4.app.Fragment但由于ClassLoader不一样，导致两个Class不相等；</strong></p>
-<p>查看其它的Class发现，系统自带的那些jar里面的Class都是由BootClassLoader加载的，<br><img src="/images/blog/10_2.png" alt=""><br>而BootClassLoader的实例在虚拟机中只有一个，所以模块中的Context.class和宿主app里的Context.class是一样的</p>
-]]></content>
-      <categories>
-        <category>Xposed</category>
-      </categories>
-  </entry>
-  <entry>
     <title>HDU 1003 Max sum——分治法的应用，动态规划，前缀数组</title>
     <url>/blog/11/</url>
     <content><![CDATA[<p>原题： <a href="http://acm.hdu.edu.cn/showproblem.php?pid=1003" target="_blank" rel="noopener">http://acm.hdu.edu.cn/showproblem.php?pid=1003</a></p>
@@ -134,6 +118,22 @@
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line">#include &lt;cstdio&gt;</span><br><span class="line">#include &lt;cstring&gt;</span><br><span class="line">#include &lt;algorithm&gt;</span><br><span class="line"></span><br><span class="line">#define iinf 1e9</span><br><span class="line"></span><br><span class="line">using namespace std;</span><br><span class="line"></span><br><span class="line">// O(n)AC</span><br><span class="line"></span><br><span class="line">// 另一种结合前缀数组的方法</span><br><span class="line">// data[i] = list[0...(i - 1)];</span><br><span class="line">// data数组从1开始避免对边界的判断</span><br><span class="line">// 则list[x...y] = data[y + 1] - data[x];</span><br><span class="line">// i作为循环变量</span><br><span class="line">// 维护data[i]的最小值mi，更新ans的最大值</span><br><span class="line">// mi = min(mi, data[i])</span><br><span class="line">// ans = max(data[i] - mi, ans)</span><br><span class="line">// 可知若以第y个元素结尾的所有子列中list[x...y]为最优解，那么data[x]一定是data[1],data[2],data[3]...data[y](注意这里没有data[y+1],因为至少要有一个元素)中的最小值</span><br><span class="line"></span><br><span class="line">int main(int argc, char const *argv[])</span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line">	int T, N, sum, now, ans, min, minpos, l, r;</span><br><span class="line">	scanf(&quot;%d&quot;, &amp;T);</span><br><span class="line">	for (int j = 1; j &lt;= T; j++) &#123;</span><br><span class="line">		sum = 0;</span><br><span class="line">		ans = -iinf;</span><br><span class="line">		min = 0;</span><br><span class="line">		minpos = 0;</span><br><span class="line">		l = 1;</span><br><span class="line">		r = 1;</span><br><span class="line">		scanf(&quot;%d&quot;, &amp;N);</span><br><span class="line"></span><br><span class="line">		for (int i = 1; i &lt;= N; i++) &#123;</span><br><span class="line">			scanf(&quot;%d&quot;, &amp;now);</span><br><span class="line">			sum += now;</span><br><span class="line">			if (sum - min &gt; ans) &#123;//更新答案，这里使用的是上一次循环的min值</span><br><span class="line">				r = i;</span><br><span class="line">				l = minpos + 1;</span><br><span class="line">				ans = sum - min;</span><br><span class="line">			&#125;</span><br><span class="line">			if (sum &lt; min) &#123;//该判断语句不可和上一句调换，否则将可能出现最优解的数列长度为0；</span><br><span class="line">				min = sum;//更新本次循环的min，为在下一循环中使用到</span><br><span class="line">				minpos = i;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		if (j == 1) &#123;</span><br><span class="line">			printf(&quot;Case 1:\n&quot;);</span><br><span class="line">		&#125; else &#123;</span><br><span class="line">			printf(&quot;\nCase %d:\n&quot;, j);</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		printf(&quot;%d %d %d\n&quot;, ans, l, r);</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
       <categories>
         <category>HDU</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>Fragment != Fragment ? —— Xposed开发时遇到的关于ClassLoader的问题</title>
+    <url>/blog/10/</url>
+    <content><![CDATA[<p>今天在写Xposed模块的过程中，为了找到某个Field，需要判断Filed的某个祖先的类型是是Fragment类型</p>
+<p>但在做比较的时候出现了问题，发生了Fragment != Fragment的问题：</p>
+<p>注：这里的 Fragment 是 android.support.v4.app.Fragment 而不是 android.app.Fragment</p>
+<p>我们知道v4包是要额外导入的，<br><img src="/images/blog/10_1.png" alt=""></p>
+<p>所以说，一共出现了两份v4包，一份打包在宿主app里，一份打包在自己的模块里面，在加载的时候会出现因为ClassLoader不一致而导致两个class不同的情况</p>
+<p>如图：<br><img src="/images/blog/10_0.png" alt=""></p>
+<p><strong>在debug添加查看发现，两个Class虽然都是android.support.v4.app.Fragment但由于ClassLoader不一样，导致两个Class不相等；</strong></p>
+<p>查看其它的Class发现，系统自带的那些jar里面的Class都是由BootClassLoader加载的，<br><img src="/images/blog/10_2.png" alt=""><br>而BootClassLoader的实例在虚拟机中只有一个，所以模块中的Context.class和宿主app里的Context.class是一样的</p>
+]]></content>
+      <categories>
+        <category>Xposed</category>
       </categories>
   </entry>
   <entry>

@@ -407,7 +407,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://blog.imlk.top/blog/62/">
+    <link itemprop="mainEntityOfPage" href="http://blog.imlk.top/blog/10/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="imlk">
@@ -426,7 +426,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/blog/62/" itemprop="url">自制玩具操作系统--week10</a></h1>
+                <a class="post-title-link" href="/blog/10/" itemprop="url">Fragment != Fragment ? —— Xposed开发时遇到的关于ClassLoader的问题</a></h1>
         
 
         <div class="post-meta">
@@ -438,7 +438,7 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-05-01T00:00:09+08:00">2019-05-01</time>
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-02-25T18:02:56+08:00">2018-02-25</time>
             
 
             
@@ -459,7 +459,7 @@
                 <span class="post-meta-item-text">In</span>
               
               
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/OS/" itemprop="url" rel="index"><span itemprop="name">OS</span></a></span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Xposed/" itemprop="url" rel="index"><span itemprop="name">Xposed</span></a></span>
 
                 
                 
@@ -474,8 +474,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/blog/62/#comments" itemprop="discussionUrl">
-                  <span class="post-meta-item-text">Comments:</span> <span class="post-comments-count valine-comment-count" data-xid="/blog/62/" itemprop="commentCount"></span>
+                <a href="/blog/10/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">Comments:</span> <span class="post-comments-count valine-comment-count" data-xid="/blog/10/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -505,25 +505,976 @@
       
         
           
-            <h2 id="DAY-0x1B"><a href="#DAY-0x1B" class="headerlink" title="DAY 0x1B"></a>DAY 0x1B</h2><p>回顾<code>TSS</code>结构体，其中有一<code>CR3</code>字段，该字段在task切换的时候会自动赋值给<code>CR3</code>寄存器，我们可以在这里给用户程序设置额外的页目录地址（物理地址），</p>
-<p>首先需要分配一张页表</p>
-<p>按照内存中的结构来构造页目录结构体和页表结构体<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">PAGE_DE</span> &#123;</span></span><br><span class="line">	<span class="keyword">unsigned</span> <span class="keyword">int</span> entrys[PAGE_DE_ENTRY_NUM];</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function">PAGE_DE* <span class="title">alloc_page_de</span><span class="params">(MEMMAN* memman)</span> </span>&#123;</span><br><span class="line">	PAGE_DE* p = (PAGE_DE*)memman_alloc_4k(memman, <span class="keyword">sizeof</span>(PAGE_DE));</span><br><span class="line">	utils::<span class="built_in">memset</span>(p, <span class="number">0</span>, <span class="keyword">sizeof</span>(PAGE_DE));</span><br><span class="line">	<span class="keyword">return</span> p;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>获得页表以后，可以分配一定的内存区域来存放用户程序数据，作者在运行用户程序时，采用新增一项段表的方法将逻辑地址映射到物理地址，但是我们这里依然绕过段表，直接用页表映射到物理地址。<br>所以，我们将从<code>0x00000000</code>开始的线性地址区域映射到我们刚刚分配的用户程序区域的物理地址：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">map_page_addr2addr(sys::memman, pagede, <span class="number">0</span>, segsiz, (<span class="keyword">unsigned</span> <span class="keyword">int</span>)q - LADDR_K_BASE, <span class="number">7</span>, <span class="number">7</span>); <span class="comment">// user access | write | present</span></span><br></pre></td></tr></table></figure></p>
-<p>注意flag设置为“用户态可访问、可写、该页存在”</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">// 映射地址到页目录，要求start_laddr和start_paddr低12位相同</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">map_page_addr2addr</span><span class="params">(MEMMAN* memman, PAGE_DE* pagede, <span class="keyword">unsigned</span> <span class="keyword">int</span> start_laddr, <span class="keyword">unsigned</span> <span class="keyword">int</span> size,</span></span></span><br><span class="line"><span class="function"><span class="params">                        <span class="keyword">unsigned</span> <span class="keyword">int</span> start_paddr, <span class="keyword">unsigned</span> <span class="keyword">int</span> demode, <span class="keyword">unsigned</span> <span class="keyword">int</span> tamode)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">unsigned</span> <span class="keyword">int</span> end_laddr = start_laddr + size;</span><br><span class="line">	end_laddr = (end_laddr - <span class="number">1</span> + <span class="number">0x1000</span>) / <span class="number">0x1000</span>  * <span class="number">0x1000</span>;<span class="comment">// 4k向上对齐</span></span><br><span class="line">	start_laddr = start_laddr / <span class="number">0x1000</span> * <span class="number">0x1000</span>;<span class="comment">// 4k向下对齐</span></span><br><span class="line">	start_paddr = start_paddr / <span class="number">0x1000</span> * <span class="number">0x1000</span>;<span class="comment">// 4k向下对齐</span></span><br><span class="line"></span><br><span class="line">	<span class="keyword">unsigned</span> <span class="keyword">int</span> start_entry = start_laddr &gt;&gt; <span class="number">22</span>;</span><br><span class="line">	<span class="keyword">unsigned</span> <span class="keyword">int</span> end_entry = ((end_laddr - <span class="number">1</span> + <span class="number">0x400000</span>) / <span class="number">0x400000</span>  * <span class="number">0x400000</span>) &gt;&gt; <span class="number">22</span>;<span class="comment">// 4MB对齐</span></span><br><span class="line">	<span class="keyword">unsigned</span> <span class="keyword">int</span> sub_start_laddr = start_laddr;</span><br><span class="line">	<span class="keyword">unsigned</span> <span class="keyword">int</span> sub_end_laddr = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">unsigned</span> <span class="keyword">int</span> sub_start_paddr = start_paddr;</span><br><span class="line">	<span class="keyword">unsigned</span> <span class="keyword">int</span> sub_size = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = start_entry; i &lt; end_entry &amp;&amp; i &lt; PAGE_DE_ENTRY_NUM; ++i) &#123;</span><br><span class="line">		PAGE_TA* pta = (PAGE_TA*)((pagede-&gt;entrys[i]) &amp; <span class="number">0xFFFFF000</span>);</span><br><span class="line">		<span class="keyword">if</span> (pta == <span class="literal">nullptr</span>) &#123;</span><br><span class="line">			pta = alloc_page_ta(memman);</span><br><span class="line">		&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">			pta = (PAGE_TA*)(((<span class="keyword">unsigned</span> <span class="keyword">int</span>)pta) + LADDR_K_BASE);</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		sub_end_laddr = utils::min(end_laddr, (i + <span class="number">1</span>) &lt;&lt; <span class="number">22</span>);</span><br><span class="line">		sub_size = utils::max(<span class="number">0</span>, sub_end_laddr - sub_start_laddr);</span><br><span class="line">		map_page_addr2addr(pta, sub_start_laddr, sub_size, sub_start_paddr, tamode);<span class="comment">// 填充pta指向的页表</span></span><br><span class="line">		sub_start_paddr += sub_size;</span><br><span class="line">		sub_start_laddr += sub_size;</span><br><span class="line">		set_page_ta2de(pagede, pta, i, demode);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>需要注意的是，分页结构要求页表映射的内存是按4k对齐的，即线性地址的一页映射物理内存一帧。而作者之前编写的<code>memman_alloc_4k</code>函数仅仅保证了内存区域大小4k对齐，因此我们要对该函数进行修改，让它分配的空间在初始地址和内存大小都按4k对齐。</p>
-<p>除了用户程序的页表外，我们还需要把内核程序的页表加入到用户态页目录里面，这样的话，用户态程序调用内核中的api执行内核程序时，就不用更变CR3,直接从当前的task（带有我们准备的用户态页目录）里面映射到内核态的代码了</p>
-<p>用户态task的分页：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">cr3: 0x00000077e000</span><br><span class="line">0x00000000-0x00000fff -&gt; 0x000020000000-0x000020000fff  /* 低线性地址区域用户程序 */</span><br><span class="line">0xc0000000-0xdfffffff -&gt; 0x000000000000-0x00001fffffff  /* 高线性地址区域内核程序 */</span><br><span class="line">0xe0000000-0xffffffff -&gt; 0x0000e0000000-0x0000ffffffff  /* 高线性地址区域硬件区域 */</span><br></pre></td></tr></table></figure></p>
-<p>编写函数执行这一拷贝过程<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">copy_page_de2de</span><span class="params">(PAGE_DE* fromde, <span class="keyword">int</span> fromstart, PAGE_DE* tode, <span class="keyword">int</span> tostart, <span class="keyword">int</span> count)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; count &amp;&amp; fromstart + i &lt; PAGE_DE_ENTRY_NUM &amp;&amp; tostart + i &lt; PAGE_DE_ENTRY_NUM; ++i) &#123;</span><br><span class="line">		tode-&gt;entrys[tostart + i] = fromde-&gt;entrys[fromstart + i];</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>增加两项用户态的gdt<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">set_segmdesc(gdt + ((<span class="keyword">unsigned</span> <span class="keyword">int</span>)__USER_CS &gt;&gt; <span class="number">3</span>), <span class="number">0xFFFFFFFF</span>, <span class="number">0</span>, AR_CODE32_ER + <span class="number">0x60</span>);</span><br><span class="line">set_segmdesc(gdt + ((<span class="keyword">unsigned</span> <span class="keyword">int</span>)__USER_DS &gt;&gt; <span class="number">3</span>), <span class="number">0xFFFFFFFF</span>, <span class="number">0</span>, AR_DATA32_RW + <span class="number">0x60</span>);</span><br></pre></td></tr></table></figure></p>
-<p>以用户态运行我们加载的程序<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">start_app(<span class="number">0x1b</span>, __USER_CS, esp, __USER_DS, &amp;(task-&gt;tss.esp0));<span class="comment">// 入口地址0x1b,那里是一个jmp跳板</span></span><br></pre></td></tr></table></figure></p>
-<p>运行hello<br><img src="/images/blog/os/21.png" alt=""></p>
-<p>可能会质疑如果将内核的页表放到用户态程序的页目录里面会不会导致从用户态直接访问内核数据，毕竟我们绕过了段表，段表的limit已经不能起保护作用了。<br>实际上是不用担心的，因为内核页表的flag中设定了User位为0，只允许内核态代码访问。</p>
-<p>编写以下程序<code>touch_kernel.cpp</code>来测试：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">HariMain</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="keyword">int</span>* kp = (<span class="keyword">int</span>*)<span class="number">0xC0000000</span>;</span><br><span class="line">	(*kp) = <span class="number">0xFFFFFFFF</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p><img src="/images/blog/os/22.png" alt=""><br>bochs检测到了页错误PE<br><img src="/images/blog/os/23.png" alt=""></p>
-<p>至此，不考虑虚拟内存的用户态分页实现完成</p>
+          今天在写Xposed模块的过程中，为了找到某个Field，需要判断Filed的某个祖先的类型是是Fragment类型
+但在做比较的时候出现了问题，发生了Fragment != Fragment的问题：
+注：这里的 Fragment 是 android.support.v4.app.Fragment 
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/blog/10/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://blog.imlk.top/blog/14/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="imlk">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="IMLK">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/blog/14/" itemprop="url">HDU 1325 1272 并查集判断有向图和无向图是否构成一棵树型</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-02-09T16:49:34+08:00">2018-02-09</time>
+            
+
+            
+            
+
+            
+          </span>
 
           
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/HDU/" itemprop="url" rel="index"><span itemprop="name">HDU</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/blog/14/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">Comments:</span> <span class="post-comments-count valine-comment-count" data-xid="/blog/14/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+          HDU 1325HDU 1272
+HDU 1325是有向图，给定某个节点是另一个元素的父节点HDU 1272是无向图，将两个节点连接起来
+共同点：判断是否成环，判断是树木还是森林
+区别：有向图可能出现多个箭头指向同一个节点的情况（即一个节点多个父节点）例如
+另外，关于HDU 1272
+评论区看到一种
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/blog/14/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://blog.imlk.top/blog/7/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="imlk">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="IMLK">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/blog/7/" itemprop="url">CodeForces 699D Fix a Tree——并查集优化 给出所有节点的父节点（有向图），用最少的修改生成一颗合法的树（环的判断，去环）</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-02-08T18:24:54+08:00">2018-02-08</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/未分类/" itemprop="url" rel="index"><span itemprop="name">未分类</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/blog/7/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">Comments:</span> <span class="post-comments-count valine-comment-count" data-xid="/blog/7/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+          123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263D. Fix a Treetime limit per test2
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/blog/7/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://blog.imlk.top/blog/6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="imlk">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="IMLK">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/blog/6/" itemprop="url">CodeForces 699C Vacations——动态规划</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-02-08T11:49:53+08:00">2018-02-08</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/算法/" itemprop="url" rel="index"><span itemprop="name">算法</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/blog/6/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">Comments:</span> <span class="post-comments-count valine-comment-count" data-xid="/blog/6/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+          原题链接
+12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667686970717273C. Vacat
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/blog/6/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://blog.imlk.top/blog/19/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="imlk">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="IMLK">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/blog/19/" itemprop="url">HYSBZ 1216: [HNOI2003]操作系统</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-02-07T23:27:09+08:00">2018-02-07</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/算法/" itemprop="url" rel="index"><span itemprop="name">算法</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/blog/19/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">Comments:</span> <span class="post-comments-count valine-comment-count" data-xid="/blog/19/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+          题目链接
+1234567891011121314151617181920212223242526272829303132333435363738394041424344451216: [HNOI2003]操作系统Time Limit: 10 Sec  Memory Limit: 162 MBSubm
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/blog/19/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://blog.imlk.top/blog/28/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="imlk">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="IMLK">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/blog/28/" itemprop="url">最长递增子列的另一种思路（转化为LCS问题）</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-02-06T21:11:32+08:00">2018-02-06</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/算法/" itemprop="url" rel="index"><span itemprop="name">算法</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/blog/28/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">Comments:</span> <span class="post-comments-count valine-comment-count" data-xid="/blog/28/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+          利用LCS的解题思路可以解决最长递增子列的问题顺便求出该递增序列
+例如list1 = [1, 2, 3, 1, -1, 0, 4, 5]将其排序得list2 = [-1, 0, 1, 1, 2, 3, 4, 5]则问题转化为求list1和list2的最长的不要求连续的公共子列及其长度
+
+资料：htt
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/blog/28/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://blog.imlk.top/blog/13/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="imlk">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="IMLK">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/blog/13/" itemprop="url">HDU 1166 敌兵布阵——线段树，树状数组</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-02-06T17:33:38+08:00">2018-02-06</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/算法/" itemprop="url" rel="index"><span itemprop="name">算法</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/blog/13/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">Comments:</span> <span class="post-comments-count valine-comment-count" data-xid="/blog/13/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+          这题本来我打算用前缀数组实现源数据的处理，并把更变用map实现，发现后来还是超时了；
+借机学习了一下线段树，虽然没怎么看懂，但大概还是理解了一点；这题用 指针构成的线段树 和 数组构成的线段树 分别来实现了一下资料：线段树从零开始 - CSDN博客http://blog.csdn.net/zearo
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/blog/13/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -564,7 +1515,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/5/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><span class="page-number current">6</span><a class="page-number" href="/page/7/">7</a><span class="space">&hellip;</span><a class="page-number" href="/page/63/">63</a><a class="extend next" rel="next" href="/page/7/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <a class="extend prev" rel="prev" href="/page/5/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><span class="page-number current">6</span><a class="page-number" href="/page/7/">7</a><span class="space">&hellip;</span><a class="page-number" href="/page/9/">9</a><a class="extend next" rel="next" href="/page/7/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 
@@ -823,6 +1774,12 @@
   </span>
   <span class="author" itemprop="copyrightHolder">imlk</span>
 
+<div class="BbeiAn-info">
+京ICP备 -
+<a target="_blank"  href="http://www.miitbeian.gov.cn/">2020042968号</a>
+</a>
+</div>
+
   
 
   
@@ -840,6 +1797,7 @@
 
 
   <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/theme-next/hexo-theme-next">NexT.Mist</a> v6.0.6</div>
+
 
 
 
