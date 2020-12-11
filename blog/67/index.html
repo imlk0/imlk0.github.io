@@ -1,0 +1,1455 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.loli.net/css?family=EB Garamond:300,300italic,400,400italic,700,700italic|Noto Serif SC:300,300italic,400,400italic,700,700italic|Noto Serif SC:300,300italic,400,400italic,700,700italic|Source Code Pro:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+  
+
+<link href="https://cdn.jsdelivr.net/npm/font-awesome@4/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.0.6" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.0.6">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.0.6">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.0.6">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.0.6" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '6.0.6',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="最近把一块1T的垃圾机械硬盘拿去换新了，分区后发现还留有不少的空间，再加上最近有挂byrbt做种的需求，于是乎把它拿来当移动硬盘挂bt啦。无奈主力电脑出厂自带的那块网卡实在是太垃圾了，根本过不了200Mbps。同学推荐上车AX200，搜了一下，50+￥左右，不算太贵。又正好看到Intel出了新款的AX210，好家伙，Wi-FI 7都给整上了，本着买新不买旧的原则，于是乎70+大洋某宝剁手买下了;)">
+<meta name="keywords" content="iwlwifi,ax210">
+<meta property="og:type" content="article">
+<meta property="og:title" content="在Linux平台上用上AX210NGW网卡">
+<meta property="og:url" content="http://blog.imlk.top/blog/67/index.html">
+<meta property="og:site_name" content="IMLK">
+<meta property="og:description" content="最近把一块1T的垃圾机械硬盘拿去换新了，分区后发现还留有不少的空间，再加上最近有挂byrbt做种的需求，于是乎把它拿来当移动硬盘挂bt啦。无奈主力电脑出厂自带的那块网卡实在是太垃圾了，根本过不了200Mbps。同学推荐上车AX200，搜了一下，50+￥左右，不算太贵。又正好看到Intel出了新款的AX210，好家伙，Wi-FI 7都给整上了，本着买新不买旧的原则，于是乎70+大洋某宝剁手买下了;)">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://blog.imlk.top/images/blog/67/image-20201211172348572.png">
+<meta property="og:image" content="http://blog.imlk.top/images/blog/67/image-20201211165048156.png">
+<meta property="og:image" content="http://blog.imlk.top/images/blog/67/image-20201211170418845.png">
+<meta property="og:image" content="http://blog.imlk.top/images/blog/67/image-20201211170754645.png">
+<meta property="og:image" content="http://blog.imlk.top/images/blog/67/image-20201211171018130.png">
+<meta property="og:updated_time" content="2020-12-11T09:47:25.909Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="在Linux平台上用上AX210NGW网卡">
+<meta name="twitter:description" content="最近把一块1T的垃圾机械硬盘拿去换新了，分区后发现还留有不少的空间，再加上最近有挂byrbt做种的需求，于是乎把它拿来当移动硬盘挂bt啦。无奈主力电脑出厂自带的那块网卡实在是太垃圾了，根本过不了200Mbps。同学推荐上车AX200，搜了一下，50+￥左右，不算太贵。又正好看到Intel出了新款的AX210，好家伙，Wi-FI 7都给整上了，本着买新不买旧的原则，于是乎70+大洋某宝剁手买下了;)">
+<meta name="twitter:image" content="http://blog.imlk.top/images/blog/67/image-20201211172348572.png">
+
+
+
+
+
+
+  <link rel="canonical" href="http://blog.imlk.top/blog/67/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>在Linux平台上用上AX210NGW网卡 | IMLK</title>
+  
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css">
+<script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js"></script>
+<meting-js server="netease" type="playlist" id="377484398" autoplay="false" fixed ="true"> </meting-js>
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"> 
+
+<div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">IMLK</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">一条咸鱼</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+          
+  <li class="menu-item menu-item-主页">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br />主页</a>
+</li>
+
+      
+        
+        
+          
+  <li class="menu-item menu-item-目录">
+    <a href="/categories/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-th"></i> <br />目录</a>
+</li>
+
+      
+        
+        
+          
+  <li class="menu-item menu-item-文章">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />文章</a>
+</li>
+
+      
+        
+        
+          
+  <li class="menu-item menu-item-友链">
+    <a href="/links/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-link"></i> <br />友链</a>
+</li>
+
+      
+        
+        
+          
+  <li class="menu-item menu-item-关于">
+    <a href="/about/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-user"></i> <br />关于</a>
+</li>
+
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />Search</a>
+        </li>
+      
+    </ul>
+  
+
+  
+    
+
+    
+    
+      
+      
+    
+      
+      
+    
+      
+      
+    
+      
+      
+    
+      
+      
+    
+    
+
+  
+
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="Searching..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+  
+
+
+
+ </div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://blog.imlk.top/blog/67/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="imlk">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="IMLK">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">在Linux平台上用上AX210NGW网卡</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-12-11T15:34:07+08:00">2020-12-11</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/blog/67/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">Comments:</span> <span class="post-comments-count valine-comment-count" data-xid="/blog/67/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>最近把一块1T的垃圾机械硬盘拿去换新了，分区后发现还留有不少的空间，再加上最近有挂byrbt做种的需求，于是乎把它拿来当移动硬盘挂bt啦。无奈主力电脑出厂自带的那块网卡实在是太垃圾了，根本过不了200Mbps。同学推荐上车AX200，搜了一下，50+￥左右，不算太贵。又正好看到Intel出了新款的AX210，好家伙，Wi-FI 7都给整上了，本着买新不买旧的原则，于是乎70+大洋某宝剁手买下了;)</p>
+<p>买回来换上去一看，Windows下去官网装一个wifi驱动和一个蓝牙驱动就能用了。但是换到Linux下，发现根本识别不了网卡，啊这就很淦了，dmesg也没有看到有价值的信息，于是花几天时间查了查资料，算是把这个问题解决了，这里做个记录。</p>
+<h2 id="系统版本"><a href="#系统版本" class="headerlink" title="系统版本"></a>系统版本</h2><p>首先我使用的发行版是Manjaro，内核版本是<code>5.4.80-2-MANJARO</code>，因此这篇文章不一定能够解决你的问题，但是排查过程可能会有所帮助。</p>
+<h2 id="wifi问题"><a href="#wifi问题" class="headerlink" title="wifi问题"></a>wifi问题</h2><p>其实Linux内核中对AX210系列早就有支持了，关于AX210的<a href="https://github.com/torvalds/linux/commit/d151b0a2efa128cb4f643b11baf54b1e4de2c528#diff-9161e5dc4fbda717a6c0f43490cab079fffa987b7a5cf5831de396bcfb5ae01eR244" target="_blank" rel="noopener">提交</a>可以追溯到两年前，按道理相应的支持应该已经到位了，这就让我很迷惑。</p>
+<ol>
+<li><p>首先看了下<code>dmesg</code>的日志，里面并没有找到相关的信息</p>
+</li>
+<li><p>执行<code>lsmod | grep iwlwifi</code></p>
+<p>并没有看到输出，因此这里可以知道的是，<code>iwlwifi</code>模块并没有被加载，查阅<a href="https://wireless.wiki.kernel.org/en/users/drivers/iwlwifi" target="_blank" rel="noopener">资料</a>发现，这个网卡属于Intel的比较新的型号，对应的驱动是一个叫<code>iwlwifi</code>的模块。于是执行下面的命令加载这个模块</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">modprobe iwlwifi</span><br></pre></td></tr></table></figure>
+<p>再次执行<code>lsmod | grep iwlwifi</code>发现模块现在已经被加载上了，<code>dmesg</code>里面出现了这样的内容：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[    2.410221] cfg80211: Loading compiled-in X.509 certificates for regulatory database</span><br><span class="line">[    2.451194] cfg80211: Loaded X.509 cert &apos;sforshee: 00b28ddf47aef9cea7&apos;</span><br><span class="line">[    2.486819] Intel(R) Wireless WiFi driver for Linux</span><br><span class="line">[    2.486820] Copyright(c) 2003- 2015 Intel Corporation</span><br></pre></td></tr></table></figure>
+<p>按照传统功夫点到为止，驱动也加载了应该是能上网了，但是爷还是没法用wifi。</p>
+</li>
+<li><p>firmware问题？</p>
+<p>上面的那份资料所在的页面里还提供了每个型号对应的固件的下载，目前最新的是AX201，还没有AX210的固件。不过文中指出新的固件可以在<a href="https://git.kernel.org/pub/scm/linux/kernel/git/firmware/linux-firmware.git" target="_blank" rel="noopener">linux-firmware.git</a>这里找到，其中有一个叫做<a href="https://git.kernel.org/pub/scm/linux/kernel/git/firmware/linux-firmware.git/tree/iwlwifi-ty-a0-gf-a0-59.ucode?id=7eb7fda50e9aa554c6bfafdd456e6c2ea54f6163" target="_blank" rel="noopener">iwlwifi-ty-a0-gf-a0-59.ucode</a>的文件引起了我的注意，根据AX210的代号即为TyphoonPeak，大胆推断这个就是AX210对应的固件。</p>
+<p>linux-firmware.git中的固件不在GPL LICENSE的覆盖范围中，并且是以二进制的形式发布的，一般是默认用包管理器就安装了的（在manjaro中，包名为linux-firmware）。</p>
+<p>在本机上对应的目录为<code>/lib/firmware/</code>，在该目录下，我找到了一份<code>iwlwifi-ty-a0-gf-a0-59.ucode</code>文件，末尾是59是版本号</p>
+<p><img src="/images/blog/67/image-20201211172348572.png" alt="image-20201211172348572"></p>
+<p>说明我的电脑上是有固件的，没有的话，<code>git clone</code>下来拷贝一份<code>.ucode</code>文件到你电脑上就行了</p>
+<p>iwlwifi版本问题？</p>
+<p>执行：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">modinfo iwlwifi | grep firmware</span><br></pre></td></tr></table></figure>
+<p>可以看到iwlwifi支持的所有固件，如果里面没有类似于<code>iwlwifi-ty-a0-gf-a0-60.ucode</code>这样的（版本号似乎不受影响，如果输出中是版本号60，也可以用59的firmware文件），说明你的iwlwifi可能太老了，老到还不知道AX210的存在呢，你需要更新iwlwifi。</p>
+</li>
+<li><p>iwlwifi问题？</p>
+<p>我面临的情况是，iwlwifi版本支持AX210，firmware也存在。也试过更新内核版本带动iwlwifi模块的更新，但是都没有效果。</p>
+<p>最后我看到了这么一个mail list：<a href="https://lore.kernel.org/linux-wireless/iwlwifi.20201202143859.a06ba7540449.I7390305d088a49c1043c9b489154fe057989c18f@changeid/T/#u" target="_blank" rel="noopener">https://lore.kernel.org/linux-wireless/iwlwifi.20201202143859.a06ba7540449.I7390305d088a49c1043c9b489154fe057989c18f@changeid/T/#u</a></p>
+<p>这里提到Intel缺失了一些AX210不能被识别的原因是他们漏了加上部分<code>subsytem device ID</code>了。</p>
+<p>用<code>lspci -k</code>查看，我的这块AX210<code>vendor id</code>和<code>subsytem device ID</code>分别是[0x2725: 0x0024]，正好在遗漏的范围内：</p>
+<p><img src="/images/blog/67/image-20201211165048156.png" alt="image-20201211165048156"></p>
+<p>那么两个办法，一是升级kernel到最新的版本，提交是2020年12月3日和入的，5.10-rc7版本的内核已经包含了这个修复，考虑到新内核bug还是很多的（之前试过5.10-rc5版本无法usb共享上网）。因此采取了第二种办法，自己编译iwlwifi，然后把这个patch打上就行了。</p>
+<p>这里我们不能直接用aur里提供的iwlwifi和iwlwifi-next，这两个编译过程中都会出错，原因是不同版本内核头文件不一致导致一些函数找不到。但是我们可以下载<a href="https://git.kernel.org/pub/scm/linux/kernel/git/iwlwifi/backport-iwlwifi.git" target="_blank" rel="noopener">backport-iwlwifi.git</a>的源码来编译</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git clone https://git.kernel.org/pub/scm/linux/kernel/git/iwlwifi/backport-iwlwifi.git</span><br><span class="line">cd backport-iwlwifi</span><br></pre></td></tr></table></figure>
+<p>mail list中提到了三个patch，我们一并给打上。</p>
+<p>首先下载patch文件：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">wget https://github.com/torvalds/linux/commit/9b15596c5006d82b2f82810e8cbf80d8c6e7e7b4.patch</span><br><span class="line">wget https://github.com/torvalds/linux/commit/568d3434178b00274615190a19d29c3d235b4e6d.patch</span><br><span class="line">wget https://github.com/torvalds/linux/commit/5febcdef30902fa870128b9789b873199f13aff1.patch</span><br></pre></td></tr></table></figure>
+<p>打patch：在源码目录下对三个patch分别执行</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">patch -Np1 -i &lt;你下载的patch文件路径&gt;</span><br></pre></td></tr></table></figure>
+<p>正确输出结果类似如下：</p>
+<p><img src="/images/blog/67/image-20201211170418845.png" alt="image-20201211170418845"></p>
+<p>编译并安装</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo make &amp;&amp; sudo make install</span><br></pre></td></tr></table></figure>
+<p>我这里过程比较顺畅，编译时没有遇到问题，新的模块安装到了<code>/lib/modules/5.4.80-2-MANJARO/updates/drivers/net/wireless/intel/iwlwifi/iwlwifi.ko.xz</code>这里</p>
+<p>接下来启用新的iwlwifi模块</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo modprobe -r iwlwifi &amp;&amp; sudo modprobe iwlwifi</span><br></pre></td></tr></table></figure>
+<p>然后就是检查dmesg输出：</p>
+<p><img src="/images/blog/67/image-20201211170754645.png" alt="image-20201211170754645"></p>
+<p>发现wlp1s0这个interface已经活了，很快啊，然后就是一个连wifi，一个看速率：</p>
+<p><img src="/images/blog/67/image-20201211171018130.png" alt="image-20201211171018130"></p>
+<p>从200Mb/s变成300Mb/s了</p>
+<p>好，很有精神</p>
+</li>
+</ol>
+<h2 id="蓝牙"><a href="#蓝牙" class="headerlink" title="蓝牙"></a>蓝牙</h2><p>解决了Wi-fi问题，还得解决蓝牙问题</p>
+<h2 id="相关文档"><a href="#相关文档" class="headerlink" title="相关文档"></a>相关文档</h2><ol>
+<li><p>Linux Wireless - Intel - 固件列表</p>
+<p><a href="https://wireless.wiki.kernel.org/en/users/drivers/iwlwifi" target="_blank" rel="noopener">https://wireless.wiki.kernel.org/en/users/drivers/iwlwifi</a></p>
+</li>
+<li><p>从backport-iwlwifi编译iwlwifi模块</p>
+<p><a href="https://vampire.ink/desktop/compileiwlwifi.html" target="_blank" rel="noopener">https://vampire.ink/desktop/compileiwlwifi.html</a></p>
+</li>
+</ol>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/iwlwifi/" rel="tag"># iwlwifi</a>
+          
+            <a href="/tags/ax210/" rel="tag"># ax210</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/66/" rel="next" title="TSCTF 2020 writeup（pwn + misc）">
+                <i class="fa fa-chevron-left"></i> TSCTF 2020 writeup（pwn + misc）
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">imlk</p>
+              <p class="site-description motion-element" itemprop="description">勿在浮沙铸高台</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives">
+                
+                    <span class="site-state-item-count">64</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">24</span>
+                    <span class="site-state-item-name">categories</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">44</span>
+                    <span class="site-state-item-name">tags</span>
+                  
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/KB5201314" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:me@imlk.top" target="_blank" title="E-Mail"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  
+                </span>
+              
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#系统版本"><span class="nav-number">1.</span> <span class="nav-text">系统版本</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#wifi问题"><span class="nav-number">2.</span> <span class="nav-text">wifi问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#蓝牙"><span class="nav-number">3.</span> <span class="nav-text">蓝牙</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#相关文档"><span class="nav-number">4.</span> <span class="nav-text">相关文档</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love" id="animate"> 
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">imlk</span>
+
+<div class="BbeiAn-info">
+京ICP备 -
+<a target="_blank"  href="http://www.miitbeian.gov.cn/">2020042968号</a>
+</a>
+</div>
+
+  
+
+  
+</div>
+
+
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/theme-next/hexo-theme-next">NexT.Mist</a> v6.0.6</div>
+
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.0.6"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.0.6"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.0.6"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.0.6"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.0.6"></script>
+
+
+
+  
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  
+  
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(function (item) {
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: true,
+        notify: true,
+        appId: 'pPIiFQjO1RTMg6A6ANqP5qN7-gzGzoHsz',
+        appKey: 'XaPR8xbkykCRQYhjj0K7jozz',
+        placeholder: 'come on ヾﾉ≧∀≦)o!!',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+  </script>
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
