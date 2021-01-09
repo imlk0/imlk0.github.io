@@ -158,7 +158,7 @@
 <meta property="og:image" content="http://blog.imlk.top/images/blog/67/image-20201211170418845.png">
 <meta property="og:image" content="http://blog.imlk.top/images/blog/67/image-20201211170754645.png">
 <meta property="og:image" content="http://blog.imlk.top/images/blog/67/image-20201211171018130.png">
-<meta property="og:updated_time" content="2020-12-11T09:47:25.909Z">
+<meta property="og:updated_time" content="2021-01-09T16:57:10.643Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="在Linux平台上用上AX210NGW网卡">
 <meta name="twitter:description" content="最近把一块1T的垃圾机械硬盘拿去换新了，分区后发现还留有不少的空间，再加上最近有挂byrbt做种的需求，于是乎把它拿来当移动硬盘挂bt啦。无奈主力电脑出厂自带的那块网卡实在是太垃圾了，根本过不了200Mbps。同学推荐上车AX200，搜了一下，50+￥左右，不算太贵。又正好看到Intel出了新款的AX210，好家伙，Wi-FI 7都给整上了，本着买新不买旧的原则，于是乎70+大洋某宝剁手买下了;)">
@@ -500,7 +500,7 @@
                   <i class="fa fa-file-word-o"></i>
                 </span>
                 
-                <span title="Symbols count in article">7.6k</span>
+                <span title="Symbols count in article">8.3k</span>
               
 
               
@@ -512,7 +512,7 @@
                   <i class="fa fa-clock-o"></i>
                 </span>
                 
-                <span title="Reading time">7 mins.</span>
+                <span title="Reading time">8 mins.</span>
               
             </div>
           
@@ -586,7 +586,11 @@
 <p>好，很有精神</p>
 </li>
 </ol>
-<h2 id="蓝牙"><a href="#蓝牙" class="headerlink" title="蓝牙"></a>蓝牙</h2><p>解决了Wi-fi问题，还得解决蓝牙问题</p>
+<h2 id="蓝牙"><a href="#蓝牙" class="headerlink" title="蓝牙"></a>蓝牙</h2><p>目前蓝牙问题还没有得到解决，<a href="https://github.com/torvalds/linux/commit/875e16759005e3bdaa84eb2741281f37ba35b886" target="_blank" rel="noopener">这个提交</a>将对AX210 Bluetooth的支持添加到了内核中，但是会报一个错误：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[  184.585416] Bluetooth: hci0: Reading Intel version information failed (-22)</span><br></pre></td></tr></table></figure>
+<p>已经有老哥在跟进这个bug了：</p>
+<p><a href="https://www.spinics.net/lists/linux-bluetooth/msg89107.html" target="_blank" rel="noopener">https://www.spinics.net/lists/linux-bluetooth/msg89107.html</a></p>
+<p>看来还是等新版内核吧</p>
 <h2 id="相关文档"><a href="#相关文档" class="headerlink" title="相关文档"></a>相关文档</h2><ol>
 <li><p>Linux Wireless - Intel - 固件列表</p>
 <p><a href="https://wireless.wiki.kernel.org/en/users/drivers/iwlwifi" target="_blank" rel="noopener">https://wireless.wiki.kernel.org/en/users/drivers/iwlwifi</a></p>
@@ -947,7 +951,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
   <span class="with-love" id="animate"> 
     <i class="fa fa-user"></i>
   </span>
@@ -965,7 +969,7 @@
       <i class="fa fa-area-chart"></i>
     </span>
     
-    <span title="Symbols count total">91k</span>
+    <span title="Symbols count total">92k</span>
   
 
   
@@ -974,7 +978,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="Reading time total">1:23</span>
+    <span title="Reading time total">1:24</span>
   
 </div>
 
