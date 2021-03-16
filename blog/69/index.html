@@ -1,0 +1,1577 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.loli.net/css?family=EB Garamond:300,300italic,400,400italic,700,700italic|Noto Serif SC:300,300italic,400,400italic,700,700italic|Noto Serif SC:300,300italic,400,400italic,700,700italic|Source Code Pro:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+  
+
+<link href="https://cdn.jsdelivr.net/npm/font-awesome@4/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=6.0.6" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.0.6">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.0.6">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.0.6">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.0.6" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '6.0.6',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="problem1题目https://miaotony.xyz/2021/02/12/CTF_2021HappyChineseNewYear/ 分离文件下载原图后发现文件头为jpg文件头，jpg文件以FF D8开始以FF D9结束 其中隐藏的第二个文件偏移量为0x10764，我们用dd命令取出第二个文件 1dd if=sleep_fix.jpg of=second_fix.rar skip=6742">
+<meta name="keywords" content="meowgame,misc">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[write up] meowgame2021">
+<meta property="og:url" content="http://blog.imlk.top/blog/69/index.html">
+<meta property="og:site_name" content="IMLK">
+<meta property="og:description" content="problem1题目https://miaotony.xyz/2021/02/12/CTF_2021HappyChineseNewYear/ 分离文件下载原图后发现文件头为jpg文件头，jpg文件以FF D8开始以FF D9结束 其中隐藏的第二个文件偏移量为0x10764，我们用dd命令取出第二个文件 1dd if=sleep_fix.jpg of=second_fix.rar skip=6742">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://blog.imlk.top/images/blog/69/task.png">
+<meta property="og:image" content="http://blog.imlk.top/images/blog/69/R36_20210307_063335.png">
+<meta property="og:image" content="http://blog.imlk.top/images/blog/69/M1_20210307_063355.png">
+<meta property="og:image" content="http://blog.imlk.top/images/blog/69/task_resize.png">
+<meta property="og:image" content="http://blog.imlk.top/images/blog/69/out_wm.png">
+<meta property="og:image" content="http://blog.imlk.top/images/blog/69/task4.png">
+<meta property="og:image" content="http://blog.imlk.top/images/blog/69/compare_no_bg.png">
+<meta property="og:image" content="http://blog.imlk.top/images/blog/69/out.png">
+<meta property="og:updated_time" content="2021-03-16T15:28:46.327Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="[write up] meowgame2021">
+<meta name="twitter:description" content="problem1题目https://miaotony.xyz/2021/02/12/CTF_2021HappyChineseNewYear/ 分离文件下载原图后发现文件头为jpg文件头，jpg文件以FF D8开始以FF D9结束 其中隐藏的第二个文件偏移量为0x10764，我们用dd命令取出第二个文件 1dd if=sleep_fix.jpg of=second_fix.rar skip=6742">
+<meta name="twitter:image" content="http://blog.imlk.top/images/blog/69/task.png">
+
+
+
+
+
+
+  <link rel="canonical" href="http://blog.imlk.top/blog/69/">
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>[write up] meowgame2021 | IMLK</title>
+  
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css">
+<script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js"></script>
+<meting-js server="netease" type="playlist" id="377484398" autoplay="false" fixed="true"> </meting-js>
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"> 
+
+<div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">IMLK</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">一条咸鱼</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+          
+  <li class="menu-item menu-item-主页">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br>主页</a>
+</li>
+
+      
+        
+        
+          
+  <li class="menu-item menu-item-目录">
+    <a href="/categories/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-th"></i> <br>目录</a>
+</li>
+
+      
+        
+        
+          
+  <li class="menu-item menu-item-文章">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>文章</a>
+</li>
+
+      
+        
+        
+          
+  <li class="menu-item menu-item-友链">
+    <a href="/links/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-link"></i> <br>友链</a>
+</li>
+
+      
+        
+        
+          
+  <li class="menu-item menu-item-关于">
+    <a href="/about/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+</li>
+
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>Search</a>
+        </li>
+      
+    </ul>
+  
+
+  
+    
+
+    
+    
+      
+      
+    
+      
+      
+    
+      
+      
+    
+      
+      
+    
+      
+      
+    
+    
+
+  
+
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="Searching..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+  
+
+
+
+ </div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://blog.imlk.top/blog/69/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="imlk">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="IMLK">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">[write up] meowgame2021</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2021-03-16T23:20:16+08:00">2021-03-16</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/CTF/" itemprop="url" rel="index"><span itemprop="name">CTF</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/blog/69/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">Comments:</span> <span class="post-comments-count valine-comment-count" data-xid="/blog/69/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-symbolscount">
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                <span title="Symbols count in article">54k</span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                <span title="Reading time">49 mins.</span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="problem1"><a href="#problem1" class="headerlink" title="problem1"></a>problem1</h1><h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p><a href="https://miaotony.xyz/2021/02/12/CTF_2021HappyChineseNewYear/" target="_blank" rel="noopener">https://miaotony.xyz/2021/02/12/CTF_2021HappyChineseNewYear/</a></p>
+<h2 id="分离文件"><a href="#分离文件" class="headerlink" title="分离文件"></a><strong>分离文件</strong></h2><p>下载原图后发现文件头为jpg文件头，jpg文件以<code>FF D8</code>开始以<code>FF D9</code>结束</p>
+<p>其中隐藏的第二个文件偏移量为0x10764，我们用dd命令取出第二个文件</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dd <span class="keyword">if</span>=sleep_fix.jpg of=second_fix.rar skip=67428 bs=1</span><br></pre></td></tr></table></figure>
+<p>第二个文件的魔术字和rar文件的一致，但是分析其余字段发现并不符合rar文件格式。实质上这是一个修改了魔术字的zip文件，需要将它的魔术字修改回去。</p>
+<h2 id="压缩包密码"><a href="#压缩包密码" class="headerlink" title="压缩包密码"></a><strong>压缩包密码</strong></h2><p>直接vscode文本方式打开zip文件，可以看见末尾追加了这样的字符串：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">喵喵说这题要足够白给，但是需要一点信息收集能力。</span><br><span class="line">喵喵博客上有个面基页面，密码就设为那个页面的 url 好了。</span><br><span class="line">噢格式啊，包含 https 以及结尾的 /</span><br><span class="line">期待有机会能和大佬面基喵~JustTryT0F1ndM3</span><br></pre></td></tr></table></figure>
+<p>从喵喵的博客上找到了这个url，那么密码就是<code>https://miaotony.xyz/meetups/</code></p>
+<h2 id="压缩包中的cowsay-txt"><a href="#压缩包中的cowsay-txt" class="headerlink" title="压缩包中的cowsay.txt"></a>压缩包中的<strong>cowsay.txt</strong></h2><p>内容是</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"> _________________________________________</span><br><span class="line">/ 8J+QruW5tOWkp+WQiS4yMDIxLm1pYW90b255Lnh \</span><br><span class="line">| 5egpNaWFvVG9ueSBsaWtlcyB0byBoaWRlIHNlY3 |</span><br><span class="line">| JldHMgaW4gZG9tYWlucy4KU28gd2hhdCBpcyB0a |</span><br><span class="line">\ GlzPyA=                                 /</span><br><span class="line"> -----------------------------------------</span><br><span class="line">        \   ^__^</span><br><span class="line">         \  (oo)\_______</span><br><span class="line">            (__)\       )\/\</span><br><span class="line">                ||----w |</span><br><span class="line">                ||     ||</span><br></pre></td></tr></table></figure>
+<p>提取出base64内容：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">8J+QruW5tOWkp+WQiS4yMDIxLm1pYW90b255Lnh5egpNaWFvVG9ueSBsaWtlcyB0byBoaWRlIHNlY3JldHMgaW4gZG9tYWlucy4KU28gd2hhdCBpcyB0aGlzPyA=</span><br></pre></td></tr></table></figure>
+<p>解码结果：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">🐮年大吉.2021.miaotony.xyz</span><br><span class="line">MiaoTony likes to hide secrets in domains.</span><br><span class="line">So what is this?</span><br></pre></td></tr></table></figure>
+<h2 id="关于xn–"><a href="#关于xn–" class="headerlink" title="关于xn–"></a><strong>关于xn–</strong></h2><p><a href="https://stackoverflow.com/questions/9724379/xn-on-domain-what-it-means" target="_blank" rel="noopener">https://stackoverflow.com/questions/9724379/xn-on-domain-what-it-means</a></p>
+<p>大概是域名中一些unicode编码的字符需要转化为xn–开头的纯ASCII表示，这两者之间有个映射关系，浏览器在访问这一类域名的时候，自动为我们做了这个转换</p>
+<h2 id="dns"><a href="#dns" class="headerlink" title="dns"></a><strong>dns</strong></h2><p>既然提到了邮件，又提到了字符画，那自然是TXT了，dig的时候记得加<code>+trace</code>（顺便骂一下google的在线dns lookup服务<code>https://dns.google.com/</code>，什么鸟东西都查不出来）</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dig <span class="string">'xn--9prx2jk6eno80c.2021.miaotony.xyz'</span> TXT +noidnin +noidnout +trace</span><br></pre></td></tr></table></figure>
+<p>结果里面是这个</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&quot;K5XXOIJAJF2CO4ZAORUW2ZJAORXSA43IN53SA5DIMUQGM2LSON2CAZTMMFTSCCRAEAQCAIBAEAQCAIBAEAQF6IBAEAQCAIBAEAQCAIBAEAQCAIBAEBPV6IC7EAQCAXZAEBPSAIC7EAQCAIBAEAQCAIBAEAQCAIBAEAQCAIBAEAQCAIBAEAQCAIBAL5PV6IBAEAQCAIBAEAQCAIC7L4QCAIC7L4QF6X27L5PSAIBAEBPV6X27EAQCAIBAEAQF6XZ&quot; &quot;AEAQAUIBAL4QF6XZAL5PV6IBAFBPSSIBAL5PSAXZAEAQF6X27EAQCAIBPEAXXYID4EB6CA7D4EB6HYID4EAQCAXZAL5PSAIBAL4QF6XZAEAQF6IBAEBPSAIBAEAQCALZAL4QFYIC7L4QCAX27EAQCAXBALQQC6IBPPRPV6XZAF4QCAIBPEBPV6IC4EAQF6IC7L5OCAXBAEAFCA7BAE5PSAYBAL4QFYID4EB6CALZAL5QCA7BAF4QF6IC4EAQHYI&quot; &quot;D4EB6CA7C7PQQHY7BAPR6CA7C7EB6CAJ27EBOCA7BAE5PSAXBAPQQHYID4EB6CAIBAEB6CA7BAPQQHYXBALQXSALZAEAQCAXBAKYQC6IBAEB6F6IC4EAQC6IBPEBPWAID4PQQCOX27PR6CA7BABIQHYID4EB6CA7BAPQQHY7BAPR6CAKC7PQQHY7BAFBPSSID4HQQDYIBAPQQCAXZAEB6HYX27EAQCAX34PQQHYXZJEB6HYID4L4USA7D4EB6F6&quot; &quot;7BAPQQCAIBAPQQHYX34EB6CAPRAEA6CAIBAEAQCA7BAPQQCAIC7L5PSSID4PQQHYIBIL56CA7D4EB6CAIBAEA7CAPQKEB6F67BAPRPXYID4L56HYX34EBOF6XZML56CAXC7L5PS6IBAPQQHYID4L56CA7C7PQQCAID4L56CAID4EAXF6XZPEB6CALS7L4XSAIC4L5PSYID4L5PV6X27LRPV6XZPEAXV6L24L5OF6X27L5PXYX34EAQHYX27L5PS&quot; &quot;6IBALQQFYX27FRPXY7C7PQQCAID4EB6CACRAEAQCAIBAEAQCAIBAEAQCAIBAEAQCAIBAEAQCAIBAEAQCAIBALRPVYIBAEAQCAIBAEAQCAIBAEAQCA7C7PQQCAIBAPRPXYIBAEAQCA7C7L5PS67C7L5PV6X34EAQCAIBAEAQCAIBAPRPV6X27L56CAIBAEAQCAIBAEAQCAIBALRPV6X27F4QCAIBAEAQC6XZPEAQAUTTFPB2DUIDNMVXXOZ3BNVS&quot; &quot;S4MRQGIYS43LJMFXXI33OPEXHQ6L2&quot;</span><br></pre></td></tr></table></figure>
+<p>按照每8个分组后发现有很多重复的<code>EAQCAIBA</code>以此在google上搜索发现与base32相关。</p>
+<p>当然也可以用<a href="https://gchq.github.io/CyberChef/" target="_blank" rel="noopener">CyberChef</a>这个工具快速找出字符串是使用了什么处理方法。</p>
+<p>是base32！</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">'K5XXOIJAJF2CO4ZAORUW2ZJAORXSA43IN53SA5DIMUQGM2LSON2CAZTMMFTSCCRAEAQCAIBAEAQCAIBAEAQF6IBAEAQCAIBAEAQCAIBAEAQCAIBAEBPV6IC7EAQCAXZAEBPSAIC7EAQCAIBAEAQCAIBAEAQCAIBAEAQCAIBAEAQCAIBAEAQCAIBAL5PV6IBAEAQCAIBAEAQCAIC7L4QCAIC7L4QF6X27L5PSAIBAEBPV6X27EAQCAIBAEAQF6XZAEAQAUIBAL4QF6XZAL5PV6IBAFBPSSIBAL5PSAXZAEAQF6X27EAQCAIBPEAXXYID4EB6CA7D4EB6HYID4EAQCAXZAL5PSAIBAL4QF6XZAEAQF6IBAEBPSAIBAEAQCALZAL4QFYIC7L4QCAX27EAQCAXBALQQC6IBPPRPV6XZAF4QCAIBPEBPV6IC4EAQF6IC7L5OCAXBAEAFCA7BAE5PSAYBAL4QFYID4EB6CALZAL5QCA7BAF4QF6IC4EAQHYID4EB6CA7C7PQQHY7BAPR6CA7C7EB6CAJ27EBOCA7BAE5PSAXBAPQQHYID4EB6CAIBAEB6CA7BAPQQHYXBALQXSALZAEAQCAXBAKYQC6IBAEB6F6IC4EAQC6IBPEBPWAID4PQQCOX27PR6CA7BABIQHYID4EB6CA7BAPQQHY7BAPR6CAKC7PQQHY7BAFBPSSID4HQQDYIBAPQQCAXZAEB6HYX27EAQCAX34PQQHYXZJEB6HYID4L4USA7D4EB6F67BAPQQCAIBAPQQHYX34EB6CAPRAEA6CAIBAEAQCA7BAPQQCAIC7L5PSSID4PQQHYIBIL56CA7D4EB6CAIBAEA7CAPQKEB6F67BAPRPXYID4L56HYX34EBOF6XZML56CAXC7L5PS6IBAPQQHYID4L56CA7C7PQQCAID4L56CAID4EAXF6XZPEB6CALS7L4XSAIC4L5PSYID4L5PV6X27LRPV6XZPEAXV6L24L5OF6X27L5PXYX34EAQHYX27L5PS6IBALQQFYX27FRPXY7C7PQQCAID4EB6CACRAEAQCAIBAEAQCAIBAEAQCAIBAEAQCAIBAEAQCAIBAEAQCAIBALRPVYIBAEAQCAIBAEAQCAIBAEAQCA7C7PQQCAIBAPRPXYIBAEAQCA7C7L5PS67C7L5PV6X34EAQCAIBAEAQCAIBAPRPV6X27L56CAIBAEAQCAIBAEAQCAIBALRPV6X27F4QCAIBAEAQC6XZPEAQAUTTFPB2DUIDNMVXXOZ3BNVSS4MRQGIYS43LJMFXXI33OPEXHQ6L2'</span> | base32 -d</span><br></pre></td></tr></table></figure>
+<p>结果</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Wow! It&apos;s time to show the first flag!</span><br><span class="line">             _                  __ _   _  _  _                              ___           __   __ _____    ____       __</span><br><span class="line">  _ __ ___  (_)  __ _   ___    / /| | | || || |   _ __   _ __   _   _      / _ \ __  __   \ \ / /|___ /   / __ \  _ __\ \</span><br><span class="line"> | &apos;_ ` _ \ | | / _` | / _ \  | | | |_| || || |_ | &apos;_ \ | &apos;_ \ | | | |    | | | |\ \/ /    \ V /   |_ \  / / _` || &apos;__|| |</span><br><span class="line"> | | | | | || || (_| || (_) |&lt; &lt;  |  _  ||__   _|| |_) || |_) || |_| |    | |_| | &gt;  &lt;      | |   ___) || | (_| || |    &gt; &gt;</span><br><span class="line"> |_| |_| |_||_| \__,_| \___/  | | |_| |_|   |_|  | .__/ | .__/  \__, |_____\___/ /_/\_\_____|_|  |____/  \ \__,_||_|   | |</span><br><span class="line">                               \_\               |_|    |_|     |___/|_____|          |_____|             \____/      /_/</span><br><span class="line">Next: meowgame.2021.miaotony.xyz</span><br></pre></td></tr></table></figure>
+<p>flag是<code>miao{H4ppy_0x_Y3@r}</code></p>
+<h1 id="problem2"><a href="#problem2" class="headerlink" title="problem2"></a>problem2</h1><h2 id="题目-1"><a href="#题目-1" class="headerlink" title="题目"></a>题目</h2><blockquote>
+<p>#闯关 #MeowGame<br>Task 2<br>喵喵说要开个喵喵电（视）台，先播个 Pusheen 好了。<br>噫 jiamu 说他有好康的不如来播一下，而且还有个 secret 要给喵喵，但是藏起来了。<br>太坏了惹！<br>「jiamu 说的 secret 是不是藏在这张图里呢？」正在剪辑节目的喵喵顺手截了张图。<br>音视频： <a href="https://radio.miaotony.xyz/live/2021.m3u8" target="_blank" rel="noopener">https://radio.miaotony.xyz/live/2021.m3u8</a><br>仅音频： <a href="https://radio.miaotony.xyz/live/2021audio.m3u8" target="_blank" rel="noopener">https://radio.miaotony.xyz/live/2021audio.m3u8</a><br>（小服务器性能比较辣鸡，可能会有点卡，但视频并不必要，只听音频就能解<br>Hint: 后面某步可能可以找到多种脚本，如果您也是这么做的话，这题用的是名称大小写完全匹配的那个，或者自己撸代码也行（</p>
+</blockquote>
+<p>题目中喵喵的截图：</p>
+<p><img src="/images/blog/69/task.png" alt="task.png"></p>
+<h2 id="音频"><a href="#音频" class="headerlink" title="音频"></a>音频</h2><p>下载音频：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ffmpeg -i https://radio.miaotony.xyz/live/2021audio_360p878kbs/index.m3u8 -codec copy out_360p_878kbs_new_with_proxy.flv</span><br></pre></td></tr></table></figure>
+<p>下载一段时间后ctrl-c掐掉，发现推的是循环播放一段音频。截取出了其中重复的那部分：<code>cut_hq.wav</code> 可以在这里下载：<a href="/objects/meowgame2021_task2_cut_hq.wav">cut_hq.wav</a></p>
+<p>经过喵喵提点，这是<code>SSTV</code>编码后的音频，用下载qssstv后，解码该文件，共识别出两张图片：</p>
+<p><img src="/images/blog/69/R36_20210307_063335.png" alt="R36_20210307_063335.png"></p>
+<p><img src="/images/blog/69/M1_20210307_063355.png" alt="M1_20210307_063355.png"></p>
+<p>唔，是盲水印，其中提到的工具链接在这：<a href="https://github.com/fire-keeper/BlindWatermark" target="_blank" rel="noopener">https://github.com/fire-keeper/BlindWatermark</a></p>
+<h2 id="盲水印"><a href="#盲水印" class="headerlink" title="盲水印"></a>盲水印</h2><p>所谓的秘密就在题目中那张截图里面了：</p>
+<p>首先剪裁图片得到其中的图片内容部分，然后使用该工具反解出盲水印。</p>
+<p>需要注意的是该工具反解时，需要加上水印后的图片和原图一样尺寸大小。上面提到的牛年闯关入口原图大小是1280*843。截取后得到的图片如下：</p>
+<p><img src="/images/blog/69/task_resize.png" alt="task_resize.png"></p>
+<p>使用下面的命令提取水印：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python ./bwm.py -k 2021 2333 28 -ex -r ../task_resize.png -ws 111 111 -o out_wm.png</span><br></pre></td></tr></table></figure>
+<p>发现被隐藏的内容是一个二维码：</p>
+<p><img src="/images/blog/69/out_wm.png" alt="out_wm.png"></p>
+<p>识别出来后就是flag：<code>Meow~ miao{s5Tv+Bl1ndW4t3rm@rk_S0_gr3a7}</code></p>
+<h1 id="problem3"><a href="#problem3" class="headerlink" title="problem3"></a>problem3</h1><h2 id="题目-2"><a href="#题目-2" class="headerlink" title="题目"></a>题目</h2><blockquote>
+<p>#闯关 #MeowGame<br>Task 3<br>Jiamu 说他之前的活干完了，调试用的远程服务器已经弃用了，不过正好顺便就帮喵喵藏了一个 secret。给喵喵发来了个带有 .ssh 文件夹的东西。<br>「jiamu 发的什么玩意啊？影响我开发 MeowGame 平台了！好烦啊！」随手就用 git 的某个魔法功能把当前修改给整没了。<br>「啊怎么又发来个 Notes……」算了，给他压缩一下丢目录下的 jiamu.zip 好了。<br>PS: 就是一台小鸡鸡，不需要使用扫描工具，也请不要泄露此题有关的任何服务器信息，谢谢！<br>Hints:</p>
+<ol>
+<li>此题需要 MeowGame 平台，地址在 Task1 最后一步，当然还可以自己找（</li>
+<li>README…<br>———————<br>（久等了，喵喵出的大概就这些题目了吧，出不动了<br>（后面还有其他师傅出的题<br>（平台还没写完，过几天有空摸鱼了再慢慢写<br>（红包等有人解出来了再放吧，有问题可以进群反馈一下</li>
+</ol>
+</blockquote>
+<h2 id="jiamu-zip"><a href="#jiamu-zip" class="headerlink" title="jiamu.zip"></a><strong>jiamu.zip</strong></h2><p>这个文件在平台www的根目录下：</p>
+<p><a href="https://meowgame.2021.miaotony.xyz/jiamu.zip" target="_blank" rel="noopener">https://meowgame.2021.miaotony.xyz/jiamu.zip</a></p>
+<p>下载下来是的内容是一个<code>.git</code>目录，我们将其重命名为<code>.git</code> 然后执行<code>git checkout .</code> 检出最新的内容：</p>
+<p>其中有一个名为<code>NotesByJiaMu.txt</code> 的文件：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Hi, MiaoTony!</span><br><span class="line"></span><br><span class="line">I have finished my part of work.</span><br><span class="line">Just login with your private key.</span><br><span class="line">Enjoy but use with care please.</span><br><span class="line">Finally, happy the year of ox!</span><br><span class="line"></span><br><span class="line">From: JiaMu</span><br></pre></td></tr></table></figure>
+<h2 id="ssh"><a href="#ssh" class="headerlink" title="ssh"></a><strong>ssh</strong></h2><p>这里需要祭出一个很好用的git技巧，叫 <code>git map</code>。关于这个命令，可以参考 <a href="https://stackoverflow.com/a/1838938" target="_blank" rel="noopener">https://stackoverflow.com/a/1838938</a>。其实它是一个alias，它相当于：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">log</span> --graph --full-history --all --color \</span><br><span class="line">        --pretty=format:<span class="string">"%x1b[31m%h%x09%x1b[32m%d%x1b[0m%x20%s"</span></span><br></pre></td></tr></table></figure>
+<p>我们用 <code>git map</code> 命令来检查一下提交树。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">* c8717dc        (HEAD -&gt; master, origin/master, origin/HEAD) Refactor: Remove some redundant codes. (miaotony)</span><br><span class="line">| *   970bf67    (refs/stash) On master: Stash some changes. (miaotony)</span><br><span class="line">|/|\</span><br><span class="line">| | * 43a22d2    untracked files on master: 130141d Feat: Add check flag function and UI. (miaotony)</span><br><span class="line">| * 517f5b7      index on master: 130141d Feat: Add check flag function and UI. (miaotony)</span><br><span class="line">|/</span><br><span class="line">* 130141d        Feat: Add check flag function and UI. (miaotony)</span><br><span class="line">* 04cc0bc        Feat: Add Vercel configuration. (miaotony)</span><br><span class="line">* a9e4730        Feat: Add HomePage. (miaotony)</span><br><span class="line">* 4bf6d24        Feat: Init Vuetify. (miaotony)</span><br><span class="line">* a1993fc        Feat: Init project. (miaotony)</span><br><span class="line">* dcf8a35        Initial commit (MiaoTony)</span><br></pre></td></tr></table></figure>
+<p>可以看到有一个stash节点，可以猜测上面的<code>git魔法功能</code>是stash</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line">[imlk@imlk-pc jiamu]$ git show 43a22d2</span><br><span class="line">commit 43a22d29c8a4352c3c7530c2036ebe59314b71f2</span><br><span class="line">Author: miaotony &lt;41962043+miaotony@users.noreply.github.com&gt;</span><br><span class="line">Date:   Mon Feb 15 03:03:21 2021 +0800</span><br><span class="line"></span><br><span class="line">    untracked files on master: 130141d Feat: Add check flag function and UI.</span><br><span class="line"></span><br><span class="line">diff --git a/.ssh/id_rsa b/.ssh/id_rsa</span><br><span class="line">new file mode 100644</span><br><span class="line">index 0000000..b444c96</span><br><span class="line">--- /dev/null</span><br><span class="line">+++ b/.ssh/id_rsa</span><br><span class="line">@@ -0,0 +1,27 @@</span><br><span class="line">+-----BEGIN OPENSSH PRIVATE KEY-----</span><br><span class="line">+b3BlbnNzaC1rZXktdjEAAAAABG5vbmUAAAAEbm9uZQAAAAAAAAABAAABFwAAAAdzc2gtcn</span><br><span class="line">+NhAAAAAwEAAQAAAQEApKMZUD/pBcKpml2dx1ky0BHmA5OMOIaGq0VUp//kW5Scda4UkrsA</span><br><span class="line">+3VKgAtELkTPeYIx27ZwQJZ8z2Bttav9t1E76oIaMpGHh/5mDDEeeLOFFbZKKr0bQCJHoVl</span><br><span class="line">+m6EqjYvCILw5wwxVNXWort/4a+PPV5Rg8mjfcWI4giinckUrYUsoU9K6JfgPW765TYes2E</span><br><span class="line">++OEMMYWDEnc7qIED5W6HNLG8X6x4Sx8820LBrVmgcyARes64WXR/J8NXViEhmni9kEisOS</span><br><span class="line">+ruG+DQkdOoBURyMKFb8FC/FvRqAjkLwUb3sJoNjv+KNWeTBhF8VTYYNl9z6HL5Cd5DbuOW</span><br><span class="line">+3VlKMtIyCQAAA9CKEbyOihG8jgAAAAdzc2gtcnNhAAABAQCkoxlQP+kFwqmaXZ3HWTLQEe</span><br><span class="line">+YDk4w4hoarRVSn/+RblJx1rhSSuwDdUqAC0QuRM95gjHbtnBAlnzPYG21q/23UTvqghoyk</span><br><span class="line">+YeH/mYMMR54s4UVtkoqvRtAIkehWWboSqNi8IgvDnDDFU1daiu3/hr489XlGDyaN9xYjiC</span><br><span class="line">+KKdyRSthSyhT0rol+A9bvrlNh6zYT44QwxhYMSdzuogQPlboc0sbxfrHhLHzzbQsGtWaBz</span><br><span class="line">+IBF6zrhZdH8nw1dWISGaeL2QSKw5Ku4b4NCR06gFRHIwoVvwUL8W9GoCOQvBRvewmg2O/4</span><br><span class="line">+o1Z5MGEXxVNhg2X3PocvkJ3kNu45bdWUoy0jIJAAAAAwEAAQAAAQAOKS0zNtwPL8gwy96X</span><br><span class="line">+V/fD59Y19on4DrIkpyj57kuxCN5QTPHeERGo98Nlmp95FNIK0eok0+ibo87sxqcpreC/gy</span><br><span class="line">++RgSE1vmmW95hLBRn42EOFgjZFjzyzkAFA9CTKGBXUUMVcROH5BwsbcZm5Adj5G1AcE4+I</span><br><span class="line">+ZHlWAw6dhFPufTF/I64fDsp1Mh8v5C7FVudC4eWVYz4XyYvH3z4pUVowV9o36LKrI6kfeW</span><br><span class="line">+Rl61YX5lNprVpPqa9XT+4Kjx+LRuiKkWwxppACXSFATIJcLFWjR/hWsOxjY5VcJHZ6mysi</span><br><span class="line">+Rehu/SoSipIGAdmdufY7uJLqfpToPDIrrcLi9kvHkxllAAAAgC+HcS8jAj36Ud5SOFWdId</span><br><span class="line">+MUxdGTHssAFk4vP9B42qh3og+c5KxeCboswgW583OkfHWzKnf/J/FvwCVsIgsHk2IfGJDe</span><br><span class="line">+qjBjCiTb+nzZSXh0Z5MfGNH8VbJeTz5lwcxGVy4RsVLT0I27dE7bY9BBnlB2FnW72QjP7z</span><br><span class="line">+2rb/jNJC6gAAAAgQDWSOy733NQ5wHNb7cDoJ6GUsrAJN8Pqs7nPsO+kqNlliKyHkDGhbXY</span><br><span class="line">+xhIIPbZBxsHq871pS1fyFbqIjONGmYD0llqA4+6Zl71g9J+7dlkfVYsp6D76fT00eU3qBQ</span><br><span class="line">+HnVxz9QsZAHwvLdjTxxa/ilxHSCyxmz+P2inwpqar5fxCEVwAAAIEAxK/vMGGfkfCfTrdM</span><br><span class="line">+BY7bLZ3nxZChwFXTfizWeWNYqhpbJslZaWNkkKxldMFw9Z6WlhCXsKZLdroOA6vlhScYZp</span><br><span class="line">+ZiTePNTswdGHHX1uj9UPdC5npGN8G6FOT7LiFgu6HJPJTQYTdvsNQf8/x9/cb1aK9LOwob</span><br><span class="line">+QK50eu32N7rwAJ8AAAAZSGFwcHlOZXdZZWFyQDgwMGJlNzg4ZTQ1YwEC</span><br><span class="line">+-----END OPENSSH PRIVATE KEY-----</span><br><span class="line">diff --git a/.ssh/id_rsa.pub b/.ssh/id_rsa.pub</span><br><span class="line">new file mode 100644</span><br><span class="line">index 0000000..7283c84</span><br><span class="line">--- /dev/null</span><br><span class="line">+++ b/.ssh/id_rsa.pub</span><br><span class="line">@@ -0,0 +1 @@</span><br><span class="line">+ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCkoxlQP+kFwqmaXZ3HWTLQEeYDk4w4hoarRVSn/+RblJx1rhSSuwDdUqAC0QuRM95gjHbtnBAlnzPYG21q/23UTvqghoykYeH/mYMMR54s4UVtkoqvRtAIkehWWboSqNi8IgvDnDDFU1daiu3/hr489XlGDyaN9xYjiCKKdyRSthSyhT0rol+A9bvrlNh6zYT44QwxhYMSdzuogQPlboc0sbxfrHhLHzzbQsGtWaBzIBF6zrhZdH8nw1dWISGaeL2QSKw5Ku4b4NCR06gFRHIwoVvwUL8W9GoCOQvBRvewmg2O/4o1Z5MGEXxVNhg2X3PocvkJ3kNu45bdWUoy0jIJ HappyNewYear@800be788e45c</span><br></pre></td></tr></table></figure>
+<p>这个stash里面包含了一对ssh密钥，将它保存下来</p>
+<h2 id="hint"><a href="#hint" class="headerlink" title="hint"></a><strong>hint</strong></h2><p>README.md里面提到:</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;!--</span><br><span class="line">    听说注释里可以藏东西，不如把 hint 藏这里吧</span><br><span class="line">    注意看看配置文件，喵w~</span><br><span class="line">--&gt;</span><br></pre></td></tr></table></figure>
+<p>这个配置文件应该是指<code>vue.config.js</code></p>
+<p>用 <code>git log vue.config.js</code>查看该文件的变更：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">commit 04cc0bc395aa87cac275c1af5711e1e1ab69623d</span><br><span class="line">Author: miaotony &lt;41962043+miaotony@users.noreply.github.com&gt;</span><br><span class="line">Date:   Fri Feb 12 04:20:08 2021 +0800</span><br><span class="line"></span><br><span class="line">    Feat: Add Vercel configuration.</span><br><span class="line"></span><br><span class="line">commit a9e4730b8f8bf8ffc1cc52e83743752522d3ca1f</span><br><span class="line">Author: miaotony &lt;41962043+miaotony@users.noreply.github.com&gt;</span><br><span class="line">Date:   Fri Feb 12 03:46:17 2021 +0800</span><br><span class="line"></span><br><span class="line">    Feat: Add HomePage.</span><br><span class="line"></span><br><span class="line">commit 4bf6d24303c6bc213b8df7a1413d2f38ba6a68ca</span><br><span class="line">Author: miaotony &lt;41962043+miaotony@users.noreply.github.com&gt;</span><br><span class="line">Date:   Thu Feb 11 21:38:32 2021 +0800</span><br><span class="line"></span><br><span class="line">    Feat: Init Vuetify.</span><br></pre></td></tr></table></figure>
+<p>其中<code>04cc0bc395aa87cac275c1af5711e1e1ab69623d</code>比较可疑</p>
+<figure class="highlight diff"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line">[imlk@imlk-pc jiamu]$ git show 04cc0bc395aa87cac275c1af5711e1e1ab69623d</span><br><span class="line">commit 04cc0bc395aa87cac275c1af5711e1e1ab69623d</span><br><span class="line">Author: miaotony &lt;41962043+miaotony@users.noreply.github.com&gt;</span><br><span class="line">Date:   Fri Feb 12 04:20:08 2021 +0800</span><br><span class="line"></span><br><span class="line">    Feat: Add Vercel configuration.</span><br><span class="line"></span><br><span class="line">diff --git a/.gitignore b/.gitignore</span><br><span class="line">index b7b075a..45bc65f 100644</span><br><span class="line"><span class="comment">--- a/.gitignore</span></span><br><span class="line"><span class="comment">+++ b/.gitignore</span></span><br><span class="line">@@ -117,3 +117,5 @@ dist</span><br><span class="line"> node_modules</span><br><span class="line"> /dist</span><br><span class="line"> .vercel</span><br><span class="line"><span class="addition">+secret*</span></span><br><span class="line"><span class="addition">+api/</span></span><br><span class="line">diff --git a/vercel.json b/vercel.json</span><br><span class="line">new file mode 100644</span><br><span class="line">index 0000000..91e16c0</span><br><span class="line"><span class="comment">--- /dev/null</span></span><br><span class="line"><span class="comment">+++ b/vercel.json</span></span><br><span class="line"><span class="meta">@@ -0,0 +1,11 @@</span></span><br><span class="line"><span class="addition">+&#123;</span></span><br><span class="line"><span class="addition">+       "version": 2,</span></span><br><span class="line"><span class="addition">+       "routes": [&#123;</span></span><br><span class="line"><span class="addition">+               "headers": &#123;</span></span><br><span class="line"><span class="addition">+                       "Access-Control-Allow-Origin": "*"</span></span><br><span class="line"><span class="addition">+               &#125;,</span></span><br><span class="line"><span class="addition">+               "src": "/api(.*)",</span></span><br><span class="line"><span class="addition">+               "dest": "api/main.py",</span></span><br><span class="line"><span class="addition">+               "continue": true</span></span><br><span class="line"><span class="addition">+       &#125;]</span></span><br><span class="line"><span class="addition">+&#125;</span></span><br><span class="line">\ No newline at end of file</span><br><span class="line">diff --git a/vue.config.js b/vue.config.js</span><br><span class="line">index 38c5d6e..c09d4b7 100644</span><br><span class="line"><span class="comment">--- a/vue.config.js</span></span><br><span class="line"><span class="comment">+++ b/vue.config.js</span></span><br><span class="line">@@ -5,7 +5,6 @@ module.exports = &#123;</span><br><span class="line">   devServer: &#123;</span><br><span class="line">     host: '0.0.0.0',</span><br><span class="line">     port: '8888',</span><br><span class="line"><span class="deletion">-    // public: 'host.al0ngurl.ucan' + 'n0tf1nd.2021.miao' + 'tony.xyz' + ':8123',</span></span><br><span class="line">   &#125;,</span><br><span class="line">   lintOnSave: false,</span><br><span class="line">   productionSourceMap: false</span><br></pre></td></tr></table></figure>
+<p>果然出现了一个域名，试试ssh登录上去：<br>根据上面的<code>id_rsa.pub</code>得知username应该是<code>HappyNewYear</code>:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">[imlk@imlk-pc jiamu]$ ssh -i ../id_rsa  HappyNewYear@host.al0ngurl.ucann0tf1nd.2021.miaotony.xyz -p 8123</span><br><span class="line">Last login: Sat Feb 27 01:45:32 2021 from 140.238.14.16</span><br><span class="line">  _ __ ___   ___  _____      __</span><br><span class="line"> | &apos;_ ` _ \ / _ \/ _ \ \ /\ / /</span><br><span class="line"> | | | | | |  __/ (_) \ V  V /</span><br><span class="line"> |_| |_| |_|\___|\___/ \_/\_/</span><br><span class="line"></span><br><span class="line">  Welcome to MiaoTony&apos;s box</span><br><span class="line"></span><br><span class="line">  What are you doing?</span><br><span class="line">$ cat /fl4g</span><br><span class="line">miao&#123;th1s_15_@_f4k3_$lag&#125;</span><br><span class="line">Meow~ What are you looking for?</span><br><span class="line">The real flag?</span><br><span class="line">I hid it! QwQ</span><br></pre></td></tr></table></figure>
+<p>看起来是个fake flag</p>
+<p>真实的flag在这里：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ cat &apos;/.git/.s0meth1n9_s3cR37_Y0u_c@nn0t_s33/.r3@l_l0ng_And_LOn93r_$lag&apos;</span><br><span class="line">miao&#123;M3ovv_SO_H4ppy_70_53E_u_h3Re&#125;</span><br><span class="line">Enjoy!</span><br></pre></td></tr></table></figure>
+<p>flag是 <code>miao{M3ovv_SO_H4ppy_70_53E_u_h3Re}</code></p>
+<h1 id="problem4"><a href="#problem4" class="headerlink" title="problem4"></a>problem4</h1><h2 id="题目-3"><a href="#题目-3" class="headerlink" title="题目"></a>题目</h2><blockquote>
+<p>#闯关 #MeowGame<br>Task 4<br>cuso4-5h2o 给喵喵丢来一张图，说写了一个小游戏，拿到 50,000,000 分时能拿到神秘奖励，但获取奖励的选项无法选中，似乎是拼错了什么单词。<br>「这不就两张一样的图么？」喵喵用尾巴挠了挠脑袋，没有什么头绪，不如去睡大觉吧……<br>P.S.: 本题为动态 flag。感谢 @cuso45h2o 供题。<br>Hint:<br>实际分数比最大的可能得分小20亿也会判定为 cheat</p>
+</blockquote>
+<p>题目中的图片：</p>
+<p><img src="/images/blog/69/task4.png" alt="task4.png"></p>
+<h2 id="双图"><a href="#双图" class="headerlink" title="双图"></a><strong>双图</strong></h2><p>首先切图，分别保存下来</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> PIL <span class="keyword">import</span> Image</span><br><span class="line"></span><br><span class="line">img = Image.open(<span class="string">"task4.png"</span>)</span><br><span class="line">print(img.size)</span><br><span class="line">cropped1 = img.crop((<span class="number">0</span>, <span class="number">0</span>, <span class="number">1280</span>, <span class="number">843</span>))  <span class="comment"># (left, upper, right, lower)</span></span><br><span class="line">cropped2 = img.crop((<span class="number">0</span>, <span class="number">843</span>, <span class="number">1280</span>, <span class="number">843</span>*<span class="number">2</span>))  <span class="comment"># (left, upper, right, lower)</span></span><br></pre></td></tr></table></figure>
+<p>参考下面这里的总结：<br><a href="https://v0w.top/2018/10/22/CTF%E4%B8%AD%E5%B8%B8%E8%A7%81%E7%9A%84%E9%9A%90%E5%86%99%E6%9C%AF%E5%A5%97%E8%B7%AF/#1-8-BrainTools" target="_blank" rel="noopener">https://v0w.top/2018/10/22/CTF%E4%B8%AD%E5%B8%B8%E8%A7%81%E7%9A%84%E9%9A%90%E5%86%99%E6%9C%AF%E5%A5%97%E8%B7%AF/#1-8-BrainTools</a></p>
+<p>双图隐藏数据一般是像素内容进行xor或者sub运算，或者可能是盲水印。</p>
+<p>用ImageMagick的compare工具比较下两张图的差异点：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">compare cropped1.png cropped2.png compare_no_bg.png</span><br></pre></td></tr></table></figure>
+<p>发现差异部分呈现出有规律的短条纹状，基本可以断定是盲水印</p>
+<p><img src="/images/blog/69/compare_no_bg.png" alt="compare_no_bg.png"></p>
+<h2 id="盲水印-1"><a href="#盲水印-1" class="headerlink" title="盲水印"></a><strong>盲水印</strong></h2><p>使用下面这个库：<br><a href="https://github.com/chishaxie/BlindWaterMark" target="_blank" rel="noopener">https://github.com/chishaxie/BlindWaterMark</a></p>
+<p>注意python2和python3的随机数算法不同，解出来的东西也不一样，这里需要使用python3的。<br>随机数种子是<code>2333</code></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python bwmforpy3.py decode ../cropped1.png ../cropped2.png ../out.png --seed 2333</span><br></pre></td></tr></table></figure>
+<p><img src="/images/blog/69/out.png" alt="out.png"></p>
+<p>找到如下内容：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">protamine-meowgame.cuso-4.com</span><br><span class="line">username: meow </span><br><span class="line">password: 2021-01-01</span><br></pre></td></tr></table></figure>
+<h2 id="网页"><a href="#网页" class="headerlink" title="网页"></a><strong>网页</strong></h2><p>这里面是一个游戏，按f12分析网络请求。这里有两个需要处理的点。</p>
+<ul>
+<li>作者留下的代码会触发断点调试，这个可以在f12里屏蔽掉调试器</li>
+<li>该网页加载了一个block-me.js，内容如下</li>
+</ul>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[][(![]+[])[+[]]+(![]+[])[!+[]+!+[]]+(![]+[])[+!+[]]+(!![]+[])[+[]]][([][(![]+[])[+[]]+(![]+[])[!+[]+!+[]]+(![]+[])[+!+[]]+(!![]+[])[+[]]]+[])[!+[]+!+[]+!+[]]+(!![]+[][(![]+[])[+[]]+(![]+[])[!+[]+!+[]]+(![]+[])[+!+[]]+(!![]+[])[+[]]])[+!+[]+[+[]]]+([][[]]+[])[+!+[]]+(![]+[])[!+[]+!+[]+!+[]]+(!![]+[])[+[]]+(!![]+[])[+!+[]]+([][[]]+[])[+[]]+([][(![]+[])[+[]]+(![]+[])[!+[]+!+[]]+(![]+[])[+!+[]]+(!![]+[])[+[]]]+[])[!+[]+!+[]+!+[]]+(!![]+[])[+[]]+(!![]+[][(![]+[])[+[]]+(![]+[])[!+[]+!+[]]+(![]+[])[+!+[]]+(!![]+[])[+[]]])[+!+[]+[+[]]]+(!![]+[])[+!+[]]]((!![]+[])[+!+[]]+(!![]+[])[!+[]+!+[]+!+[]]+(!![]+[])[+[]]+([][[]]+[])[+[]]+(!![]+[])[+!+[]]+([][[]]+[])[+!+[]]+(+[![]]+[][(![]+[])[+[]]+(![]+[])[!+[]+!+[]]+(![]+[])[+!+[]]+(!![]+[])[+[]]])[+!+[]+[+!+[]]]+(!![]+[])[!+[]+!+[]+!+[]]+(+(!+[]+!+[]+!+[]+[+!+[]]))[(!![]+[])[+[]]+(!![]+[][(![]+[])[+[]]+(![]+[])[!+[]+!+[]]+(![]+[])[+!+[]]+(!![]+[])[+[]]])[+!+[]+[+[]]]+([]+[])[([][(![]+[])[+[]]+(![]+[])[!+[]+!+[]]+(![]+[])[+!+[]]+(!![]+[])[+[]]]+[])[!+[]+!+[]+!+[]]+(!![]+[][(![]+[])[+[]]+(![]+[])[!+[]+!+[]]+(![]+[])[+!+[]]+(!![]+[])[+[]]])[+!+[]+[+[]]]+([][[]]+[])[+!+[]]+(![]+[])[!+[]+!+[]+!+[]]+(!![]+[])[+[]]+(!![]+[])[+!+[]]+([][[]]+[])[+[]]+([][(![]+[])[+[]]+(![]+[])[!+[]+!+[]]+(![]+[])[+!+[]]+(!![]+[])[+[]]]+[])[!+[]+!+[]+!+[]]+(!![]+[])[+[]]+(!![]+[][(![]+[])[+[]]+(![]+[])[!+[]+!+[]]+(![]+[])[+!+[]]+(!![]+[])[+[]]])[+!+[]+[+[]]]+(!![]+[])[+!+[]]][([][[]]+[])[+!+[]]+(![]+[])[+!+[]]+((+[])[([][(![]+[])[+[]]+(![]+[])[!+[]+!+[]]+(![]+[])[+!+[]]+(!![]+[])[+[]]]+[])[!+[]+!+[]+!+[]]+(!![]+[][(![]+[])[+[]]+(![]+[])[!+[]+!+[]]+(![]+[])[+!+[]]+(!![]+[])[+[]]])[+!+[]+[+[]]]+([][[]]+[])[+!+[]]+(![]+[])[!+[]+!+[]+!+[]]+(!![]+[])[+[]]+(!![]+[])[+!+[]]+([][[]]+[])[+[]]+([][(![]+[])[+[]]+(![]+[])[!+[]+!+[]]+(![]+[])[+!+[]]+(!![]+[])[+[]]]+[])[!+[]+!+[]+!+[]]+(!![]+[])[+[]]+(!![]+[][(![]+[])[+[]]+(![]+[])[!+[]+!+[]]+(![]+[])[+!+[]]+(!![]+[])[+[]]])[+!+[]+[+[]]]+(!![]+[])[+!+[]]]+[])[+!+[]+[+!+[]]]+(!![]+[])[!+[]+!+[]+!+[]]]](!+[]+!+[]+!+[]+[!+[]+!+[]])+(![]+[])[+!+[]]+(![]+[])[!+[]+!+[]])()((![]+[])[!+[]+!+[]+!+[]]+(!![]+[])[!+[]+!+[]+!+[]]+(!![]+[])[+[]]+(+(+!+[]+(!+[]+[])[!+[]+!+[]+!+[]]+[+!+[]]+[+[]]+[+[]]+[+[]])+[])[+[]]+([][[]]+[])[+!+[]]+(!![]+[])[+[]]+(!![]+[])[!+[]+!+[]+!+[]]+(!![]+[])[+!+[]]+(+(!+[]+!+[]+!+[]+[+!+[]]))[(!![]+[])[+[]]+(!![]+[][(![]+[])[+[]]+(![]+[])[!+[]+!+[]]+(![]+[])[+!+[]]+(!![]+[])[+[]]])[+!+[]+[+[]]]+([]+[])[([][(![]+[])[+[]]+(![]+[])[!+[]+!+[]]+(![]+[])[+!+[]]+(!![]+[])[+[]]]+[])[!+[]+!+[]+!+[]]+(!![]+[][(![]+[])[+[]]+(![]+[])[!+[]+!+[]]+(![]+[])[+!+[]]+(!![]+[])[+[]]])[+!+[]+[+[]]]+([][[]]+[])[+!+[]]+(![]+[])[!+[]+!+[]+!+[]]+(!![]+[])[+[]]+(!![]+[])[+!+[]]+([][[]]+[])[+[]]+([][(![]+[])[+[]]+(![]+[])[!+[]+!+[]]+(![]+[])[+!+[]]+(!![]+[])[+[]]]+[])[!+[]+!+[]+!+[]]+(!![]+[])[+[]]+(!![]+[][(![]+[])[+[]]+(![]+[])[!+[]+!+[]]+(![]+[])[+!+[]]+(!![]+[])[+[]]])[+!+[]+[+[]]]+(!![]+[])[+!+[]]][([][[]]+[])[+!+[]]+(![]+[])[+!+[]]+((+[])[([][(![]+[])[+[]]+(![]+[])[!+[]+!+[]]+(![]+[])[+!+[]]+(!![]+[])[+[]]]+[])[!+[]+!+[]+!+[]]+(!![]+[][(![]+[])[+[]]+(![]+[])[!+[]+!+[]]+(![]+[])[+!+[]]+(!![]+[])[+[]]])[+!+[]+[+[]]]+([][[]]+[])[+!+[]]+(![]+[])[!+[]+!+[]+!+[]]+(!![]+[])[+[]]+(!![]+[])[+!+[]]+([][[]]+[])[+[]]+([][(![]+[])[+[]]+(![]+[])[!+[]+!+[]]+(![]+[])[+!+[]]+(!![]+[])[+[]]]+[])[!+[]+!+[]+!+[]]+(!![]+[])[+[]]+(!![]+[][(![]+[])[+[]]+(![]+[])[!+[]+!+[]]+(![]+[])[+!+[]]+(!![]+[])[+[]]])[+!+[]+[+[]]]+(!![]+[])[+!+[]]]+[])[+!+[]+[+!+[]]]+(!![]+[])[!+[]+!+[]+!+[]]]](!+[]+!+[]+!+[]+[!+[]+!+[]])+(![]+[])[+!+[]]+(![]+[])[!+[]+!+[]]+([][(![]+[])[+[]]+(![]+[])[!+[]+!+[]]+(![]+[])[+!+[]]+(!![]+[])[+[]]]+[])[+!+[]+[!+[]+!+[]+!+[]]]+([][(![]+[])[+[]]+(![]+[])[!+[]+!+[]]+(![]+[])[+!+[]]+(!![]+[])[+[]]]+[])[+!+[]+[!+[]+!+[]+!+[]]]+([+[]]+![]+[][(![]+[])[+[]]+(![]+[])[!+[]+!+[]]+(![]+[])[+!+[]]+(!![]+[])[+[]]])[!+[]+!+[]+[+[]]]+([]+[])[(![]+[])[+[]]+(!![]+[][(![]+[])[+[]]+(![]+[])[!+[]+!+[]]+(![]+[])[+!+[]]+(!![]+[])[+[]]])[+!+[]+[+[]]]+([][[]]+[])[+!+[]]+(!![]+[])[+[]]+([][(![]+[])[+[]]+(![]+[])[!+[]+!+[]]+(![]+[])[+!+[]]+(!![]+[])[+[]]]+[])[!+[]+!+[]+!+[]]+(!![]+[][(![]+[])[+[]]+(![]+[])[!+[]+!+[]]+(![]+[])[+!+[]]+(!![]+[])[+[]]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(!![]+[][(![]+[])[+[]]+(![]+[])[!+[]+!+[]]+(![]+[])[+!+[]]+(!![]+[])[+[]]])[+!+[]+[+[]]]+(!![]+[])[+!+[]]]()[+!+[]+[+!+[]]]+([]+[])[([![]]+[][[]])[+!+[]+[+[]]]+(!![]+[])[+[]]+(![]+[])[+!+[]]+(![]+[])[!+[]+!+[]]+([![]]+[][[]])[+!+[]+[+[]]]+([][(![]+[])[+[]]+(![]+[])[!+[]+!+[]]+(![]+[])[+!+[]]+(!![]+[])[+[]]]+[])[!+[]+!+[]+!+[]]+(![]+[])[!+[]+!+[]+!+[]]]()[!+[]+!+[]]+(!![]+[][(![]+[])[+[]]+(![]+[])[!+[]+!+[]]+(![]+[])[+!+[]]+(!![]+[])[+[]]])[!+[]+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(!![]+[][(![]+[])[+[]]+(![]+[])[!+[]+!+[]]+(![]+[])[+!+[]]+(!![]+[])[+[]]])[+!+[]+[+[]]]+([][(![]+[])[+[]]+(![]+[])[!+[]+!+[]]+(![]+[])[+!+[]]+(!![]+[])[+[]]]+[])[!+[]+!+[]+!+[]]+(![]+[])[+!+[]]+(!![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+(!![]+[][(![]+[])[+[]]+(![]+[])[!+[]+!+[]]+(![]+[])[+!+[]]+(!![]+[])[+[]]])[+!+[]+[+[]]]+([][[]]+[])[+!+[]]+(+(+!+[]+[+!+[]]+(!![]+[])[!+[]+!+[]+!+[]]+[!+[]+!+[]]+[+[]])+[])[+!+[]]+(!![]+[])[+!+[]]+(!![]+[])[!+[]+!+[]+!+[]]+(![]+[])[!+[]+!+[]]+(!![]+[][(![]+[])[+[]]+(![]+[])[!+[]+!+[]]+(![]+[])[+!+[]]+(!![]+[])[+[]]])[+!+[]+[+[]]]+(![]+[])[+!+[]]+([][[]]+[])[!+[]+!+[]]+([][(![]+[])[+[]]+(![]+[])[!+[]+!+[]]+(![]+[])[+!+[]]+(!![]+[])[+[]]]+[])[+!+[]+[!+[]+!+[]+!+[]]]+([+[]]+![]+[][(![]+[])[+[]]+(![]+[])[!+[]+!+[]]+(![]+[])[+!+[]]+(!![]+[])[+[]]])[!+[]+!+[]+[+[]]]+([]+[])[(![]+[])[+[]]+(!![]+[][(![]+[])[+[]]+(![]+[])[!+[]+!+[]]+(![]+[])[+!+[]]+(!![]+[])[+[]]])[+!+[]+[+[]]]+([][[]]+[])[+!+[]]+(!![]+[])[+[]]+([][(![]+[])[+[]]+(![]+[])[!+[]+!+[]]+(![]+[])[+!+[]]+(!![]+[])[+[]]]+[])[!+[]+!+[]+!+[]]+(!![]+[][(![]+[])[+[]]+(![]+[])[!+[]+!+[]]+(![]+[])[+!+[]]+(!![]+[])[+[]]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(!![]+[][(![]+[])[+[]]+(![]+[])[!+[]+!+[]]+(![]+[])[+!+[]]+(!![]+[])[+[]]])[+!+[]+[+[]]]+(!![]+[])[+!+[]]](+[![]]+([]+[])[(![]+[])[+[]]+(!![]+[][(![]+[])[+[]]+(![]+[])[!+[]+!+[]]+(![]+[])[+!+[]]+(!![]+[])[+[]]])[+!+[]+[+[]]]+([][[]]+[])[+!+[]]+(!![]+[])[+[]]+([][(![]+[])[+[]]+(![]+[])[!+[]+!+[]]+(![]+[])[+!+[]]+(!![]+[])[+[]]]+[])[!+[]+!+[]+!+[]]+(!![]+[][(![]+[])[+[]]+(![]+[])[!+[]+!+[]]+(![]+[])[+!+[]]+(!![]+[])[+[]]])[+!+[]+[+[]]]+(![]+[])[!+[]+!+[]]+(!![]+[][(![]+[])[+[]]+(![]+[])[!+[]+!+[]]+(![]+[])[+!+[]]+(!![]+[])[+[]]])[+!+[]+[+[]]]+(!![]+[])[+!+[]]]()[+!+[]+[!+[]+!+[]]])[!+[]+!+[]+[+!+[]]]+([][(![]+[])[+[]]+(![]+[])[!+[]+!+[]]+(![]+[])[+!+[]]+(!![]+[])[+[]]]+[])[(![]+[])[!+[]+!+[]+!+[]]+(![]+[])[!+[]+!+[]]+([![]]+[][[]])[+!+[]+[+[]]]+([][(![]+[])[+[]]+(![]+[])[!+[]+!+[]]+(![]+[])[+!+[]]+(!![]+[])[+[]]]+[])[!+[]+!+[]+!+[]]+(!![]+[])[!+[]+!+[]+!+[]]]((+((+(+!+[]+[+!+[]]+(!![]+[])[!+[]+!+[]+!+[]]+[!+[]+!+[]]+[+[]])+[])[+!+[]]+[+[]+[+[]]+[+[]]+[+[]]+[+[]]+[+[]]+[+!+[]]])+[])[!+[]+!+[]]+[+!+[]])+[[]][([][(![]+[])[+[]]+(![]+[])[!+[]+!+[]]+(![]+[])[+!+[]]+(!![]+[])[+[]]]+[])[!+[]+!+[]+!+[]]+(!![]+[][(![]+[])[+[]]+(![]+[])[!+[]+!+[]]+(![]+[])[+!+[]]+(!![]+[])[+[]]])[+!+[]+[+[]]]+([][[]]+[])[+!+[]]+([][(![]+[])[+[]]+(![]+[])[!+[]+!+[]]+(![]+[])[+!+[]]+(!![]+[])[+[]]]+[])[!+[]+!+[]+!+[]]+(![]+[])[+!+[]]+(!![]+[])[+[]]]([[]])+[]+[+!+[]]+[+[]]+[+[]]+[+[]]+[+[]]+([+[]]+![]+[][(![]+[])[+[]]+(![]+[])[!+[]+!+[]]+(![]+[])[+!+[]]+(!![]+[])[+[]]])[!+[]+!+[]+[+[]]]);</span><br></pre></td></tr></table></figure>
+<p>是jsfuck编码，用 <a href="https://enkhee-osiris.github.io/Decoder-JSFuck/" target="_blank" rel="noopener">https://enkhee-osiris.github.io/Decoder-JSFuck/</a> 这个工具解密出来是：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">setInterval(<span class="function"><span class="params">()</span>=&gt;</span>&#123;location.reload();&#125;,<span class="number">10000</span>)</span><br></pre></td></tr></table></figure>
+<p>这是造成网页不断刷新的原因。</p>
+<p>可以利用chrome 的 Local Override机制替换被加载的任意文件，将这个文件替换掉，具体使用方法如下：<br><a href="https://developers.google.com/web/updates/2018/01/devtools#overrides" target="_blank" rel="noopener">https://developers.google.com/web/updates/2018/01/devtools#overrides</a></p>
+<h2 id="游戏"><a href="#游戏" class="headerlink" title="游戏"></a><strong>游戏</strong></h2><p>这游戏是一个类似于flappy bird的游戏，最后得分超过<code>50000000</code>分后会发送一个请求：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">curl <span class="string">'https://protamine-meowgame.cuso-4.com/api/report'</span> \</span><br><span class="line">  -H <span class="string">'authority: protamine-meowgame.cuso-4.com'</span> \</span><br><span class="line">  -H <span class="string">'pragma: no-cache'</span> \</span><br><span class="line">  -H <span class="string">'cache-control: no-cache'</span> \</span><br><span class="line">  -H <span class="string">'authorization: Basic bWVvdzoyMDIxLTAxLTAx'</span> \</span><br><span class="line">  -H <span class="string">'sec-ch-ua: "Google Chrome";v="89", "Chromium";v="89", ";Not\"A\\Brand";v="99"'</span> \</span><br><span class="line">  -H <span class="string">'dnt: 1'</span> \</span><br><span class="line">  -H <span class="string">'sec-ch-ua-mobile: ?1'</span> \</span><br><span class="line">  -H <span class="string">'user-agent: Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.72 Mobile Safari/537.36'</span> \</span><br><span class="line">  -H <span class="string">'content-type: application/json'</span> \</span><br><span class="line">  -H <span class="string">'accept: */*'</span> \</span><br><span class="line">  -H <span class="string">'origin: https://protamine-meowgame.cuso-4.com'</span> \</span><br><span class="line">  -H <span class="string">'sec-fetch-site: same-origin'</span> \</span><br><span class="line">  -H <span class="string">'sec-fetch-mode: cors'</span> \</span><br><span class="line">  -H <span class="string">'sec-fetch-dest: empty'</span> \</span><br><span class="line">  -H <span class="string">'referer: https://protamine-meowgame.cuso-4.com/'</span> \</span><br><span class="line">  -H <span class="string">'accept-language: zh-CN,zh;q=0.9,en-US;q=0.8,en;q=0.7,ja-JP;q=0.6,ja;q=0.5,zh-TW;q=0.4'</span> \</span><br><span class="line">  -H <span class="string">'cookie: __cfduid=d07a9aa098d3456860bd08378d92a4ecc1614590625'</span> \</span><br><span class="line">  --data-raw <span class="string">'&#123;"id":"aW1saw==","score":"40","picking_log":"20,20"&#125;'</span> \</span><br><span class="line">  --compressed</span><br></pre></td></tr></table></figure>
+<p>其中得分和每步骤的得分分别由<code>score</code>和<code>picking_log</code>字段记录。</p>
+<h3 id="假的解法"><a href="#假的解法" class="headerlink" title="假的解法"></a><strong>假的解法</strong></h3><p>简单的思路是通过构造很长的 <code>picking_log</code>，但是出题人限制了单个请求大小的限制，过长会导致http返回413错误。</p>
+<p>经过测试，将每次得分设置为999是最好的答案，整个请求的大小 能够符合限制。</p>
+<p>最后report请求返回一个flag：<code>miao{p_c2c0580470}</code></p>
+<h3 id="真的解法"><a href="#真的解法" class="headerlink" title="真的解法"></a><strong>真的解法</strong></h3><p>赛后查看源码：<br><a href="https://github.com/cuso4-5h2o/protamine-meowgame/blob/main/server/src/main.rs#L18" target="_blank" rel="noopener">https://github.com/cuso4-5h2o/protamine-meowgame/blob/main/server/src/main.rs#L18</a></p>
+<p><code>score</code>和<code>picking_log</code>的解析：</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> score = Regex::new(<span class="string">r"[^0-9]"</span>)</span><br><span class="line">    .unwrap()</span><br><span class="line">    .replace_all(game_info.score.as_str(), <span class="string">""</span>)</span><br><span class="line">    .parse::&lt;<span class="built_in">u32</span>&gt;()</span><br><span class="line">    .unwrap();</span><br><span class="line"><span class="keyword">let</span> picking_log = Regex::new(<span class="string">r"[^0-9,\-]"</span>)</span><br><span class="line">    .unwrap()</span><br><span class="line">    .replace_all(game_info.picking_log.as_str(), <span class="string">""</span>)</span><br><span class="line">    .to_string();</span><br></pre></td></tr></table></figure>
+<p>可以发现<code>score</code>字段会忽略正负号，解析成<code>u32</code>类型。</p>
+<p>接下来看验证部分：</p>
+<figure class="highlight rust"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fn</span> <span class="title">verify_game</span></span>(score: <span class="built_in">u32</span>, picking_log: <span class="built_in">String</span>) -&gt; <span class="built_in">bool</span> &#123;</span><br><span class="line">    <span class="keyword">let</span> picking_log: <span class="built_in">Vec</span>&lt;&amp;<span class="built_in">str</span>&gt; = picking_log.split(<span class="string">","</span>).collect();</span><br><span class="line">    <span class="keyword">let</span> <span class="keyword">mut</span> max_score: <span class="built_in">u32</span> = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> this_score_str <span class="keyword">in</span> picking_log.iter() &#123;</span><br><span class="line">        <span class="keyword">let</span> this_score = this_score_str.parse::&lt;<span class="built_in">i64</span>&gt;().unwrap();</span><br><span class="line">        <span class="keyword">if</span> this_score &gt; <span class="number">1350</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        max_score += this_score <span class="keyword">as</span> <span class="built_in">u32</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> (max_score &gt;= score) &amp;&amp; (max_score &lt;= (score + <span class="number">2000000000</span>));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>可以发现这里有两个验证：</p>
+<ol>
+<li><code>picking_log</code>字段字符串的每一个值先parse成<code>i64</code>与<code>1350</code>比较判断是否单次得分过高的作弊。</li>
+<li><p>然后再将每一步的分数从<code>i64</code>cast成<code>u32</code>类型相加，这里<code>i64</code>转<code>u32</code>是直接截取的低32位解释成无符号数，因此负数会被解释成大于等于<code>2^31</code>的正数。</p>
+<p> 之后和<code>score</code>比较，首先要满足<code>max_score &gt;= score</code> ，其次还有一个<code>max_score &lt;= (score + 2000000000)</code>的判断，我们可以在<code>picking_log</code>中使用一些特殊的分数来绕过。</p>
+</li>
+</ol>
+<p>经过分析代码，我们可以用<code>-2000000000 - 1</code>这个分数，构造下面这样的分数：</p>
+<p><code>&quot;score&quot;:&quot;2294967295&quot;, &quot;picking_log&quot;:&quot;-2000000001&quot;</code><br>下面这个curl命令可以拿到flag</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">curl <span class="string">'https://protamine-meowgame.cuso-4.com/api/report'</span> \</span><br><span class="line">  -H <span class="string">'authority: protamine-meowgame.cuso-4.com'</span> \</span><br><span class="line">  -H <span class="string">'pragma: no-cache'</span> \</span><br><span class="line">  -H <span class="string">'cache-control: no-cache'</span> \</span><br><span class="line">  -H <span class="string">'authorization: Basic bWVvdzoyMDIxLTAxLTAx'</span> \</span><br><span class="line">  -H <span class="string">'sec-ch-ua: "Google Chrome";v="89", "Chromium";v="89", ";Not\"A\\Brand";v="99"'</span> \</span><br><span class="line">  -H <span class="string">'dnt: 1'</span> \</span><br><span class="line">  -H <span class="string">'sec-ch-ua-mobile: ?1'</span> \</span><br><span class="line">  -H <span class="string">'user-agent: Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.72 Mobile Safari/537.36'</span> \</span><br><span class="line">  -H <span class="string">'content-type: application/json'</span> \</span><br><span class="line">  -H <span class="string">'accept: */*'</span> \</span><br><span class="line">  -H <span class="string">'origin: https://protamine-meowgame.cuso-4.com'</span> \</span><br><span class="line">  -H <span class="string">'sec-fetch-site: same-origin'</span> \</span><br><span class="line">  -H <span class="string">'sec-fetch-mode: cors'</span> \</span><br><span class="line">  -H <span class="string">'sec-fetch-dest: empty'</span> \</span><br><span class="line">  -H <span class="string">'referer: https://protamine-meowgame.cuso-4.com/'</span> \</span><br><span class="line">  -H <span class="string">'accept-language: zh-CN,zh;q=0.9,en-US;q=0.8,en;q=0.7,ja-JP;q=0.6,ja;q=0.5,zh-TW;q=0.4'</span> \</span><br><span class="line">  -H <span class="string">'cookie: __cfduid=d07a9aa098d3456860bd08378d92a4ecc1614590625'</span> \</span><br><span class="line">  --data-raw <span class="string">'&#123;"id":"aW1saw==","score":"2294967295","picking_log":"-2000000001"&#125;'</span> \</span><br><span class="line">  --compressed</span><br></pre></td></tr></table></figure>
+<p>flag是<code>miao{p_c2c0580470}</code></p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/meowgame/" rel="tag"># meowgame</a>
+          
+            <a href="/tags/misc/" rel="tag"># misc</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/blog/68/" rel="next" title="System.loadLibrary的一二事">
+                <i class="fa fa-chevron-left"></i> System.loadLibrary的一二事
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">imlk</p>
+              <p class="site-description motion-element" itemprop="description">勿在浮沙铸高台</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives">
+                
+                    <span class="site-state-item-count">66</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">26</span>
+                    <span class="site-state-item-name">categories</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">48</span>
+                    <span class="site-state-item-name">tags</span>
+                  
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/KB5201314" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:me@imlk.top" target="_blank" title="E-Mail"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  
+                </span>
+              
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#problem1"><span class="nav-number">1.</span> <span class="nav-text">problem1</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#题目"><span class="nav-number">1.1.</span> <span class="nav-text">题目</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#分离文件"><span class="nav-number">1.2.</span> <span class="nav-text">分离文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#压缩包密码"><span class="nav-number">1.3.</span> <span class="nav-text">压缩包密码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#压缩包中的cowsay-txt"><span class="nav-number">1.4.</span> <span class="nav-text">压缩包中的cowsay.txt</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#关于xn–"><span class="nav-number">1.5.</span> <span class="nav-text">关于xn–</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#dns"><span class="nav-number">1.6.</span> <span class="nav-text">dns</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#problem2"><span class="nav-number">2.</span> <span class="nav-text">problem2</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#题目-1"><span class="nav-number">2.1.</span> <span class="nav-text">题目</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#音频"><span class="nav-number">2.2.</span> <span class="nav-text">音频</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#盲水印"><span class="nav-number">2.3.</span> <span class="nav-text">盲水印</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#problem3"><span class="nav-number">3.</span> <span class="nav-text">problem3</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#题目-2"><span class="nav-number">3.1.</span> <span class="nav-text">题目</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#jiamu-zip"><span class="nav-number">3.2.</span> <span class="nav-text">jiamu.zip</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ssh"><span class="nav-number">3.3.</span> <span class="nav-text">ssh</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#hint"><span class="nav-number">3.4.</span> <span class="nav-text">hint</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#problem4"><span class="nav-number">4.</span> <span class="nav-text">problem4</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#题目-3"><span class="nav-number">4.1.</span> <span class="nav-text">题目</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#双图"><span class="nav-number">4.2.</span> <span class="nav-text">双图</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#盲水印-1"><span class="nav-number">4.3.</span> <span class="nav-text">盲水印</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#网页"><span class="nav-number">4.4.</span> <span class="nav-text">网页</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#游戏"><span class="nav-number">4.5.</span> <span class="nav-text">游戏</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#假的解法"><span class="nav-number">4.5.1.</span> <span class="nav-text">假的解法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#真的解法"><span class="nav-number">4.5.2.</span> <span class="nav-text">真的解法</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2021</span>
+  <span class="with-love" id="animate"> 
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">imlk</span>
+
+<div class="BbeiAn-info">
+京ICP备 -
+<a target="_blank" href="http://www.miitbeian.gov.cn/">2020042968号</a>
+
+</div>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+    <span title="Symbols count total">262k</span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    
+    <span title="Reading time total">3:58</span>
+  
+</div>
+
+
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/theme-next/hexo-theme-next">NexT.Mist</a> v6.0.6</div>
+
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.0.6"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.0.6"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.0.6"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.0.6"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.0.6"></script>
+
+
+
+  
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  
+  
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(function (item) {
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: true,
+        notify: true,
+        appId: 'pPIiFQjO1RTMg6A6ANqP5qN7-gzGzoHsz',
+        appKey: 'XaPR8xbkykCRQYhjj0K7jozz',
+        placeholder: 'come on ヾﾉ≧∀≦)o!!',
+        avatar:'mm',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+  </script>
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
