@@ -3144,7 +3144,7 @@
 </ul>
 <p>文件的md5sum:<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">3784d3f46879644a0d1343208f381005  cer1.cer</span><br><span class="line">4b60d9eaa8eaf05f784391d9e83a1f34  cer2.cer</span><br></pre></td></tr></table></figure></p>
 <blockquote>
-<p>最后，由于在设备上随意安装未知来源的CA证书是一件很危险的事情，使用上面的证书文件的同时，也意味着您已经了解并明白潜在的风险，本人不承担由此导致的任何风险。</p>
+<p>最后，由于在设备上随意安装未知来源的CA证书是一件很危险的事情，使用上面的证书文件的同时，也意味着您已经了解并明白潜在的风险，本人不承担由此导致的任何责任。</p>
 </blockquote>
 <h2 id="refer"><a href="#refer" class="headerlink" title="refer"></a>refer</h2><ul>
 <li><p><a href="https://documentation.meraki.com/MR/Encryption_and_Authentication/Wireless_Encryption_and_Authentication_Overview" target="_blank" rel="noopener">Wireless Encryption and Authentication Overview</a></p>
