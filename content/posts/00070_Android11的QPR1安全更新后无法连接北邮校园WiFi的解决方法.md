@@ -1,12 +1,12 @@
 ---
 title: 'Android11的QPR1安全更新后无法连接北邮校园WiFi的解决方法'
-date: 2021-03-17 13:51:32
+date: 2021-03-17T13:51:32+08:00
 id: 70
 categories:
-    - [misc]
+    - misc
 tags:
-    - [BUPT]
-    - [wpa2-enterprise]
+    - BUPT
+    - wpa2-enterprise
 ---
 
 Android11在2020年12月发布的安全更新中进行了一个修复：[PSA: Android 11 will no longer let you insecurely connect to enterprise WiFi networks](https://www.xda-developers.com/android-11-break-enterprise-wifi-connection/)

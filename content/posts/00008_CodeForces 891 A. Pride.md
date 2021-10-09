@@ -2,10 +2,10 @@
 title: CodeForces 891 A. Pride
 id: 8
 categories:
-  - [Codeforces]
-  - [动态规划]
-  - [算法]
-date: 2018-02-27 10:30:47
+  - Codeforces
+  - 动态规划
+  - 算法
+date: 2018-02-27T10:30:47+08:00
 tags:
 ---
 

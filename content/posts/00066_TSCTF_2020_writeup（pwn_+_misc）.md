@@ -1,13 +1,13 @@
 ---
 title: 'TSCTF 2020 writeup（pwn + misc）'
-date: 2020-10-19 15:48:21
+date: 2020-10-19T15:48:21+08:00
 id: 66
 categories:
-    - [ctf]
+    - ctf
 tags:
-    - [ctf]
-    - [pwn]
-    - [Android]
+    - ctf
+    - pwn
+    - Android
 ---
 
 

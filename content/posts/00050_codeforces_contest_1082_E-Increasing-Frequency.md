@@ -1,14 +1,14 @@
 ---
 title: codeforces contest 1082 E. Increasing Frequency
-date: 2018-11-30 00:06:03
+date: 2018-11-30T00:06:03+08:00
 id: 50
 categories: 
-  - [Codeforces]
-  - [算法]
+  - Codeforces
+  - 算法
 tags: 
-  - [Codeforces]
-  - [贪心]
-  - [dp]
+  - Codeforces
+  - 贪心
+  - dp
 ---
 
 [原题在这](http://codeforces.com/contest/1082/problem/E)

@@ -1,14 +1,14 @@
 ---
 title: '[Codeforces]Contest 1009 E. Intercity Travelling'
-date: 2018-07-15 21:06:24
+date: 2018-07-15T21:06:24+08:00
 id: 48
 categories:
-  - [算法]
-  - [Codeforces]
+  - 算法
+  - Codeforces
 tags:
-  - [Codeforces contest 1009]
-  - [Educational Codeforces Round 47 (Rated for Div. 2)]
-  - [Codeforces]
+  - Codeforces contest 1009
+  - Educational Codeforces Round 47 (Rated for Div. 2)
+  - Codeforces
 ---
 
 ### 链接

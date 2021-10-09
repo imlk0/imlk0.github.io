@@ -1,14 +1,14 @@
 ---
 title: '[POJ]1150 The Last Non-zero Digit'
-date: 2018-07-13 16:02:29
+date: 2018-07-13T16:02:29+08:00
 id: 45
 categories: 
-  - [POJ]
-  - [算法]
+  - POJ
+  - 算法
 tags:
-  - [POJ]
-  - [阶乘]
-  - [最低非零位]
+  - POJ
+  - 阶乘
+  - 最低非零位
 ---
 
 ### 原题

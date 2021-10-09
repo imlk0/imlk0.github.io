@@ -1,14 +1,14 @@
 ---
 title: '[Codeforces]Contest 1005 E2. Median on Segments (General Case Edition)'
-date: 2018-07-11 16:58:32
+date: 2018-07-11T16:58:32+08:00
 id: 44
 categories: 
-  - [算法]
-  - [Codeforces]
+  - 算法
+  - Codeforces
 tags:
-  - [Codeforces contest 1005]
-  - [Codeforces Round 496 (Div. 3)]
-  - [Codeforces]
+  - Codeforces contest 1005
+  - Codeforces Round 496 (Div. 3)
+  - Codeforces
 ---
 
 

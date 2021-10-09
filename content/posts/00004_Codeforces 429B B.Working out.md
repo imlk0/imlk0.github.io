@@ -3,7 +3,7 @@ title: Codeforces 429B B.Working out
 id: 4
 categories:
   - 算法
-date: 2018-01-09 20:47:19
+date: 2018-01-09T20:47:19+08:00
 tags:
 ---
 

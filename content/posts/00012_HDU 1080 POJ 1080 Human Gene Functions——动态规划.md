@@ -3,7 +3,7 @@ title: HDU 1080 POJ 1080 Human Gene Functions——动态规划
 id: 12
 categories:
   - HDU
-date: 2018-02-26 21:53:24
+date: 2018-02-26T21:53:24+08:00
 tags:
 ---
 

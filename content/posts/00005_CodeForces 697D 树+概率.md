@@ -3,7 +3,7 @@ title: CodeForces 697D 树+概率
 id: 5
 categories:
   - 算法
-date: 2018-02-01 23:34:57
+date: 2018-02-01T23:34:57+08:00
 tags:
 ---
 

@@ -3,7 +3,7 @@ title: C——printf格式化动态长度
 id: 9
 categories:
   - C/C++
-date: 2017-12-16 23:55:10
+date: 2017-12-16T23:55:10+08:00
 tags:
 ---
 

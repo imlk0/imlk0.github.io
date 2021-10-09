@@ -1,12 +1,12 @@
 ---
 title: '[write up] meowgame2021'
-date: 2021-03-16 23:20:16
+date: 2021-03-16T23:20:16+08:00
 id: 69
 categories:
-    - [CTF]
+    - CTF
 tags:
-    - [meowgame]
-    - [misc]
+    - meowgame
+    - misc
 ---
 
 # problem1

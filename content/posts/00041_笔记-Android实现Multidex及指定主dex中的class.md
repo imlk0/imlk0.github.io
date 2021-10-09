@@ -1,12 +1,12 @@
 ---
 title: '[笔记]Android实现Multidex及指定主dex中的class'
-date: 2018-04-29 11:19:47
+date: 2018-04-29T11:19:47+08:00
 id: 41
 categories:
-	- 笔记
+  - 笔记
 tags:
-	- 杂文
-	- 笔记
+  - 杂文
+  - 笔记
 ---
 
 
