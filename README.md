@@ -1,5 +1,9 @@
 # imlk's blog
 
+[![GitHub last commit (branch)](https://img.shields.io/github/last-commit/KB5201314/KB5201314.github.io/master)](https://github.com/KB5201314/KB5201314.github.io/commits/master)
+[![GitHub Page Deploy](https://github.com/KB5201314/KB5201314.github.io/actions/workflows/hugo_gen.yml/badge.svg?branch=master)](https://github.com/KB5201314/KB5201314.github.io/actions/workflows/hugo_gen.yml)
+[![Uptime Robot status](https://img.shields.io/uptimerobot/status/m789411176-07f6d484927ac79219ec949a)](https://blog.imlk.top/)
+
 👋 hello, welcome to here.
 
 This is repository of my static blog, which was originally built using [hexo](https://github.com/hexojs/hexo), but has now been migrated to [hugo](https://github.com/gohugoio/hugo/).
