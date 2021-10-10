@@ -1,84 +1,60 @@
-<!DOCTYPE html>
-<html lang="zh-cn">
-
+<!doctype html><html lang=zh-cn>
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Codeforces Contest 1009 E. Intercity Travelling | imlk&#39;s blog</title>
-  <link rel="stylesheet" href='/css/style.css' />
-  <link rel="stylesheet" href='/css/fonts.css' />
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&display=swap" rel="stylesheet">
+<meta charset=utf-8>
+<meta name=viewport content="width=device-width,initial-scale=1">
+<title>Codeforces Contest 1009 E. Intercity Travelling | imlk's blog</title>
+<link rel=stylesheet href=/css/style.css>
+<link rel=stylesheet href=/css/fonts.css>
+<link rel=preconnect href=https://fonts.googleapis.com>
+<link rel=preconnect href=https://fonts.gstatic.com crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&display=swap" rel=stylesheet>
 </head>
-
 <body>
-  <header class="header">
-    <a class="logo" href='/'> imlk's Blog </a>
-    <nav>
-      <ul class="menu">
-        
-        <li><a href="/">Home</a></li>
-        
-        <li><a href="/about/">About</a></li>
-        
-        <li><a href="/archives/">Archives</a></li>
-        
-        <li><a href="/friends/">Friends</a></li>
-        
-        <li><a href="/index.xml">Subscribe</a></li>
-        
-      </ul>
-    </nav>
-  </header>
-  <hr />
-
-
-
-<div class="article-meta">
-    <h1><span class="title">Codeforces Contest 1009 E. Intercity Travelling</span></h1>
-    
-    <span>
-        <span class="date">2018-07-15</span>
-        |
-        
-        <span class="cats">
-            
-            
-            <a href='https://blog.imlk.top/categories/algorithm/'>Algorithm</a>
-            
-        </span>
-        
-        |
-        <span class="tags">
-            
-            <a href='https://blog.imlk.top/tags/codeforces/'>#Codeforces</a>
-            
-        </span>
-        
-    </span>
-    <br>
-    
+<header class=header>
+<a class=logo href=/> imlk's Blog </a>
+<nav>
+<ul class=menu>
+<li><a href=/>Home</a></li>
+<li><a href=/about/>About</a></li>
+<li><a href=/archives/>Archives</a></li>
+<li><a href=/friends/>Friends</a></li>
+<li><a href=/index.xml>Subscribe</a></li>
+</ul>
+</nav>
+</header>
+<hr>
+<div class=article-meta>
+<h1><span class=title>Codeforces Contest 1009 E. Intercity Travelling</span></h1>
+<span>
+<span class=date>2018-07-15</span>
+|
+<span class=cats>
+<a href=https://blog.imlk.top/categories/algorithm/>Algorithm</a>
+</span>
+|
+<span class=tags>
+<a href=https://blog.imlk.top/tags/codeforces/>#Codeforces</a>
+</span>
+</span>
+<br>
 </div>
-
-
 <main>
-    <h3 id="链接">链接</h3>
+<h3 id=链接>链接</h3>
 <p>Educational Codeforces Round 47 (Rated for Div. 2) - E. Intercity Travelling
-<a href="http://codeforces.com/contest/1009/problem/E">http://codeforces.com/contest/1009/problem/E</a></p>
-<h3 id="思路">思路</h3>
+<a href=http://codeforces.com/contest/1009/problem/E>http://codeforces.com/contest/1009/problem/E</a></p>
+<h3 id=思路>思路</h3>
 <p>n千米，有n段路，共有n-1个可能可以休息的地方，则共有2^(n-1)种可能的休息方式;
 要计算 p⋅2^(n−1)，也就是计算所有的可能的休息方式下的消耗之和;
 分解出来，就是要计算所有的可能的休息方式中所有的a[i]的和;
-也就是求和 sum(a[i] * 消耗a[i]出现的总次数) (i-&gt;1,2,3,&hellip;n);</p>
+也就是求和 sum(a[i] * 消耗a[i]出现的总次数) (i->1,2,3,&mldr;n);</p>
 <p>我们可以按照这种思路，统计a[1]出现的总次数，a[2]出现的次数，这个应该是有规律的;</p>
-<pre tabindex="0"><code>例如n=4的情况
+<pre tabindex=0><code>例如n=4的情况
 
 0  1  2  3  4
 #--#--#--#--#
 其中 1,2,3 这几个点既可以是休息，也可以是不休息两种状态
 </code></pre><p>先考虑简单的，要使a[1]出现:</p>
-<pre tabindex="0"><code>若a[1]出现在 0-1 之间，显然这是必定的，和 1,2,3 休息与不休息都没关系，有所以在 0-1 出现a[1]的次数是 2^3 = 2^(n-1) 次
+<pre tabindex=0><code>若a[1]出现在 0-1 之间，显然这是必定的，和 1,2,3 休息与不休息都没关系，有所以在 0-1 出现a[1]的次数是 2^3 = 2^(n-1) 次
 若a[1]出现在 1-2 之间，则必须是在 1 点处休息了，而 2，3 处则没关系，那么所有在 1-2 出现a[1]的次数是 2^2 = 2^0 * 2^(n-2) = 2^(n-2) 次
 若a[1]出现在 2-3 之间，则必须是在 2 点休息了，和在 1，3 的状况没关系，那么所有在 2-3 出现a[1]的次数是 2^2 = 2^1 * 2^(n-3) = 2^(n-2) 次
 同理可得a[1]出现在 3-4 之间的次数是 2^2 = 2^2 * 2^(n-4) = 2^(n-2) 次
@@ -92,80 +68,71 @@ a[4]出现的总次数是 2^0</p>
 <strong>a[i]出现的次数是 2^(n-i) + 2^(n-i-1) * (n-i)</strong></p>
 <p>乘以a[i]加起来就是答案</p>
 <p>拙劣代码：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#75715e">#include</span><span style="color:#75715e">&lt;iostream&gt;</span><span style="color:#75715e">
-</span><span style="color:#75715e">#include</span><span style="color:#75715e">&lt;cstdio&gt;</span><span style="color:#75715e">
-</span><span style="color:#75715e">#include</span><span style="color:#75715e">&lt;cstring&gt;</span><span style="color:#75715e">
-</span><span style="color:#75715e">#include</span><span style="color:#75715e">&lt;algorithm&gt;</span><span style="color:#75715e">
-</span><span style="color:#75715e"></span>
-<span style="color:#75715e">#define MOD 998244353
-</span><span style="color:#75715e"></span>
-<span style="color:#66d9ef">using</span> <span style="color:#66d9ef">namespace</span> std;
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-cpp data-lang=cpp><span style=color:#75715e>#include</span><span style=color:#75715e>&lt;iostream&gt;</span><span style=color:#75715e>
+</span><span style=color:#75715e>#include</span><span style=color:#75715e>&lt;cstdio&gt;</span><span style=color:#75715e>
+</span><span style=color:#75715e>#include</span><span style=color:#75715e>&lt;cstring&gt;</span><span style=color:#75715e>
+</span><span style=color:#75715e>#include</span><span style=color:#75715e>&lt;algorithm&gt;</span><span style=color:#75715e>
+</span><span style=color:#75715e></span>
+<span style=color:#75715e>#define MOD 998244353
+</span><span style=color:#75715e></span>
+<span style=color:#66d9ef>using</span> <span style=color:#66d9ef>namespace</span> std;
 
-<span style="color:#75715e">// n最大为100000, n^2算法不可取
-</span><span style="color:#75715e"></span>
-<span style="color:#66d9ef">int</span> n;
-<span style="color:#75715e">// long long an[1000005];
-</span><span style="color:#75715e"></span><span style="color:#66d9ef">long</span> <span style="color:#66d9ef">long</span> _2n[<span style="color:#ae81ff">1000005</span>];
-
-
-<span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>(<span style="color:#66d9ef">int</span> argc, <span style="color:#66d9ef">char</span> <span style="color:#66d9ef">const</span> <span style="color:#f92672">*</span>argv[]) {
-
-	scanf(<span style="color:#e6db74">&#34;%d&#34;</span>, <span style="color:#f92672">&amp;</span>n);
-
-	_2n[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>;
+<span style=color:#75715e>// n最大为100000, n^2算法不可取
+</span><span style=color:#75715e></span>
+<span style=color:#66d9ef>int</span> n;
+<span style=color:#75715e>// long long an[1000005];
+</span><span style=color:#75715e></span><span style=color:#66d9ef>long</span> <span style=color:#66d9ef>long</span> _2n[<span style=color:#ae81ff>1000005</span>];
 
 
-	<span style="color:#66d9ef">int</span> b <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>;
-	<span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>; i <span style="color:#f92672">&lt;</span> n; <span style="color:#f92672">++</span>i) {
-		b <span style="color:#f92672">=</span> (b <span style="color:#f92672">*</span> <span style="color:#ae81ff">2</span>) <span style="color:#f92672">%</span> MOD;
-		_2n[i] <span style="color:#f92672">=</span> b;
+<span style=color:#66d9ef>int</span> <span style=color:#a6e22e>main</span>(<span style=color:#66d9ef>int</span> argc, <span style=color:#66d9ef>char</span> <span style=color:#66d9ef>const</span> <span style=color:#f92672>*</span>argv[]) {
+
+	scanf(<span style=color:#e6db74>&#34;%d&#34;</span>, <span style=color:#f92672>&amp;</span>n);
+
+	_2n[<span style=color:#ae81ff>0</span>] <span style=color:#f92672>=</span> <span style=color:#ae81ff>1</span>;
+
+
+	<span style=color:#66d9ef>int</span> b <span style=color:#f92672>=</span> <span style=color:#ae81ff>1</span>;
+	<span style=color:#66d9ef>for</span> (<span style=color:#66d9ef>int</span> i <span style=color:#f92672>=</span> <span style=color:#ae81ff>1</span>; i <span style=color:#f92672>&lt;</span> n; <span style=color:#f92672>++</span>i) {
+		b <span style=color:#f92672>=</span> (b <span style=color:#f92672>*</span> <span style=color:#ae81ff>2</span>) <span style=color:#f92672>%</span> MOD;
+		_2n[i] <span style=color:#f92672>=</span> b;
 	}
 
 
-	<span style="color:#66d9ef">long</span> <span style="color:#66d9ef">long</span> a;
-	<span style="color:#66d9ef">long</span> <span style="color:#66d9ef">long</span> ans <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
-	<span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>; i <span style="color:#f92672">&lt;=</span> n; <span style="color:#f92672">++</span>i) {
-		scanf(<span style="color:#e6db74">&#34;%lld&#34;</span>, <span style="color:#f92672">&amp;</span>a);
-		ans <span style="color:#f92672">=</span> (ans <span style="color:#f92672">+</span> ((_2n[n <span style="color:#f92672">-</span> i] <span style="color:#f92672">+</span> ((n <span style="color:#f92672">-</span> i) <span style="color:#f92672">*</span> _2n[n <span style="color:#f92672">-</span> i <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>]) <span style="color:#f92672">%</span> MOD) <span style="color:#f92672">*</span> a) <span style="color:#f92672">%</span> MOD) <span style="color:#f92672">%</span> MOD;
+	<span style=color:#66d9ef>long</span> <span style=color:#66d9ef>long</span> a;
+	<span style=color:#66d9ef>long</span> <span style=color:#66d9ef>long</span> ans <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>;
+	<span style=color:#66d9ef>for</span> (<span style=color:#66d9ef>int</span> i <span style=color:#f92672>=</span> <span style=color:#ae81ff>1</span>; i <span style=color:#f92672>&lt;=</span> n; <span style=color:#f92672>++</span>i) {
+		scanf(<span style=color:#e6db74>&#34;%lld&#34;</span>, <span style=color:#f92672>&amp;</span>a);
+		ans <span style=color:#f92672>=</span> (ans <span style=color:#f92672>+</span> ((_2n[n <span style=color:#f92672>-</span> i] <span style=color:#f92672>+</span> ((n <span style=color:#f92672>-</span> i) <span style=color:#f92672>*</span> _2n[n <span style=color:#f92672>-</span> i <span style=color:#f92672>-</span> <span style=color:#ae81ff>1</span>]) <span style=color:#f92672>%</span> MOD) <span style=color:#f92672>*</span> a) <span style=color:#f92672>%</span> MOD) <span style=color:#f92672>%</span> MOD;
 	}
 
-	printf(<span style="color:#e6db74">&#34;%lld</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, ans);
+	printf(<span style=color:#e6db74>&#34;%lld</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>, ans);
 
 
-	<span style="color:#75715e">// TL旧代码
-</span><span style="color:#75715e"></span>
-	<span style="color:#75715e">// for (int k = 1; k &lt;= n; ++k) {
-</span><span style="color:#75715e"></span>	<span style="color:#75715e">// 	ans = (ans + ans) % MOD;
-</span><span style="color:#75715e"></span>	<span style="color:#75715e">// 	printf(&#34;x2\n&#34;);
-</span><span style="color:#75715e"></span>	<span style="color:#75715e">// 	for (int i = 1; i &lt; k; ++i) {
-</span><span style="color:#75715e"></span>	<span style="color:#75715e">// 		ans = (ans + an[i] * _2n[k - i - 1]) % MOD;
-</span><span style="color:#75715e"></span>	<span style="color:#75715e">// 		printf(&#34;+a[%d] x 2^%d\n&#34;, i, k - i - 1);
-</span><span style="color:#75715e"></span>	<span style="color:#75715e">// 	}
-</span><span style="color:#75715e"></span>	<span style="color:#75715e">// 	ans = (ans + an[k]) % MOD;
-</span><span style="color:#75715e"></span>	<span style="color:#75715e">// 	printf(&#34;+a[%d] x 2^0\n&#34;, k);
-</span><span style="color:#75715e"></span>	<span style="color:#75715e">// }
-</span><span style="color:#75715e"></span>
+	<span style=color:#75715e>// TL旧代码
+</span><span style=color:#75715e></span>
+	<span style=color:#75715e>// for (int k = 1; k &lt;= n; ++k) {
+</span><span style=color:#75715e></span>	<span style=color:#75715e>// 	ans = (ans + ans) % MOD;
+</span><span style=color:#75715e></span>	<span style=color:#75715e>// 	printf(&#34;x2\n&#34;);
+</span><span style=color:#75715e></span>	<span style=color:#75715e>// 	for (int i = 1; i &lt; k; ++i) {
+</span><span style=color:#75715e></span>	<span style=color:#75715e>// 		ans = (ans + an[i] * _2n[k - i - 1]) % MOD;
+</span><span style=color:#75715e></span>	<span style=color:#75715e>// 		printf(&#34;+a[%d] x 2^%d\n&#34;, i, k - i - 1);
+</span><span style=color:#75715e></span>	<span style=color:#75715e>// 	}
+</span><span style=color:#75715e></span>	<span style=color:#75715e>// 	ans = (ans + an[k]) % MOD;
+</span><span style=color:#75715e></span>	<span style=color:#75715e>// 	printf(&#34;+a[%d] x 2^0\n&#34;, k);
+</span><span style=color:#75715e></span>	<span style=color:#75715e>// }
+</span><span style=color:#75715e></span>
 
-	<span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+	<span style=color:#66d9ef>return</span> <span style=color:#ae81ff>0</span>;
 }
 </code></pre></div>
 </main>
-
-
-
-<div id="comments">
-    <hr>
-    <script src="https://utteranc.es/client.js" repo='KB5201314/KB5201314.github.io' issue-term="pathname" label='💬 comments 💬'
-        theme='github-light' crossorigin="anonymous" async>
-        </script>
+<div id=comments>
+<hr>
+<script src=https://utteranc.es/client.js repo=KB5201314/KB5201314.github.io issue-term=pathname label="💬 comments 💬" theme=github-light crossorigin=anonymous async></script>
 </div>
-
-
-  <footer>
-  
-  <hr/>
-  © imlk 2017 &ndash; 2021 | <a href="https://blog.imlk.top">imlk's blog</a> | <a href="https://github.com/KB5201314/">Github</a> | <a href="mailto:me@imlk.top">Email</a> | <a href="https://beian.miit.gov.cn/">京ICP备 - 2020042968号</a>
-  
-  </footer>
-  </body>
+<footer>
+<hr>
+© imlk 2017 &ndash; 2021 | <a href=https://blog.imlk.top>imlk's blog</a> | <a href=https://github.com/KB5201314/>Github</a> | <a href=mailto:me@imlk.top>Email</a> | <a href=https://beian.miit.gov.cn/>京ICP备 - 2020042968号</a>
+</footer>
+</body>
 </html>

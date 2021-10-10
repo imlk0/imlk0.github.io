@@ -1,73 +1,48 @@
-<!DOCTYPE html>
-<html lang="zh-cn">
-
+<!doctype html><html lang=zh-cn>
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>POJ 1061 青蛙的约会 | imlk&#39;s blog</title>
-  <link rel="stylesheet" href='/css/style.css' />
-  <link rel="stylesheet" href='/css/fonts.css' />
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&display=swap" rel="stylesheet">
+<meta charset=utf-8>
+<meta name=viewport content="width=device-width,initial-scale=1">
+<title>POJ 1061 青蛙的约会 | imlk's blog</title>
+<link rel=stylesheet href=/css/style.css>
+<link rel=stylesheet href=/css/fonts.css>
+<link rel=preconnect href=https://fonts.googleapis.com>
+<link rel=preconnect href=https://fonts.gstatic.com crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&display=swap" rel=stylesheet>
 </head>
-
 <body>
-  <header class="header">
-    <a class="logo" href='/'> imlk's Blog </a>
-    <nav>
-      <ul class="menu">
-        
-        <li><a href="/">Home</a></li>
-        
-        <li><a href="/about/">About</a></li>
-        
-        <li><a href="/archives/">Archives</a></li>
-        
-        <li><a href="/friends/">Friends</a></li>
-        
-        <li><a href="/index.xml">Subscribe</a></li>
-        
-      </ul>
-    </nav>
-  </header>
-  <hr />
-
-
-
-<div class="article-meta">
-    <h1><span class="title">POJ 1061 青蛙的约会</span></h1>
-    
-    <span>
-        <span class="date">2018-07-13</span>
-        |
-        
-        <span class="cats">
-            
-            
-            <a href='https://blog.imlk.top/categories/algorithm/'>Algorithm</a>
-            
-        </span>
-        
-        |
-        <span class="tags">
-            
-            <a href='https://blog.imlk.top/tags/poj/'>#POJ</a>
-            
-            <a href='https://blog.imlk.top/tags/%E6%89%A9%E5%B1%95%E6%AC%A7%E5%87%A0%E9%87%8C%E5%BE%97/'>#扩展欧几里得</a>
-            
-        </span>
-        
-    </span>
-    <br>
-    
+<header class=header>
+<a class=logo href=/> imlk's Blog </a>
+<nav>
+<ul class=menu>
+<li><a href=/>Home</a></li>
+<li><a href=/about/>About</a></li>
+<li><a href=/archives/>Archives</a></li>
+<li><a href=/friends/>Friends</a></li>
+<li><a href=/index.xml>Subscribe</a></li>
+</ul>
+</nav>
+</header>
+<hr>
+<div class=article-meta>
+<h1><span class=title>POJ 1061 青蛙的约会</span></h1>
+<span>
+<span class=date>2018-07-13</span>
+|
+<span class=cats>
+<a href=https://blog.imlk.top/categories/algorithm/>Algorithm</a>
+</span>
+|
+<span class=tags>
+<a href=https://blog.imlk.top/tags/poj/>#POJ</a>
+<a href=https://blog.imlk.top/tags/%E6%89%A9%E5%B1%95%E6%AC%A7%E5%87%A0%E9%87%8C%E5%BE%97/>#扩展欧几里得</a>
+</span>
+</span>
+<br>
 </div>
-
-
 <main>
-    <h3 id="原题">原题</h3>
+<h3 id=原题>原题</h3>
 <p><a href="http://poj.org/problem?id=1061">http://poj.org/problem?id=1061</a></p>
-<h3 id="解法">解法</h3>
+<h3 id=解法>解法</h3>
 <p>此题用扩展欧几里得计算
 (n-m) * X ≡ (x-y) (mod l) 的最小正整数解
 即(n-m) * X + l * Y = (x-y)</p>
@@ -76,88 +51,79 @@
 此特解乘上</strong>m / gcd(a,b)<strong>得到的就是</strong>ax + by = m</strong>的特解</p>
 <p><strong>所有的解x mod (b/gcd(a,b))同余</strong>
 <strong>所有的解y mod (a/gcd(a,b))同余</strong></p>
-<h3 id="参考">参考</h3>
-<p><a href="https://blog.csdn.net/ccnuacmhdu/article/details/79415284">https://blog.csdn.net/ccnuacmhdu/article/details/79415284</a>
-<a href="https://www.cnblogs.com/xeoncdy/p/7265419.html">https://www.cnblogs.com/xeoncdy/p/7265419.html</a>
-<a href="https://blog.csdn.net/sun897949163/article/details/51894372">https://blog.csdn.net/sun897949163/article/details/51894372</a>
-<a href="https://blog.csdn.net/yoer77/article/details/69568676">https://blog.csdn.net/yoer77/article/details/69568676</a></p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;iostream&gt;</span><span style="color:#75715e">
-</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;algorithm&gt;</span><span style="color:#75715e">
-</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;cstring&gt;</span><span style="color:#75715e">
-</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;string&gt;</span><span style="color:#75715e">
-</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;cstdio&gt;</span><span style="color:#75715e">
-</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;cmath&gt;</span><span style="color:#75715e">
-</span><span style="color:#75715e"></span>
-<span style="color:#75715e">#define LL long long
-</span><span style="color:#75715e"></span><span style="color:#66d9ef">using</span> <span style="color:#66d9ef">namespace</span> std;
+<h3 id=参考>参考</h3>
+<p><a href=https://blog.csdn.net/ccnuacmhdu/article/details/79415284>https://blog.csdn.net/ccnuacmhdu/article/details/79415284</a>
+<a href=https://www.cnblogs.com/xeoncdy/p/7265419.html>https://www.cnblogs.com/xeoncdy/p/7265419.html</a>
+<a href=https://blog.csdn.net/sun897949163/article/details/51894372>https://blog.csdn.net/sun897949163/article/details/51894372</a>
+<a href=https://blog.csdn.net/yoer77/article/details/69568676>https://blog.csdn.net/yoer77/article/details/69568676</a></p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-cpp data-lang=cpp><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;iostream&gt;</span><span style=color:#75715e>
+</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;algorithm&gt;</span><span style=color:#75715e>
+</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;cstring&gt;</span><span style=color:#75715e>
+</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;string&gt;</span><span style=color:#75715e>
+</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;cstdio&gt;</span><span style=color:#75715e>
+</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;cmath&gt;</span><span style=color:#75715e>
+</span><span style=color:#75715e></span>
+<span style=color:#75715e>#define LL long long
+</span><span style=color:#75715e></span><span style=color:#66d9ef>using</span> <span style=color:#66d9ef>namespace</span> std;
 
 LL x, y, m, n, l;
 
 
-<span style="color:#75715e">// 扩展欧几里得求二元一次方程的一个解
-</span><span style="color:#75715e"></span>LL <span style="color:#a6e22e">exGCD</span>(LL a, LL b, LL<span style="color:#f92672">&amp;</span>x, LL<span style="color:#f92672">&amp;</span>y) {
-	<span style="color:#66d9ef">if</span> (b <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>) {
-		x <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>;<span style="color:#75715e">// a * 1 + b * 0 = a
-</span><span style="color:#75715e"></span>		y <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
-		<span style="color:#66d9ef">return</span> a;
+<span style=color:#75715e>// 扩展欧几里得求二元一次方程的一个解
+</span><span style=color:#75715e></span>LL <span style=color:#a6e22e>exGCD</span>(LL a, LL b, LL<span style=color:#f92672>&amp;</span>x, LL<span style=color:#f92672>&amp;</span>y) {
+	<span style=color:#66d9ef>if</span> (b <span style=color:#f92672>==</span> <span style=color:#ae81ff>0</span>) {
+		x <span style=color:#f92672>=</span> <span style=color:#ae81ff>1</span>;<span style=color:#75715e>// a * 1 + b * 0 = a
+</span><span style=color:#75715e></span>		y <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>;
+		<span style=color:#66d9ef>return</span> a;
 	}
 
-	LL r <span style="color:#f92672">=</span> exGCD(b, a <span style="color:#f92672">%</span> b, x, y);
+	LL r <span style=color:#f92672>=</span> exGCD(b, a <span style=color:#f92672>%</span> b, x, y);
 
-	LL t_y <span style="color:#f92672">=</span> y;
-	y <span style="color:#f92672">=</span> x <span style="color:#f92672">+</span> (<span style="color:#f92672">-</span>a <span style="color:#f92672">/</span> b) <span style="color:#f92672">*</span> y;
-	x <span style="color:#f92672">=</span> t_y;
+	LL t_y <span style=color:#f92672>=</span> y;
+	y <span style=color:#f92672>=</span> x <span style=color:#f92672>+</span> (<span style=color:#f92672>-</span>a <span style=color:#f92672>/</span> b) <span style=color:#f92672>*</span> y;
+	x <span style=color:#f92672>=</span> t_y;
 
-	<span style="color:#66d9ef">return</span> r;<span style="color:#75715e">//返回值为gcd
-</span><span style="color:#75715e"></span>	<span style="color:#75715e">// 记法：该函数返回时满足 a * x + b * y = gcd; 调整x和y只是为了返回上一层调用后能重新调整x&#39;和y&#39;
-</span><span style="color:#75715e"></span>	<span style="color:#75715e">// x&#39; = y
-</span><span style="color:#75715e"></span>	<span style="color:#75715e">// y&#39; = x + (-a/b) * y
-</span><span style="color:#75715e"></span>}
-
-
-<span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>(<span style="color:#66d9ef">int</span> argc, <span style="color:#66d9ef">char</span> <span style="color:#66d9ef">const</span> <span style="color:#f92672">*</span>argv[]) {
-
-	scanf(<span style="color:#e6db74">&#34;%lld%lld%lld%lld%lld&#34;</span>, <span style="color:#f92672">&amp;</span>x, <span style="color:#f92672">&amp;</span>y, <span style="color:#f92672">&amp;</span>m, <span style="color:#f92672">&amp;</span>n, <span style="color:#f92672">&amp;</span>l);
+	<span style=color:#66d9ef>return</span> r;<span style=color:#75715e>//返回值为gcd
+</span><span style=color:#75715e></span>	<span style=color:#75715e>// 记法：该函数返回时满足 a * x + b * y = gcd; 调整x和y只是为了返回上一层调用后能重新调整x&#39;和y&#39;
+</span><span style=color:#75715e></span>	<span style=color:#75715e>// x&#39; = y
+</span><span style=color:#75715e></span>	<span style=color:#75715e>// y&#39; = x + (-a/b) * y
+</span><span style=color:#75715e></span>}
 
 
-	LL a <span style="color:#f92672">=</span> ((n <span style="color:#f92672">-</span> m) <span style="color:#f92672">%</span> l <span style="color:#f92672">+</span> l ) <span style="color:#f92672">%</span> l;<span style="color:#75715e">//（将X的系数化为正的）
-</span><span style="color:#75715e"></span>
+<span style=color:#66d9ef>int</span> <span style=color:#a6e22e>main</span>(<span style=color:#66d9ef>int</span> argc, <span style=color:#66d9ef>char</span> <span style=color:#66d9ef>const</span> <span style=color:#f92672>*</span>argv[]) {
+
+	scanf(<span style=color:#e6db74>&#34;%lld%lld%lld%lld%lld&#34;</span>, <span style=color:#f92672>&amp;</span>x, <span style=color:#f92672>&amp;</span>y, <span style=color:#f92672>&amp;</span>m, <span style=color:#f92672>&amp;</span>n, <span style=color:#f92672>&amp;</span>l);
+
+
+	LL a <span style=color:#f92672>=</span> ((n <span style=color:#f92672>-</span> m) <span style=color:#f92672>%</span> l <span style=color:#f92672>+</span> l ) <span style=color:#f92672>%</span> l;<span style=color:#75715e>//（将X的系数化为正的）
+</span><span style=color:#75715e></span>
 	LL x0, y0;
 
-	LL gcd <span style="color:#f92672">=</span> exGCD(a, l, x0, y0);
+	LL gcd <span style=color:#f92672>=</span> exGCD(a, l, x0, y0);
 
-	<span style="color:#66d9ef">if</span> ((<span style="color:#f92672">!</span>a) <span style="color:#f92672">||</span> (x <span style="color:#f92672">-</span> y) <span style="color:#f92672">%</span> gcd) {
-		printf(<span style="color:#e6db74">&#34;Impossible</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>);
-		<span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+	<span style=color:#66d9ef>if</span> ((<span style=color:#f92672>!</span>a) <span style=color:#f92672>||</span> (x <span style=color:#f92672>-</span> y) <span style=color:#f92672>%</span> gcd) {
+		printf(<span style=color:#e6db74>&#34;Impossible</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>);
+		<span style=color:#66d9ef>return</span> <span style=color:#ae81ff>0</span>;
 	}
 
-	x0 <span style="color:#f92672">=</span> x0 <span style="color:#f92672">*</span> (x <span style="color:#f92672">-</span> y) <span style="color:#f92672">/</span> gcd;<span style="color:#75715e">// x0原先是 (n-m) * X + l * Y = gcd 的一个特解，现在将它化为 (n-m) * X + l * Y = (x-y)的特解X0
-</span><span style="color:#75715e"></span>
-	<span style="color:#75715e">// 找出最小的正整数解X0,所有X mod (b/gcd(a,b))同余
-</span><span style="color:#75715e"></span>	x0 <span style="color:#f92672">=</span> ((x0 <span style="color:#f92672">%</span> (l <span style="color:#f92672">/</span> gcd)) <span style="color:#f92672">+</span> (l <span style="color:#f92672">/</span> gcd)) <span style="color:#f92672">%</span> (l <span style="color:#f92672">/</span> gcd);<span style="color:#75715e">// 用%表示mod的办法
-</span><span style="color:#75715e"></span>	printf(<span style="color:#e6db74">&#34;%lld</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, x0);
+	x0 <span style=color:#f92672>=</span> x0 <span style=color:#f92672>*</span> (x <span style=color:#f92672>-</span> y) <span style=color:#f92672>/</span> gcd;<span style=color:#75715e>// x0原先是 (n-m) * X + l * Y = gcd 的一个特解，现在将它化为 (n-m) * X + l * Y = (x-y)的特解X0
+</span><span style=color:#75715e></span>
+	<span style=color:#75715e>// 找出最小的正整数解X0,所有X mod (b/gcd(a,b))同余
+</span><span style=color:#75715e></span>	x0 <span style=color:#f92672>=</span> ((x0 <span style=color:#f92672>%</span> (l <span style=color:#f92672>/</span> gcd)) <span style=color:#f92672>+</span> (l <span style=color:#f92672>/</span> gcd)) <span style=color:#f92672>%</span> (l <span style=color:#f92672>/</span> gcd);<span style=color:#75715e>// 用%表示mod的办法
+</span><span style=color:#75715e></span>	printf(<span style=color:#e6db74>&#34;%lld</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>, x0);
 
 
-	<span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+	<span style=color:#66d9ef>return</span> <span style=color:#ae81ff>0</span>;
 }
 </code></pre></div>
 </main>
-
-
-
-<div id="comments">
-    <hr>
-    <script src="https://utteranc.es/client.js" repo='KB5201314/KB5201314.github.io' issue-term="pathname" label='💬 comments 💬'
-        theme='github-light' crossorigin="anonymous" async>
-        </script>
+<div id=comments>
+<hr>
+<script src=https://utteranc.es/client.js repo=KB5201314/KB5201314.github.io issue-term=pathname label="💬 comments 💬" theme=github-light crossorigin=anonymous async></script>
 </div>
-
-
-  <footer>
-  
-  <hr/>
-  © imlk 2017 &ndash; 2021 | <a href="https://blog.imlk.top">imlk's blog</a> | <a href="https://github.com/KB5201314/">Github</a> | <a href="mailto:me@imlk.top">Email</a> | <a href="https://beian.miit.gov.cn/">京ICP备 - 2020042968号</a>
-  
-  </footer>
-  </body>
+<footer>
+<hr>
+© imlk 2017 &ndash; 2021 | <a href=https://blog.imlk.top>imlk's blog</a> | <a href=https://github.com/KB5201314/>Github</a> | <a href=mailto:me@imlk.top>Email</a> | <a href=https://beian.miit.gov.cn/>京ICP备 - 2020042968号</a>
+</footer>
+</body>
 </html>

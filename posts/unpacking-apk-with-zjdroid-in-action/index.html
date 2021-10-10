@@ -1,112 +1,87 @@
-<!DOCTYPE html>
-<html lang="zh-cn">
-
+<!doctype html><html lang=zh-cn>
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>记一次ZjDroid脱壳实战 | imlk&#39;s blog</title>
-  <link rel="stylesheet" href='/css/style.css' />
-  <link rel="stylesheet" href='/css/fonts.css' />
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&display=swap" rel="stylesheet">
+<meta charset=utf-8>
+<meta name=viewport content="width=device-width,initial-scale=1">
+<title>记一次ZjDroid脱壳实战 | imlk's blog</title>
+<link rel=stylesheet href=/css/style.css>
+<link rel=stylesheet href=/css/fonts.css>
+<link rel=preconnect href=https://fonts.googleapis.com>
+<link rel=preconnect href=https://fonts.gstatic.com crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&display=swap" rel=stylesheet>
 </head>
-
 <body>
-  <header class="header">
-    <a class="logo" href='/'> imlk's Blog </a>
-    <nav>
-      <ul class="menu">
-        
-        <li><a href="/">Home</a></li>
-        
-        <li><a href="/about/">About</a></li>
-        
-        <li><a href="/archives/">Archives</a></li>
-        
-        <li><a href="/friends/">Friends</a></li>
-        
-        <li><a href="/index.xml">Subscribe</a></li>
-        
-      </ul>
-    </nav>
-  </header>
-  <hr />
-
-
-
-<div class="article-meta">
-    <h1><span class="title">记一次ZjDroid脱壳实战</span></h1>
-    
-    <span>
-        <span class="date">2018-04-28</span>
-        |
-        
-        <span class="cats">
-            
-            
-            <a href='https://blog.imlk.top/categories/reverse/'>Reverse</a>
-            
-        </span>
-        
-        |
-        <span class="tags">
-            
-            <a href='https://blog.imlk.top/tags/%E7%9E%8E%E6%90%9E/'>#瞎搞</a>
-            
-            <a href='https://blog.imlk.top/tags/zjdroid/'>#ZjDroid</a>
-            
-        </span>
-        
-    </span>
-    <br>
-    
+<header class=header>
+<a class=logo href=/> imlk's Blog </a>
+<nav>
+<ul class=menu>
+<li><a href=/>Home</a></li>
+<li><a href=/about/>About</a></li>
+<li><a href=/archives/>Archives</a></li>
+<li><a href=/friends/>Friends</a></li>
+<li><a href=/index.xml>Subscribe</a></li>
+</ul>
+</nav>
+</header>
+<hr>
+<div class=article-meta>
+<h1><span class=title>记一次ZjDroid脱壳实战</span></h1>
+<span>
+<span class=date>2018-04-28</span>
+|
+<span class=cats>
+<a href=https://blog.imlk.top/categories/reverse/>Reverse</a>
+</span>
+|
+<span class=tags>
+<a href=https://blog.imlk.top/tags/%E7%9E%8E%E6%90%9E/>#瞎搞</a>
+<a href=https://blog.imlk.top/tags/zjdroid/>#ZjDroid</a>
+</span>
+</span>
+<br>
 </div>
-
-
 <main>
-    <p>看了那么多逆向破解的文章，总得来点实战的了，正所谓实践出真知嘛。</p>
-<p>拜读了姜维大神的<a href="https://blog.csdn.net/jiangwei0910410003/article/details/52840602">「Android中Xposed框架篇&mdash;基于Xposed的一款脱壳神器ZjDroid工具原理解析」</a>，准备来个应用动手试试了，想起我自己之前有个应用恰好是大数字加固的，于是想试试破自己的应用。
+<p>看了那么多逆向破解的文章，总得来点实战的了，正所谓实践出真知嘛。</p>
+<p>拜读了姜维大神的<a href=https://blog.csdn.net/jiangwei0910410003/article/details/52840602>「Android中Xposed框架篇&mdash;基于Xposed的一款脱壳神器ZjDroid工具原理解析」</a>，准备来个应用动手试试了，想起我自己之前有个应用恰好是大数字加固的，于是想试试破自己的应用。
 (纯粹是个人黑历史，就不贴应用链接了)。</p>
-<h3 id="环境">环境</h3>
-<p>我手头的设备是版本是 Android7.1.2 电脑上也有Android4.4版本的模拟器（Android Emulator，已root和刷入Xposed，不知道怎么手动给模拟器刷root的同学参考这个<a href="https://android.stackexchange.com/questions/171442/root-android-virtual-device-with-android-7-1-1">https://android.stackexchange.com/questions/171442/root-android-virtual-device-with-android-7-1-1</a>）</p>
-<h3 id="准备">准备</h3>
+<h3 id=环境>环境</h3>
+<p>我手头的设备是版本是 Android7.1.2 电脑上也有Android4.4版本的模拟器（Android Emulator，已root和刷入Xposed，不知道怎么手动给模拟器刷root的同学参考这个<a href=https://android.stackexchange.com/questions/171442/root-android-virtual-device-with-android-7-1-1>https://android.stackexchange.com/questions/171442/root-android-virtual-device-with-android-7-1-1</a>）</p>
+<h3 id=准备>准备</h3>
 <p>首先嘛，当然是要下载大名鼎鼎的ZjDroid模块了，这个脱壳工具是基于Xposed模块的，看了下该项目的github，似乎并没有给出ZjDroid现成的apk安装包，网上虽然是有找，但我还是选择自己手动编译了一下，</p>
 <p>clone
 导入AS</p>
 <p>在解决了~几个问题~很多个问题以后总算是编译成功了。</p>
 <p><strong>主要是为了解决导入库的问题和<code>multidex</code>的问题（为了支持低sdk版本的设备）</strong></p>
 <p><strong>也算是学习了</strong></p>
-<h3 id="在脱壳的边缘试探">在脱壳的边缘试探</h3>
+<h3 id=在脱壳的边缘试探>在脱壳的边缘试探</h3>
 <p>把编译好的apk装进我的手机（Android 7.1.2），激活模块重启，连上电脑，按照教程里的方法，启动俩<code>cmd</code>一个用来看<code>logcat</code>输出，一个用来发送广播执行指令，</p>
 <p>试了一个：
 查看dex信息</p>
-<pre tabindex="0"><code>am broadcast -a com.zjdroid.invoke --ei target 18881 --es cmd '{action:dump_dexinfo}'
+<pre tabindex=0><code>am broadcast -a com.zjdroid.invoke --ei target 18881 --es cmd '{action:dump_dexinfo}'
 </code></pre><p><code>logcat</code>输出是</p>
-<pre tabindex="0"><code>04-27 21:00:19.798 12563 12563 D zjdroid-shell-com.imlk.BlackAndWhite: the cmd = dump_dexinfo
+<pre tabindex=0><code>04-27 21:00:19.798 12563 12563 D zjdroid-shell-com.imlk.BlackAndWhite: the cmd = dump_dexinfo
 04-27 21:00:19.805 12563 13323 D zjdroid-shell-com.imlk.BlackAndWhite: The DexFile Infomation -&gt;
 04-27 21:00:19.805 12563 13323 D zjdroid-shell-com.imlk.BlackAndWhite: filepath:/data/app/com.imlk.BlackAndWhite-1/base.apk mCookie:-1
 04-27 21:00:19.807 12563 13323 D zjdroid-shell-com.imlk.BlackAndWhite: End DexFile Infomation
 </code></pre><p>似乎有什么奇奇怪怪的地方。。
 <code>mCookie</code>的值是<code>-1</code>，不过看教程里面好像是一串没有规律的数字哇。心想可能是大数字又升级了，这种方案脱壳可能不能奏效。</p>
 <p>不管了，继续试试：</p>
-<pre tabindex="0"><code> am broadcast -a com.zjdroid.invoke --ei target 8880 --es cmd '{&quot;action&quot;:&quot;backsmali&quot;,&quot;dexpath&quot;:&quot;/data/app/com.imlk.BlackAndWhite-1/base.apk&quot;}'
+<pre tabindex=0><code> am broadcast -a com.zjdroid.invoke --ei target 8880 --es cmd '{&quot;action&quot;:&quot;backsmali&quot;,&quot;dexpath&quot;:&quot;/data/app/com.imlk.BlackAndWhite-1/base.apk&quot;}'
 
 </code></pre><p>WTF!
 程序退出了！
 看下<code>logcat</code>里的输出</p>
-<pre tabindex="0"><code>04-27 22:16:56.475 18342 18342 D zjdroid-shell-com.imlk.BlackAndWhite: the cmd = backsmali
+<pre tabindex=0><code>04-27 22:16:56.475 18342 18342 D zjdroid-shell-com.imlk.BlackAndWhite: the cmd = backsmali
 04-27 22:16:56.487 18342 18734 D zjdroid-shell-com.imlk.BlackAndWhite: start disassemble the mCookie -1
 </code></pre><p>？？？？
 戛然而止？？？</p>
 <p>第一时间想到肯定和那个<code>-1</code>有关系，反正手头有<code>ZjDroid</code>的源码，看看到底是哪里崩了。
 字符串搜索，走起！</p>
-<h3 id="在修复的边缘试探">在修复的边缘试探</h3>
+<h3 id=在修复的边缘试探>在修复的边缘试探</h3>
 <p>首先想看看执行<code>dump_dexinfo</code>命令的时候，输出的那个<code>-1</code>究竟是哪里来的，
 到<code>ZjDroid</code>的源码里搜索<code>mCookie:</code>
 （这里有一个小技巧，到<code>github</code>的项目首页，顶栏可以指定在这个项目里搜索），</p>
 <p>果然搜到一处<code>com.android.reverse.request.DumpDexInfoCommandHandler</code>中的<code>doAction()</code>方法输出了这个<code>-1</code></p>
-<pre tabindex="0"><code>public class DumpDexInfoCommandHandler implements CommandHandler {
+<pre tabindex=0><code>public class DumpDexInfoCommandHandler implements CommandHandler {
 
 	@Override
 	public void doAction() {
@@ -123,7 +98,7 @@
 
 }
 </code></pre><p>到as里面定位到这个文件，溯源到<code>com.android.reverse.collecter.DexFileInfoCollecter</code>的<code>dumpDexFileInfo()</code>方法</p>
-<pre tabindex="0"><code>	public HashMap&lt;String, DexFileInfo&gt; dumpDexFileInfo() {
+<pre tabindex=0><code>	public HashMap&lt;String, DexFileInfo&gt; dumpDexFileInfo() {
 		HashMap&lt;String, DexFileInfo&gt; dexs = new HashMap&lt;String, DexFileInfo&gt;(dynLoadedDexInfo);
 		Object dexPathList = RefInvoke.getFieldOjbect(&quot;dalvik.system.BaseDexClassLoader&quot;, pathClassLoader, &quot;pathList&quot;);
 		Object[] dexElements = (Object[]) RefInvoke.getFieldOjbect(&quot;dalvik.system.DexPathList&quot;, dexPathList, &quot;dexElements&quot;);
@@ -138,9 +113,9 @@
 		return dexs;
 	}
 </code></pre><p>可以看到：
-源码中，通过反射获取&quot;mCookie&quot;这个int类型的变量，然后结果得到的是<code>-1</code>，看到这里我也没多想，就想去验证这个变量是否真的是<code>-1</code></p>
+源码中，通过反射获取"mCookie"这个int类型的变量，然后结果得到的是<code>-1</code>，看到这里我也没多想，就想去验证这个变量是否真的是<code>-1</code></p>
 <p>想达到这个目的，首先我想到的是用as动态调试一波走起。</p>
-<h3 id="尝试用动态调试找出-1">尝试用动态调试找出-1</h3>
+<h3 id=尝试用动态调试找出-1>尝试用动态调试找出-1</h3>
 <p>结合上面的代码，可以总结出，应该是
 BaseDexClassLoader中的
 dexElements数组中的元素中的
@@ -150,14 +125,14 @@ mCookie</p>
 <p>这样不需要修改源程序，就能轻松的下断点，
 我们只要点击任意一个可点击的<code>view</code>触发了它的<code>onClick</code>方法，调试器就能捕捉到，之后我们就能任意查看内容了。</p>
 <p>调试器中插入代码，查看内容
-<img src="/images/blog/40_0.png" alt="调试器查看内容"></p>
+<img src=/images/blog/40_0.png alt=调试器查看内容></p>
 <p>WTF!!!
 <code>mCookie</code>居然是个<code>Long[]</code>，说好的<code>int</code>呢！
-<img src="/images/blog/40_1.png" alt="查看 mCookie 这个成员变量的类型"></p>
+<img src=/images/blog/40_1.png alt="查看 mCookie 这个成员变量的类型"></p>
 <p>居然是Object！</p>
 <p>回去看ZjDroid源码，从<code>getFieldInt</code>方法切入</p>
-<pre tabindex="0"><code>			int mCookie = RefInvoke.getFieldInt(&quot;dalvik.system.DexFile&quot;, dexFile, &quot;mCookie&quot;);
-</code></pre><pre tabindex="0"><code>	public static int getFieldInt(String class_name,Object obj, String filedName){
+<pre tabindex=0><code>			int mCookie = RefInvoke.getFieldInt(&quot;dalvik.system.DexFile&quot;, dexFile, &quot;mCookie&quot;);
+</code></pre><pre tabindex=0><code>	public static int getFieldInt(String class_name,Object obj, String filedName){
 		try {
 			Class obj_class = Class.forName(class_name);
 			Field field = obj_class.getDeclaredField(filedName);
@@ -185,15 +160,15 @@ mCookie</p>
 </code></pre><p>似乎是调用<code>Field</code>类型的对象的<code>getInt()</code>方法发生了异常（肯定会发生异常啦，这个变量都是个数组，不可能得到<code>int</code>类型，异常也是情理之中的），
 发生异常以后，只能输出 <code>-1</code> 了，</p>
 <p>用同样的动态调试方法，对<code>Android 4.4的模拟器进行测试</code>：
-<img src="/images/blog/40_2.png" alt="调试器查看内容，Android4.4">
-<img src="/images/blog/40_3.png" alt="查看 mCookie 这个成员变量的类型"></p>
+<img src=/images/blog/40_2.png alt=调试器查看内容，Android4.4>
+<img src=/images/blog/40_3.png alt="查看 mCookie 这个成员变量的类型"></p>
 <p>看来应该是<code>art</code>虚拟机和<code>dalvik</code>虚拟机的不同造成的，在Android4.4上面这个变量是<code>int</code>类型的，</p>
 <p>不过我倒是来了兴趣，想试试能不能修复这个问题，不过这就要对<code>mCookie</code>深入研究研究了。</p>
-<h3 id="第二天">第二天</h3>
+<h3 id=第二天>第二天</h3>
 <p>起床搜了搜资料，网上也有好多人遇到了这个问题。</p>
 <p>不过关于<code>mCookie</code>的详细叙述倒是没多少</p>
 <p>退回原点，看看崩溃时的异常：</p>
-<pre tabindex="0"><code>    --------- beginning of crash
+<pre tabindex=0><code>    --------- beginning of crash
 04-28 10:31:34.468 17165-20179/com.imlk.BlackAndWhite E/AndroidRuntime: FATAL EXCEPTION: Thread-3
     Process: com.imlk.BlackAndWhite, PID: 17165
     java.lang.UnsatisfiedLinkError: dalvik.system.PathClassLoader[DexPathList[[zip file &quot;/data/app/com.android.reverse-1/base.apk&quot;],nativeLibraryDirectories=[/system/lib, /vendor/lib]]] couldn't find &quot;libdvmnative.so&quot;
@@ -209,35 +184,35 @@ mCookie</p>
 <p>而这个文件是在ZjDroid项目里的，看看编译出的apk</p>
 <p>里面是有这个东西的，真是奇了怪了，xposed框架竟然没帮我把so文件加载进去？？？？？？</p>
 <p>后面发现是平台的原因，我的模拟器是x86的，apk里只有arm的源码</p>
-<h3 id="暂时失败告终">暂时失败告终</h3>
+<h3 id=暂时失败告终>暂时失败告终</h3>
 <p>哇，看了一下，这<code>art</code>和<code>dalvik</code>的区别还是很大的，仅仅是修复这些Java层的代码是行不通的，因为它这里好几个地方用到了so中的<code>native</code>方法，这些是不开源的东西，想修改也修改不了。Android7.1.2上的尝试只好放弃了。</p>
 <p>不过这里还是学到了一些东西，也第一次尝试了multidex，但是在Android4.4上好像得自己手动加载余下的dex，还真让人头疼啊。</p>
-<h3 id="船新版本">船新版本</h3>
+<h3 id=船新版本>船新版本</h3>
 <p><code>github</code>真的万能啊！！</p>
 <p>捞到了<code>native</code>部分的源码！</p>
 <p>是从一个叫<code>HeyGirl</code>的项目里捞到的，这个项目貌似是fork的最早版本的ZjDroid，（不知道是什么原因原项目已不存在），总之从里面捞到了native的源码，可以学习一波啦</p>
 <p>又找来了<code>luajava</code>的源码，凑在一起基本上就是原版的ZjDroid了。</p>
 <p>我为什么要费工夫找这些源码？？？</p>
 <p>因为github上面的ZjDroid中只有arm平台的so文件，而我的虚拟机是x86的，没法用，提示找不到so文件。</p>
-<h3 id="继续尝试脱">继续尝试脱</h3>
+<h3 id=继续尝试脱>继续尝试脱</h3>
 <p>输入：</p>
-<pre tabindex="0"><code>adb logcat -s zjdroid-shell-com.imlk.BlackAndWhite
+<pre tabindex=0><code>adb logcat -s zjdroid-shell-com.imlk.BlackAndWhite
 </code></pre><p>logcat：</p>
-<pre tabindex="0"><code>--------- beginning of /dev/log/system
+<pre tabindex=0><code>--------- beginning of /dev/log/system
 --------- beginning of /dev/log/main
 D/zjdroid-shell-com.imlk.BlackAndWhite( 3717): the package = com.imlk.BlackAndWhite has hook
 D/zjdroid-shell-com.imlk.BlackAndWhite( 3717): the app target id = 3717
 </code></pre><p>输入：</p>
-<pre tabindex="0"><code>am broadcast -a com.zjdroid.invoke --ei target 3717 --es cmd '{action:dump_dexinfo}'
+<pre tabindex=0><code>am broadcast -a com.zjdroid.invoke --ei target 3717 --es cmd '{action:dump_dexinfo}'
 </code></pre><p>logcat：</p>
-<pre tabindex="0"><code>D/zjdroid-shell-com.imlk.BlackAndWhite( 3717): the cmd = dump_dexinfo
+<pre tabindex=0><code>D/zjdroid-shell-com.imlk.BlackAndWhite( 3717): the cmd = dump_dexinfo
 D/zjdroid-shell-com.imlk.BlackAndWhite( 3717): The DexFile Infomation -&gt;
 D/zjdroid-shell-com.imlk.BlackAndWhite( 3717): filepath:/data/app/com.imlk.BlackAndWhite-1.apk mCookie:-1204615840
 D/zjdroid-shell-com.imlk.BlackAndWhite( 3717): End DexFile Infomation
 </code></pre><p>输入</p>
-<pre tabindex="0"><code>am broadcast -a com.zjdroid.invoke --ei target 3717 --es cmd '{&quot;action&quot;:&quot;backsmali&quot;,&quot;dexpath&quot;:&quot;/data/app/com.imlk.BlackAndWhite-1.apk&quot;}'
+<pre tabindex=0><code>am broadcast -a com.zjdroid.invoke --ei target 3717 --es cmd '{&quot;action&quot;:&quot;backsmali&quot;,&quot;dexpath&quot;:&quot;/data/app/com.imlk.BlackAndWhite-1.apk&quot;}'
 </code></pre><p>输出</p>
-<pre tabindex="0"><code>D/zjdroid-shell-com.imlk.BlackAndWhite( 3717): the cmd = backsmali
+<pre tabindex=0><code>D/zjdroid-shell-com.imlk.BlackAndWhite( 3717): the cmd = backsmali
 D/zjdroid-shell-com.imlk.BlackAndWhite( 3717): start disassemble the mCookie -1203426560
 D/zjdroid-shell-com.imlk.BlackAndWhite( 3717): dvmnative
 D/zjdroid-shell-com.imlk.BlackAndWhite( 3717): dvmnative
@@ -258,19 +233,19 @@ D/zjdroid-shell-com.imlk.BlackAndWhite( 3717): the dexfile data save to =/data/d
 </code></pre><p>激动！！！
 似乎是成功了，我们去看看在目标路径下有没有我们要的文件：
 哇是真的有！！</p>
-<pre tabindex="0"><code>root@generic_x86:/data/data/com.imlk.BlackAndWhite/files # ll
+<pre tabindex=0><code>root@generic_x86:/data/data/com.imlk.BlackAndWhite/files # ll
 -rw------- u0_a60   u0_a60      12920 2018-04-29 10:44 dexfile.dex
 </code></pre><p>快快<code>adb pull</code>出来瞧瞧</p>
 <p>先用dex2jar处理，然后用jd-gui查看。。。</p>
-<p><img src="/images/blog/40_4.png" alt="脱出来的东西"></p>
+<p><img src=/images/blog/40_4.png alt=脱出来的东西></p>
 <p>我擦这不就是壳子吗？逗我吧！！！</p>
-<h3 id="继续研究">继续研究</h3>
+<h3 id=继续研究>继续研究</h3>
 <p>研究发现</p>
 <p>加固应用在加载以后会动态加载两个dex，所以加上apk，一共有三个<code>DexFile</code></p>
 <p>可以通过用as调试看出来：</p>
 <p>这里的dexElements的来源是：</p>
-<pre tabindex="0"><code>ClassLoader-&gt;pathList-&gt;dexElements
-</code></pre><pre tabindex="0"><code>dexElements = {DexPathList$Element[3]@831564034400} 
+<pre tabindex=0><code>ClassLoader-&gt;pathList-&gt;dexElements
+</code></pre><pre tabindex=0><code>dexElements = {DexPathList$Element[3]@831564034400} 
 	0 = {DexPathList$Element@831564034360} &quot;dex file &quot;dalvik.system.DexFile@9d139c78&quot;&quot;
 		dexFile = {DexFile@831563996280} 
 			guard = {CloseGuard@831559184936} 
@@ -304,17 +279,17 @@ D/zjdroid-shell-com.imlk.BlackAndWhite( 3717): the dexfile data save to =/data/d
 </code></pre><p>但是原版的<code>ZjDroid</code>默认是以文件名称<code>mFileName</code>为键<code>key</code>，在一个<code>map</code>中保存加载了的dex文件的相关信息的，这导致三个文件只被保存了一个信息，于是我魔改了一下，让<code>ZjDroid</code>将<code>mCookie</code>作为键，发送的命令也通过指定<code>mCookie</code>的值来dump我们要的文件，这样就解决了冲突问题。</p>
 <p>魔改版本
 KB5201314/ZjDroid：
-<a href="https://github.com/KB5201314/ZjDroid">https://github.com/KB5201314/ZjDroid</a></p>
-<h3 id="脱">脱！</h3>
+<a href=https://github.com/KB5201314/ZjDroid>https://github.com/KB5201314/ZjDroid</a></p>
+<h3 id=脱>脱！</h3>
 <p>到这一步可以说是非常nice了。</p>
 <p>启动时的输出：</p>
-<pre tabindex="0"><code>D/zjdroid-shell-com.imlk.BlackAndWhite( 3525): the package = com.imlk.BlackAndWhite has hook
+<pre tabindex=0><code>D/zjdroid-shell-com.imlk.BlackAndWhite( 3525): the package = com.imlk.BlackAndWhite has hook
 D/zjdroid-shell-com.imlk.BlackAndWhite( 3525): the app target id = 3525
 D/zjdroid-shell-com.imlk.BlackAndWhite( 3525): openDexFileNative() is invoked with filepath:/data/app/com.imlk.BlackAndWhite-1.apk result:-1196414688
 D/zjdroid-shell-com.imlk.BlackAndWhite( 3525): openDexFileNative() is invoked with filepath:/data/app/com.imlk.BlackAndWhite-1.apk result:-1196412000
 </code></pre><p>那个<code>result</code>就是<code>mCookie</code></p>
 <p>看一下<code>dexinfo</code></p>
-<pre tabindex="0"><code>D/zjdroid-shell-com.imlk.BlackAndWhite( 3525): the cmd = dump_dexinfo
+<pre tabindex=0><code>D/zjdroid-shell-com.imlk.BlackAndWhite( 3525): the cmd = dump_dexinfo
 D/zjdroid-shell-com.imlk.BlackAndWhite( 3525): The DexFile Infomation -&gt;
 D/zjdroid-shell-com.imlk.BlackAndWhite( 3525): filepath:/data/app/com.imlk.BlackAndWhite-1.apk dexElementToString:zip file &quot;/data/app/com.imlk.BlackAndWhite-1.apk&quot; mCookie:-1197778512
 D/zjdroid-shell-com.imlk.BlackAndWhite( 3525): filepath:/data/app/com.imlk.BlackAndWhite-1.apk dexElementToString:dex file &quot;dalvik.system.DexFile@9d19c9d0&quot; mCookie:-1196412000
@@ -322,19 +297,19 @@ D/zjdroid-shell-com.imlk.BlackAndWhite( 3525): filepath:/data/app/com.imlk.Black
 D/zjdroid-shell-com.imlk.BlackAndWhite( 3525): End DexFile Infomation
 </code></pre><p>这就是我魔改的版本啦，可以看到<code>dexinfo</code>里还显示了当前文件是dex文件还是zip文件，也给出了<code>mCookie</code></p>
 <p>下面对三个文件进行<code>dumpdex</code></p>
-<pre tabindex="0"><code>am broadcast -a com.zjdroid.invoke --ei target 3525 --es cmd '{&quot;action&quot;:&quot;dump_dexfile&quot;,&quot;mCookie&quot;:&quot;-1197778512&quot;}'
+<pre tabindex=0><code>am broadcast -a com.zjdroid.invoke --ei target 3525 --es cmd '{&quot;action&quot;:&quot;dump_dexfile&quot;,&quot;mCookie&quot;:&quot;-1197778512&quot;}'
 am broadcast -a com.zjdroid.invoke --ei target 3525 --es cmd '{&quot;action&quot;:&quot;dump_dexfile&quot;,&quot;mCookie&quot;:&quot;-1196412000&quot;}'
 am broadcast -a com.zjdroid.invoke --ei target 3525 --es cmd '{&quot;action&quot;:&quot;dump_dexfile&quot;,&quot;mCookie&quot;:&quot;-1196414688&quot;}'
 
 </code></pre><p>得到的三个文件大小为</p>
-<pre tabindex="0"><code>	 Length Name
+<pre tabindex=0><code>	 Length Name
 	 ------ ----
 	 359520 dexdump-1197778512.odex
 	  39652 dexdump-1196412000.odex
 	1051756 dexdump-1196414688.odex
 </code></pre><p>直觉告诉我最大的那个应该是我们要的了</p>
 <p>用<code>backsmali.jar</code>工具：</p>
-<pre tabindex="0"><code>java -jar E:\toolBox\smali_JesusFreke\baksmali-2.2.2.jar deodex -d .\system\framework\ -o out -a 19 .\dexdump-1196414688.odex
+<pre tabindex=0><code>java -jar E:\toolBox\smali_JesusFreke\baksmali-2.2.2.jar deodex -d .\system\framework\ -o out -a 19 .\dexdump-1196414688.odex
 </code></pre><ul>
 <li>命令是<code>deodex</code></li>
 <li>另外，还要指定sdk版本，<code>-a</code>参数后面的就是sdk版本，我的模拟器sdk版本是19。</li>
@@ -343,7 +318,7 @@ am broadcast -a com.zjdroid.invoke --ei target 3525 --es cmd '{&quot;action&quot
 比如：
 我当前文件夹的文件树：</li>
 </ul>
-<pre tabindex="0"><code>.
+<pre tabindex=0><code>.
 ├── dexdump-1196412000.odex
 ├── dexdump-1196414688.odex
 ├── dexdump-1197778512.odex
@@ -356,27 +331,27 @@ am broadcast -a com.zjdroid.invoke --ei target 3525 --es cmd '{&quot;action&quot
         └── wm.odex
 </code></pre><p>ok，out文件夹下已经是输出的smali文件了，</p>
 <p>用<code>smali.jar</code>转成dex文件</p>
-<pre tabindex="0"><code> java -jar E:\toolBox\smali_JesusFreke\smali-2.2.2.jar assemble -a 19 .\out\
+<pre tabindex=0><code> java -jar E:\toolBox\smali_JesusFreke\smali-2.2.2.jar assemble -a 19 .\out\
 </code></pre><p>用jadx开开试试</p>
-<p><img src="/images/blog/40_5.png" alt="jadx查看生成的dex文件"></p>
+<p><img src=/images/blog/40_5.png alt=jadx查看生成的dex文件></p>
 <p>好激动啊！！！可算是幸苦没有白费</p>
-<h3 id="改application">改Application</h3>
+<h3 id=改application>改Application</h3>
 <p>把dex填回原来的apk里面去，再用<code>apktool</code>反编译，修改<code>AndroidManifest.xml</code>里面的<code>Application</code>字段</p>
 <p>回编译时出现error，最后一句是</p>
-<pre tabindex="0"><code>W: E:\toolBox\resource\dumped\com.imlk.BlackAndWhite\unsigned\res\layout-v26\abc_screen_toolbar.xml:5: error: No resource identifier found for attribute 'keyboardNavigationCluster' in package 'android'
+<pre tabindex=0><code>W: E:\toolBox\resource\dumped\com.imlk.BlackAndWhite\unsigned\res\layout-v26\abc_screen_toolbar.xml:5: error: No resource identifier found for attribute 'keyboardNavigationCluster' in package 'android'
 W:
 </code></pre><p>看看<code>apktool</code>的<code>help</code></p>
-<pre tabindex="0"><code>usage: apktool b[uild] [options] &lt;app_path&gt;
+<pre tabindex=0><code>usage: apktool b[uild] [options] &lt;app_path&gt;
  -f,--force-all          Skip changes detection and build all files.
  -o,--output &lt;dir&gt;       The name of apk that gets written. Default is dist/name.apk
  -p,--frame-path &lt;dir&gt;   Uses framework files located in &lt;dir&gt;.
 </code></pre><p>尝试着用<code>-p</code>指定<code>framework</code>文件夹：</p>
-<pre tabindex="0"><code>java -jar E:\toolBox\apktool\apktool_2.3.1.jar b -p system\framework unsigned
+<pre tabindex=0><code>java -jar E:\toolBox\apktool\apktool_2.3.1.jar b -p system\framework unsigned
 </code></pre><p>居然成功了！
 签名</p>
-<h3 id="去除stubapp">去除<code>StubApp</code></h3>
+<h3 id=去除stubapp>去除<code>StubApp</code></h3>
 <p>又崩了</p>
-<pre tabindex="0"><code>04-30 02:30:34.604 3999-3999/com.imlk.BlackAndWhite E/AndroidRuntime: FATAL EXCEPTION: main
+<pre tabindex=0><code>04-30 02:30:34.604 3999-3999/com.imlk.BlackAndWhite E/AndroidRuntime: FATAL EXCEPTION: main
     Process: com.imlk.BlackAndWhite, PID: 3999
     java.lang.NoClassDefFoundError: com.stub.StubApp
         at com.imlk.BlackAndWhite.MainActivity.&lt;clinit&gt;(Unknown Source)
@@ -386,8 +361,8 @@ W:
 </code></pre><p>看来有些东西没清理干净</p>
 <p>大数字往里面加了静态代码块啊</p>
 <p>在jadx里全局搜索<code>StubApp</code>，去文件里注释掉</p>
-<h3 id="native的oncreate方法">native的onCreate方法</h3>
-<pre tabindex="0"><code>04-30 02:35:41.484 4151-4151/com.imlk.BlackAndWhite E/AndroidRuntime: FATAL EXCEPTION: main
+<h3 id=native的oncreate方法>native的onCreate方法</h3>
+<pre tabindex=0><code>04-30 02:35:41.484 4151-4151/com.imlk.BlackAndWhite E/AndroidRuntime: FATAL EXCEPTION: main
     Process: com.imlk.BlackAndWhite, PID: 4151
     java.lang.UnsatisfiedLinkError: Native method not found: com.imlk.BlackAndWhite.MainActivity.onCreate:(Landroid/os/Bundle;)V
         at com.imlk.BlackAndWhite.MainActivity.onCreate(Native Method)
@@ -397,26 +372,26 @@ W:
 </code></pre><p>哇，没想到这个<code>onCreate</code>方法居然是<code>native</code>的！！！
 皮万斤！</p>
 <p>看到应用里两个<code>Activity</code>里面上一步的静态代码块有一点区别</p>
-<pre tabindex="0"><code>    static {
+<pre tabindex=0><code>    static {
         StubApp.interface11(0);
     }
 
 </code></pre><p>和</p>
-<pre tabindex="0"><code>    static {
+<pre tabindex=0><code>    static {
         StubApp.interface11(1);
     }
 
 </code></pre><p>猜测是根据参数值来识别是哪个<code>Activity</code>的</p>
 <p>看看我们dump出来的其它dex</p>
 <p>哇，简直崩溃。。。做不来做不来</p>
-<h3 id="告一段落">告一段落</h3>
+<h3 id=告一段落>告一段落</h3>
 <p>所以说完全复原我是搞不来了，不过仅仅是看看源码还是能的</p>
 <p>能力有限啊，搞不了，还是先继续学习吧。。。。</p>
 <p>2018_04_30</p>
-<h3 id="小插曲">小插曲</h3>
+<h3 id=小插曲>小插曲</h3>
 <p>编译后安装在<code>Android4.4</code>上时偶遇这个问题，
 安装上以后，XposedInstaller直接就崩溃了，看日志也一头雾水，上网搜才知道是模块的<code>versionCode</code>和<code>versionName</code>没有设置，在<code>gradle.build</code>里加上就好了。</p>
-<pre tabindex="0"><code>04-29 09:29:04.538 5603-5619/de.robv.android.xposed.installer E/AndroidRuntime: FATAL EXCEPTION: RepositoryReload
+<pre tabindex=0><code>04-29 09:29:04.538 5603-5619/de.robv.android.xposed.installer E/AndroidRuntime: FATAL EXCEPTION: RepositoryReload
     Process: de.robv.android.xposed.installer, PID: 5603
     android.database.sqlite.SQLiteConstraintException: installed_modules.version_name may not be NULL (code 19)
         at android.database.sqlite.SQLiteConnection.nativeExecuteForLastInsertedRowId(Native Method)
@@ -429,43 +404,33 @@ W:
         at de.robv.android.xposed.installer.util.ModuleUtil.getInstance(ModuleUtil.java:52)
         at de.robv.android.xposed.installer.XposedApp.updateProgressIndicator(XposedApp.java:114)
         at de.robv.android.xposed.installer.util.RepoLoader$2.run(RepoLoader.java:210)
-</code></pre><h3 id="参考资料">参考资料</h3>
+</code></pre><h3 id=参考资料>参考资料</h3>
 <p>- Android中Xposed框架篇&mdash;基于Xposed的一款脱壳神器ZjDroid工具原理解析：
-<a href="https://blog.csdn.net/jiangwei0910410003/article/details/52840602">https://blog.csdn.net/jiangwei0910410003/article/details/52840602</a>
+<a href=https://blog.csdn.net/jiangwei0910410003/article/details/52840602>https://blog.csdn.net/jiangwei0910410003/article/details/52840602</a>
 - [原创]安卓逆向之基于Xposed-ZjDroid脱壳：
-<a href="https://bbs.pediy.com/thread-218798.htm">https://bbs.pediy.com/thread-218798.htm</a>
+<a href=https://bbs.pediy.com/thread-218798.htm>https://bbs.pediy.com/thread-218798.htm</a>
 - ZjDroid项目源码（已经停更4年）：
-<a href="https://github.com/halfkiss/ZjDroid">https://github.com/halfkiss/ZjDroid</a>
+<a href=https://github.com/halfkiss/ZjDroid>https://github.com/halfkiss/ZjDroid</a>
 - HeyGirl项目地址
-<a href="https://github.com/mikusjelly/HeyGirl">https://github.com/mikusjelly/HeyGirl</a>
+<a href=https://github.com/mikusjelly/HeyGirl>https://github.com/mikusjelly/HeyGirl</a>
 - android am命令用法：
-<a href="https://blog.csdn.net/u010164190/article/details/72875865">https://blog.csdn.net/u010164190/article/details/72875865</a>
+<a href=https://blog.csdn.net/u010164190/article/details/72875865>https://blog.csdn.net/u010164190/article/details/72875865</a>
 - [原创]360加固逆向脱壳之过反调试：
-<a href="https://bbs.pediy.com/thread-213214.htm">https://bbs.pediy.com/thread-213214.htm</a>
+<a href=https://bbs.pediy.com/thread-213214.htm>https://bbs.pediy.com/thread-213214.htm</a>
 - [原创]360加固逆向脱壳之过反调试&ndash;后续：
-<a href="https://bbs.pediy.com/thread-213377.htm">https://bbs.pediy.com/thread-213377.htm</a>
+<a href=https://bbs.pediy.com/thread-213377.htm>https://bbs.pediy.com/thread-213377.htm</a>
 - 360加固保动态脱壳：
-<a href="https://www.cnblogs.com/2014asm/p/4104456.html">https://www.cnblogs.com/2014asm/p/4104456.html</a>
+<a href=https://www.cnblogs.com/2014asm/p/4104456.html>https://www.cnblogs.com/2014asm/p/4104456.html</a>
 - JesusFreke smali:
-<a href="https://bitbucket.org/JesusFreke/smali/downloads/">https://bitbucket.org/JesusFreke/smali/downloads/</a></p>
-
+<a href=https://bitbucket.org/JesusFreke/smali/downloads/>https://bitbucket.org/JesusFreke/smali/downloads/</a></p>
 </main>
-
-
-
-<div id="comments">
-    <hr>
-    <script src="https://utteranc.es/client.js" repo='KB5201314/KB5201314.github.io' issue-term="pathname" label='💬 comments 💬'
-        theme='github-light' crossorigin="anonymous" async>
-        </script>
+<div id=comments>
+<hr>
+<script src=https://utteranc.es/client.js repo=KB5201314/KB5201314.github.io issue-term=pathname label="💬 comments 💬" theme=github-light crossorigin=anonymous async></script>
 </div>
-
-
-  <footer>
-  
-  <hr/>
-  © imlk 2017 &ndash; 2021 | <a href="https://blog.imlk.top">imlk's blog</a> | <a href="https://github.com/KB5201314/">Github</a> | <a href="mailto:me@imlk.top">Email</a> | <a href="https://beian.miit.gov.cn/">京ICP备 - 2020042968号</a>
-  
-  </footer>
-  </body>
+<footer>
+<hr>
+© imlk 2017 &ndash; 2021 | <a href=https://blog.imlk.top>imlk's blog</a> | <a href=https://github.com/KB5201314/>Github</a> | <a href=mailto:me@imlk.top>Email</a> | <a href=https://beian.miit.gov.cn/>京ICP备 - 2020042968号</a>
+</footer>
+</body>
 </html>

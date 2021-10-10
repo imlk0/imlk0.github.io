@@ -1,99 +1,73 @@
-<!DOCTYPE html>
-<html lang="zh-cn">
-
+<!doctype html><html lang=zh-cn>
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>为Xposed模块增加Multidex支持并指定主dex中的class | imlk&#39;s blog</title>
-  <link rel="stylesheet" href='/css/style.css' />
-  <link rel="stylesheet" href='/css/fonts.css' />
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&display=swap" rel="stylesheet">
+<meta charset=utf-8>
+<meta name=viewport content="width=device-width,initial-scale=1">
+<title>为Xposed模块增加Multidex支持并指定主dex中的class | imlk's blog</title>
+<link rel=stylesheet href=/css/style.css>
+<link rel=stylesheet href=/css/fonts.css>
+<link rel=preconnect href=https://fonts.googleapis.com>
+<link rel=preconnect href=https://fonts.gstatic.com crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&display=swap" rel=stylesheet>
 </head>
-
 <body>
-  <header class="header">
-    <a class="logo" href='/'> imlk's Blog </a>
-    <nav>
-      <ul class="menu">
-        
-        <li><a href="/">Home</a></li>
-        
-        <li><a href="/about/">About</a></li>
-        
-        <li><a href="/archives/">Archives</a></li>
-        
-        <li><a href="/friends/">Friends</a></li>
-        
-        <li><a href="/index.xml">Subscribe</a></li>
-        
-      </ul>
-    </nav>
-  </header>
-  <hr />
-
-
-
-<div class="article-meta">
-    <h1><span class="title">为Xposed模块增加Multidex支持并指定主dex中的class</span></h1>
-    
-    <span>
-        <span class="date">2018-04-29</span>
-        |
-        
-        <span class="cats">
-            
-            
-            <a href='https://blog.imlk.top/categories/android/'>Android</a>
-            
-        </span>
-        
-        |
-        <span class="tags">
-            
-            <a href='https://blog.imlk.top/tags/multidex/'>#Multidex</a>
-            
-            <a href='https://blog.imlk.top/tags/zjdroid/'>#ZjDroid</a>
-            
-            <a href='https://blog.imlk.top/tags/xposed/'>#Xposed</a>
-            
-        </span>
-        
-    </span>
-    <br>
-    
+<header class=header>
+<a class=logo href=/> imlk's Blog </a>
+<nav>
+<ul class=menu>
+<li><a href=/>Home</a></li>
+<li><a href=/about/>About</a></li>
+<li><a href=/archives/>Archives</a></li>
+<li><a href=/friends/>Friends</a></li>
+<li><a href=/index.xml>Subscribe</a></li>
+</ul>
+</nav>
+</header>
+<hr>
+<div class=article-meta>
+<h1><span class=title>为Xposed模块增加Multidex支持并指定主dex中的class</span></h1>
+<span>
+<span class=date>2018-04-29</span>
+|
+<span class=cats>
+<a href=https://blog.imlk.top/categories/android/>Android</a>
+</span>
+|
+<span class=tags>
+<a href=https://blog.imlk.top/tags/multidex/>#Multidex</a>
+<a href=https://blog.imlk.top/tags/zjdroid/>#ZjDroid</a>
+<a href=https://blog.imlk.top/tags/xposed/>#Xposed</a>
+</span>
+</span>
+<br>
 </div>
-
-
 <main>
-    <h3 id="起因">起因</h3>
+<h3 id=起因>起因</h3>
 <p>在编译ZjDroid源码的时候遇到了著名的方法数超出<code>65536</code>个的问题。</p>
 <p>我的<code>gradle</code>版本</p>
-<pre tabindex="0"><code>        classpath 'com.android.tools.build:gradle:3.1.2'
-</code></pre><h3 id="要解决的问题">要解决的问题</h3>
+<pre tabindex=0><code>        classpath 'com.android.tools.build:gradle:3.1.2'
+</code></pre><h3 id=要解决的问题>要解决的问题</h3>
 <ol>
 <li><code>Xposed</code>模块中的方法数超过了<code>65536</code>个，需要进行分包操作</li>
 <li>分包以后如何在模块被加载执行前尽可能早的把其余的dex加载进来</li>
 <li>最后遇到的问题：把模块的入口类指定到第一个dex中</li>
 </ol>
-<h3 id="问题1">问题1</h3>
+<h3 id=问题1>问题1</h3>
 <p>关于分包操作：</p>
 <p>搜了半天，搜到的解决办法是：
 <code>gradle.build</code>中在<code>defaultConfig</code>中添加</p>
-<pre tabindex="0"><code>        multiDexEnabled true
+<pre tabindex=0><code>        multiDexEnabled true
 </code></pre><p>让编译脚本开启分包</p>
-<h3 id="问题2">问题2</h3>
+<h3 id=问题2>问题2</h3>
 <p>关于分包后的加载问题：</p>
 <p>网上对于一般应用的解决办法是</p>
 <p>引入</p>
-<pre tabindex="0"><code>    implementation 'com.android.support:multidex:1.0.3'
+<pre tabindex=0><code>    implementation 'com.android.support:multidex:1.0.3'
 </code></pre><p>在<code>Application</code>中调用</p>
-<pre tabindex="0"><code>        MultiDex.install(this);
+<pre tabindex=0><code>        MultiDex.install(this);
 </code></pre><p>来实现分包应用的启动。</p>
 <p><strong>但是有一个问题是这个<code>Multidex</code>的<code>install</code>方法需要传入一个<code>Context</code>实例，而<code>Xposed</code>模块的启动是没有<code>Application</code>的，怎么办呢，如果要截获宿主的<code>Application</code>又比较麻烦，能不能直接一句话完成呢？</strong></p>
 <p>于是我决定去研究研究<code>MultiDex</code>的源码，尝试魔改出一个适用于<code>Xposed</code>模块的<code>MultiDex.install()</code>。</p>
-<h3 id="魔改之旅">魔改之旅</h3>
+<h3 id=魔改之旅>魔改之旅</h3>
 <p>研究了一番发现，传入的<code>Context</code>的主要用途有：</p>
 <ol>
 <li>传入<code>getApplicationInfo</code>方法获取<code>ApplicationInfo</code></li>
@@ -101,72 +75,62 @@
 <li>获取<code>SharedPreferences</code>储存一些和<code>dex</code>文件数量以及文件校验相关的信息（考虑的还挺周到）</li>
 </ol>
 <p>我发现在模块的</p>
-<pre tabindex="0"><code>    public void handleLoadPackage(LoadPackageParam lpparam) throws Throwable {
+<pre tabindex=0><code>    public void handleLoadPackage(LoadPackageParam lpparam) throws Throwable {
 
 </code></pre><p>这个入口函数的参数<code>lpparam</code>中，能获取到宿主的<code>ApplicationInfo</code>，从而获取到宿主应用的私有文件夹路径</p>
 <p>这样我就能往里面解压文件啦</p>
 <p>至于文件校验，这个就不做了，（原方案是一次启动的时候解压，然后以后启动的时候就去校验这个文件，再加载进来），我就干脆每次启动的时候都要解压，加载完再删掉就ok了。</p>
-<h3 id="魔改完成">魔改完成</h3>
+<h3 id=魔改完成>魔改完成</h3>
 <p>项目地址：
-<a href="https://github.com/KB5201314/XposedModuleMultidex">https://github.com/KB5201314/XposedModuleMultidex</a></p>
+<a href=https://github.com/KB5201314/XposedModuleMultidex>https://github.com/KB5201314/XposedModuleMultidex</a></p>
 <p>添加依赖</p>
-<pre tabindex="0"><code>  compile 'top.imlk.xpmodulemultidex:XposedModuleMultidex:1.0.0'
+<pre tabindex=0><code>  compile 'top.imlk.xpmodulemultidex:XposedModuleMultidex:1.0.0'
 </code></pre><p>删了一大堆，总算是魔改出来了一个，虽然只有两个文件。。。。但还是值得庆幸的！</p>
 <p>获取<code>module</code>的安装包路径：</p>
 <p>通过给入口类继承<code>IXposedHookZygoteInit</code>并实现<code>initZygote</code>方法</p>
-<pre tabindex="0"><code>    @Override
+<pre tabindex=0><code>    @Override
     public void initZygote(StartupParam startupParam) throws Throwable {
         MODULE_PATH = startupParam.modulePath;
     }
 </code></pre><p>就能拿到模块的安装包路径啦。</p>
 <p>然后在<code>handleLoadPackage</code>中执行</p>
-<pre tabindex="0"><code>...
+<pre tabindex=0><code>...
     @Override
     public void handleLoadPackage(LoadPackageParam lpparam) throws Throwable {
         XMMultiDex.install(ReverseXposedModule.class.getClassLoader(),MODULE_PATH,lpparam.appInfo);
 ...
 </code></pre><p>其中<code>ReverseXposedModule</code>就是我这个模块的入口类的名称啦。</p>
-<h3 id="问题3">问题3</h3>
+<h3 id=问题3>问题3</h3>
 <p><strong>指定主<code>dex</code>中的<code>class</code>文件的问题</strong></p>
 <p>这可废了我不少时间啊，网上的方法大多都过时了，唯一一个看着靠谱的插件<code>DexKnifePlugin</code>也用不了，搜了半天，终于找到一位仁兄的方法</p>
 <p>在<code>gradle.build</code>的<code>defaultConfig</code>中可以指定一个文件来表示要放在第一个<code>dex</code>中的<code>class</code></p>
 <p>加入</p>
-<pre tabindex="0"><code> multiDexKeepFile file('maindexlist.txt')
+<pre tabindex=0><code> multiDexKeepFile file('maindexlist.txt')
 </code></pre><p>然后在<code>gradle.build</code>的同级目录下新建一个文件<code>maindexlist.txt</code></p>
 <p>里面填上要放在第一个<code>dex</code>中的<code>class</code></p>
 <p>如：</p>
-<pre tabindex="0"><code>com/android/reverse/mod/ReverseXposedModule.class
+<pre tabindex=0><code>com/android/reverse/mod/ReverseXposedModule.class
 top/imlk/xpmodulemultidexer/XMMultiDex.class
 </code></pre><p>也可以用</p>
-<pre tabindex="0"><code> multiDexKeepProguard file('maindexlist.pro')
+<pre tabindex=0><code> multiDexKeepProguard file('maindexlist.pro')
 </code></pre><p>然后
 新建<code>maindexlist.pro</code>文件，这样就可以用<code>proguard</code>语法来写</p>
-<pre tabindex="0"><code>-keep class com.android.reverse.mod.ReverseXposedModule
+<pre tabindex=0><code>-keep class com.android.reverse.mod.ReverseXposedModule
 -keep class top.imlk.xpmodulemultidexer.*
 </code></pre><p>可算是ok了</p>
-<h3 id="参考资料">参考资料</h3>
+<h3 id=参考资料>参考资料</h3>
 <p>gradle3.0.0分包把指定的class放到maindex里面:
-<a href="https://blog.csdn.net/qq_17265737/article/details/79074494">https://blog.csdn.net/qq_17265737/article/details/79074494</a>
+<a href=https://blog.csdn.net/qq_17265737/article/details/79074494>https://blog.csdn.net/qq_17265737/article/details/79074494</a>
 理解 Multidex 生成：
-<a href="http://www.jkeabc.com/566905.html">http://www.jkeabc.com/566905.html</a></p>
-
+<a href=http://www.jkeabc.com/566905.html>http://www.jkeabc.com/566905.html</a></p>
 </main>
-
-
-
-<div id="comments">
-    <hr>
-    <script src="https://utteranc.es/client.js" repo='KB5201314/KB5201314.github.io' issue-term="pathname" label='💬 comments 💬'
-        theme='github-light' crossorigin="anonymous" async>
-        </script>
+<div id=comments>
+<hr>
+<script src=https://utteranc.es/client.js repo=KB5201314/KB5201314.github.io issue-term=pathname label="💬 comments 💬" theme=github-light crossorigin=anonymous async></script>
 </div>
-
-
-  <footer>
-  
-  <hr/>
-  © imlk 2017 &ndash; 2021 | <a href="https://blog.imlk.top">imlk's blog</a> | <a href="https://github.com/KB5201314/">Github</a> | <a href="mailto:me@imlk.top">Email</a> | <a href="https://beian.miit.gov.cn/">京ICP备 - 2020042968号</a>
-  
-  </footer>
-  </body>
+<footer>
+<hr>
+© imlk 2017 &ndash; 2021 | <a href=https://blog.imlk.top>imlk's blog</a> | <a href=https://github.com/KB5201314/>Github</a> | <a href=mailto:me@imlk.top>Email</a> | <a href=https://beian.miit.gov.cn/>京ICP备 - 2020042968号</a>
+</footer>
+</body>
 </html>

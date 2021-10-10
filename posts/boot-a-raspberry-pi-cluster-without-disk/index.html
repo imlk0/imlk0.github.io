@@ -1,75 +1,48 @@
-<!DOCTYPE html>
-<html lang="zh-cn">
-
+<!doctype html><html lang=zh-cn>
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>PXE无盘启动树莓派集群 | imlk&#39;s blog</title>
-  <link rel="stylesheet" href='/css/style.css' />
-  <link rel="stylesheet" href='/css/fonts.css' />
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&display=swap" rel="stylesheet">
+<meta charset=utf-8>
+<meta name=viewport content="width=device-width,initial-scale=1">
+<title>PXE无盘启动树莓派集群 | imlk's blog</title>
+<link rel=stylesheet href=/css/style.css>
+<link rel=stylesheet href=/css/fonts.css>
+<link rel=preconnect href=https://fonts.googleapis.com>
+<link rel=preconnect href=https://fonts.gstatic.com crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&display=swap" rel=stylesheet>
 </head>
-
 <body>
-  <header class="header">
-    <a class="logo" href='/'> imlk's Blog </a>
-    <nav>
-      <ul class="menu">
-        
-        <li><a href="/">Home</a></li>
-        
-        <li><a href="/about/">About</a></li>
-        
-        <li><a href="/archives/">Archives</a></li>
-        
-        <li><a href="/friends/">Friends</a></li>
-        
-        <li><a href="/index.xml">Subscribe</a></li>
-        
-      </ul>
-    </nav>
-  </header>
-  <hr />
-
-
-
-<div class="article-meta">
-    <h1><span class="title">PXE无盘启动树莓派集群</span></h1>
-    
-    <span>
-        <span class="date">2020-10-04</span>
-        |
-        
-        <span class="cats">
-            
-            
-            <a href='https://blog.imlk.top/categories/raspberry-pi/'>Raspberry Pi</a>
-            
-        </span>
-        
-        |
-        <span class="tags">
-            
-            <a href='https://blog.imlk.top/tags/%E6%A0%91%E8%8E%93%E6%B4%BE/'>#树莓派</a>
-            
-            <a href='https://blog.imlk.top/tags/%E8%B7%AF%E7%94%B1%E5%99%A8/'>#路由器</a>
-            
-            <a href='https://blog.imlk.top/tags/nfs/'>#NFS</a>
-            
-            <a href='https://blog.imlk.top/tags/%E7%9E%8E%E6%90%9E/'>#瞎搞</a>
-            
-        </span>
-        
-    </span>
-    <br>
-    
+<header class=header>
+<a class=logo href=/> imlk's Blog </a>
+<nav>
+<ul class=menu>
+<li><a href=/>Home</a></li>
+<li><a href=/about/>About</a></li>
+<li><a href=/archives/>Archives</a></li>
+<li><a href=/friends/>Friends</a></li>
+<li><a href=/index.xml>Subscribe</a></li>
+</ul>
+</nav>
+</header>
+<hr>
+<div class=article-meta>
+<h1><span class=title>PXE无盘启动树莓派集群</span></h1>
+<span>
+<span class=date>2020-10-04</span>
+|
+<span class=cats>
+<a href=https://blog.imlk.top/categories/raspberry-pi/>Raspberry Pi</a>
+</span>
+|
+<span class=tags>
+<a href=https://blog.imlk.top/tags/%E6%A0%91%E8%8E%93%E6%B4%BE/>#树莓派</a>
+<a href=https://blog.imlk.top/tags/%E8%B7%AF%E7%94%B1%E5%99%A8/>#路由器</a>
+<a href=https://blog.imlk.top/tags/nfs/>#NFS</a>
+<a href=https://blog.imlk.top/tags/%E7%9E%8E%E6%90%9E/>#瞎搞</a>
+</span>
+</span>
+<br>
 </div>
-
-
 <main>
-    <p>最近从同学那里拿到了几个闲置的树莓派，外加一个路由器和一块2T的硬盘，于是乎想用这些派来搭建一个简单的集群。但是发现SD卡实在是不够，遂尝试使用nfs的方式来启动树莓派。</p>
+<p>最近从同学那里拿到了几个闲置的树莓派，外加一个路由器和一块2T的硬盘，于是乎想用这些派来搭建一个简单的集群。但是发现SD卡实在是不够，遂尝试使用nfs的方式来启动树莓派。</p>
 <p>实验中用到的东西主要有：</p>
 <ul>
 <li>树莓派3B v1.2</li>
@@ -79,45 +52,45 @@
 <li>一条网线（连接派和路由器）</li>
 <li>测试过程用的：HDMI转VGA线、USB键盘、USB鼠标</li>
 </ul>
-<p><img src="/images/blog/64/image-20201004200939893.png" alt="树莓派3B"></p>
-<h2 id="树莓派开启usbnetwork启动">树莓派开启USB/network启动</h2>
+<p><img src=/images/blog/64/image-20201004200939893.png alt=树莓派3B></p>
+<h2 id=树莓派开启usbnetwork启动>树莓派开启USB/network启动</h2>
 <p>为了让树莓派支持从nfs启动，我们需要给树莓派的OTP写入一个标志位。我们需要先准备一张烧录了Raspberry Pi OS的SD卡，插入树莓派启动。</p>
 <p>首先进行系统更新，让树莓派更新到最新的bootloader</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">sudo apt update <span style="color:#f92672">&amp;&amp;</span> sudo apt full-upgrade
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-sh data-lang=sh>sudo apt update <span style=color:#f92672>&amp;&amp;</span> sudo apt full-upgrade
 </code></pre></div><p>增加启动选项，在下一次启动时，树莓派会根据该选项修改OTP（OTP的写入是一次性的，不可以改回去，但是在树莓派的启动顺序中，USB启动是排在SD卡之后的，因此并不会对实际使用造成影响）：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">echo program_usb_boot_mode<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span> | sudo tee -a /boot/config.txt
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-sh data-lang=sh>echo program_usb_boot_mode<span style=color:#f92672>=</span><span style=color:#ae81ff>1</span> | sudo tee -a /boot/config.txt
 </code></pre></div><p>在重启之前，我们读取OTP，这是没有开启过网络启动的树莓派的输出结果：</p>
-<pre tabindex="0"><code>pi@raspberrypi:~ $ vcgencmd otp_dump | grep 17:
+<pre tabindex=0><code>pi@raspberrypi:~ $ vcgencmd otp_dump | grep 17:
 17:1020000a
 </code></pre><p>重启之后，会发现OTP相应位应该已经被修改：</p>
-<pre tabindex="0"><code>pi@raspberrypi:~ $ vcgencmd otp_dump | grep 17:
+<pre tabindex=0><code>pi@raspberrypi:~ $ vcgencmd otp_dump | grep 17:
 17:3020000a
 </code></pre><p>此时可以修改<code>/boot/config.txt</code>去掉<code>program_usb_boot_mode=1</code>选项</p>
-<h2 id="配置文件系统">配置文件系统</h2>
-<p>在启动前，我们需要为树莓派准备系统文件。由于我们不需要运行桌面程序，而仅仅将树莓派作为服务器，所以我们选择了<a href="https://dietpi.com/">DietPi</a>的系统镜像来部署，其实Raspberry Pi OS镜像的部署方式也大同小异。</p>
+<h2 id=配置文件系统>配置文件系统</h2>
+<p>在启动前，我们需要为树莓派准备系统文件。由于我们不需要运行桌面程序，而仅仅将树莓派作为服务器，所以我们选择了<a href=https://dietpi.com/>DietPi</a>的系统镜像来部署，其实Raspberry Pi OS镜像的部署方式也大同小异。</p>
 <p>下载后解压得到以下内容：</p>
-<pre tabindex="0"><code>DietPi_RPi-ARMv6-Buster/
+<pre tabindex=0><code>DietPi_RPi-ARMv6-Buster/
 ├── DietPi_RPi-ARMv6-Buster.img
 ├── hash.txt
 └── README.md
 </code></pre><p>我们需要先将img文件通过loop设备挂载到本机上，具体的方法可以在网上找到，挂载后可以看到这个img文件里包含两个分区：</p>
-<pre tabindex="0"><code>NAME      MAJ:MIN RM   SIZE RO TYPE MOUNTPOINT
+<pre tabindex=0><code>NAME      MAJ:MIN RM   SIZE RO TYPE MOUNTPOINT
 loop0       7:0    0  1015M  1 loop 
 ├─loop0p1 259:0    0   256M  1 part /run/media/imlk/boot
 └─loop0p2 259:1    0 754.9M  1 part /run/media/imlk/rootfs
 </code></pre><p>分区名称分别是<code>boot</code>分区和<code>rootfs</code>分区。boot分区存放的主要是启动阶段需要的<code>bootcode.bin</code>以及系统内核文件，该分区在Linux启动后一般会被挂载到<code>/boot</code>目录下。<code>rootfs</code>分区就更好理解了，就是被挂载到<code>/</code>的根文件系统。</p>
-<h4 id="准备系统文件">准备系统文件</h4>
+<h4 id=准备系统文件>准备系统文件</h4>
 <p>我们准备了一块2T的移动硬盘，在上面划分了512G的ext4格式分区用来存储树莓派的根文件系统，在我们的演示中，我们将该分区挂载到了<code>/mnt/cluster/</code>。</p>
 <p>为了便于管理，我们在该分区中创建一个名为<code>system</code>的目录，用来存放不同树莓派设备的文件，不同的树莓派设备的文件被放在它们的序列号所对应的子目录下（用序列号仅仅是为了区分设备而已，你也可以用别的名称）。例如我们当前的树莓派设备序列号是<code>000000008a4232c8</code>，则该设备的文件路径为<code>/mnt/cluster/system/000000008a4232c8</code>。</p>
 <p>（序列号可以通过<code>cat /proc/cpuinfo</code>命令的<code>Serial</code>字段找到）</p>
 <p>然后使用rsync命令将镜像的<code>rootfs</code>分区内容拷贝到子目录下的rootfs目录中（注意目录末尾的<code>/</code>不能忽略，否则语义不同）：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">sudo rsync -a /run/media/imlk/rootfs/ /mnt/cluster/system/000000008a4232c8/rootfs/
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-sh data-lang=sh>sudo rsync -a /run/media/imlk/rootfs/ /mnt/cluster/system/000000008a4232c8/rootfs/
 </code></pre></div><p>接着，我们将<code>boot</code>分区的内容拷贝到rootfs目录下的boot子目录中（其实也可以放在一个单独的目录下，但是这样的话我们就还需要在<code>/etc/fstab</code>下配置一条<code>/boot</code>的nfs条目）：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">sudo rsync -a /run/media/imlk/boot/ /mnt/cluster/system/000000008a4232c8/rootfs/boot/
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-sh data-lang=sh>sudo rsync -a /run/media/imlk/boot/ /mnt/cluster/system/000000008a4232c8/rootfs/boot/
 </code></pre></div><p>为了方便，我们在rootfs的父目录下创建一个软链接，指向<code>rootfs/boot</code>:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">sudo ln -s rootfs/boot /mnt/cluster/system/000000008a4232c8/boot
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-sh data-lang=sh>sudo ln -s rootfs/boot /mnt/cluster/system/000000008a4232c8/boot
 </code></pre></div><p>最终对应该设备的目录树如下：</p>
-<pre tabindex="0"><code>root@g-dock:~# tree -L 2 /mnt/cluster/system
+<pre tabindex=0><code>root@g-dock:~# tree -L 2 /mnt/cluster/system
 /mnt/cluster/system
 └── 000000008a4232c8
     ├── boot -&gt; rootfs/boot		# 对应boot分区
@@ -126,15 +99,15 @@ loop0       7:0    0  1015M  1 loop
 3 directories, 0 files
 </code></pre><p>上面的<code>boot</code>软链接对应了原始镜像中<code>boot</code>分区的内容，<code>rootfs</code>目录对应了原始镜像中<code>rootfs</code>分区的内容。</p>
 <p>至此，一台树莓派设备的系统文件初始化完成。如果我们现在要新增一台树莓派，可以直接拷贝一份<code>000000008a4232c8</code>目录，命名为新树莓派的序列号。</p>
-<h2 id="配置路由器">配置路由器</h2>
-<h4 id="在路由器上挂载移动硬盘">在路由器上挂载移动硬盘</h4>
+<h2 id=配置路由器>配置路由器</h2>
+<h4 id=在路由器上挂载移动硬盘>在路由器上挂载移动硬盘</h4>
 <p>我们使用一台竞斗云2.0作为路由设备，在它上面挂载移动硬盘。</p>
 <p>测试速度如下：</p>
-<pre tabindex="0"><code>root@g-dock:/etc/opkg# hdparm -Tt /dev/sda4 
+<pre tabindex=0><code>root@g-dock:/etc/opkg# hdparm -Tt /dev/sda4 
 /dev/sda4:
  Timing cached reads:   714 MB in  2.00 seconds = 356.74 MB/sec
  Timing buffered disk reads:  88 MB in  3.19 seconds =  27.63 MB/sec
-</code></pre><pre tabindex="0"><code>root@g-dock:/etc/opkg# bonnie++ -n 0 -u 0  -f -b -d /mnt/data
+</code></pre><pre tabindex=0><code>root@g-dock:/etc/opkg# bonnie++ -n 0 -u 0  -f -b -d /mnt/data
 Using uid:0, gid:0.
 Writing intelligently...done
 Rewriting...done
@@ -148,14 +121,14 @@ Latency                       34156us     183ms               166ms     515ms
 
 1.98,1.98,OpenWrt,1,1601667412,1G,,8192,5,,,32834,56,13675,28,,,27680,28,96.3,31,,,,,,,,,,,,,,,,,,,34156us,183ms,,166ms,515ms,,,,,,
 </code></pre><p>（可选）开启硬盘禁止自动休眠（spin-down）</p>
-<pre tabindex="0"><code>root@g-dock:~# hdparm -S 0 /dev/sda
+<pre tabindex=0><code>root@g-dock:~# hdparm -S 0 /dev/sda
 
 /dev/sda:
  setting standby to 0 (off)
-</code></pre><h4 id="配置pxe引导服务器">配置PXE引导服务器</h4>
+</code></pre><h4 id=配置pxe引导服务器>配置PXE引导服务器</h4>
 <p>我们使用<code>dnsmasq</code>内置的的PXE引导服务来为树莓派实现网络启动的第一步。<code>dnsmasq</code>是一个常用的提供DHCP服务和DNS服务的进程。首先我们需要修改它的配置文件，让它在网络启动过程作为PXE引导服务器，并通过tftp协议为树莓派提供boot分区中的<code>bootcode.bin</code>和内核文件。</p>
 <p>修改<code>/etc/dnsmasq.conf</code>内容如下：</p>
-<pre tabindex="0"><code>log-facility=/var/log/daemon.log	# 指定日志文件输出路径
+<pre tabindex=0><code>log-facility=/var/log/daemon.log	# 指定日志文件输出路径
 # port=0 							# 设定port=0会禁用dns服务，不需要配置
 log-dhcp							# 在日志中显示dhcp请求信息
 enable-tftp							# （关键）启动tftp服务
@@ -165,31 +138,31 @@ pxe-service=0,&quot;Raspberry Pi Boot&quot;	# （关键）pxe服务相关配置
 </code></pre><p>配置完后重启<code>dnsmasq</code>。</p>
 <p>该配置文件中，<code>log-facility</code>指定日志文件输出路径，<code>log-dhcp</code>表示在日志中显示dhcp请求信息，开启这两者方便我们排除错误。我们还设定了<code>/mnt/cluster/tftpboot</code>作为基础根目录，同时设定<code>tftp-unique-root=mac</code>来为区分为不同设备提供的文件，该选项会自动在基础根目录后追加mac地址，例如mac地址为<code>b8:27:eb:42:32:c8</code>的设备所看到的目录为<code>/mnt/cluster/tftpboot/b8-27-eb-42-32-c8/</code>。</p>
 <p>接下来我们在挂载的硬盘分区中创建<code>tftpboot</code>目录，并根据树莓派网口的mac地址，创建一个指向该设备boot分区内容的软链接：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">sudo ln -s ../system/000000008a4232c8/boot/ /mnt/cluster/tftpboot/b8-27-eb-42-32-c8
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-sh data-lang=sh>sudo ln -s ../system/000000008a4232c8/boot/ /mnt/cluster/tftpboot/b8-27-eb-42-32-c8
 </code></pre></div><p>最终<code>tftpboot</code>目录的结构如下：</p>
-<pre tabindex="0"><code>root@g-dock:~# tree /mnt/cluster/tftpboot/
+<pre tabindex=0><code>root@g-dock:~# tree /mnt/cluster/tftpboot/
 /mnt/cluster/tftpboot/
 └── b8-27-eb-42-32-c8 -&gt; ../system/000000008a4232c8/boot/
 
 1 directory, 0 files
 </code></pre><p>这样，树莓派启动时向<code>dnsmasq</code>查询文件，<code>dnsmasq</code>就会在<code>/mnt/cluster/tftpboot/b8-27-eb-42-32-c8/</code>中，即该设备的boot分区文件中查找。</p>
 <p>至此，树莓派已经能够从路由器上加载内核文件并执行。</p>
-<h4 id="配置nfs服务器">配置nfs服务器</h4>
+<h4 id=配置nfs服务器>配置nfs服务器</h4>
 <p>经过上一步，内核虽然可以成功启动，但是是无法挂载rootfs的，接下来，我们需要用nfs来提供rootfs。</p>
 <p>在路由器上安装nfs-server</p>
-<pre tabindex="0"><code>opkg update
+<pre tabindex=0><code>opkg update
 opkg install nfs-kernel-server
 </code></pre><p>配置<code>/etc/exports</code>文件，将我们之前在磁盘中准备的<code>system</code>目录暴露出去</p>
-<pre tabindex="0"><code>root@g-dock:/mnt/cluster# cat /etc/exports 
+<pre tabindex=0><code>root@g-dock:/mnt/cluster# cat /etc/exports 
 /mnt/cluster/system   192.168.1.0/255.255.255.0(rw,sync,no_subtree_check,no_root_squash)
 </code></pre><p>(注意括号中的选项不要写错，尤其是注意需要配置<code>no_root_squash</code>选项，否则nfs客户端无法以root用户身份执行操作)</p>
 <p>启动nfs服务：（通常会使用portmap来搭配提供rpc，但是我们路由器上没有安装portmap，我们使用rpcbind替代）</p>
-<pre tabindex="0"><code>root@g-dock:~# service rpcbind start
+<pre tabindex=0><code>root@g-dock:~# service rpcbind start
 root@g-dock:~# service rpcbind enable
 root@g-dock:~# service nfsd start
 root@g-dock:~# service nfsd enable
 </code></pre><p>可以再自己的电脑上测试能否挂载nfs：</p>
-<pre tabindex="0"><code>[imlk@imlk-pc cluster]$ sudo mount -t nfs 192.168.1.1:/mnt/cluster/system/000000008a4232c8/rootfs ./system/
+<pre tabindex=0><code>[imlk@imlk-pc cluster]$ sudo mount -t nfs 192.168.1.1:/mnt/cluster/system/000000008a4232c8/rootfs ./system/
 [imlk@imlk-pc cluster]$ tree -L 1 system/
 system/
 ├── bin
@@ -214,45 +187,45 @@ system/
 
 19 directories, 0 files
 </code></pre><p>可以看到上面我们成功将一台设备的rootfs通过nfs挂载到了我们的机器上（挂在失败的注意检查服务器<code>/etc/exports</code>中的配置，以及服务器的防火墙配置）</p>
-<h4 id="最后一点点配置">最后一点点配置</h4>
+<h4 id=最后一点点配置>最后一点点配置</h4>
 <p>下面的配置文件均指rootfs目录下的文件，而不是路由器自身的文件</p>
-<h5 id="配置内核命令行bootcmdlinetxt">配置内核命令行<code>/boot/cmdline.txt</code></h5>
+<h5 id=配置内核命令行bootcmdlinetxt>配置内核命令行<code>/boot/cmdline.txt</code></h5>
 <p>我们需要配置内核命令行选项，让内核从nfs挂载rootfs。</p>
 <p>首先在路由器上查看rootfs中的<code>/boot/cmdline.txt</code>文件：</p>
-<pre tabindex="0"><code>root@g-dock:~# cat /mnt/cluster/system/000000008a4232c8/boot/cmdline.txt 
+<pre tabindex=0><code>root@g-dock:~# cat /mnt/cluster/system/000000008a4232c8/boot/cmdline.txt 
 console=serial0,115200 console=tty1 root=PARTUUID=907af7d0-02 rootfstype=ext4 elevator=deadline fsck.repair=yes rootwait quiet net.ifnames=0
 </code></pre><p>删除<code>root=</code>和<code>rootfstype=</code>的内容，改成<code>root=/dev/nfs</code>和<code>nfsroot=192.168.1.1:/mnt/cluster/system/000000008a4232c8/rootfs,vers=3,proto=tcp</code>，后者是指定rootfs在nfs服务器上的路径。需要注意的是<code>vers=3</code>这个配置，在有些文献中配置 的是<code>vers=4.1</code>，但是实测dietpi的内核似乎不支持挂载4.1版本的nfs，改成<code>vers=3</code>后就成功了。</p>
 <p>改完之后内容如下：</p>
-<pre tabindex="0"><code>root@g-dock:~# cat /mnt/cluster/system/000000008a4232c8/boot/cmdline.txt 
+<pre tabindex=0><code>root@g-dock:~# cat /mnt/cluster/system/000000008a4232c8/boot/cmdline.txt 
 console=serial0,115200 console=tty1 root=/dev/nfs nfsroot=192.168.1.1:/mnt/cluster/system/000000008a4232c8/rootfs,vers=3,proto=tcp rw ip=dhcp rootwait elevator=deadline
-</code></pre><h5 id="配置自动挂载etcfstab">配置自动挂载<code>/etc/fstab</code></h5>
+</code></pre><h5 id=配置自动挂载etcfstab>配置自动挂载<code>/etc/fstab</code></h5>
 <p>由于我们配置了内核启动时从nfs获取rootfs，<code>/etc/fstab</code>里不再需要挂载<code>/</code>。我们删除rootfs里<code>/etc/fstab</code>文件中关于<code>/</code>和<code>/boot</code>的挂载条目：要删除的条目类似于如下内容：</p>
-<pre tabindex="0"><code>PARTUUID=907af7d0-02 / auto noatime,lazytime,rw 0 1
+<pre tabindex=0><code>PARTUUID=907af7d0-02 / auto noatime,lazytime,rw 0 1
 PARTUUID=907af7d0-01 /boot auto noatime,lazytime,rw 0 2
-</code></pre><h5 id="配置网络接口初始化etcnetworkinterfaces">配置网络接口初始化<code>/etc/network/interfaces</code></h5>
+</code></pre><h5 id=配置网络接口初始化etcnetworkinterfaces>配置网络接口初始化<code>/etc/network/interfaces</code></h5>
 <p>这部分和init进程初始化网络接口有关系，它会读取<code>/etc/network/interfaces</code>中的配置对网络接口进行初始化。由于我们在加载rootfs时已经初始化了eth0，这里我们不能再对eth0进行重新初始化，否则nfs会中断，导致init进程提示<code>a start job is running for the raise network</code>然后block住。</p>
 <p>我们需要注释掉和eth0有关的条目：</p>
-<pre tabindex="0"><code># Ethernet
+<pre tabindex=0><code># Ethernet
 #allow-hotplug eth0
 #iface eth0 inet dhcp
 #address 192.168.0.100
 #netmask 255.255.255.0
 #gateway 192.168.0.1
 #dns-nameservers 9.9.9.9 149.112.112.112
-</code></pre><h3 id="启动">启动</h3>
+</code></pre><h3 id=启动>启动</h3>
 <p>拔掉树莓派的SD卡，用网线连接树莓派的网口和路由器，如果有HDMI和键盘也都可以接上，然后通电。等待10秒左右，树莓派会fallback到USB/Network方式启动。</p>
 <p>查看dnsmasq的日志文件，第一阶段树莓派向dnsmasq请求<code>bootcode.bin</code>：</p>
-<p><img src="/images/blog/64/image-20201004200646054.png" alt="image-20201004200646054"></p>
+<p><img src=/images/blog/64/image-20201004200646054.png alt=image-20201004200646054></p>
 <p>第二阶段向dnsmasq请求内核和其它文件：</p>
-<p><img src="/images/blog/64/image-20201004200744633.png" alt="image-20201004200744633"></p>
+<p><img src=/images/blog/64/image-20201004200744633.png alt=image-20201004200744633></p>
 <p>接下来内核会初始化dhcp客户端，然后通过nfs挂载rootfs。</p>
 <p>成功启动：</p>
-<p><img src="/images/blog/64/IMG_20201004_201311.jpg" alt="IMG_20201004_201311"></p>
-<h2 id="故障排除">故障排除</h2>
+<p><img src=/images/blog/64/IMG_20201004_201311.jpg alt=IMG_20201004_201311></p>
+<h2 id=故障排除>故障排除</h2>
 <ul>
 <li>
 <p>内核启动后卡住，显示类似于下面的内容</p>
-<pre tabindex="0"><code>IP-Config: Complete:
+<pre tabindex=0><code>IP-Config: Complete:
 ...
 random: crng init done
 </code></pre><p>原因：内核挂载rootfs失败，请检查<code>boot/cmdlime.txt</code>中填写的内容</p>
@@ -262,43 +235,33 @@ random: crng init done
 <p><code>/etc/network/interfaces</code>配置问题，由于rootfs是通过nfs挂载的，因此系统启动后不应改变<code>eth0</code>接口的状态，否则已挂载的根文件系统会宕掉。</p>
 </li>
 </ul>
-<h2 id="相关文献">相关文献</h2>
+<h2 id=相关文献>相关文献</h2>
 <ul>
 <li>
 <p>树莓派的两种USB启动模式</p>
-<p><a href="https://www.raspberrypi.org/documentation/hardware/raspberrypi/bootmodes/usb.md">https://www.raspberrypi.org/documentation/hardware/raspberrypi/bootmodes/usb.md</a></p>
+<p><a href=https://www.raspberrypi.org/documentation/hardware/raspberrypi/bootmodes/usb.md>https://www.raspberrypi.org/documentation/hardware/raspberrypi/bootmodes/usb.md</a></p>
 </li>
 <li>
 <p>树莓派启动顺序</p>
-<p><a href="https://www.raspberrypi.org/documentation/hardware/raspberrypi/bootmodes/bootflow.md">https://www.raspberrypi.org/documentation/hardware/raspberrypi/bootmodes/bootflow.md</a></p>
+<p><a href=https://www.raspberrypi.org/documentation/hardware/raspberrypi/bootmodes/bootflow.md>https://www.raspberrypi.org/documentation/hardware/raspberrypi/bootmodes/bootflow.md</a></p>
 </li>
 <li>
 <p>树莓派配置网络启动教程(official)</p>
-<p><a href="https://www.raspberrypi.org/documentation/hardware/raspberrypi/bootmodes/net_tutorial.md">https://www.raspberrypi.org/documentation/hardware/raspberrypi/bootmodes/net_tutorial.md</a></p>
+<p><a href=https://www.raspberrypi.org/documentation/hardware/raspberrypi/bootmodes/net_tutorial.md>https://www.raspberrypi.org/documentation/hardware/raspberrypi/bootmodes/net_tutorial.md</a></p>
 </li>
 <li>
 <p>预启动执行环境（PXE）</p>
-<p><a href="https://zh.wikipedia.org/wiki/%E9%A2%84%E5%90%AF%E5%8A%A8%E6%89%A7%E8%A1%8C%E7%8E%AF%E5%A2%83">https://zh.wikipedia.org/wiki/%E9%A2%84%E5%90%AF%E5%8A%A8%E6%89%A7%E8%A1%8C%E7%8E%AF%E5%A2%83</a></p>
+<p><a href=https://zh.wikipedia.org/wiki/%E9%A2%84%E5%90%AF%E5%8A%A8%E6%89%A7%E8%A1%8C%E7%8E%AF%E5%A2%83>https://zh.wikipedia.org/wiki/%E9%A2%84%E5%90%AF%E5%8A%A8%E6%89%A7%E8%A1%8C%E7%8E%AF%E5%A2%83</a></p>
 </li>
 </ul>
-
 </main>
-
-
-
-<div id="comments">
-    <hr>
-    <script src="https://utteranc.es/client.js" repo='KB5201314/KB5201314.github.io' issue-term="pathname" label='💬 comments 💬'
-        theme='github-light' crossorigin="anonymous" async>
-        </script>
+<div id=comments>
+<hr>
+<script src=https://utteranc.es/client.js repo=KB5201314/KB5201314.github.io issue-term=pathname label="💬 comments 💬" theme=github-light crossorigin=anonymous async></script>
 </div>
-
-
-  <footer>
-  
-  <hr/>
-  © imlk 2017 &ndash; 2021 | <a href="https://blog.imlk.top">imlk's blog</a> | <a href="https://github.com/KB5201314/">Github</a> | <a href="mailto:me@imlk.top">Email</a> | <a href="https://beian.miit.gov.cn/">京ICP备 - 2020042968号</a>
-  
-  </footer>
-  </body>
+<footer>
+<hr>
+© imlk 2017 &ndash; 2021 | <a href=https://blog.imlk.top>imlk's blog</a> | <a href=https://github.com/KB5201314/>Github</a> | <a href=mailto:me@imlk.top>Email</a> | <a href=https://beian.miit.gov.cn/>京ICP备 - 2020042968号</a>
+</footer>
+</body>
 </html>

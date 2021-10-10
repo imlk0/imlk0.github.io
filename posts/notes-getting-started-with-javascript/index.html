@@ -1,88 +1,64 @@
-<!DOCTYPE html>
-<html lang="zh-cn">
-
+<!doctype html><html lang=zh-cn>
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>JavaScript入门啦 | imlk&#39;s blog</title>
-  <link rel="stylesheet" href='/css/style.css' />
-  <link rel="stylesheet" href='/css/fonts.css' />
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&display=swap" rel="stylesheet">
+<meta charset=utf-8>
+<meta name=viewport content="width=device-width,initial-scale=1">
+<title>JavaScript入门啦 | imlk's blog</title>
+<link rel=stylesheet href=/css/style.css>
+<link rel=stylesheet href=/css/fonts.css>
+<link rel=preconnect href=https://fonts.googleapis.com>
+<link rel=preconnect href=https://fonts.gstatic.com crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&display=swap" rel=stylesheet>
 </head>
-
 <body>
-  <header class="header">
-    <a class="logo" href='/'> imlk's Blog </a>
-    <nav>
-      <ul class="menu">
-        
-        <li><a href="/">Home</a></li>
-        
-        <li><a href="/about/">About</a></li>
-        
-        <li><a href="/archives/">Archives</a></li>
-        
-        <li><a href="/friends/">Friends</a></li>
-        
-        <li><a href="/index.xml">Subscribe</a></li>
-        
-      </ul>
-    </nav>
-  </header>
-  <hr />
-
-
-
-<div class="article-meta">
-    <h1><span class="title">JavaScript入门啦</span></h1>
-    
-    <span>
-        <span class="date">2018-04-17</span>
-        |
-        
-        <span class="cats">
-            
-            
-            <a href='https://blog.imlk.top/categories/javascript/'>JavaScript</a>
-            
-        </span>
-        
-        |
-        <span class="tags">
-            
-            <a href='https://blog.imlk.top/tags/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/'>#编程语言</a>
-            
-        </span>
-        
-    </span>
-    <br>
-    
+<header class=header>
+<a class=logo href=/> imlk's Blog </a>
+<nav>
+<ul class=menu>
+<li><a href=/>Home</a></li>
+<li><a href=/about/>About</a></li>
+<li><a href=/archives/>Archives</a></li>
+<li><a href=/friends/>Friends</a></li>
+<li><a href=/index.xml>Subscribe</a></li>
+</ul>
+</nav>
+</header>
+<hr>
+<div class=article-meta>
+<h1><span class=title>JavaScript入门啦</span></h1>
+<span>
+<span class=date>2018-04-17</span>
+|
+<span class=cats>
+<a href=https://blog.imlk.top/categories/javascript/>JavaScript</a>
+</span>
+|
+<span class=tags>
+<a href=https://blog.imlk.top/tags/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/>#编程语言</a>
+</span>
+</span>
+<br>
 </div>
-
-
 <main>
-    <p>参考资料：
+<p>参考资料：
 ECMAScript 6 入门:
-<a href="http://es6.ruanyifeng.com/">http://es6.ruanyifeng.com/</a></p>
+<a href=http://es6.ruanyifeng.com/>http://es6.ruanyifeng.com/</a></p>
 <p><strong>以下所有代码示例均为在nodejs交互模式下进行的，环境：Linux</strong></p>
 <ul>
 <li>JavaScript不区分整数和浮点数，统一用Number表示;</li>
 <li>js注释</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-JavaScript" data-lang="JavaScript"><span style="color:#75715e">// 注释
-</span><span style="color:#75715e"></span>
-<span style="color:#75715e">/*
-</span><span style="color:#75715e">注释
-</span><span style="color:#75715e">*/</span>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-JavaScript data-lang=JavaScript><span style=color:#75715e>// 注释
+</span><span style=color:#75715e></span>
+<span style=color:#75715e>/*
+</span><span style=color:#75715e>注释
+</span><span style=color:#75715e>*/</span>
 </code></pre></div><ul>
 <li>js等号比较运算符</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-JavaScript" data-lang="JavaScript"><span style="color:#f92672">==</span> <span style="color:#75715e">// 会自动转换数据类型再比较，很多时候会得到非常诡异的结果
-</span><span style="color:#75715e"></span>
-<span style="color:#f92672">===</span> <span style="color:#75715e">// 不会自动转换数据类型，如果数据类型不一致，直接返回false，一致的话再比较
-</span><span style="color:#75715e"></span>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-JavaScript data-lang=JavaScript><span style=color:#f92672>==</span> <span style=color:#75715e>// 会自动转换数据类型再比较，很多时候会得到非常诡异的结果
+</span><span style=color:#75715e></span>
+<span style=color:#f92672>===</span> <span style=color:#75715e>// 不会自动转换数据类型，如果数据类型不一致，直接返回false，一致的话再比较
+</span><span style=color:#75715e></span>
 </code></pre></div><ul>
 <li>实际时常用<code>===</code>而不用<code>==</code></li>
 <li>使用<code>isNaN()</code>函数判断是否为<code>NaN</code></li>
@@ -91,7 +67,7 @@ ECMAScript 6 入门:
 <li><code>node</code>交互模式中，<code>_</code>表示上一次语句执行成功后的结果</li>
 <li><code>null</code>不等于<code>0</code>也不等于<code>''</code></li>
 </ul>
-<pre tabindex="0"><code>&gt; null == 0
+<pre tabindex=0><code>&gt; null == 0
 false
 &gt; null === 0
 false
@@ -110,14 +86,14 @@ false
 </code></pre><ul>
 <li>js中还有一个特殊的元素<code>undefined</code></li>
 </ul>
-<pre tabindex="0"><code>&gt; undefined === undefined
+<pre tabindex=0><code>&gt; undefined === undefined
 true
 </code></pre><ul>
-<li>js中<code>var</code>与不加<code>var</code>的区别：<a href="https://www.cnblogs.com/liuna/p/6140901.html">https://www.cnblogs.com/liuna/p/6140901.html</a></li>
-<li>js中<code>typeof</code>关键字的使用：<a href="https://blog.csdn.net/z18842589113/article/details/53315910">https://blog.csdn.net/z18842589113/article/details/53315910</a></li>
+<li>js中<code>var</code>与不加<code>var</code>的区别：<a href=https://www.cnblogs.com/liuna/p/6140901.html>https://www.cnblogs.com/liuna/p/6140901.html</a></li>
+<li>js中<code>typeof</code>关键字的使用：<a href=https://blog.csdn.net/z18842589113/article/details/53315910>https://blog.csdn.net/z18842589113/article/details/53315910</a></li>
 <li><code>typeof</code>运算符把类型信息当作字符串返回</li>
 </ul>
-<pre tabindex="0"><code>&gt; i = 1
+<pre tabindex=0><code>&gt; i = 1
 1
 &gt; typeof(i)
 'number'
@@ -146,7 +122,7 @@ true
 <li>Javascript中的对象都有一个方法<code>toString()</code>。</li>
 <li>对类型为<code>Function</code>的对象执行<code>toString()</code>方法将打印函数的内容。</li>
 </ul>
-<pre tabindex="0"><code>&gt; i = function(e){
+<pre tabindex=0><code>&gt; i = function(e){
 ... console.log(e)
 ... }
 [Function: i]
@@ -158,7 +134,7 @@ true
 <li>js中的函数对象本身代表一个函数</li>
 <li>js中构造一个函数对象（函数）</li>
 </ul>
-<pre tabindex="0"><code>&gt; function f1(){};
+<pre tabindex=0><code>&gt; function f1(){};
 undefined
 &gt; var f2 = function(){};
 undefined
@@ -193,10 +169,10 @@ f2 {}
 &gt; f3.prototype
 anonymous {}
 </code></pre><ul>
-<li>JS所有内置对象属性和方法汇总：<a href="https://segmentfault.com/a/1190000011467723">https://segmentfault.com/a/1190000011467723</a></li>
+<li>JS所有内置对象属性和方法汇总：<a href=https://segmentfault.com/a/1190000011467723>https://segmentfault.com/a/1190000011467723</a></li>
 <li>JavaScript 的 valueOf() 方法，返回<code>对象</code>的<code>原始值</code>。</li>
 </ul>
-<pre tabindex="0"><code>&gt; b = new Boolean(true)
+<pre tabindex=0><code>&gt; b = new Boolean(true)
 [Boolean: true]
 &gt; typeof b
 'object'
@@ -226,7 +202,7 @@ true
 </code></pre><ul>
 <li>与<code>valueOf()</code>之相反的则是<code>new Object(obj)</code>，它将原始值转化为对应的对象</li>
 </ul>
-<pre tabindex="0"><code>&gt; a = 1;
+<pre tabindex=0><code>&gt; a = 1;
 1
 &gt; b = new Object(a)
 [Number: 1]
@@ -236,7 +212,7 @@ true
 false
 </code></pre><ul>
 <li><strong>js中没有类</strong></li>
-<li>js中创建对象的7种方式：<a href="http://www.jb51.net/article/106325.htm">http://www.jb51.net/article/106325.htm</a>
+<li>js中创建对象的7种方式：<a href=http://www.jb51.net/article/106325.htm>http://www.jb51.net/article/106325.htm</a>
 1.工厂模式(在函数中构造对象并返回)
 2.构造函数模式(对函数使用<code>new</code>操作符，生成的对象的<code>constructor</code>属性指向构造函数)
 3.原型模式(每一个函数都有一个<code>prototype</code>(原型)属性，它指向一个<strong>对象</strong>，可以理解为共享的一个对象，这个对象是与构造函数挂钩的，所有实例共享它所包含的属性和方法，注意此时所有生成的对象所访问的原型中定义的对象都是同一个东西)
@@ -246,7 +222,7 @@ false
 7.稳妥构造函数模式</li>
 <li>js中的对象,我们可以把ECMAScript的对象想象成散列表：无非就是一组名对值，其中值可以是数据或函数。</li>
 </ul>
-<pre tabindex="0"><code>&gt; b = {'one': 'emmm','t':23333}
+<pre tabindex=0><code>&gt; b = {'one': 'emmm','t':23333}
 { one: 'emmm', t: 23333 }
 &gt; for (var key in b){
 ... console.log(key);
@@ -260,7 +236,7 @@ undefined
 </code></pre><ul>
 <li>js的函数中有一个特殊的关键字<code>arguments</code>，因此可以支持可变长参数传递，这个<code>arguments</code>变量只可在函数中使用，是一个特殊的对象，与一个普通的对象相比，可以读取<code>arguments.length</code>属性</li>
 </ul>
-<pre tabindex="0"><code>&gt; f1 = function(e){
+<pre tabindex=0><code>&gt; f1 = function(e){
 ... console.log(typeof arguments);
 ... console.log(arguments.length);
 ... console.log(arguments);
@@ -274,7 +250,7 @@ undefined
 </code></pre><ul>
 <li>js中的<code>instanceof</code>关键字</li>
 </ul>
-<pre tabindex="0"><code>&gt; c = new f1(1,2);
+<pre tabindex=0><code>&gt; c = new f1(1,2);
 object
 2
 { '0': 1, '1': 2 }
@@ -287,54 +263,45 @@ true
 true
 </code></pre><ul>
 <li>exports 和 module.exports 的区别
-<a href="http://cnodejs.org/topic/5231a630101e574521e45ef8">http://cnodejs.org/topic/5231a630101e574521e45ef8</a></li>
+<a href=http://cnodejs.org/topic/5231a630101e574521e45ef8>http://cnodejs.org/topic/5231a630101e574521e45ef8</a></li>
 </ul>
-<pre tabindex="0"><code>module.exports 初始值为一个空对象 {}
+<pre tabindex=0><code>module.exports 初始值为一个空对象 {}
 exports 是指向的 module.exports 的引用
 require() 返回的是 module.exports 而不是 exports
 </code></pre><ul>
 <li>exports 快捷方式
-<a href="http://nodejs.cn/api/modules.html#modules_exports_shortcut">http://nodejs.cn/api/modules.html#modules_exports_shortcut</a>
+<a href=http://nodejs.cn/api/modules.html#modules_exports_shortcut>http://nodejs.cn/api/modules.html#modules_exports_shortcut</a>
 <code>exports</code>变量是在模块的文件级别作用域内有效的，它在模块被执行前被赋予<code>module.exports</code>的值。</li>
 <li>js定义常量语法糖<code>const { PI }</code>
-<a href="https://segmentfault.com/q/1010000011190967">https://segmentfault.com/q/1010000011190967</a></li>
+<a href=https://segmentfault.com/q/1010000011190967>https://segmentfault.com/q/1010000011190967</a></li>
 </ul>
-<pre tabindex="0"><code>const { PI } = Math;
+<pre tabindex=0><code>const { PI } = Math;
 实际上是语法糖，等价于：
 const PI = Math.PI 
 </code></pre><ul>
 <li>js模块包装器
-<a href="http://nodejs.cn/api/modules.html#modules_the_module_wrapper">http://nodejs.cn/api/modules.html#modules_the_module_wrapper</a>
+<a href=http://nodejs.cn/api/modules.html#modules_the_module_wrapper>http://nodejs.cn/api/modules.html#modules_the_module_wrapper</a>
 在执行模块代码之前，Node.js 会使用一个如下的函数包装器将其包装：</li>
 </ul>
-<pre tabindex="0"><code>(function(exports, require, module, __filename, __dirname) {
+<pre tabindex=0><code>(function(exports, require, module, __filename, __dirname) {
 // 模块的代码实际上在这里
 });
 </code></pre><ul>
 <li>export
 模块是独立的文件，该文件内部的所有的变量外部都无法获取。如果希望获取某个变量，必须通过export输出，</li>
 </ul>
-<pre tabindex="0"><code>export var firstName = 'Michael';
+<pre tabindex=0><code>export var firstName = 'Michael';
 export var lastName = 'Jackson';
 export var year = 1958;
 </code></pre>
 </main>
-
-
-
-<div id="comments">
-    <hr>
-    <script src="https://utteranc.es/client.js" repo='KB5201314/KB5201314.github.io' issue-term="pathname" label='💬 comments 💬'
-        theme='github-light' crossorigin="anonymous" async>
-        </script>
+<div id=comments>
+<hr>
+<script src=https://utteranc.es/client.js repo=KB5201314/KB5201314.github.io issue-term=pathname label="💬 comments 💬" theme=github-light crossorigin=anonymous async></script>
 </div>
-
-
-  <footer>
-  
-  <hr/>
-  © imlk 2017 &ndash; 2021 | <a href="https://blog.imlk.top">imlk's blog</a> | <a href="https://github.com/KB5201314/">Github</a> | <a href="mailto:me@imlk.top">Email</a> | <a href="https://beian.miit.gov.cn/">京ICP备 - 2020042968号</a>
-  
-  </footer>
-  </body>
+<footer>
+<hr>
+© imlk 2017 &ndash; 2021 | <a href=https://blog.imlk.top>imlk's blog</a> | <a href=https://github.com/KB5201314/>Github</a> | <a href=mailto:me@imlk.top>Email</a> | <a href=https://beian.miit.gov.cn/>京ICP备 - 2020042968号</a>
+</footer>
+</body>
 </html>

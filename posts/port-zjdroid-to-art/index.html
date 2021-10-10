@@ -1,87 +1,60 @@
-<!DOCTYPE html>
-<html lang="zh-cn">
-
+<!doctype html><html lang=zh-cn>
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>为ZjDroid适配ART虚拟机的尝试 | imlk&#39;s blog</title>
-  <link rel="stylesheet" href='/css/style.css' />
-  <link rel="stylesheet" href='/css/fonts.css' />
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&display=swap" rel="stylesheet">
+<meta charset=utf-8>
+<meta name=viewport content="width=device-width,initial-scale=1">
+<title>为ZjDroid适配ART虚拟机的尝试 | imlk's blog</title>
+<link rel=stylesheet href=/css/style.css>
+<link rel=stylesheet href=/css/fonts.css>
+<link rel=preconnect href=https://fonts.googleapis.com>
+<link rel=preconnect href=https://fonts.gstatic.com crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&display=swap" rel=stylesheet>
 </head>
-
 <body>
-  <header class="header">
-    <a class="logo" href='/'> imlk's Blog </a>
-    <nav>
-      <ul class="menu">
-        
-        <li><a href="/">Home</a></li>
-        
-        <li><a href="/about/">About</a></li>
-        
-        <li><a href="/archives/">Archives</a></li>
-        
-        <li><a href="/friends/">Friends</a></li>
-        
-        <li><a href="/index.xml">Subscribe</a></li>
-        
-      </ul>
-    </nav>
-  </header>
-  <hr />
-
-
-
-<div class="article-meta">
-    <h1><span class="title">为ZjDroid适配ART虚拟机的尝试</span></h1>
-    
-    <span>
-        <span class="date">2018-05-05</span>
-        |
-        
-        <span class="cats">
-            
-            
-            <a href='https://blog.imlk.top/categories/reverse/'>Reverse</a>
-            
-        </span>
-        
-        |
-        <span class="tags">
-            
-            <a href='https://blog.imlk.top/tags/android/'>#Android</a>
-            
-            <a href='https://blog.imlk.top/tags/art/'>#ART</a>
-            
-            <a href='https://blog.imlk.top/tags/zjdroid/'>#ZjDroid</a>
-            
-            <a href='https://blog.imlk.top/tags/%E7%9E%8E%E6%90%9E/'>#瞎搞</a>
-            
-        </span>
-        
-    </span>
-    <br>
-    
+<header class=header>
+<a class=logo href=/> imlk's Blog </a>
+<nav>
+<ul class=menu>
+<li><a href=/>Home</a></li>
+<li><a href=/about/>About</a></li>
+<li><a href=/archives/>Archives</a></li>
+<li><a href=/friends/>Friends</a></li>
+<li><a href=/index.xml>Subscribe</a></li>
+</ul>
+</nav>
+</header>
+<hr>
+<div class=article-meta>
+<h1><span class=title>为ZjDroid适配ART虚拟机的尝试</span></h1>
+<span>
+<span class=date>2018-05-05</span>
+|
+<span class=cats>
+<a href=https://blog.imlk.top/categories/reverse/>Reverse</a>
+</span>
+|
+<span class=tags>
+<a href=https://blog.imlk.top/tags/android/>#Android</a>
+<a href=https://blog.imlk.top/tags/art/>#ART</a>
+<a href=https://blog.imlk.top/tags/zjdroid/>#ZjDroid</a>
+<a href=https://blog.imlk.top/tags/%E7%9E%8E%E6%90%9E/>#瞎搞</a>
+</span>
+</span>
+<br>
 </div>
-
-
 <main>
-    <p>上星期趁着放假玩了玩ZjDroid，自己编译了一个来玩，最终克服万难总算找齐了源码，给编译出来了。
+<p>上星期趁着放假玩了玩ZjDroid，自己编译了一个来玩，最终克服万难总算找齐了源码，给编译出来了。
 上一篇文章:</p>
 <p>笔记-第一次ZjDroid脱壳实战
-<a href="https://blog.imlk.top/blog/40/">https://blog.imlk.top/blog/40/</a></p>
+<a href=https://blog.imlk.top/blog/40/>https://blog.imlk.top/blog/40/</a></p>
 <p>虽然，最终拿出来的大数字加固的dex没能恢复onCreate这个native方法（本人实在太菜），但是其他部分还是能看源码的。</p>
-<h3 id="起因">起因</h3>
+<h3 id=起因>起因</h3>
 <p>最近一个朋友给我看了一个爱加密的包，我放到模拟器里面用我的ZjDroid脱，没想到这个包却主动退出了！
 我以为是检测到了ZjDroid，就卸载了ZjDroid，结果还是崩，后来上网查才发现，爱加密检测到是模拟器环境就会主动退出。</p>
 <p>这可让我费脑筋啊！</p>
 <p>我手上只有Android7.1.2的设备，而目前的ZjDroid只支持dalvik虚拟机上跑，这可咋办呢，要我刷机？懒得备份。。。</p>
 <p>我记得ZjDroid的源码最后是4年前更新的，然后作者就不维护了，于是我想能不能学习ZjDroid的原理去适配art呢？</p>
 <p>打开as就开始捣鼓了！</p>
-<h3 id="稍微尝试">稍微尝试</h3>
+<h3 id=稍微尝试>稍微尝试</h3>
 <p>尝试在Android7.1.2上面安装ZjDroid，重启，打开上次我拆的应用（就是那个我自己的应用啦）。</p>
 <p>看log，除了几个碍眼的异常以外，没什么大状况出现，</p>
 <p>嗯，</p>
@@ -93,26 +66,26 @@ ZjDroid在执行<code>dump_dexinfo</code>命令的时候并没有用到native层
 <ul>
 <li>
 <p>dalvik（Android4.4及以前 sdk &lt;= 19）中的openDexFileNative
-<a href="http://androidxref.com/4.4.4_r1/xref/libcore/dalvik/src/main/java/dalvik/system/DexFile.java#301">http://androidxref.com/4.4.4_r1/xref/libcore/dalvik/src/main/java/dalvik/system/DexFile.java#301</a></p>
+<a href=http://androidxref.com/4.4.4_r1/xref/libcore/dalvik/src/main/java/dalvik/system/DexFile.java#301>http://androidxref.com/4.4.4_r1/xref/libcore/dalvik/src/main/java/dalvik/system/DexFile.java#301</a></p>
 </li>
 <li>
 <p>art （Android5.1.1及以前 19 &lt; sdk &lt;= 22）中的openDexFileNative
-<a href="http://androidxref.com/5.1.1_r6/xref/libcore/dalvik/src/main/java/dalvik/system/DexFile.java#308">http://androidxref.com/5.1.1_r6/xref/libcore/dalvik/src/main/java/dalvik/system/DexFile.java#308</a></p>
+<a href=http://androidxref.com/5.1.1_r6/xref/libcore/dalvik/src/main/java/dalvik/system/DexFile.java#308>http://androidxref.com/5.1.1_r6/xref/libcore/dalvik/src/main/java/dalvik/system/DexFile.java#308</a></p>
 </li>
 <li>
 <p>art （Android6.0至今(已测试7.1.2) 22 &lt; sdk）中的openDexFileNative
-<a href="http://androidxref.com/7.1.2_r36/xref/libcore/dalvik/src/main/java/dalvik/system/DexFile.java#396">http://androidxref.com/7.1.2_r36/xref/libcore/dalvik/src/main/java/dalvik/system/DexFile.java#396</a></p>
+<a href=http://androidxref.com/7.1.2_r36/xref/libcore/dalvik/src/main/java/dalvik/system/DexFile.java#396>http://androidxref.com/7.1.2_r36/xref/libcore/dalvik/src/main/java/dalvik/system/DexFile.java#396</a></p>
 </li>
 </ul>
-<h3 id="art虚拟机的mcookie">art虚拟机的mCookie</h3>
+<h3 id=art虚拟机的mcookie>art虚拟机的mCookie</h3>
 <p>但是还有一个问题就是，
 我们要的<code>mCookie</code>究竟是什么样子的呢?</p>
 <p>通过对ZjDroid的旧版本代码进行分析发现，在dalvik虚拟机中，<code>mCookie</code>实际上就是一个结构体的内存地址，通过这个结构体可以获得内存中dex文件的地址，然后就能dump出来了。
 既然如此，在art里面的<code>mCookie</code>时一个<code>long[]</code>类型的，我们就很有必要去了解这个东西是怎么形成的了。</p>
 <p>查看Android7.1.2的源码，找到<code>openDexFileNative</code>方法的native层实现：
-<a href="http://androidxref.com/7.1.2_r36/xref/art/runtime/native/dalvik_system_DexFile.cc#156">http://androidxref.com/7.1.2_r36/xref/art/runtime/native/dalvik_system_DexFile.cc#156</a></p>
+<a href=http://androidxref.com/7.1.2_r36/xref/art/runtime/native/dalvik_system_DexFile.cc#156>http://androidxref.com/7.1.2_r36/xref/art/runtime/native/dalvik_system_DexFile.cc#156</a></p>
 <p>有一些情况下是返回空指针的，我们就只看返回正常值的情况，在第184-194行，</p>
-<pre tabindex="0"><code>···
+<pre tabindex=0><code>···
 184  if (!dex_files.empty()) {
 185    jlongArray array = ConvertDexFilesToJavaArray(env, oat_file, dex_files);
 186    if (array == nullptr) {
@@ -127,7 +100,7 @@ ZjDroid在执行<code>dump_dexinfo</code>命令的时候并没有用到native层
 ···
 </code></pre><p>这个<code>ConvertDexFilesToJavaArray</code>函数应该是很重要的一个函数
 看看它的实现</p>
-<pre tabindex="0"><code>
+<pre tabindex=0><code>
 77static jlongArray ConvertDexFilesToJavaArray(JNIEnv* env,
 78                                             const OatFile* oat_file,
 79                                             std::vector&lt;std::unique_ptr&lt;const DexFile&gt;&gt;&amp; vec) {
@@ -163,21 +136,21 @@ ZjDroid在执行<code>dump_dexinfo</code>命令的时候并没有用到native层
 108}
 </code></pre><p>可以大概了解到，第一个位置被赋值为<code>oat_file</code>这个指针（实际上就是把指向的地址存到了第一个位置里），然后依次填充<code>vec</code>这个数组里的东西到之前的<code>long</code>数组里面，看看这个<code>vec</code>：
 在参数列表里：</p>
-<pre tabindex="0"><code>std::vector&lt;std::unique_ptr&lt;const DexFile&gt;&gt;&amp; vec
+<pre tabindex=0><code>std::vector&lt;std::unique_ptr&lt;const DexFile&gt;&gt;&amp; vec
 </code></pre><p>不要慌，看起来很复杂，但其实不难理解：</p>
 <p><code>vec</code>是一个引用，引用的是一个<code>vector</code>（可变长数组）对象，这个对象里装的都是<code>unique_ptr</code>类型，这也是一种指针，可以看到这个东西指向的类型是<code>DexFile</code>，上面的那段代码应该就是把这些指针指向的<strong>地址</strong>信息填到<code>long</code>数组里面了</p>
 <p>最终返回的<code>long</code>类型数组里面，应该全都是地址。</p>
-<h3 id="art中的dexfile">art中的DexFile</h3>
+<h3 id=art中的dexfile>art中的DexFile</h3>
 <p>再看看<code>DexFile</code>这个东西：</p>
 <p>在</p>
-<p><a href="http://androidxref.com/7.1.2_r36/xref/art/runtime/dex_file.h">http://androidxref.com/7.1.2_r36/xref/art/runtime/dex_file.h</a></p>
-<pre tabindex="0"><code>class DexFile {
+<p><a href=http://androidxref.com/7.1.2_r36/xref/art/runtime/dex_file.h>http://androidxref.com/7.1.2_r36/xref/art/runtime/dex_file.h</a></p>
+<pre tabindex=0><code>class DexFile {
 </code></pre><p>是一个class，里面还有结构体比如</p>
-<pre tabindex="0"><code>  struct Header {
+<pre tabindex=0><code>  struct Header {
 </code></pre><p>之类的，这好像和dex文件的结构有点关联了。</p>
 <p>继续往下翻</p>
-<p>在第1235行的地方：<a href="http://androidxref.com/7.1.2_r36/xref/art/runtime/dex_file.h#1235">http://androidxref.com/7.1.2_r36/xref/art/runtime/dex_file.h#1235</a></p>
-<pre tabindex="0"><code>···
+<p>在第1235行的地方：<a href=http://androidxref.com/7.1.2_r36/xref/art/runtime/dex_file.h#1235>http://androidxref.com/7.1.2_r36/xref/art/runtime/dex_file.h#1235</a></p>
+<pre tabindex=0><code>···
 1234  // The base address of the memory mapping.
 1235  const uint8_t* const begin_;
 1236
@@ -205,15 +178,15 @@ ZjDroid在执行<code>dump_dexinfo</code>命令的时候并没有用到native层
 1258  const TypeId* const type_ids_;
 ···
 </code></pre><p>这个<code>begin_</code>的描述，似乎是什么什么内存映射的基地址，下面还有这个块区域的大小<code>size_</code>，接下来是一些指针，<code>Header</code>，<code>StringId</code>，<code>TypeId</code>啥的，结合相关代码，我猜测这就是我们要找的dex文件的信息了。</p>
-<h3 id="总结">总结</h3>
+<h3 id=总结>总结</h3>
 <p>总结一下：</p>
 <p>Java层获取到的<code>mCookie</code>是一个<code>long</code>类型数组，里面都是地址，其中第一个地址是<code>oat_file</code>也就是oat过的文件的地址，当然现在大多数加固都不会允许虚拟机进行oat操作了，因为oat操作会在储存中生成优化过的oat文件，对于加固来说，无疑是自己把代码给出去了。这也是我们上一篇文章里，<code>long</code>数组第一个元素为0的原因：
-<img src="/images/blog/40_0.png" alt="调试器查看内容"></p>
+<img src=/images/blog/40_0.png alt=调试器查看内容></p>
 <p>解决方法：
-<a href="https://github.com/KB5201314/ZjDroid/blob/master/app/src/main/java/com/android/reverse/collecter/DexFileInfoCollecter.java#L190">https://github.com/KB5201314/ZjDroid/blob/master/app/src/main/java/com/android/reverse/collecter/DexFileInfoCollecter.java#L190</a></p>
+<a href=https://github.com/KB5201314/ZjDroid/blob/master/app/src/main/java/com/android/reverse/collecter/DexFileInfoCollecter.java#L190>https://github.com/KB5201314/ZjDroid/blob/master/app/src/main/java/com/android/reverse/collecter/DexFileInfoCollecter.java#L190</a></p>
 <p>接下来</p>
 <p>我们只需要第二个位置开始的内容，每一个元素都是一个地址，把地址传到<code>native</code>方法里，在<code>native</code>层里，这个地址指向的就是一个<code>DexFile</code>类，而因为类也类似于结构体，也有它的储存结构，只要找到<code>begin_</code>和<code>size_</code>的内容就能dump出内存中的dex（odex）文件。</p>
-<h3 id="遇到的几个问题">遇到的几个问题</h3>
+<h3 id=遇到的几个问题>遇到的几个问题</h3>
 <p>关于内存对不到的问题：</p>
 <p>我们知道C++和Java是有很大的区别的，在C++里面，一个变量，编译了以后，在运行时你是不能通过变量的名称来找到这个类的。因为这些变量都变成了地址或者偏移量。只代表某个内存区域。不能像Java那样通过反射动态获取。</p>
 <p>所以，和结构体类似，想要获取一个C++对象的某个成员变量，你只能通过这个<strong>对象的地址</strong>+<strong>这个成员变量在这个对象中的相对位置</strong>来获取到，</p>
@@ -225,41 +198,41 @@ ZjDroid在执行<code>dump_dexinfo</code>命令的时候并没有用到native层
 </ul>
 <p>那是因为，只有一模一样，才能有一样的偏移量啊！</p>
 <p>假设已经取得的<code>DexFile</code>的某个对象的地址<code>adress</code>(假设是<code>long</code>类型)，想获得对象中的成员变量<code>begin_</code>的值，应该用以下的步骤</p>
-<pre tabindex="0"><code>DexFile *dexFile_ptr = (DexFile *)adress; // cast为DexFile类型的指针
+<pre tabindex=0><code>DexFile *dexFile_ptr = (DexFile *)adress; // cast为DexFile类型的指针
 
 dexFile_ptr -&gt; begin_; // 这样取得begin_的内容
 
 </code></pre><p>对于第一个问题：设想如果你的代码里面没有<code>DexFile</code>的定义，怎么通过编译？编译器会告诉你找不到符号</p>
 <p>实际上第二句：</p>
-<pre tabindex="0"><code>dexFile_ptr -&gt; begin_;
+<pre tabindex=0><code>dexFile_ptr -&gt; begin_;
 </code></pre><p>可以理解为:
 （<code>dexFile_ptr</code>的地址 + <code>begin_</code>这个成员变量在对象里的相对位置）就是<code>begin_</code>的内容在内存中的位置</p>
 <p>而这个相对位置，是编译时决定的，与class的结构有关，与编译器有关，与平台有关。</p>
-<h3 id="关于c对象的内存结构">关于C++对象的内存结构</h3>
+<h3 id=关于c对象的内存结构>关于C++对象的内存结构</h3>
 <p>以下是我个人所了解到的</p>
 <ul>
-<li>C++中的类如果有虚函数存在，那么对象的内存结构中第一个位置应该是<strong>虚函数表的指针</strong>。<a href="https://www.linuxidc.com/Linux/2014-12/111047.htm">https://www.linuxidc.com/Linux/2014-12/111047.htm</a></li>
+<li>C++中的类如果有虚函数存在，那么对象的内存结构中第一个位置应该是<strong>虚函数表的指针</strong>。<a href=https://www.linuxidc.com/Linux/2014-12/111047.htm>https://www.linuxidc.com/Linux/2014-12/111047.htm</a></li>
 <li>C++中的函数与类绑定，在对象中不占内存</li>
 <li>C++中的static成员变量与类绑定，在对象中不占内存</li>
 </ul>
-<h3 id="挫折">挫折</h3>
+<h3 id=挫折>挫折</h3>
 <p>发现自己编译出的so文件中<code>std::string</code>类型的大小和art虚拟机中的不一致，
-<a href="https://github.com/KB5201314/ZjDroid/blob/master/app/src/main/jni/dvmnative/dexfile_art.h#L454">https://github.com/KB5201314/ZjDroid/blob/master/app/src/main/jni/dvmnative/dexfile_art.h#L454</a></p>
+<a href=https://github.com/KB5201314/ZjDroid/blob/master/app/src/main/jni/dvmnative/dexfile_art.h#L454>https://github.com/KB5201314/ZjDroid/blob/master/app/src/main/jni/dvmnative/dexfile_art.h#L454</a></p>
 <p>通过dump出这一块内存经过分析可知</p>
 <p>内存结构对应关系为：</p>
-<p><img src="/images/blog/42_0.png" alt="DexFile类的对象的内存结构"></p>
+<p><img src=/images/blog/42_0.png alt=DexFile类的对象的内存结构></p>
 <p>这里的<code>std::string</code>占了3 * 4 = 12个字节，而我编译出来的so里面，它是只占了4个字节的。</p>
 <p>这导致，在那个string之后的内容都发生错位，也就是说，我编译出来的class，偏移量和art虚拟机里面的so文件里的不一样，这导致向ZjDroid发送<code>backsmali</code>命令无法使用</p>
 <p>解决办法：</p>
 <p>在一定范围内进行内存搜索：
 因为<code>begin_</code>和<code>head_ptr</code>的值是一样的，我在之后的一定的内存区域内搜索<code>begin_</code>的值就能找到<code>head_ptr</code>的位置了
-<a href="https://github.com/KB5201314/ZjDroid/blob/master/app/src/main/jni/dvmnative/dvmnative.cpp#L583">https://github.com/KB5201314/ZjDroid/blob/master/app/src/main/jni/dvmnative/dvmnative.cpp#L583</a></p>
-<h3 id="出炉">出炉</h3>
+<a href=https://github.com/KB5201314/ZjDroid/blob/master/app/src/main/jni/dvmnative/dvmnative.cpp#L583>https://github.com/KB5201314/ZjDroid/blob/master/app/src/main/jni/dvmnative/dvmnative.cpp#L583</a></p>
+<h3 id=出炉>出炉</h3>
 <p>源码：
-<a href="https://github.com/KB5201314/ZjDroid">https://github.com/KB5201314/ZjDroid</a>
+<a href=https://github.com/KB5201314/ZjDroid>https://github.com/KB5201314/ZjDroid</a>
 apk下载：
-<a href="https://github.com/KB5201314/ZjDroid/releases">https://github.com/KB5201314/ZjDroid/releases</a></p>
-<h3 id="遗留问题">遗留问题</h3>
+<a href=https://github.com/KB5201314/ZjDroid/releases>https://github.com/KB5201314/ZjDroid/releases</a></p>
+<h3 id=遗留问题>遗留问题</h3>
 <p>由于原始版本的源码过于老旧，似乎只适配到Android sdk 17</p>
 <p>在高版本上部分api发生改变，会引发异常</p>
 <p>已知：</p>
@@ -268,54 +241,44 @@ apk下载：
 <li>ZjDroid的<code>backsmali</code>命令虽然获取dex信息部分（native层）已经搞定，但是ZjDroid所使用的<code>org.jf.dexlib2</code>等库是四年前的版本，不支持art，要改为新版的话，要做很多修改。</li>
 </ul>
 <p>欢迎提交改进</p>
-<h3 id="查看android源码的网站">查看Android源码的网站</h3>
+<h3 id=查看android源码的网站>查看Android源码的网站</h3>
 <ul>
 <li>grepcode:支持查看Android5.1.1及以前的源码，支持文件比较
-<a href="http://www.grepcode.com/">http://www.grepcode.com/</a></li>
+<a href=http://www.grepcode.com/>http://www.grepcode.com/</a></li>
 <li>androidxref:资源全，但文件比较功能没上面的那个好用
-<a href="http://androidxref.com/">http://androidxref.com/</a></li>
+<a href=http://androidxref.com/>http://androidxref.com/</a></li>
 </ul>
-<h3 id="参考">参考</h3>
+<h3 id=参考>参考</h3>
 <ul>
 <li>解决爱加密加固之后使用xposed hook的时候log打印不出来的问题:
-<a href="https://bbs.pediy.com/thread-216965.htm">https://bbs.pediy.com/thread-216965.htm</a></li>
+<a href=https://bbs.pediy.com/thread-216965.htm>https://bbs.pediy.com/thread-216965.htm</a></li>
 <li>C++类对象的内存模型:
-<a href="https://www.linuxidc.com/Linux/2014-12/111047.htm">https://www.linuxidc.com/Linux/2014-12/111047.htm</a></li>
+<a href=https://www.linuxidc.com/Linux/2014-12/111047.htm>https://www.linuxidc.com/Linux/2014-12/111047.htm</a></li>
 <li>std::string源码探秘和性能分析：
-<a href="https://blog.csdn.net/ybxuwei/article/details/51326830">https://blog.csdn.net/ybxuwei/article/details/51326830</a></li>
+<a href=https://blog.csdn.net/ybxuwei/article/details/51326830>https://blog.csdn.net/ybxuwei/article/details/51326830</a></li>
 <li>修改安卓源码：Art模式下的通用脱壳方法:
-<a href="http://www.freebuf.com/articles/terminal/166307.html">http://www.freebuf.com/articles/terminal/166307.html</a></li>
+<a href=http://www.freebuf.com/articles/terminal/166307.html>http://www.freebuf.com/articles/terminal/166307.html</a></li>
 <li>GDB中打印ART基础类:
-<a href="http://www.cnblogs.com/YYPapa/p/6858787.html">http://www.cnblogs.com/YYPapa/p/6858787.html</a></li>
+<a href=http://www.cnblogs.com/YYPapa/p/6858787.html>http://www.cnblogs.com/YYPapa/p/6858787.html</a></li>
 <li>阿里早期Android加固代码的实现分析:
-<a href="http://www.voidcn.com/article/p-ntseiwvg-bqs.html">http://www.voidcn.com/article/p-ntseiwvg-bqs.html</a></li>
+<a href=http://www.voidcn.com/article/p-ntseiwvg-bqs.html>http://www.voidcn.com/article/p-ntseiwvg-bqs.html</a></li>
 <li>[原创]阿里早期加固代码还原4.4-6.0:
-<a href="https://bbs.pediy.com/thread-215078.htm">https://bbs.pediy.com/thread-215078.htm</a></li>
+<a href=https://bbs.pediy.com/thread-215078.htm>https://bbs.pediy.com/thread-215078.htm</a></li>
 <li>dex_file.h头文件
-<a href="http://androidxref.com/7.1.2_r36/xref/art/runtime/dex_file.h">http://androidxref.com/7.1.2_r36/xref/art/runtime/dex_file.h</a></li>
+<a href=http://androidxref.com/7.1.2_r36/xref/art/runtime/dex_file.h>http://androidxref.com/7.1.2_r36/xref/art/runtime/dex_file.h</a></li>
 <li>dex_file.h头文件（Android P）
-<a href="https://android.googlesource.com/platform/art/+/android-p-preview-2/libdexfile/dex/dex_file.h">https://android.googlesource.com/platform/art/+/android-p-preview-2/libdexfile/dex/dex_file.h</a></li>
+<a href=https://android.googlesource.com/platform/art/+/android-p-preview-2/libdexfile/dex/dex_file.h>https://android.googlesource.com/platform/art/+/android-p-preview-2/libdexfile/dex/dex_file.h</a></li>
 <li>dalvik_system_DexFile.h头文件
-<a href="http://androidxref.com/7.1.2_r36/xref/art/runtime/native/dalvik_system_DexFile.h">http://androidxref.com/7.1.2_r36/xref/art/runtime/native/dalvik_system_DexFile.h</a></li>
+<a href=http://androidxref.com/7.1.2_r36/xref/art/runtime/native/dalvik_system_DexFile.h>http://androidxref.com/7.1.2_r36/xref/art/runtime/native/dalvik_system_DexFile.h</a></li>
 </ul>
-
 </main>
-
-
-
-<div id="comments">
-    <hr>
-    <script src="https://utteranc.es/client.js" repo='KB5201314/KB5201314.github.io' issue-term="pathname" label='💬 comments 💬'
-        theme='github-light' crossorigin="anonymous" async>
-        </script>
+<div id=comments>
+<hr>
+<script src=https://utteranc.es/client.js repo=KB5201314/KB5201314.github.io issue-term=pathname label="💬 comments 💬" theme=github-light crossorigin=anonymous async></script>
 </div>
-
-
-  <footer>
-  
-  <hr/>
-  © imlk 2017 &ndash; 2021 | <a href="https://blog.imlk.top">imlk's blog</a> | <a href="https://github.com/KB5201314/">Github</a> | <a href="mailto:me@imlk.top">Email</a> | <a href="https://beian.miit.gov.cn/">京ICP备 - 2020042968号</a>
-  
-  </footer>
-  </body>
+<footer>
+<hr>
+© imlk 2017 &ndash; 2021 | <a href=https://blog.imlk.top>imlk's blog</a> | <a href=https://github.com/KB5201314/>Github</a> | <a href=mailto:me@imlk.top>Email</a> | <a href=https://beian.miit.gov.cn/>京ICP备 - 2020042968号</a>
+</footer>
+</body>
 </html>

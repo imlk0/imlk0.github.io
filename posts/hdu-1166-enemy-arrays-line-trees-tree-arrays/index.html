@@ -1,85 +1,61 @@
-<!DOCTYPE html>
-<html lang="zh-cn">
-
+<!doctype html><html lang=zh-cn>
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>HDU 1166 敌兵布阵——线段树，树状数组 | imlk&#39;s blog</title>
-  <link rel="stylesheet" href='/css/style.css' />
-  <link rel="stylesheet" href='/css/fonts.css' />
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&display=swap" rel="stylesheet">
+<meta charset=utf-8>
+<meta name=viewport content="width=device-width,initial-scale=1">
+<title>HDU 1166 敌兵布阵——线段树，树状数组 | imlk's blog</title>
+<link rel=stylesheet href=/css/style.css>
+<link rel=stylesheet href=/css/fonts.css>
+<link rel=preconnect href=https://fonts.googleapis.com>
+<link rel=preconnect href=https://fonts.gstatic.com crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&display=swap" rel=stylesheet>
 </head>
-
 <body>
-  <header class="header">
-    <a class="logo" href='/'> imlk's Blog </a>
-    <nav>
-      <ul class="menu">
-        
-        <li><a href="/">Home</a></li>
-        
-        <li><a href="/about/">About</a></li>
-        
-        <li><a href="/archives/">Archives</a></li>
-        
-        <li><a href="/friends/">Friends</a></li>
-        
-        <li><a href="/index.xml">Subscribe</a></li>
-        
-      </ul>
-    </nav>
-  </header>
-  <hr />
-
-
-
-<div class="article-meta">
-    <h1><span class="title">HDU 1166 敌兵布阵——线段树，树状数组</span></h1>
-    
-    <span>
-        <span class="date">2018-02-06</span>
-        |
-        
-        <span class="cats">
-            
-            
-            <a href='https://blog.imlk.top/categories/algorithm/'>Algorithm</a>
-            
-        </span>
-        
-        |
-        <span class="tags">
-            
-            <a href='https://blog.imlk.top/tags/%E7%BA%BF%E6%AE%B5%E6%A0%91/'>#线段树</a>
-            
-        </span>
-        
-    </span>
-    <br>
-    
+<header class=header>
+<a class=logo href=/> imlk's Blog </a>
+<nav>
+<ul class=menu>
+<li><a href=/>Home</a></li>
+<li><a href=/about/>About</a></li>
+<li><a href=/archives/>Archives</a></li>
+<li><a href=/friends/>Friends</a></li>
+<li><a href=/index.xml>Subscribe</a></li>
+</ul>
+</nav>
+</header>
+<hr>
+<div class=article-meta>
+<h1><span class=title>HDU 1166 敌兵布阵——线段树，树状数组</span></h1>
+<span>
+<span class=date>2018-02-06</span>
+|
+<span class=cats>
+<a href=https://blog.imlk.top/categories/algorithm/>Algorithm</a>
+</span>
+|
+<span class=tags>
+<a href=https://blog.imlk.top/tags/%E7%BA%BF%E6%AE%B5%E6%A0%91/>#线段树</a>
+</span>
+</span>
+<br>
 </div>
-
-
 <main>
-    <p>这题本来我打算用前缀数组实现源数据的处理，并把更变用map&lt;int ,int&gt;实现，发现后来还是超时了；</p>
+<p>这题本来我打算用前缀数组实现源数据的处理，并把更变用map&lt;int ,int>实现，发现后来还是超时了；</p>
 <p>借机学习了一下线段树，虽然没怎么看懂，但大概还是理解了一点；
 这题用 指针构成的线段树 和 数组构成的线段树 分别来实现了一下
 资料：
 线段树从零开始 - CSDN博客
-<a href="http://blog.csdn.net/zearot/article/details/52280189">http://blog.csdn.net/zearot/article/details/52280189</a>
+<a href=http://blog.csdn.net/zearot/article/details/52280189>http://blog.csdn.net/zearot/article/details/52280189</a>
 线段树详解 （原理，实现与应用） - CSDN博客
-<a href="http://blog.csdn.net/zearot/article/details/48299459">http://blog.csdn.net/zearot/article/details/48299459</a>
+<a href=http://blog.csdn.net/zearot/article/details/48299459>http://blog.csdn.net/zearot/article/details/48299459</a>
 看到有人用树状数组实现，学习了一下树状数组，代码贴在最后：
 资料：
 树状数组入门
-<a href="https://www.cnblogs.com/hsd-/p/6139376.html">https://www.cnblogs.com/hsd-/p/6139376.html</a></p>
+<a href=https://www.cnblogs.com/hsd-/p/6139376.html>https://www.cnblogs.com/hsd-/p/6139376.html</a></p>
 <p>题目来源：<a href="http://acm.hdu.edu.cn/showproblem.php?pid=1166">http://acm.hdu.edu.cn/showproblem.php?pid=1166</a></p>
 <blockquote>
 <p>敌兵布阵
-Time Limit: 2000/1000 MS (Java/Others)    Memory Limit: 65536/32768 K (Java/Others)
-Total Submission(s): 106625    Accepted Submission(s): 44789</p>
+Time Limit: 2000/1000 MS (Java/Others) Memory Limit: 65536/32768 K (Java/Others)
+Total Submission(s): 106625 Accepted Submission(s): 44789</p>
 <p>Problem Description
 C国的死对头A国这段时间正在进行军事演习，所以C国间谍头子Derek和他手下Tidy又开始忙乎了。A国在海岸线沿直线布置了N个工兵营地,Derek和Tidy的任务就是要监视这些工兵营地的活动情况。由于采取了某种先进的监测手段，所以每个工兵营地的人数C国都掌握的一清二楚,每个工兵营地的人数都有可能发生变动，可能增加或减少若干人手,但这些都逃不过C国的监视。
 中央情报局要研究敌人究竟演习什么战术,所以Tidy要随时向Derek汇报某一段连续的工兵营地一共有多少人,例如Derek问:“Tidy,马上汇报第3个营地到第10个营地共有多少人!”Tidy就要马上开始计算这一段的总人数并汇报。但敌兵营地的人数经常变动，而Derek每次询问的段都不一样，所以Tidy不得不每次都一个一个营地的去数，很快就精疲力尽了，Derek对Tidy的计算速度越来越不满:&ldquo;你个死肥仔，算得这么慢，我炒你鱿鱼!”Tidy想：“你自己来算算看，这可真是一项累人的工作!我恨不得你炒我鱿鱼呢!”无奈之下，Tidy只好打电话向计算机专家Windbreaker求救,Windbreaker说：“死肥仔，叫你平时做多点acm题和看多点算法书，现在尝到苦果了吧!”Tidy说：&ldquo;我知错了。。。&ldquo;但Windbreaker已经挂掉电话了。Tidy很苦恼，这么算他真的会崩溃的，聪明的读者，你能写个程序帮他完成这项工作吗？不过如果你的程序效率不够高的话，Tidy还是会受到Derek的责骂的.</p>
@@ -114,10 +90,10 @@ End</p>
 <p>Author
 Windbreaker</p>
 <p>Recommend
-Eddy   |   We have carefully selected several similar problems for you:  1394 1698 1754 1542 1540</p>
+Eddy | We have carefully selected several similar problems for you: 1394 1698 1754 1542 1540</p>
 </blockquote>
 <p>指针线段树：</p>
-<pre tabindex="0"><code>#include &lt;iostream&gt;
+<pre tabindex=0><code>#include &lt;iostream&gt;
 #include &lt;cstdio&gt;
 #include &lt;cstring&gt;
 
@@ -238,7 +214,7 @@ int main(int argc, char const *argv[])
 	return 0;
 }
 </code></pre><p>自定义结构体组成的数组实现线段树：</p>
-<pre tabindex="0"><code>#include &lt;iostream&gt;
+<pre tabindex=0><code>#include &lt;iostream&gt;
 #include &lt;cstdio&gt;
 #include &lt;cstring&gt;
 
@@ -348,7 +324,7 @@ int main(int argc, char const *argv[])
 	return 0;
 }
 </code></pre><p>树状数组实现：代码量超少！！！</p>
-<pre tabindex="0"><code>#include &lt;iostream&gt;
+<pre tabindex=0><code>#include &lt;iostream&gt;
 #include &lt;cstdio&gt;
 #include &lt;cstring&gt;
 
@@ -459,22 +435,13 @@ int main(int argc, char const *argv[])
 }
 </code></pre>
 </main>
-
-
-
-<div id="comments">
-    <hr>
-    <script src="https://utteranc.es/client.js" repo='KB5201314/KB5201314.github.io' issue-term="pathname" label='💬 comments 💬'
-        theme='github-light' crossorigin="anonymous" async>
-        </script>
+<div id=comments>
+<hr>
+<script src=https://utteranc.es/client.js repo=KB5201314/KB5201314.github.io issue-term=pathname label="💬 comments 💬" theme=github-light crossorigin=anonymous async></script>
 </div>
-
-
-  <footer>
-  
-  <hr/>
-  © imlk 2017 &ndash; 2021 | <a href="https://blog.imlk.top">imlk's blog</a> | <a href="https://github.com/KB5201314/">Github</a> | <a href="mailto:me@imlk.top">Email</a> | <a href="https://beian.miit.gov.cn/">京ICP备 - 2020042968号</a>
-  
-  </footer>
-  </body>
+<footer>
+<hr>
+© imlk 2017 &ndash; 2021 | <a href=https://blog.imlk.top>imlk's blog</a> | <a href=https://github.com/KB5201314/>Github</a> | <a href=mailto:me@imlk.top>Email</a> | <a href=https://beian.miit.gov.cn/>京ICP备 - 2020042968号</a>
+</footer>
+</body>
 </html>

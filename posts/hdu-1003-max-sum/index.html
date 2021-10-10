@@ -1,74 +1,49 @@
-<!DOCTYPE html>
-<html lang="zh-cn">
-
+<!doctype html><html lang=zh-cn>
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>HDU 1003 Max sum——分治法的应用，动态规划，前缀数组 | imlk&#39;s blog</title>
-  <link rel="stylesheet" href='/css/style.css' />
-  <link rel="stylesheet" href='/css/fonts.css' />
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&display=swap" rel="stylesheet">
+<meta charset=utf-8>
+<meta name=viewport content="width=device-width,initial-scale=1">
+<title>HDU 1003 Max sum——分治法的应用，动态规划，前缀数组 | imlk's blog</title>
+<link rel=stylesheet href=/css/style.css>
+<link rel=stylesheet href=/css/fonts.css>
+<link rel=preconnect href=https://fonts.googleapis.com>
+<link rel=preconnect href=https://fonts.gstatic.com crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&display=swap" rel=stylesheet>
 </head>
-
 <body>
-  <header class="header">
-    <a class="logo" href='/'> imlk's Blog </a>
-    <nav>
-      <ul class="menu">
-        
-        <li><a href="/">Home</a></li>
-        
-        <li><a href="/about/">About</a></li>
-        
-        <li><a href="/archives/">Archives</a></li>
-        
-        <li><a href="/friends/">Friends</a></li>
-        
-        <li><a href="/index.xml">Subscribe</a></li>
-        
-      </ul>
-    </nav>
-  </header>
-  <hr />
-
-
-
-<div class="article-meta">
-    <h1><span class="title">HDU 1003 Max sum——分治法的应用，动态规划，前缀数组</span></h1>
-    
-    <span>
-        <span class="date">2017-12-06</span>
-        |
-        
-        <span class="cats">
-            
-            
-            <a href='https://blog.imlk.top/categories/algorithm/'>Algorithm</a>
-            
-        </span>
-        
-        |
-        <span class="tags">
-            
-            <a href='https://blog.imlk.top/tags/hdu/'>#HDU</a>
-            
-            <a href='https://blog.imlk.top/tags/%E5%88%86%E6%B2%BB%E6%B3%95/'>#分治法</a>
-            
-        </span>
-        
-    </span>
-    <br>
-    
+<header class=header>
+<a class=logo href=/> imlk's Blog </a>
+<nav>
+<ul class=menu>
+<li><a href=/>Home</a></li>
+<li><a href=/about/>About</a></li>
+<li><a href=/archives/>Archives</a></li>
+<li><a href=/friends/>Friends</a></li>
+<li><a href=/index.xml>Subscribe</a></li>
+</ul>
+</nav>
+</header>
+<hr>
+<div class=article-meta>
+<h1><span class=title>HDU 1003 Max sum——分治法的应用，动态规划，前缀数组</span></h1>
+<span>
+<span class=date>2017-12-06</span>
+|
+<span class=cats>
+<a href=https://blog.imlk.top/categories/algorithm/>Algorithm</a>
+</span>
+|
+<span class=tags>
+<a href=https://blog.imlk.top/tags/hdu/>#HDU</a>
+<a href=https://blog.imlk.top/tags/%E5%88%86%E6%B2%BB%E6%B3%95/>#分治法</a>
+</span>
+</span>
+<br>
 </div>
-
-
 <main>
-    <p>原题： <a href="http://acm.hdu.edu.cn/showproblem.php?pid=1003">http://acm.hdu.edu.cn/showproblem.php?pid=1003</a></p>
+<p>原题： <a href="http://acm.hdu.edu.cn/showproblem.php?pid=1003">http://acm.hdu.edu.cn/showproblem.php?pid=1003</a></p>
 <p>看到这题的时候一脸懵逼，网上寻找解答，发现都讲的不详细，变量声明也很短，根本看不出是什么用途，这里给出了我的解答，参考了网上各位大神的方法，加上了注释，方便学习。</p>
 <p>##<strong>0x00 分治法解题</strong></p>
-<pre tabindex="0"><code>#include &lt;stdio.h&gt;
+<pre tabindex=0><code>#include &lt;stdio.h&gt;
 
 struct Sequence
 {
@@ -183,9 +158,9 @@ int main() {
 	return 0;
 }
 </code></pre><p>寒假看到这样一篇文章，讲的很详细
-<a href="http://conw.net/archives/9/#comment-25">http://conw.net/archives/9/#comment-25</a></p>
+<a href=http://conw.net/archives/9/#comment-25>http://conw.net/archives/9/#comment-25</a></p>
 <p>##<strong>0x01 动态规划</strong></p>
-<pre tabindex="0"><code>#include &lt;iostream&gt;
+<pre tabindex=0><code>#include &lt;iostream&gt;
 #include &lt;cstdio&gt;
 #include &lt;cstring&gt;
 
@@ -246,7 +221,7 @@ int main(int argc, char const *argv[])
 
 </code></pre><p>##<strong>0x02 结合优化后的前缀数组</strong></p>
 <p>用这种用法的人似乎更多</p>
-<pre tabindex="0"><code>#include &lt;iostream&gt;
+<pre tabindex=0><code>#include &lt;iostream&gt;
 #include &lt;cstdio&gt;
 #include &lt;cstring&gt;
 #include &lt;algorithm&gt;
@@ -309,22 +284,13 @@ int main(int argc, char const *argv[])
 }
 </code></pre>
 </main>
-
-
-
-<div id="comments">
-    <hr>
-    <script src="https://utteranc.es/client.js" repo='KB5201314/KB5201314.github.io' issue-term="pathname" label='💬 comments 💬'
-        theme='github-light' crossorigin="anonymous" async>
-        </script>
+<div id=comments>
+<hr>
+<script src=https://utteranc.es/client.js repo=KB5201314/KB5201314.github.io issue-term=pathname label="💬 comments 💬" theme=github-light crossorigin=anonymous async></script>
 </div>
-
-
-  <footer>
-  
-  <hr/>
-  © imlk 2017 &ndash; 2021 | <a href="https://blog.imlk.top">imlk's blog</a> | <a href="https://github.com/KB5201314/">Github</a> | <a href="mailto:me@imlk.top">Email</a> | <a href="https://beian.miit.gov.cn/">京ICP备 - 2020042968号</a>
-  
-  </footer>
-  </body>
+<footer>
+<hr>
+© imlk 2017 &ndash; 2021 | <a href=https://blog.imlk.top>imlk's blog</a> | <a href=https://github.com/KB5201314/>Github</a> | <a href=mailto:me@imlk.top>Email</a> | <a href=https://beian.miit.gov.cn/>京ICP备 - 2020042968号</a>
+</footer>
+</body>
 </html>

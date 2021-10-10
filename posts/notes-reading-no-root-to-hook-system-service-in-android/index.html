@@ -1,87 +1,60 @@
-<!DOCTYPE html>
-<html lang="zh-cn">
-
+<!doctype html><html lang=zh-cn>
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>读Android系统篇之----免root实现Hook系统服务拦截方法 | imlk&#39;s blog</title>
-  <link rel="stylesheet" href='/css/style.css' />
-  <link rel="stylesheet" href='/css/fonts.css' />
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&display=swap" rel="stylesheet">
+<meta charset=utf-8>
+<meta name=viewport content="width=device-width,initial-scale=1">
+<title>读Android系统篇之----免root实现Hook系统服务拦截方法 | imlk's blog</title>
+<link rel=stylesheet href=/css/style.css>
+<link rel=stylesheet href=/css/fonts.css>
+<link rel=preconnect href=https://fonts.googleapis.com>
+<link rel=preconnect href=https://fonts.gstatic.com crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&display=swap" rel=stylesheet>
 </head>
-
 <body>
-  <header class="header">
-    <a class="logo" href='/'> imlk's Blog </a>
-    <nav>
-      <ul class="menu">
-        
-        <li><a href="/">Home</a></li>
-        
-        <li><a href="/about/">About</a></li>
-        
-        <li><a href="/archives/">Archives</a></li>
-        
-        <li><a href="/friends/">Friends</a></li>
-        
-        <li><a href="/index.xml">Subscribe</a></li>
-        
-      </ul>
-    </nav>
-  </header>
-  <hr />
-
-
-
-<div class="article-meta">
-    <h1><span class="title">读Android系统篇之&mdash;-免root实现Hook系统服务拦截方法</span></h1>
-    
-    <span>
-        <span class="date">2018-04-13</span>
-        |
-        
-        <span class="cats">
-            
-            
-            <a href='https://blog.imlk.top/categories/android/'>Android</a>
-            
-        </span>
-        
-        |
-        <span class="tags">
-            
-            <a href='https://blog.imlk.top/tags/android/'>#Android</a>
-            
-            <a href='https://blog.imlk.top/tags/binder/'>#Binder</a>
-            
-            <a href='https://blog.imlk.top/tags/ipc/'>#IPC</a>
-            
-            <a href='https://blog.imlk.top/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/'>#读书笔记</a>
-            
-        </span>
-        
-    </span>
-    <br>
-    
+<header class=header>
+<a class=logo href=/> imlk's Blog </a>
+<nav>
+<ul class=menu>
+<li><a href=/>Home</a></li>
+<li><a href=/about/>About</a></li>
+<li><a href=/archives/>Archives</a></li>
+<li><a href=/friends/>Friends</a></li>
+<li><a href=/index.xml>Subscribe</a></li>
+</ul>
+</nav>
+</header>
+<hr>
+<div class=article-meta>
+<h1><span class=title>读Android系统篇之&mdash;-免root实现Hook系统服务拦截方法</span></h1>
+<span>
+<span class=date>2018-04-13</span>
+|
+<span class=cats>
+<a href=https://blog.imlk.top/categories/android/>Android</a>
+</span>
+|
+<span class=tags>
+<a href=https://blog.imlk.top/tags/android/>#Android</a>
+<a href=https://blog.imlk.top/tags/binder/>#Binder</a>
+<a href=https://blog.imlk.top/tags/ipc/>#IPC</a>
+<a href=https://blog.imlk.top/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/>#读书笔记</a>
+</span>
+</span>
+<br>
 </div>
-
-
 <main>
-    <p>第二篇读书笔记</p>
-<p>拜读姜维大神的<a href="https://blog.csdn.net/jiangwei0910410003/article/details/52523679">Android系统篇之&mdash;-免root实现Hook系统服务拦截方法</a></p>
+<p>第二篇读书笔记</p>
+<p>拜读姜维大神的<a href=https://blog.csdn.net/jiangwei0910410003/article/details/52523679>Android系统篇之&mdash;-免root实现Hook系统服务拦截方法</a></p>
 <p>梳理了下思路，解决了疑惑</p>
 <p>我们使用剪切板服务的时候是调用了<code>ContextImpl</code>的<code>getSystemService</code>方法</p>
-<h4 id="contextimpl的getsystemservice方法"><code>ContextImpl</code>的<code>getSystemService</code>方法</h4>
-<pre tabindex="0"><code>    @Override
+<h4 id=contextimpl的getsystemservice方法><code>ContextImpl</code>的<code>getSystemService</code>方法</h4>
+<pre tabindex=0><code>    @Override
     public Object getSystemService(String name) {
         return SystemServiceRegistry.getSystemService(this, name);
     }
 
 </code></pre><p>该方法将返回<code>Object</code>类型对象，我们将它强制转换为一个<code>ClipboardManager</code>，也就是说它返回了一个<code>ClipboardManager</code>供我们使用。而这个方法最终将构造一个<code>ClipboardManager</code>，在<code>ClipboardManager</code>构造的过程中，将获取远端<code>Binder</code>并调用<code>IClipboard.Stub</code>的<code>asInterface</code>方法转化为<strong>本地代理对象</strong>保存在其中，</p>
-<h4 id="clipboardmanager的一个构造函数"><code>ClipboardManager</code>的一个构造函数</h4>
-<pre tabindex="0"><code>    /** {@hide} */
+<h4 id=clipboardmanager的一个构造函数><code>ClipboardManager</code>的一个构造函数</h4>
+<pre tabindex=0><code>    /** {@hide} */
     public ClipboardManager(Context context, Handler handler) throws ServiceNotFoundException {
         mContext = context;
         mService = IClipboard.Stub.asInterface(
@@ -91,8 +64,8 @@
 <blockquote>
 <p>这里需要铭记一点，远端<code>Binder</code>需要调用<code>Stub</code>的<code>asInterface</code>方法转化为<strong>本地代理对象</strong>才能使用(上面说到在<code>ClipboardManager</code>的构造函数中，这一步骤<code>ClipboardManager</code>帮我们封装了这一操作)</p>
 </blockquote>
-<h4 id="servicemanager中的getservice方法"><code>ServiceManager</code>中的<code>getService</code>方法</h4>
-<pre tabindex="0"><code>    /**
+<h4 id=servicemanager中的getservice方法><code>ServiceManager</code>中的<code>getService</code>方法</h4>
+<pre tabindex=0><code>    /**
      * Returns a reference to a service with the given name.
      * 
      * @param name the name of the service to get
@@ -112,15 +85,15 @@
         return null;
     }
 </code></pre><p>下面继续解析姜维的文章中hook的流程，在上一步的动态代理之后，拦截了被代理对象（<code>BinderProxy</code>对象）的<code>queryLocalInterface</code>方法，下面是</p>
-<h4 id="binderproxy中querylocalinterface的实现"><code>BinderProxy</code>中<code>queryLocalInterface</code>的实现</h4>
-<pre tabindex="0"><code>    public IInterface queryLocalInterface(String descriptor) {
+<h4 id=binderproxy中querylocalinterface的实现><code>BinderProxy</code>中<code>queryLocalInterface</code>的实现</h4>
+<pre tabindex=0><code>    public IInterface queryLocalInterface(String descriptor) {
         return null;
     }
 
 </code></pre><p>可以看见它直接返回了<code>null</code>，而这个方法是在哪里被调用的呢，反编译<code>framework.jar</code>发现，是在<code>IClipboard.Stub</code>中，这里<code>IClipboard</code>就是用<code>aidl</code>生成的，和我们自己生成的差不多
 看看</p>
-<h4 id="iclipboardstub的asinterface方法"><code>IClipboard.Stub</code>的<code>asInterface</code>方法</h4>
-<pre tabindex="0"><code>    public static IClipboard asInterface(IBinder obj) {
+<h4 id=iclipboardstub的asinterface方法><code>IClipboard.Stub</code>的<code>asInterface</code>方法</h4>
+<pre tabindex=0><code>    public static IClipboard asInterface(IBinder obj) {
         if (obj == null) {
             return null;
         }
@@ -132,9 +105,9 @@
     }
 </code></pre><p>回到正题，姜维的文章里拦截了<code>queryLocalInterface</code>以后，一开始我以为它又动态代理了一个叫做<code>base</code>的对象，因为这里new了一个<code>HookBinderInvocationHandler</code>，传入的第一个参数就是<code>base</code>突然有点蒙这个<code>base</code>是哪里冒出来的，看看上下文，发现是在第一个动态代理的Handler的构造函数里，传入了一个<code>rawBinder</code>，赋值给了成员变量<code>base</code>了，而这个<code>rawBinder</code>，就是第一次代理中，被代理的那个远端<code>Binder</code>，我就有点纳闷了，代理两次干啥？，仔细想，这只是个构造函数啊，我想传进去什么和我要动态代理什么对象没有关系呀。
 于是翻回去看，动态代理的接口是<code>this.iinterface</code>，看了下第一次动态代理的Handler的构造函数，看到</p>
-<pre tabindex="0"><code>this.iinterface = Class.forName(&quot;android.content.IClipboard&quot;)
+<pre tabindex=0><code>this.iinterface = Class.forName(&quot;android.content.IClipboard&quot;)
 </code></pre><p>仔细想想，这是要搞出来一个<code>IClipboard</code>啊，其实这个<code>IClipboard</code>我们前文接触过了，这里贴上<code>IClipboard</code>部分源码（主要看结构）</p>
-<pre tabindex="0"><code>package android.content;
+<pre tabindex=0><code>package android.content;
 ······
 public interface IClipboard extends IInterface {
 
@@ -150,10 +123,10 @@ public interface IClipboard extends IInterface {
 用<code>IClipboard</code>这个接口合成了一个代理对象，Handler是<code>HookBinderInvocationHandler</code>，
 把这个合成的代理对象<code>return</code>了！！！</p>
 <p>没错，这里是关键，它直接把它作为<code>queryLocalInterface</code>方法的返回值<code>return</code>了</p>
-<p>看一下原来的<a href="#BinderProxy%E4%B8%ADqueryLocalInterface%E7%9A%84%E5%AE%9E%E7%8E%B0">BinderProxy中queryLocalInterface的实现</a></p>
-<p>再看一下<a href="#IClipboard.Stub%E7%9A%84asInterface%E6%96%B9%E6%B3%95">IClipboard.Stub的asInterface方法</a></p>
+<p>看一下原来的<a href=#BinderProxy%E4%B8%ADqueryLocalInterface%E7%9A%84%E5%AE%9E%E7%8E%B0>BinderProxy中queryLocalInterface的实现</a></p>
+<p>再看一下<a href=#IClipboard.Stub%E7%9A%84asInterface%E6%96%B9%E6%B3%95>IClipboard.Stub的asInterface方法</a></p>
 <p>在<code>asInterface</code>方法里，我们合成的代理对象，赋值给了iin，接下来</p>
-<pre tabindex="0"><code>        IInterface iin = obj.queryLocalInterface(DESCRIPTOR);
+<pre tabindex=0><code>        IInterface iin = obj.queryLocalInterface(DESCRIPTOR);
         if (iin == null || !(iin instanceof IClipboard)) { //关键！！！！！
             return new Proxy(obj); //没走这！！！
         }
@@ -162,7 +135,7 @@ public interface IClipboard extends IInterface {
 /(ㄒoㄒ)/~~</p>
 <p>我们比较一下：</p>
 <p>hook前：</p>
-<pre tabindex="0"><code>[调用 getSystemService ]
+<pre tabindex=0><code>[调用 getSystemService ]
  --&gt; [ ClipboardManager 的构造函数]
  --&gt; [间接调用了 ServiceManager 中的 getService ]
  --&gt; [获得远端 Binder 对象]
@@ -170,7 +143,7 @@ public interface IClipboard extends IInterface {
  --&gt; [获得 IClipboard.Stub.Proxy 对象]
  --&gt; [后续使用]
 </code></pre><p>hook后：</p>
-<pre tabindex="0"><code>[Hook开始]
+<pre tabindex=0><code>[Hook开始]
  --&gt; [主动反射调用 ServiceManager 中的 getService 并动态代理远端对象]
  --&gt; [正常调用开始]
  --&gt; [调用 getSystemService ]
@@ -182,24 +155,14 @@ public interface IClipboard extends IInterface {
  --&gt; [返回合成的代理对象]
  --&gt; [后续使用]
 </code></pre><p>就这样，两次动态代理，第一次代理远端对象，拦截<code>queryLocalInterface</code>方法，第二次动态代理合成了一个实现了<code>IClipboard</code>接口的对象，骗过了<code>ClipboardManager</code>。</p>
-
 </main>
-
-
-
-<div id="comments">
-    <hr>
-    <script src="https://utteranc.es/client.js" repo='KB5201314/KB5201314.github.io' issue-term="pathname" label='💬 comments 💬'
-        theme='github-light' crossorigin="anonymous" async>
-        </script>
+<div id=comments>
+<hr>
+<script src=https://utteranc.es/client.js repo=KB5201314/KB5201314.github.io issue-term=pathname label="💬 comments 💬" theme=github-light crossorigin=anonymous async></script>
 </div>
-
-
-  <footer>
-  
-  <hr/>
-  © imlk 2017 &ndash; 2021 | <a href="https://blog.imlk.top">imlk's blog</a> | <a href="https://github.com/KB5201314/">Github</a> | <a href="mailto:me@imlk.top">Email</a> | <a href="https://beian.miit.gov.cn/">京ICP备 - 2020042968号</a>
-  
-  </footer>
-  </body>
+<footer>
+<hr>
+© imlk 2017 &ndash; 2021 | <a href=https://blog.imlk.top>imlk's blog</a> | <a href=https://github.com/KB5201314/>Github</a> | <a href=mailto:me@imlk.top>Email</a> | <a href=https://beian.miit.gov.cn/>京ICP备 - 2020042968号</a>
+</footer>
+</body>
 </html>

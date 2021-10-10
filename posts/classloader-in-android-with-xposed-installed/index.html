@@ -1,91 +1,65 @@
-<!DOCTYPE html>
-<html lang="zh-cn">
-
+<!doctype html><html lang=zh-cn>
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Xposed框架加持下的Android应用中ClassLoader的结构关系 | imlk&#39;s blog</title>
-  <link rel="stylesheet" href='/css/style.css' />
-  <link rel="stylesheet" href='/css/fonts.css' />
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&display=swap" rel="stylesheet">
+<meta charset=utf-8>
+<meta name=viewport content="width=device-width,initial-scale=1">
+<title>Xposed框架加持下的Android应用中ClassLoader的结构关系 | imlk's blog</title>
+<link rel=stylesheet href=/css/style.css>
+<link rel=stylesheet href=/css/fonts.css>
+<link rel=preconnect href=https://fonts.googleapis.com>
+<link rel=preconnect href=https://fonts.gstatic.com crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&display=swap" rel=stylesheet>
 </head>
-
 <body>
-  <header class="header">
-    <a class="logo" href='/'> imlk's Blog </a>
-    <nav>
-      <ul class="menu">
-        
-        <li><a href="/">Home</a></li>
-        
-        <li><a href="/about/">About</a></li>
-        
-        <li><a href="/archives/">Archives</a></li>
-        
-        <li><a href="/friends/">Friends</a></li>
-        
-        <li><a href="/index.xml">Subscribe</a></li>
-        
-      </ul>
-    </nav>
-  </header>
-  <hr />
-
-
-
-<div class="article-meta">
-    <h1><span class="title">Xposed框架加持下的Android应用中ClassLoader的结构关系</span></h1>
-    
-    <span>
-        <span class="date">2018-07-07</span>
-        |
-        
-        <span class="cats">
-            
-            
-            <a href='https://blog.imlk.top/categories/reverse/'>Reverse</a>
-            
-        </span>
-        
-        |
-        <span class="tags">
-            
-            <a href='https://blog.imlk.top/tags/xposed/'>#Xposed</a>
-            
-            <a href='https://blog.imlk.top/tags/android/'>#Android</a>
-            
-            <a href='https://blog.imlk.top/tags/classloader/'>#ClassLoader</a>
-            
-        </span>
-        
-    </span>
-    <br>
-    
+<header class=header>
+<a class=logo href=/> imlk's Blog </a>
+<nav>
+<ul class=menu>
+<li><a href=/>Home</a></li>
+<li><a href=/about/>About</a></li>
+<li><a href=/archives/>Archives</a></li>
+<li><a href=/friends/>Friends</a></li>
+<li><a href=/index.xml>Subscribe</a></li>
+</ul>
+</nav>
+</header>
+<hr>
+<div class=article-meta>
+<h1><span class=title>Xposed框架加持下的Android应用中ClassLoader的结构关系</span></h1>
+<span>
+<span class=date>2018-07-07</span>
+|
+<span class=cats>
+<a href=https://blog.imlk.top/categories/reverse/>Reverse</a>
+</span>
+|
+<span class=tags>
+<a href=https://blog.imlk.top/tags/xposed/>#Xposed</a>
+<a href=https://blog.imlk.top/tags/android/>#Android</a>
+<a href=https://blog.imlk.top/tags/classloader/>#ClassLoader</a>
+</span>
+</span>
+<br>
 </div>
-
-
 <main>
-    <p>好久没写东西了，期末终于考完了，想起之前对Xposed开发的一些问题还没有解决，于是搬出来探索了一番。</p>
-<h3 id="android应用classloader再思考">Android应用ClassLoader再思考</h3>
+<p>好久没写东西了，期末终于考完了，想起之前对Xposed开发的一些问题还没有解决，于是搬出来探索了一番。</p>
+<h3 id=android应用classloader再思考>Android应用ClassLoader再思考</h3>
 <p>我们知道，Android应用以<code>apk</code>文件的形式存在于手机储存空间之中，而要运行这些应用，则需要用ClassLoader加载到虚拟机中去。
 除了应用的apk文件之外，还有一些Android框架层的类在<code>/system/framework/</code>文件夹下以<code>jar</code>包的形式存在着</p>
-<p><img src="/images/blog/43_0.png" alt="/system/framework/中的类文件"></p>
+<p><img src=/images/blog/43_0.png alt=/system/framework/中的类文件></p>
 <p>对Android中各种类型的ClassLoader的使用的解释，网上已经已经很多了，这里就不再添乱。</p>
-<h3 id="未安装xposed框架时的android应用中的classloader">未安装Xposed框架时的Android应用中的ClassLoader</h3>
+<h3 id=未安装xposed框架时的android应用中的classloader>未安装Xposed框架时的Android应用中的ClassLoader</h3>
 <p>通过调试找出了ClassLoader之间的关系（Sony z5，Android7 arm64）</p>
-<p><img src="/images/blog/43_1.png" alt="未安装Xposed框架时的Android应用中的ClassLoader关系图"></p>
+<p><img src=/images/blog/43_1.png alt=未安装Xposed框架时的Android应用中的ClassLoader关系图></p>
 <p>可以看到有两个<code>PathClassLoader</code>，它们的<code>parent</code>都是<code>BootClassLoader</code>。</p>
 <p>左边那个<code>PathClassLoader</code>加载的就是我们的App，右边那个是<code>ClassLoader.getSystemClassLoader()</code>方法获取到的</p>
-<h4 id="classloadergetsystemclassloader">ClassLoader.getSystemClassLoader()</h4>
+<h4 id=classloadergetsystemclassloader>ClassLoader.getSystemClassLoader()</h4>
 <p>翻看源码</p>
-<pre tabindex="0"><code>    @CallerSensitive
+<pre tabindex=0><code>    @CallerSensitive
     public static ClassLoader getSystemClassLoader() {
         return SystemClassLoader.loader;
     }
 </code></pre><p>发现是一个静态方法</p>
-<pre tabindex="0"><code>public abstract class ClassLoader {
+<pre tabindex=0><code>public abstract class ClassLoader {
 
     static private class SystemClassLoader {
         public static ClassLoader loader = ClassLoader.createSystemClassLoader();
@@ -93,7 +67,7 @@
 ...
 </code></pre><p>这个<code>SystemClassLoader</code>类是<code>ClassLoader</code>的一个静态内部类，并且静态初始化了一个<code>loader</code>成员变量
 跟入<code>ClassLoader.createSystemClassLoader()</code></p>
-<pre tabindex="0"><code>    private static ClassLoader createSystemClassLoader() {
+<pre tabindex=0><code>    private static ClassLoader createSystemClassLoader() {
         String classPath = System.getProperty(&quot;java.class.path&quot;, &quot;.&quot;);
         String librarySearchPath = System.getProperty(&quot;java.library.path&quot;, &quot;&quot;);
 
@@ -115,7 +89,7 @@
     }
 </code></pre><p>原来这个<code>getSystemClassLoader()</code>返回的<code>ClassLoader</code>就是以系统的属性构建的一个<code>CLassLoader</code>啊</p>
 <p>在<code>System.initUnchangeableSystemProperties()</code>中找到了这个属性的初始化过程</p>
-<pre tabindex="0"><code>    private static Properties initUnchangeableSystemProperties() {
+<pre tabindex=0><code>    private static Properties initUnchangeableSystemProperties() {
         VMRuntime runtime = VMRuntime.getRuntime();
         Properties p = new Properties();
 
@@ -127,15 +101,15 @@
         String javaHome = getenv(&quot;JAVA_HOME&quot;);
     ...
 </code></pre><p>我们这里不去深究这个属性值的产生过程了，我们直接调用去获取属性，发现：</p>
-<pre tabindex="0"><code>System.getProperty(&quot;java.class.path&quot;)=&quot;.&quot;
+<pre tabindex=0><code>System.getProperty(&quot;java.class.path&quot;)=&quot;.&quot;
 System.getProperty(&quot;java.library.path&quot;)=&quot;/system/lib64:/vendor/lib64&quot;
 </code></pre><p>看起来并没有相关的线索，上网搜也没有找到什么有价值的东西，下断点发现在应用程序启动的过程中会被被调用一次。</p>
-<h4 id="bootclassloader">BootClassLoader</h4>
+<h4 id=bootclassloader>BootClassLoader</h4>
 <p>这个类加载器很特殊了，
 <code>Integer.class.getClassLoader()</code>返回的就是这个<code>BootClassLoader</code>，可见这是基础的<code>ClassLoader</code>，
 另外，调用<code>android.widget.TextView.class.getClassLoader()</code>得到的也是这个<code>BootClassLoader</code></p>
 <p>在<code>/init.rc</code>或<code>/init.environ.rc</code>中一条</p>
-<pre tabindex="0"><code>export BOOTCLASSPATH /system/framework/org.dirtyunicorns.utils.jar
+<pre tabindex=0><code>export BOOTCLASSPATH /system/framework/org.dirtyunicorns.utils.jar
 					:/system/framework/telephony-ext.jar
 					:/system/framework/tcmiface.jar
 					:/system/framework/core-oj.jar
@@ -152,19 +126,19 @@ System.getProperty(&quot;java.library.path&quot;)=&quot;/system/lib64:/vendor/li
 					:/system/framework/apache-xml.jar
 					:/system/framework/org.apache.http.legacy.boot.jar
 </code></pre><p>从字面意思上看，应该是指定了<code>BootClassLoader</code>加载的一些系统框架类的路径，其中<code>android.widget.TextView</code>这些就是在<code>/system/framework/framework.jar</code>里的。</p>
-<h3 id="xposed框架加持以后">Xposed框架加持以后</h3>
+<h3 id=xposed框架加持以后>Xposed框架加持以后</h3>
 <p>写过xposed模块的都知道，hook逻辑是是写在宿主app之外的独立的一个app里面的，宿主app启动的时候，这个模块app就会被启动，而在<code>XposedInstaller</code>里能控制模块app的启用或禁用。</p>
 <p>既然要加载别的apk，那就意味着一定和ClassLoader有关系啦，
 这里依然使用调试的方法，（rom：AEX Android7.1.2 arm）</p>
-<p><img src="/images/blog/43_2.png" alt="安装Xposed框架后的Android应用中的ClassLoader关系图"></p>
+<p><img src=/images/blog/43_2.png alt=安装Xposed框架后的Android应用中的ClassLoader关系图></p>
 <p>可以看到刷入了Xposed框架以后发生的变化：（这里使用的是Xposed89版）</p>
 <p>- <code>BootClassLoader</code>的下面多了一层<code>PathClassLoader</code>
 - 宿主app的<code>ClassLoader</code>和<code>ClassLoader.getSystemClassLoader()</code>的那个一同挂在中间层下面
 - 各个模块各有独立的<code>PathClassLoader</code>加载，挂在那个<code>ClassLoader.getSystemClassLoader()</code>下面
 - <code>ClassLoader.getSystemClassLoader()</code>的加载路径里似乎多了个<code>/system/framework/XposedBridge.jar</code></p>
-<h4 id="中间层">中间层</h4>
+<h4 id=中间层>中间层</h4>
 <p>把中间层里的那个dex文件pull出来解开，发现里面只有一个类</p>
-<pre tabindex="0"><code>package xposed.dummy;
+<pre tabindex=0><code>package xposed.dummy;
 
 import android.content.res.Resources;
 
@@ -172,21 +146,21 @@ public class XResourcesSuperClass extends Resources {
 
 }
 </code></pre><p>这个类的作用或许要拜读Xposed的源码才能知道了，看起来和资源加载有一点关系</p>
-<h4 id="各模块的classloader">各模块的ClassLoader</h4>
+<h4 id=各模块的classloader>各模块的ClassLoader</h4>
 <p>将各个模块的加载用不同的<code>ClassLoader</code>进行，避免了模块之间类的冲突，
 这也意味着<strong>模块不能直接用类似于<code>Class.forName()</code>的方式获取宿主app内的类以及成员<code>Member</code></strong>，
 这是新手（也包括当时的我）容易犯的错误，所以Xposed提供了<code>XposedHelper</code>来提供相关操作，而且为了提高效率，内部会缓存获取到的<code>Member</code>对象。</p>
-<h4 id="classloadergetsystemclassloader发生的变化">ClassLoader.getSystemClassLoader()发生的变化</h4>
+<h4 id=classloadergetsystemclassloader发生的变化>ClassLoader.getSystemClassLoader()发生的变化</h4>
 <p>注意到<code>ClassLoader.getSystemClassLoader()</code>获取到的<code>ClassLoader</code>（我们姑且称之为<code>SystemClassLoader</code>吧）的路径里面多了个<code>/system/framework/XposedBridge.jar</code></p>
 <p>另外，执行</p>
-<pre tabindex="0"><code>System.getProperty(&quot;java.class.path&quot;)
+<pre tabindex=0><code>System.getProperty(&quot;java.class.path&quot;)
 </code></pre><p>将返回<code>/system/framework/XposedBridge.jar</code>，同样的，拖出来解开看看</p>
-<p><img src="/images/blog/43_3.png" alt="/system/framework/XposedBridge.jar">
+<p><img src=/images/blog/43_3.png alt=/system/framework/XposedBridge.jar>
 可以看到这里有Xposed开发时我们熟悉的类，也有很多我们不熟悉的类，看起来这个jar里就是Xposed在Java层的一些实现相关的东西了(。・∀・)ノ</p>
 <p>让我们看看<code>de.robv.android.xposed.XposedBridge</code>这个我们开发时经常打交道的类是哪里加载来的
 在调试时输出<code>de.robv.android.xposed.XposedBridge.class.getClassLoader()</code>的值
 和<code>ClassLoader.getSystemClassLoader()</code>得到的对象进行比较，发现它们是同一个对象，就是那个<code>SystemClassLoader</code>（嘿，醒醒，只是我在这里把它这么叫而已，实际上它也是个<code>PathClassLoader</code>）</p>
-<h4 id="小错误">小错误</h4>
+<h4 id=小错误>小错误</h4>
 <p>我写这篇文章之前在在这里犯了一个错误，
 因为对Android Studio调试时的动态执行语句的环境不是很明确，</p>
 <p>在调试时执行<code>de.robv.android.xposed.XposedBridge.class.getClassLoader()</code>不会爆<code>Method threw 'java.lang.ClassNotFoundException' exception.</code>
@@ -194,30 +168,20 @@ public class XResourcesSuperClass extends Resources {
 <p>后来发现是Android Studio太聪明了，“帮我找到”了正确的ClassLoader
 如果调试时改用<code>loadClass</code>的方法或<code>Class.forName</code>都会爆异常</p>
 <p><code>Method threw 'java.lang.ClassNotFoundException' exception.</code></p>
-<pre tabindex="0"><code>getApplicationContext().getClassLoader().loadClass(&quot;de.robv.android.xposed.XposedBridge&quot;)
-</code></pre><pre tabindex="0"><code>Class.forName(&quot;de.robv.android.xposed.XposedBridge&quot;) 
-</code></pre><h4 id="玩坏xposed">玩坏Xposed</h4>
+<pre tabindex=0><code>getApplicationContext().getClassLoader().loadClass(&quot;de.robv.android.xposed.XposedBridge&quot;)
+</code></pre><pre tabindex=0><code>Class.forName(&quot;de.robv.android.xposed.XposedBridge&quot;) 
+</code></pre><h4 id=玩坏xposed>玩坏Xposed</h4>
 <p>根据Xposed加持后的<code>ClassLoader</code>关系图可以看出，<code>XposedBridge.jar</code>被添加到了<code>SystemClassLoader</code>里面加载，那么普通应用可以获取这个<code>SystemClassLoader</code>，进而调用一些方法对自己做一些hook的操作了，能力和Xposed模块已经相当了，只是只能对自己hook而且没法像Xposed模块那样在应用启动之前就进行hook，
 就我认识的有一位(nv)大(zhuang)佬突发奇想用把aide里Java显示运行输出结果的那个控制台界面hook换成了<code>WebView</code>来播放在线视频。</p>
 <p>所以说Xposed还是很好玩的，不仅要会用，还要学会它的原理，希望有一天我也能写出有价值的东西。</p>
-
 </main>
-
-
-
-<div id="comments">
-    <hr>
-    <script src="https://utteranc.es/client.js" repo='KB5201314/KB5201314.github.io' issue-term="pathname" label='💬 comments 💬'
-        theme='github-light' crossorigin="anonymous" async>
-        </script>
+<div id=comments>
+<hr>
+<script src=https://utteranc.es/client.js repo=KB5201314/KB5201314.github.io issue-term=pathname label="💬 comments 💬" theme=github-light crossorigin=anonymous async></script>
 </div>
-
-
-  <footer>
-  
-  <hr/>
-  © imlk 2017 &ndash; 2021 | <a href="https://blog.imlk.top">imlk's blog</a> | <a href="https://github.com/KB5201314/">Github</a> | <a href="mailto:me@imlk.top">Email</a> | <a href="https://beian.miit.gov.cn/">京ICP备 - 2020042968号</a>
-  
-  </footer>
-  </body>
+<footer>
+<hr>
+© imlk 2017 &ndash; 2021 | <a href=https://blog.imlk.top>imlk's blog</a> | <a href=https://github.com/KB5201314/>Github</a> | <a href=mailto:me@imlk.top>Email</a> | <a href=https://beian.miit.gov.cn/>京ICP备 - 2020042968号</a>
+</footer>
+</body>
 </html>

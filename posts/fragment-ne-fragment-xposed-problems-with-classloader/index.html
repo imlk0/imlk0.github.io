@@ -1,102 +1,66 @@
-<!DOCTYPE html>
-<html lang="zh-cn">
-
+<!doctype html><html lang=zh-cn>
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Fragment != Fragment ? —— Xposed开发中多ClassLoader的问题 | imlk&#39;s blog</title>
-  <link rel="stylesheet" href='/css/style.css' />
-  <link rel="stylesheet" href='/css/fonts.css' />
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&display=swap" rel="stylesheet">
+<meta charset=utf-8>
+<meta name=viewport content="width=device-width,initial-scale=1">
+<title>Fragment != Fragment ? —— Xposed开发中多ClassLoader的问题 | imlk's blog</title>
+<link rel=stylesheet href=/css/style.css>
+<link rel=stylesheet href=/css/fonts.css>
+<link rel=preconnect href=https://fonts.googleapis.com>
+<link rel=preconnect href=https://fonts.gstatic.com crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&display=swap" rel=stylesheet>
 </head>
-
 <body>
-  <header class="header">
-    <a class="logo" href='/'> imlk's Blog </a>
-    <nav>
-      <ul class="menu">
-        
-        <li><a href="/">Home</a></li>
-        
-        <li><a href="/about/">About</a></li>
-        
-        <li><a href="/archives/">Archives</a></li>
-        
-        <li><a href="/friends/">Friends</a></li>
-        
-        <li><a href="/index.xml">Subscribe</a></li>
-        
-      </ul>
-    </nav>
-  </header>
-  <hr />
-
-
-
-<div class="article-meta">
-    <h1><span class="title">Fragment != Fragment ? —— Xposed开发中多ClassLoader的问题</span></h1>
-    
-    <span>
-        <span class="date">2018-02-25</span>
-        |
-        
-        <span class="cats">
-            
-            
-            <a href='https://blog.imlk.top/categories/xposed/'>Xposed</a>
-            
-        </span>
-        
-        |
-        <span class="tags">
-            
-            <a href='https://blog.imlk.top/tags/android/'>#Android</a>
-            
-            <a href='https://blog.imlk.top/tags/xposed/'>#Xposed</a>
-            
-            <a href='https://blog.imlk.top/tags/java/'>#Java</a>
-            
-        </span>
-        
-    </span>
-    <br>
-    
+<header class=header>
+<a class=logo href=/> imlk's Blog </a>
+<nav>
+<ul class=menu>
+<li><a href=/>Home</a></li>
+<li><a href=/about/>About</a></li>
+<li><a href=/archives/>Archives</a></li>
+<li><a href=/friends/>Friends</a></li>
+<li><a href=/index.xml>Subscribe</a></li>
+</ul>
+</nav>
+</header>
+<hr>
+<div class=article-meta>
+<h1><span class=title>Fragment != Fragment ? —— Xposed开发中多ClassLoader的问题</span></h1>
+<span>
+<span class=date>2018-02-25</span>
+|
+<span class=cats>
+<a href=https://blog.imlk.top/categories/xposed/>Xposed</a>
+</span>
+|
+<span class=tags>
+<a href=https://blog.imlk.top/tags/android/>#Android</a>
+<a href=https://blog.imlk.top/tags/xposed/>#Xposed</a>
+<a href=https://blog.imlk.top/tags/java/>#Java</a>
+</span>
+</span>
+<br>
 </div>
-
-
 <main>
-    <p>今天在写Xposed模块的过程中，为了找到某个Field，需要判断Filed的某个祖先的类型是是Fragment类型</p>
+<p>今天在写Xposed模块的过程中，为了找到某个Field，需要判断Filed的某个祖先的类型是是Fragment类型</p>
 <p>但在做比较的时候出现了问题，发生了Fragment != Fragment的问题：</p>
 <p>注：这里的 Fragment 是 android.support.v4.app.Fragment 而不是 android.app.Fragment</p>
 <p>我们知道v4包是要额外导入的，
-<img src="/images/blog/10_1.png" alt=""></p>
+<img src=/images/blog/10_1.png alt></p>
 <p>所以说，一共出现了两份v4包，一份打包在宿主app里，一份打包在自己的模块里面，在加载的时候会出现因为ClassLoader不一致而导致两个class不同的情况</p>
 <p>如图：
-<img src="/images/blog/10_0.png" alt=""></p>
+<img src=/images/blog/10_0.png alt></p>
 <p><strong>在debug添加查看发现，两个Class虽然都是android.support.v4.app.Fragment但由于ClassLoader不一样，导致两个Class不相等；</strong></p>
 <p>查看其它的Class发现，系统自带的那些jar里面的Class都是由BootClassLoader加载的，
-<img src="/images/blog/10_2.png" alt="">
+<img src=/images/blog/10_2.png alt>
 而BootClassLoader的实例在虚拟机中只有一个，所以模块中的Context.class和宿主app里的Context.class是一样的</p>
-
 </main>
-
-
-
-<div id="comments">
-    <hr>
-    <script src="https://utteranc.es/client.js" repo='KB5201314/KB5201314.github.io' issue-term="pathname" label='💬 comments 💬'
-        theme='github-light' crossorigin="anonymous" async>
-        </script>
+<div id=comments>
+<hr>
+<script src=https://utteranc.es/client.js repo=KB5201314/KB5201314.github.io issue-term=pathname label="💬 comments 💬" theme=github-light crossorigin=anonymous async></script>
 </div>
-
-
-  <footer>
-  
-  <hr/>
-  © imlk 2017 &ndash; 2021 | <a href="https://blog.imlk.top">imlk's blog</a> | <a href="https://github.com/KB5201314/">Github</a> | <a href="mailto:me@imlk.top">Email</a> | <a href="https://beian.miit.gov.cn/">京ICP备 - 2020042968号</a>
-  
-  </footer>
-  </body>
+<footer>
+<hr>
+© imlk 2017 &ndash; 2021 | <a href=https://blog.imlk.top>imlk's blog</a> | <a href=https://github.com/KB5201314/>Github</a> | <a href=mailto:me@imlk.top>Email</a> | <a href=https://beian.miit.gov.cn/>京ICP备 - 2020042968号</a>
+</footer>
+</body>
 </html>

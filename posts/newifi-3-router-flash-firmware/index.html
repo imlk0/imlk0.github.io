@@ -1,82 +1,55 @@
-<!DOCTYPE html>
-<html lang="zh-cn">
-
+<!doctype html><html lang=zh-cn>
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>newifi 3 路由器刷padavan固件 | imlk&#39;s blog</title>
-  <link rel="stylesheet" href='/css/style.css' />
-  <link rel="stylesheet" href='/css/fonts.css' />
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&display=swap" rel="stylesheet">
+<meta charset=utf-8>
+<meta name=viewport content="width=device-width,initial-scale=1">
+<title>newifi 3 路由器刷padavan固件 | imlk's blog</title>
+<link rel=stylesheet href=/css/style.css>
+<link rel=stylesheet href=/css/fonts.css>
+<link rel=preconnect href=https://fonts.googleapis.com>
+<link rel=preconnect href=https://fonts.gstatic.com crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&display=swap" rel=stylesheet>
 </head>
-
 <body>
-  <header class="header">
-    <a class="logo" href='/'> imlk's Blog </a>
-    <nav>
-      <ul class="menu">
-        
-        <li><a href="/">Home</a></li>
-        
-        <li><a href="/about/">About</a></li>
-        
-        <li><a href="/archives/">Archives</a></li>
-        
-        <li><a href="/friends/">Friends</a></li>
-        
-        <li><a href="/index.xml">Subscribe</a></li>
-        
-      </ul>
-    </nav>
-  </header>
-  <hr />
-
-
-
-<div class="article-meta">
-    <h1><span class="title">newifi 3 路由器刷padavan固件</span></h1>
-    
-    <span>
-        <span class="date">2020-03-12</span>
-        |
-        
-        <span class="cats">
-            
-            
-            <a href='https://blog.imlk.top/categories/router/'>Router</a>
-            
-        </span>
-        
-        |
-        <span class="tags">
-            
-            <a href='https://blog.imlk.top/tags/%E8%B7%AF%E7%94%B1%E5%99%A8/'>#路由器</a>
-            
-            <a href='https://blog.imlk.top/tags/%E5%9B%BA%E4%BB%B6/'>#固件</a>
-            
-            <a href='https://blog.imlk.top/tags/%E7%9E%8E%E6%90%9E/'>#瞎搞</a>
-            
-            <a href='https://blog.imlk.top/tags/padavan/'>#padavan</a>
-            
-        </span>
-        
-    </span>
-    <br>
-    
+<header class=header>
+<a class=logo href=/> imlk's Blog </a>
+<nav>
+<ul class=menu>
+<li><a href=/>Home</a></li>
+<li><a href=/about/>About</a></li>
+<li><a href=/archives/>Archives</a></li>
+<li><a href=/friends/>Friends</a></li>
+<li><a href=/index.xml>Subscribe</a></li>
+</ul>
+</nav>
+</header>
+<hr>
+<div class=article-meta>
+<h1><span class=title>newifi 3 路由器刷padavan固件</span></h1>
+<span>
+<span class=date>2020-03-12</span>
+|
+<span class=cats>
+<a href=https://blog.imlk.top/categories/router/>Router</a>
+</span>
+|
+<span class=tags>
+<a href=https://blog.imlk.top/tags/%E8%B7%AF%E7%94%B1%E5%99%A8/>#路由器</a>
+<a href=https://blog.imlk.top/tags/%E5%9B%BA%E4%BB%B6/>#固件</a>
+<a href=https://blog.imlk.top/tags/%E7%9E%8E%E6%90%9E/>#瞎搞</a>
+<a href=https://blog.imlk.top/tags/padavan/>#padavan</a>
+</span>
+</span>
+<br>
 </div>
-
-
 <main>
-    <p>新路由器到了两星期了，期间总是出现突然wan网络不通的情况，而且信号也没有上一台强（严重影响蹲坑时玩手机的体验）。参考网友们的建议，准备给newifi3刷老毛子固件玩。</p>
-<h3 id="连接路由器">连接路由器</h3>
+<p>新路由器到了两星期了，期间总是出现突然wan网络不通的情况，而且信号也没有上一台强（严重影响蹲坑时玩手机的体验）。参考网友们的建议，准备给newifi3刷老毛子固件玩。</p>
+<h3 id=连接路由器>连接路由器</h3>
 <p>这里连接路由器有两种方法</p>
 <ul>
 <li>
 <p>telnet</p>
 <p>这玩意虽然默认没有开ssh端口，竟然默认开了telnet，把我给看傻了，直接telnet连上去就好了：</p>
-<pre tabindex="0"><code>[imlk@imlk-pc ~]$ telnet 192.168.99.1
+<pre tabindex=0><code>[imlk@imlk-pc ~]$ telnet 192.168.99.1
 Trying 192.168.99.1...
 Connected to 192.168.99.1.
 Escape character is '^]'.
@@ -97,15 +70,15 @@ Password:
 </ul>
 <p>上了路由器先看看，mips架构，可能是基于PandoraBox的固件改的吧，登录文字里写的是PandoraBox。</p>
 <p>比较有意思的是<code>/dev/root</code>挂载到<code>/rom</code>，<code>/dev/mtdblock5</code>挂载到<code>/overlay</code>，然后似乎是结合这俩整了个overlayfs直接给挂载到<code>/</code>。得了，又是没见过的操作：</p>
-<pre tabindex="0"><code>overlayfs:/overlay on / type overlayfs (rw,noatime,lowerdir=/,upperdir=/overlay)
-</code></pre><h3 id="breed">breed</h3>
+<pre tabindex=0><code>overlayfs:/overlay on / type overlayfs (rw,noatime,lowerdir=/,upperdir=/overlay)
+</code></pre><h3 id=breed>breed</h3>
 <p>这里下载的https://breed.hackpascal.net/是一个固件，需要解锁路由器才能刷入。breed的作者提供了一种加载内核模块<code>newifi-d2-jail-break.ko</code>刷入的方法，用这种方法似乎是“免解锁”的，具体作者的帖子在这：https://www.right.com.cn/forum/thread-342918-1-1.html</p>
 <p>解压后用scp上传到路由器的<code>/tmp/</code>目录加载内核模块</p>
-<pre tabindex="0"><code>insmod '解压后的.ko文件'
+<pre tabindex=0><code>insmod '解压后的.ko文件'
 </code></pre><p>之后会卡住一段时间重启，重启后还是官方固件。</p>
 <p>接下来要进入恢复模式，断电后按住reset键插入电源启动，注意需要用数据线直连路由器。</p>
 <p>![Breed web 恢复控制台](/images/blog/2020-03-12 23-13-30屏幕截图.png)</p>
-<h3 id="padavan">padavan</h3>
+<h3 id=padavan>padavan</h3>
 <p>这里我选择的是hiboy制作的padavan固件</p>
 <p>相关帖子：https://www.right.com.cn/forum/thread-2110335-1-1.html</p>
 <p>下载地址：https://opt.cn2qq.com/padavan/</p>
@@ -114,24 +87,14 @@ Password:
 <p>重启后进入192.168.123.1就是熟悉的界面了，默认账号密码是admin和admin。比较可惜的是它只认440M内存，而总内存应该是512M的。最后测试信号强度要明显比原来的好，一些没网络的角落也能有2.4G信号了。</p>
 <p>![padavan界面](/images/blog/2020-03-13 12-57-28屏幕截图.png)</p>
 <p>后面广告拦截啥的就看个人喜好啦。</p>
-
 </main>
-
-
-
-<div id="comments">
-    <hr>
-    <script src="https://utteranc.es/client.js" repo='KB5201314/KB5201314.github.io' issue-term="pathname" label='💬 comments 💬'
-        theme='github-light' crossorigin="anonymous" async>
-        </script>
+<div id=comments>
+<hr>
+<script src=https://utteranc.es/client.js repo=KB5201314/KB5201314.github.io issue-term=pathname label="💬 comments 💬" theme=github-light crossorigin=anonymous async></script>
 </div>
-
-
-  <footer>
-  
-  <hr/>
-  © imlk 2017 &ndash; 2021 | <a href="https://blog.imlk.top">imlk's blog</a> | <a href="https://github.com/KB5201314/">Github</a> | <a href="mailto:me@imlk.top">Email</a> | <a href="https://beian.miit.gov.cn/">京ICP备 - 2020042968号</a>
-  
-  </footer>
-  </body>
+<footer>
+<hr>
+© imlk 2017 &ndash; 2021 | <a href=https://blog.imlk.top>imlk's blog</a> | <a href=https://github.com/KB5201314/>Github</a> | <a href=mailto:me@imlk.top>Email</a> | <a href=https://beian.miit.gov.cn/>京ICP备 - 2020042968号</a>
+</footer>
+</body>
 </html>

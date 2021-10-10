@@ -1,334 +1,297 @@
-<!DOCTYPE html>
-<html lang="zh-cn">
-
+<!doctype html><html lang=zh-cn>
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>用nRF52840 USB Dongle和OpenSK制作开源硬件密钥 | imlk&#39;s blog</title>
-  <link rel="stylesheet" href='/css/style.css' />
-  <link rel="stylesheet" href='/css/fonts.css' />
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&display=swap" rel="stylesheet">
+<meta charset=utf-8>
+<meta name=viewport content="width=device-width,initial-scale=1">
+<title>用nRF52840 USB Dongle和OpenSK制作开源硬件密钥 | imlk's blog</title>
+<link rel=stylesheet href=/css/style.css>
+<link rel=stylesheet href=/css/fonts.css>
+<link rel=preconnect href=https://fonts.googleapis.com>
+<link rel=preconnect href=https://fonts.gstatic.com crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&display=swap" rel=stylesheet>
 </head>
-
 <body>
-  <header class="header">
-    <a class="logo" href='/'> imlk's Blog </a>
-    <nav>
-      <ul class="menu">
-        
-        <li><a href="/">Home</a></li>
-        
-        <li><a href="/about/">About</a></li>
-        
-        <li><a href="/archives/">Archives</a></li>
-        
-        <li><a href="/friends/">Friends</a></li>
-        
-        <li><a href="/index.xml">Subscribe</a></li>
-        
-      </ul>
-    </nav>
-  </header>
-  <hr />
-
-
-
-<div class="article-meta">
-    <h1><span class="title">用nRF52840 USB Dongle和OpenSK制作开源硬件密钥</span></h1>
-    
-    <span>
-        <span class="date">2020-10-10</span>
-        |
-        
-        <span class="cats">
-            
-            
-            <a href='https://blog.imlk.top/categories/hardware/'>Hardware</a>
-            
-        </span>
-        
-        |
-        <span class="tags">
-            
-            <a href='https://blog.imlk.top/tags/opensk/'>#OpenSK</a>
-            
-            <a href='https://blog.imlk.top/tags/nrf52840/'>#nRF52840</a>
-            
-            <a href='https://blog.imlk.top/tags/hardware/'>#Hardware</a>
-            
-            <a href='https://blog.imlk.top/tags/%E7%9E%8E%E6%90%9E/'>#瞎搞</a>
-            
-        </span>
-        
-    </span>
-    <br>
-    
+<header class=header>
+<a class=logo href=/> imlk's Blog </a>
+<nav>
+<ul class=menu>
+<li><a href=/>Home</a></li>
+<li><a href=/about/>About</a></li>
+<li><a href=/archives/>Archives</a></li>
+<li><a href=/friends/>Friends</a></li>
+<li><a href=/index.xml>Subscribe</a></li>
+</ul>
+</nav>
+</header>
+<hr>
+<div class=article-meta>
+<h1><span class=title>用nRF52840 USB Dongle和OpenSK制作开源硬件密钥</span></h1>
+<span>
+<span class=date>2020-10-10</span>
+|
+<span class=cats>
+<a href=https://blog.imlk.top/categories/hardware/>Hardware</a>
+</span>
+|
+<span class=tags>
+<a href=https://blog.imlk.top/tags/opensk/>#OpenSK</a>
+<a href=https://blog.imlk.top/tags/nrf52840/>#nRF52840</a>
+<a href=https://blog.imlk.top/tags/hardware/>#Hardware</a>
+<a href=https://blog.imlk.top/tags/%E7%9E%8E%E6%90%9E/>#瞎搞</a>
+</span>
+</span>
+<br>
 </div>
-
-
 <main>
-    <p>在大佬的推荐下接触了OpenSK，一个开源的安全密钥实现，支持FIDO U2F标准（双因子认证）和FIDO2规范。目前OpenSK支持的硬件主要是基于nordic的nRF52840芯片的三款产品：</p>
+<p>在大佬的推荐下接触了OpenSK，一个开源的安全密钥实现，支持FIDO U2F标准（双因子认证）和FIDO2规范。目前OpenSK支持的硬件主要是基于nordic的nRF52840芯片的三款产品：</p>
 <ul>
-<li><a href="https://www.nordicsemi.com/Software-and-Tools/Development-Kits/nRF52840-DK">Nordic nRF52840-DK</a></li>
-<li><a href="https://www.nordicsemi.com/Software-and-tools/Development-Kits/nRF52840-Dongle">Nordic nRF52840 Dongle</a></li>
-<li><a href="https://wiki.makerdiary.com/nrf52840-mdk/">Makerdiary nRF52840-MDK USB dongle</a>.</li>
+<li><a href=https://www.nordicsemi.com/Software-and-Tools/Development-Kits/nRF52840-DK>Nordic nRF52840-DK</a></li>
+<li><a href=https://www.nordicsemi.com/Software-and-tools/Development-Kits/nRF52840-Dongle>Nordic nRF52840 Dongle</a></li>
+<li><a href=https://wiki.makerdiary.com/nrf52840-mdk/>Makerdiary nRF52840-MDK USB dongle</a>.</li>
 </ul>
 <p>前两者算是nordic自产自销的，最后一款则是深圳的一家企业Makerdiary生产的usb设备，价格相对实惠一些（关键是有OpenSK官方支持且淘宝买得到）。我们使用的是makerdiary家的nRF52840-MDK USB Dongle，淘宝链接在文章最底部。</p>
-<h2 id="安装opensk">安装OpenSK</h2>
+<h2 id=安装opensk>安装OpenSK</h2>
 <p>整个安装过程主要分为两步：刷入UF2 BootLoader和刷入OpenSK</p>
-<h3 id="刷入uf2bootloader">刷入UF2BootLoader</h3>
+<h3 id=刷入uf2bootloader>刷入UF2BootLoader</h3>
 <p>首先检查板子是否已经刷入了UF2BootLoader：</p>
 <p>按住板子的reset键插入PC，左上方的绿色电源指示灯亮起，如果同时还有另一颗绿灯亮起且出现名为<code>MDK-Dongle</code>的U盘，则说明已经刷入了UF2BootLoader，可以跳过该步骤，否则需要刷UF2BootLoader。</p>
 <p>首先安装<code>nrfutil</code>：</p>
-<pre tabindex="0"><code>sudo pip install nrfutil
-</code></pre><p>从店家的github上下载<a href="https://github.com/makerdiary/nrf52840-mdk-usb-dongle/raw/master/firmware/open_bootloader/uf2_bootloader-0.2.13-44-gb2b4284-nosd_signed.zip">预编译好的UF2BootLoader</a>：</p>
-<pre tabindex="0"><code>wget https://github.com/makerdiary/nrf52840-mdk-usb-dongle/raw/master/firmware/open_bootloader/uf2_bootloader-0.2.13-44-gb2b4284-nosd_signed.zip
+<pre tabindex=0><code>sudo pip install nrfutil
+</code></pre><p>从店家的github上下载<a href=https://github.com/makerdiary/nrf52840-mdk-usb-dongle/raw/master/firmware/open_bootloader/uf2_bootloader-0.2.13-44-gb2b4284-nosd_signed.zip>预编译好的UF2BootLoader</a>：</p>
+<pre tabindex=0><code>wget https://github.com/makerdiary/nrf52840-mdk-usb-dongle/raw/master/firmware/open_bootloader/uf2_bootloader-0.2.13-44-gb2b4284-nosd_signed.zip
 </code></pre><p>用nrfutil刷入UF2BootLoader：</p>
-<pre tabindex="0"><code>nrfutil dfu usb-serial -pkg uf2_bootloader-0.2.13-44-gb2b4284-nosd_signed.zip -p &lt;your-serial-port-name&gt;
-</code></pre><p>其中<code>&lt;your-serial-port-name&gt;</code>取决于你的电脑和你的板子，比如在我的电脑上是：</p>
+<pre tabindex=0><code>nrfutil dfu usb-serial -pkg uf2_bootloader-0.2.13-44-gb2b4284-nosd_signed.zip -p &lt;your-serial-port-name&gt;
+</code></pre><p>其中<code>&lt;your-serial-port-name></code>取决于你的电脑和你的板子，比如在我的电脑上是：</p>
 <p><code>/dev/serial/by-id/usb-MakerDiary_nRF52840_MDK_USB_Dongle_0E648D428B58FE7A-if00</code></p>
 <p>刷完之后会出现一个名为<code>MDK-Dongle</code>的U盘设备<code>/dev/sdc</code>：</p>
-<p><img src="/images/blog/65/image-20201009202108347.png" alt="image-20201009202108347"></p>
-<p><img src="/images/blog/65/image-20201009190411324.png" alt="image-20201009190411324"></p>
-<h3 id="刷入opensk">刷入OpenSK</h3>
-<p>从github上<a href="https://github.com/makerdiary/nrf52840-mdk-usb-dongle/raw/master/firmware/OpenSK/opensk_nrf52840_mdk_usb_dongle_gece14d7.uf2">下载</a>预编译好的OpenSK固件：</p>
-<pre tabindex="0"><code>wget https://github.com/makerdiary/nrf52840-mdk-usb-dongle/raw/master/firmware/OpenSK/opensk_nrf52840_mdk_usb_dongle_gece14d7.uf2
+<p><img src=/images/blog/65/image-20201009202108347.png alt=image-20201009202108347></p>
+<p><img src=/images/blog/65/image-20201009190411324.png alt=image-20201009190411324></p>
+<h3 id=刷入opensk>刷入OpenSK</h3>
+<p>从github上<a href=https://github.com/makerdiary/nrf52840-mdk-usb-dongle/raw/master/firmware/OpenSK/opensk_nrf52840_mdk_usb_dongle_gece14d7.uf2>下载</a>预编译好的OpenSK固件：</p>
+<pre tabindex=0><code>wget https://github.com/makerdiary/nrf52840-mdk-usb-dongle/raw/master/firmware/OpenSK/opensk_nrf52840_mdk_usb_dongle_gece14d7.uf2
 </code></pre><p>长按reset键讲板子插入PC，挂载出现的名为<code>MDK-Dongle</code>的U盘设备：</p>
 <p>将我们的固件拷贝进去</p>
-<pre tabindex="0"><code>cp ./opensk_nrf52840_mdk_usb_dongle_gece14d7.uf2 /run/media/imlk/MDK-DONGLE/
-</code></pre><p><img src="/images/blog/65/image-20201009192646793.png" alt="image-20201009192646793"></p>
+<pre tabindex=0><code>cp ./opensk_nrf52840_mdk_usb_dongle_gece14d7.uf2 /run/media/imlk/MDK-DONGLE/
+</code></pre><p><img src=/images/blog/65/image-20201009192646793.png alt=image-20201009192646793></p>
 <p>拷贝过程约20s，期间指示灯会变成闪烁的红色：</p>
-<p><img src="/images/blog/65/IMG_20201009_200214.jpg" alt="IMG_20201009_200214"></p>
+<p><img src=/images/blog/65/IMG_20201009_200214.jpg alt=IMG_20201009_200214></p>
 <p>命令结束之后红灯变绿并熄灭，用<code>lsusb</code>可以看到该设备：</p>
-<p><img src="/images/blog/65/image-20201009202912460.png" alt="image-20201009202912460"></p>
+<p><img src=/images/blog/65/image-20201009202912460.png alt=image-20201009202912460></p>
 <p>现在我们的固件已经写好了，可以在https://webauthn.io/上或者Windows10登录选项中进行测试了。</p>
-<h2 id="编译opensk固件">编译OpenSK固件</h2>
+<h2 id=编译opensk固件>编译OpenSK固件</h2>
 <p>店铺的GitHub仓库（https://github.com/makerdiary/OpenSK）是基于老版本的OpenSK做的适配，店家说新版本修复了不少bug，而OpenSK官方仓库（https://github.com/google/OpenSK）对于makerdiary家的这款nRF52840-MDK USB Dongle已经做了适配了，因此我们直接用google的仓库编译：</p>
 <p>参考官方教程：https://github.com/google/OpenSK/blob/master/docs/install.md</p>
-<pre tabindex="0"><code>git clone git@github.com:google/OpenSK.git
+<pre tabindex=0><code>git clone git@github.com:google/OpenSK.git
 </code></pre><p><strong>官方的OpenSK在刷入后会清空UICR（user information configuration registers），这会导致BootLoader的入口地址被清除掉，因此用UF2BootLoader刷入OpenSK后会导致进不去UF2BootLoader</strong></p>
-<p>如果已经因为该原因而进不去UF2BootLoader，可以参考下一节<a href="#%E7%94%A8J-Link%E7%BB%99nRF52840%E5%88%B7BootLoader">用J-Link给nRF52840刷BootLoader</a>清空数据再重新刷入BootLoader。</p>
+<p>如果已经因为该原因而进不去UF2BootLoader，可以参考下一节<a href=#%E7%94%A8J-Link%E7%BB%99nRF52840%E5%88%B7BootLoader>用J-Link给nRF52840刷BootLoader</a>清空数据再重新刷入BootLoader。</p>
 <p>为了避免该问题我们需要对源码进行一些修改，防止清空UICR：</p>
 <p>首先确保你的当前工作目录是OpenSK源码根目录，执行下面的命令将创建一个名为<code>./patches/tock/99-avoid-erasing-uicr.patch</code>的patch</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-diff" data-lang="diff">cat &lt;&lt; EOF &gt; ./patches/tock/99-avoid-erasing-uicr.patch
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-diff data-lang=diff>cat &lt;&lt; EOF &gt; ./patches/tock/99-avoid-erasing-uicr.patch
 diff --git a/boards/nordic/nrf52_components/src/startup.rs b/boards/nordic/nrf52_components/src/startup.rs
 index 9ddb414fd..5e85da513 100644
-<span style="color:#f92672">--- a/boards/nordic/nrf52_components/src/startup.rs
-</span><span style="color:#f92672"></span><span style="color:#a6e22e">+++ b/boards/nordic/nrf52_components/src/startup.rs
-</span><span style="color:#a6e22e"></span><span style="color:#75715e">@@ -29,68 +29,68 @@ impl Component for NrfStartupComponent {
-</span><span style="color:#75715e"></span>     type StaticInput = ();
+<span style=color:#f92672>--- a/boards/nordic/nrf52_components/src/startup.rs
+</span><span style=color:#f92672></span><span style=color:#a6e22e>+++ b/boards/nordic/nrf52_components/src/startup.rs
+</span><span style=color:#a6e22e></span><span style=color:#75715e>@@ -29,68 +29,68 @@ impl Component for NrfStartupComponent {
+</span><span style=color:#75715e></span>     type StaticInput = ();
      type Output = ();
      unsafe fn finalize(self, _s: Self::StaticInput) -&gt; Self::Output {
-<span style="color:#f92672">-        // Make non-volatile memory writable and activate the reset button
-</span><span style="color:#f92672">-        let uicr = nrf52::uicr::Uicr::new();
-</span><span style="color:#f92672">-
-</span><span style="color:#f92672">-        // Check if we need to erase UICR memory to re-program it
-</span><span style="color:#f92672">-        // This only needs to be done when a bit needs to be flipped from 0 to 1.
-</span><span style="color:#f92672">-        let psel0_reset: u32 = uicr.get_psel0_reset_pin().map_or(0, |pin| pin as u32);
-</span><span style="color:#f92672">-        let psel1_reset: u32 = uicr.get_psel1_reset_pin().map_or(0, |pin| pin as u32);
-</span><span style="color:#f92672">-        let mut erase_uicr = ((!psel0_reset &amp; (self.button_rst_pin as u32))
-</span><span style="color:#f92672">-            | (!psel1_reset &amp; (self.button_rst_pin as u32))
-</span><span style="color:#f92672">-            | (!(uicr.get_vout() as u32) &amp; (self.reg_vout as u32)))
-</span><span style="color:#f92672">-            != 0;
-</span><span style="color:#f92672">-
-</span><span style="color:#f92672">-        // Only enabling the NFC pin protection requires an erase.
-</span><span style="color:#f92672">-        if self.nfc_as_gpios {
-</span><span style="color:#f92672">-            erase_uicr |= !uicr.is_nfc_pins_protection_enabled();
-</span><span style="color:#f92672">-        }
-</span><span style="color:#f92672">-
-</span><span style="color:#f92672">-        if erase_uicr {
-</span><span style="color:#f92672">-            nrf52::nvmc::NVMC.erase_uicr();
-</span><span style="color:#f92672">-        }
-</span><span style="color:#f92672">-
-</span><span style="color:#f92672">-        nrf52::nvmc::NVMC.configure_writeable();
-</span><span style="color:#f92672">-        while !nrf52::nvmc::NVMC.is_ready() {}
-</span><span style="color:#f92672">-
-</span><span style="color:#f92672">-        let mut needs_soft_reset: bool = false;
-</span><span style="color:#f92672">-
-</span><span style="color:#f92672">-        // Configure reset pins
-</span><span style="color:#f92672">-        if uicr
-</span><span style="color:#f92672">-            .get_psel0_reset_pin()
-</span><span style="color:#f92672">-            .map_or(true, |pin| pin != self.button_rst_pin)
-</span><span style="color:#f92672">-        {
-</span><span style="color:#f92672">-            uicr.set_psel0_reset_pin(self.button_rst_pin);
-</span><span style="color:#f92672">-            while !nrf52::nvmc::NVMC.is_ready() {}
-</span><span style="color:#f92672">-            needs_soft_reset = true;
-</span><span style="color:#f92672">-        }
-</span><span style="color:#f92672">-        if uicr
-</span><span style="color:#f92672">-            .get_psel1_reset_pin()
-</span><span style="color:#f92672">-            .map_or(true, |pin| pin != self.button_rst_pin)
-</span><span style="color:#f92672">-        {
-</span><span style="color:#f92672">-            uicr.set_psel1_reset_pin(self.button_rst_pin);
-</span><span style="color:#f92672">-            while !nrf52::nvmc::NVMC.is_ready() {}
-</span><span style="color:#f92672">-            needs_soft_reset = true;
-</span><span style="color:#f92672">-        }
-</span><span style="color:#f92672">-
-</span><span style="color:#f92672">-        // Configure voltage regulator output
-</span><span style="color:#f92672">-        if uicr.get_vout() != self.reg_vout {
-</span><span style="color:#f92672">-            uicr.set_vout(self.reg_vout);
-</span><span style="color:#f92672">-            while !nrf52::nvmc::NVMC.is_ready() {}
-</span><span style="color:#f92672">-            needs_soft_reset = true;
-</span><span style="color:#f92672">-        }
-</span><span style="color:#f92672">-
-</span><span style="color:#f92672">-        // Check if we need to free the NFC pins for GPIO
-</span><span style="color:#f92672">-        if self.nfc_as_gpios {
-</span><span style="color:#f92672">-            uicr.set_nfc_pins_protection(true);
-</span><span style="color:#f92672">-            while !nrf52::nvmc::NVMC.is_ready() {}
-</span><span style="color:#f92672">-            needs_soft_reset = true;
-</span><span style="color:#f92672">-        }
-</span><span style="color:#f92672">-
-</span><span style="color:#f92672">-        // Any modification of UICR needs a soft reset for the changes to be taken into account.
-</span><span style="color:#f92672">-        if needs_soft_reset {
-</span><span style="color:#f92672">-            cortexm4::scb::reset();
-</span><span style="color:#f92672">-        }
-</span><span style="color:#f92672"></span><span style="color:#a6e22e">+        // // Make non-volatile memory writable and activate the reset button
-</span><span style="color:#a6e22e">+        // let uicr = nrf52::uicr::Uicr::new();
-</span><span style="color:#a6e22e">+
-</span><span style="color:#a6e22e">+        // // Check if we need to erase UICR memory to re-program it
-</span><span style="color:#a6e22e">+        // // This only needs to be done when a bit needs to be flipped from 0 to 1.
-</span><span style="color:#a6e22e">+        // let psel0_reset: u32 = uicr.get_psel0_reset_pin().map_or(0, |pin| pin as u32);
-</span><span style="color:#a6e22e">+        // let psel1_reset: u32 = uicr.get_psel1_reset_pin().map_or(0, |pin| pin as u32);
-</span><span style="color:#a6e22e">+        // let mut erase_uicr = ((!psel0_reset &amp; (self.button_rst_pin as u32))
-</span><span style="color:#a6e22e">+        //     | (!psel1_reset &amp; (self.button_rst_pin as u32))
-</span><span style="color:#a6e22e">+        //     | (!(uicr.get_vout() as u32) &amp; (self.reg_vout as u32)))
-</span><span style="color:#a6e22e">+        //     != 0;
-</span><span style="color:#a6e22e">+
-</span><span style="color:#a6e22e">+        // // Only enabling the NFC pin protection requires an erase.
-</span><span style="color:#a6e22e">+        // if self.nfc_as_gpios {
-</span><span style="color:#a6e22e">+        //     erase_uicr |= !uicr.is_nfc_pins_protection_enabled();
-</span><span style="color:#a6e22e">+        // }
-</span><span style="color:#a6e22e">+
-</span><span style="color:#a6e22e">+        // if erase_uicr {
-</span><span style="color:#a6e22e">+        //     nrf52::nvmc::NVMC.erase_uicr();
-</span><span style="color:#a6e22e">+        // }
-</span><span style="color:#a6e22e">+
-</span><span style="color:#a6e22e">+        // nrf52::nvmc::NVMC.configure_writeable();
-</span><span style="color:#a6e22e">+        // while !nrf52::nvmc::NVMC.is_ready() {}
-</span><span style="color:#a6e22e">+
-</span><span style="color:#a6e22e">+        // let mut needs_soft_reset: bool = false;
-</span><span style="color:#a6e22e">+
-</span><span style="color:#a6e22e">+        // // Configure reset pins
-</span><span style="color:#a6e22e">+        // if uicr
-</span><span style="color:#a6e22e">+        //     .get_psel0_reset_pin()
-</span><span style="color:#a6e22e">+        //     .map_or(true, |pin| pin != self.button_rst_pin)
-</span><span style="color:#a6e22e">+        // {
-</span><span style="color:#a6e22e">+        //     uicr.set_psel0_reset_pin(self.button_rst_pin);
-</span><span style="color:#a6e22e">+        //     while !nrf52::nvmc::NVMC.is_ready() {}
-</span><span style="color:#a6e22e">+        //     needs_soft_reset = true;
-</span><span style="color:#a6e22e">+        // }
-</span><span style="color:#a6e22e">+        // if uicr
-</span><span style="color:#a6e22e">+        //     .get_psel1_reset_pin()
-</span><span style="color:#a6e22e">+        //     .map_or(true, |pin| pin != self.button_rst_pin)
-</span><span style="color:#a6e22e">+        // {
-</span><span style="color:#a6e22e">+        //     uicr.set_psel1_reset_pin(self.button_rst_pin);
-</span><span style="color:#a6e22e">+        //     while !nrf52::nvmc::NVMC.is_ready() {}
-</span><span style="color:#a6e22e">+        //     needs_soft_reset = true;
-</span><span style="color:#a6e22e">+        // }
-</span><span style="color:#a6e22e">+
-</span><span style="color:#a6e22e">+        // // Configure voltage regulator output
-</span><span style="color:#a6e22e">+        // if uicr.get_vout() != self.reg_vout {
-</span><span style="color:#a6e22e">+        //     uicr.set_vout(self.reg_vout);
-</span><span style="color:#a6e22e">+        //     while !nrf52::nvmc::NVMC.is_ready() {}
-</span><span style="color:#a6e22e">+        //     needs_soft_reset = true;
-</span><span style="color:#a6e22e">+        // }
-</span><span style="color:#a6e22e">+
-</span><span style="color:#a6e22e">+        // // Check if we need to free the NFC pins for GPIO
-</span><span style="color:#a6e22e">+        // if self.nfc_as_gpios {
-</span><span style="color:#a6e22e">+        //     uicr.set_nfc_pins_protection(true);
-</span><span style="color:#a6e22e">+        //     while !nrf52::nvmc::NVMC.is_ready() {}
-</span><span style="color:#a6e22e">+        //     needs_soft_reset = true;
-</span><span style="color:#a6e22e">+        // }
-</span><span style="color:#a6e22e">+
-</span><span style="color:#a6e22e">+        // // Any modification of UICR needs a soft reset for the changes to be taken into account.
-</span><span style="color:#a6e22e">+        // if needs_soft_reset {
-</span><span style="color:#a6e22e">+        //     cortexm4::scb::reset();
-</span><span style="color:#a6e22e">+        // }
-</span><span style="color:#a6e22e"></span>     }
+<span style=color:#f92672>-        // Make non-volatile memory writable and activate the reset button
+</span><span style=color:#f92672>-        let uicr = nrf52::uicr::Uicr::new();
+</span><span style=color:#f92672>-
+</span><span style=color:#f92672>-        // Check if we need to erase UICR memory to re-program it
+</span><span style=color:#f92672>-        // This only needs to be done when a bit needs to be flipped from 0 to 1.
+</span><span style=color:#f92672>-        let psel0_reset: u32 = uicr.get_psel0_reset_pin().map_or(0, |pin| pin as u32);
+</span><span style=color:#f92672>-        let psel1_reset: u32 = uicr.get_psel1_reset_pin().map_or(0, |pin| pin as u32);
+</span><span style=color:#f92672>-        let mut erase_uicr = ((!psel0_reset &amp; (self.button_rst_pin as u32))
+</span><span style=color:#f92672>-            | (!psel1_reset &amp; (self.button_rst_pin as u32))
+</span><span style=color:#f92672>-            | (!(uicr.get_vout() as u32) &amp; (self.reg_vout as u32)))
+</span><span style=color:#f92672>-            != 0;
+</span><span style=color:#f92672>-
+</span><span style=color:#f92672>-        // Only enabling the NFC pin protection requires an erase.
+</span><span style=color:#f92672>-        if self.nfc_as_gpios {
+</span><span style=color:#f92672>-            erase_uicr |= !uicr.is_nfc_pins_protection_enabled();
+</span><span style=color:#f92672>-        }
+</span><span style=color:#f92672>-
+</span><span style=color:#f92672>-        if erase_uicr {
+</span><span style=color:#f92672>-            nrf52::nvmc::NVMC.erase_uicr();
+</span><span style=color:#f92672>-        }
+</span><span style=color:#f92672>-
+</span><span style=color:#f92672>-        nrf52::nvmc::NVMC.configure_writeable();
+</span><span style=color:#f92672>-        while !nrf52::nvmc::NVMC.is_ready() {}
+</span><span style=color:#f92672>-
+</span><span style=color:#f92672>-        let mut needs_soft_reset: bool = false;
+</span><span style=color:#f92672>-
+</span><span style=color:#f92672>-        // Configure reset pins
+</span><span style=color:#f92672>-        if uicr
+</span><span style=color:#f92672>-            .get_psel0_reset_pin()
+</span><span style=color:#f92672>-            .map_or(true, |pin| pin != self.button_rst_pin)
+</span><span style=color:#f92672>-        {
+</span><span style=color:#f92672>-            uicr.set_psel0_reset_pin(self.button_rst_pin);
+</span><span style=color:#f92672>-            while !nrf52::nvmc::NVMC.is_ready() {}
+</span><span style=color:#f92672>-            needs_soft_reset = true;
+</span><span style=color:#f92672>-        }
+</span><span style=color:#f92672>-        if uicr
+</span><span style=color:#f92672>-            .get_psel1_reset_pin()
+</span><span style=color:#f92672>-            .map_or(true, |pin| pin != self.button_rst_pin)
+</span><span style=color:#f92672>-        {
+</span><span style=color:#f92672>-            uicr.set_psel1_reset_pin(self.button_rst_pin);
+</span><span style=color:#f92672>-            while !nrf52::nvmc::NVMC.is_ready() {}
+</span><span style=color:#f92672>-            needs_soft_reset = true;
+</span><span style=color:#f92672>-        }
+</span><span style=color:#f92672>-
+</span><span style=color:#f92672>-        // Configure voltage regulator output
+</span><span style=color:#f92672>-        if uicr.get_vout() != self.reg_vout {
+</span><span style=color:#f92672>-            uicr.set_vout(self.reg_vout);
+</span><span style=color:#f92672>-            while !nrf52::nvmc::NVMC.is_ready() {}
+</span><span style=color:#f92672>-            needs_soft_reset = true;
+</span><span style=color:#f92672>-        }
+</span><span style=color:#f92672>-
+</span><span style=color:#f92672>-        // Check if we need to free the NFC pins for GPIO
+</span><span style=color:#f92672>-        if self.nfc_as_gpios {
+</span><span style=color:#f92672>-            uicr.set_nfc_pins_protection(true);
+</span><span style=color:#f92672>-            while !nrf52::nvmc::NVMC.is_ready() {}
+</span><span style=color:#f92672>-            needs_soft_reset = true;
+</span><span style=color:#f92672>-        }
+</span><span style=color:#f92672>-
+</span><span style=color:#f92672>-        // Any modification of UICR needs a soft reset for the changes to be taken into account.
+</span><span style=color:#f92672>-        if needs_soft_reset {
+</span><span style=color:#f92672>-            cortexm4::scb::reset();
+</span><span style=color:#f92672>-        }
+</span><span style=color:#f92672></span><span style=color:#a6e22e>+        // // Make non-volatile memory writable and activate the reset button
+</span><span style=color:#a6e22e>+        // let uicr = nrf52::uicr::Uicr::new();
+</span><span style=color:#a6e22e>+
+</span><span style=color:#a6e22e>+        // // Check if we need to erase UICR memory to re-program it
+</span><span style=color:#a6e22e>+        // // This only needs to be done when a bit needs to be flipped from 0 to 1.
+</span><span style=color:#a6e22e>+        // let psel0_reset: u32 = uicr.get_psel0_reset_pin().map_or(0, |pin| pin as u32);
+</span><span style=color:#a6e22e>+        // let psel1_reset: u32 = uicr.get_psel1_reset_pin().map_or(0, |pin| pin as u32);
+</span><span style=color:#a6e22e>+        // let mut erase_uicr = ((!psel0_reset &amp; (self.button_rst_pin as u32))
+</span><span style=color:#a6e22e>+        //     | (!psel1_reset &amp; (self.button_rst_pin as u32))
+</span><span style=color:#a6e22e>+        //     | (!(uicr.get_vout() as u32) &amp; (self.reg_vout as u32)))
+</span><span style=color:#a6e22e>+        //     != 0;
+</span><span style=color:#a6e22e>+
+</span><span style=color:#a6e22e>+        // // Only enabling the NFC pin protection requires an erase.
+</span><span style=color:#a6e22e>+        // if self.nfc_as_gpios {
+</span><span style=color:#a6e22e>+        //     erase_uicr |= !uicr.is_nfc_pins_protection_enabled();
+</span><span style=color:#a6e22e>+        // }
+</span><span style=color:#a6e22e>+
+</span><span style=color:#a6e22e>+        // if erase_uicr {
+</span><span style=color:#a6e22e>+        //     nrf52::nvmc::NVMC.erase_uicr();
+</span><span style=color:#a6e22e>+        // }
+</span><span style=color:#a6e22e>+
+</span><span style=color:#a6e22e>+        // nrf52::nvmc::NVMC.configure_writeable();
+</span><span style=color:#a6e22e>+        // while !nrf52::nvmc::NVMC.is_ready() {}
+</span><span style=color:#a6e22e>+
+</span><span style=color:#a6e22e>+        // let mut needs_soft_reset: bool = false;
+</span><span style=color:#a6e22e>+
+</span><span style=color:#a6e22e>+        // // Configure reset pins
+</span><span style=color:#a6e22e>+        // if uicr
+</span><span style=color:#a6e22e>+        //     .get_psel0_reset_pin()
+</span><span style=color:#a6e22e>+        //     .map_or(true, |pin| pin != self.button_rst_pin)
+</span><span style=color:#a6e22e>+        // {
+</span><span style=color:#a6e22e>+        //     uicr.set_psel0_reset_pin(self.button_rst_pin);
+</span><span style=color:#a6e22e>+        //     while !nrf52::nvmc::NVMC.is_ready() {}
+</span><span style=color:#a6e22e>+        //     needs_soft_reset = true;
+</span><span style=color:#a6e22e>+        // }
+</span><span style=color:#a6e22e>+        // if uicr
+</span><span style=color:#a6e22e>+        //     .get_psel1_reset_pin()
+</span><span style=color:#a6e22e>+        //     .map_or(true, |pin| pin != self.button_rst_pin)
+</span><span style=color:#a6e22e>+        // {
+</span><span style=color:#a6e22e>+        //     uicr.set_psel1_reset_pin(self.button_rst_pin);
+</span><span style=color:#a6e22e>+        //     while !nrf52::nvmc::NVMC.is_ready() {}
+</span><span style=color:#a6e22e>+        //     needs_soft_reset = true;
+</span><span style=color:#a6e22e>+        // }
+</span><span style=color:#a6e22e>+
+</span><span style=color:#a6e22e>+        // // Configure voltage regulator output
+</span><span style=color:#a6e22e>+        // if uicr.get_vout() != self.reg_vout {
+</span><span style=color:#a6e22e>+        //     uicr.set_vout(self.reg_vout);
+</span><span style=color:#a6e22e>+        //     while !nrf52::nvmc::NVMC.is_ready() {}
+</span><span style=color:#a6e22e>+        //     needs_soft_reset = true;
+</span><span style=color:#a6e22e>+        // }
+</span><span style=color:#a6e22e>+
+</span><span style=color:#a6e22e>+        // // Check if we need to free the NFC pins for GPIO
+</span><span style=color:#a6e22e>+        // if self.nfc_as_gpios {
+</span><span style=color:#a6e22e>+        //     uicr.set_nfc_pins_protection(true);
+</span><span style=color:#a6e22e>+        //     while !nrf52::nvmc::NVMC.is_ready() {}
+</span><span style=color:#a6e22e>+        //     needs_soft_reset = true;
+</span><span style=color:#a6e22e>+        // }
+</span><span style=color:#a6e22e>+
+</span><span style=color:#a6e22e>+        // // Any modification of UICR needs a soft reset for the changes to be taken into account.
+</span><span style=color:#a6e22e>+        // if needs_soft_reset {
+</span><span style=color:#a6e22e>+        //     cortexm4::scb::reset();
+</span><span style=color:#a6e22e>+        // }
+</span><span style=color:#a6e22e></span>     }
  }
  
 EOF
 </code></pre></div><p>在进行上述修改后，我们再开始初始化：</p>
-<pre tabindex="0"><code>./setup.sh
+<pre tabindex=0><code>./setup.sh
 </code></pre><p>通过nrfutil部署到我们的板子上，注意改成<code>nrf52840_mdk_dfu</code>：</p>
-<pre tabindex="0"><code>./deploy.py --board=nrf52840_mdk_dfu --opensk --programmer=nordicdfu
-</code></pre><p><strong>这一步会报错<code>fatal: Couldn't find any DFU device on your system.</code>，看源码似乎在寻找一个<code>vendor_id == &quot;1915&quot;</code>并且<code>product_id == &quot;521F&quot;</code>的设备，猜测是因为刷了UF2BootLoader的原因才导致找不到设备。</strong></p>
+<pre tabindex=0><code>./deploy.py --board=nrf52840_mdk_dfu --opensk --programmer=nordicdfu
+</code></pre><p><strong>这一步会报错<code>fatal: Couldn't find any DFU device on your system.</code>，看源码似乎在寻找一个<code>vendor_id == "1915"</code>并且<code>product_id == "521F"</code>的设备，猜测是因为刷了UF2BootLoader的原因才导致找不到设备。</strong></p>
 <p>那我们就采用别的方法，编译成<code>.uf2</code>文件，通过UF2BootLoader烧写。</p>
-<pre tabindex="0"><code>./deploy.py --board=nrf52840_mdk_dfu --opensk --programmer=none
+<pre tabindex=0><code>./deploy.py --board=nrf52840_mdk_dfu --opensk --programmer=none
 </code></pre><p>执行完毕后会在生成一个合并后的<code>.hex</code>文件<code>target/nrf52840_mdk_dfu_merged.hex</code></p>
 <p>接下来从店家的github下载<code>uf2conv.py</code>这个工具</p>
-<pre tabindex="0"><code>wget https://github.com/makerdiary/nrf52840-mdk-usb-dongle/raw/master/tools/uf2conv.py
+<pre tabindex=0><code>wget https://github.com/makerdiary/nrf52840-mdk-usb-dongle/raw/master/tools/uf2conv.py
 </code></pre><p>把<code>.hex</code>转化成<code>.uf2</code></p>
-<pre tabindex="0"><code>python uf2conv.py -c -f 0xada52840 -o ./target/nrf52840_mdk_dfu_merged.uf2 ./target/nrf52840_mdk_dfu_merged.hex
+<pre tabindex=0><code>python uf2conv.py -c -f 0xada52840 -o ./target/nrf52840_mdk_dfu_merged.uf2 ./target/nrf52840_mdk_dfu_merged.hex
 </code></pre><p>按住reset按钮，将板子插入PC，拷贝uf2到板子中</p>
-<pre tabindex="0"><code>cp ./target/nrf52840_mdk_dfu_merged.uf2 /run/media/imlk/MDK-DONGLE/
+<pre tabindex=0><code>cp ./target/nrf52840_mdk_dfu_merged.uf2 /run/media/imlk/MDK-DONGLE/
 </code></pre><p>等上面的程序结束后，红灯变绿并熄灭，<code>lsusb</code>查看到新的设备</p>
-<p><img src="/images/blog/65/image-20201010130247171.png" alt="image-20201010130247171"></p>
+<p><img src=/images/blog/65/image-20201010130247171.png alt=image-20201010130247171></p>
 <p>至此刷写完成</p>
-<h2 id="用j-link给nrf52840刷bootloader">用J-Link给nRF52840刷BootLoader</h2>
+<h2 id=用j-link给nrf52840刷bootloader>用J-Link给nRF52840刷BootLoader</h2>
 <p>在刷固件的过程中，我们可能会因为填错基地址而无意中覆盖掉flash中重要的部分，此时可以进入dfu模式使用<code>nRF Connect</code>中的Programmer工具刷写固件，但是有时候我们把BootLoader刷掉了，而板子上的App又覆盖了rest按钮的逻辑，或者其他原因导致我们进不去dfu模式，我们还是有办法救回来的。nRF52840这颗SoC包含<code>SWD</code>接口，我们可以用一个J-Link编程器连接板子和pc，然后使用<code>nRF Connect</code>对其进行编程。</p>
 <p>连接方式如图所示，右侧是一个J-Link编程器，我们将它的外壳拆下，找到里面的一组swd接口（3.3VCC）、DIO、CLK、GND），对应将其连接到左边的板子上的（VIN、SWDIO、SWDCLK、GND）：</p>
-<p><img src="/images/blog/65/image-20201011000341491.png" alt="image-20201011000341491"></p>
+<p><img src=/images/blog/65/image-20201011000341491.png alt=image-20201011000341491></p>
 <p>板子的引脚图（源自https://wiki.makerdiary.com/nrf52840-mdk-usb-dongle/#software-resource）</p>
-<p><img src="/images/blog/65/nrf52840-mdk-usb-dongle-pinout.png" alt="img"></p>
+<p><img src=/images/blog/65/nrf52840-mdk-usb-dongle-pinout.png alt=img></p>
 <p>将J-Link连接到PC，可以看到我们连接到了J-Link设备。</p>
-<pre tabindex="0"><code>[imlk@imlk-pc ~]$ lsusb
+<pre tabindex=0><code>[imlk@imlk-pc ~]$ lsusb
 ...
 Bus 001 Device 087: ID 1366:0101 SEGGER J-Link PLUS
 ...
 </code></pre><p>此时打开<code>nRF Connect</code>中的Programmer工具，左上角应该能够看到我们的设备了：</p>
-<p>在当前页面中，你可以读取、擦除设备中的数据，具体的内存布局可以从NORDIC的官方文档中找到：https://infocenter.nordicsemi.com/index.jsp?topic=%2Fcom.nordic.infocenter.sdk5.v15.3.0%2Flib_bootloader.html&amp;cp=5_0_3_5_0_7&amp;anchor=lib_bootloader_memory。</p>
-<p>通过导入BootLoader的hex文件，然后点击Erase &amp; Write，可以擦除全部数据并写入BootLoader。</p>
-<p><img src="/images/blog/65/image-20201011001219508.png" alt="image-20201011001219508"></p>
+<p>在当前页面中，你可以读取、擦除设备中的数据，具体的内存布局可以从NORDIC的官方文档中找到：https://infocenter.nordicsemi.com/index.jsp?topic=%2Fcom.nordic.infocenter.sdk5.v15.3.0%2Flib_bootloader.html&cp=5_0_3_5_0_7&anchor=lib_bootloader_memory。</p>
+<p>通过导入BootLoader的hex文件，然后点击Erase & Write，可以擦除全部数据并写入BootLoader。</p>
+<p><img src=/images/blog/65/image-20201011001219508.png alt=image-20201011001219508></p>
 <p>可以在这里下载makerdiary预编译的UF2BootLoader的hex文件：https://github.com/makerdiary/nrf52840-mdk-usb-dongle/tree/master/firmware/uf2_bootloader</p>
-<h2 id="用opensk实现linux登录失败">用OpenSK实现Linux登录（失败）</h2>
+<h2 id=用opensk实现linux登录失败>用OpenSK实现Linux登录（失败）</h2>
 <p>遇到的问题是执行<code>pamu2fcfg</code>命令后，按下板子上的按钮会出现<code>error: fido_cred_verify (-7) FIDO_ERR_INVALID_ARGUMENT</code>的错误，没找到解决办法</p>
 <p>暂时把找到的资料堆在这里，等成功了再更新：</p>
-<p><a href="https://sites.google.com/site/mtrons/howtos/bake-your-own-security-key">https://sites.google.com/site/mtrons/howtos/bake-your-own-security-key</a></p>
-<p><a href="https://schulz.dk/2019/08/23/using-solokey-for-linux-login/">https://schulz.dk/2019/08/23/using-solokey-for-linux-login/</a></p>
-<p><a href="https://schulz.dk/2019/08/24/password-less-linux-login-with-solokeys/">https://schulz.dk/2019/08/24/password-less-linux-login-with-solokeys/</a></p>
-<h2 id="相关链接">相关链接</h2>
+<p><a href=https://sites.google.com/site/mtrons/howtos/bake-your-own-security-key>https://sites.google.com/site/mtrons/howtos/bake-your-own-security-key</a></p>
+<p><a href=https://schulz.dk/2019/08/23/using-solokey-for-linux-login/>https://schulz.dk/2019/08/23/using-solokey-for-linux-login/</a></p>
+<p><a href=https://schulz.dk/2019/08/24/password-less-linux-login-with-solokeys/>https://schulz.dk/2019/08/24/password-less-linux-login-with-solokeys/</a></p>
+<h2 id=相关链接>相关链接</h2>
 <ul>
 <li>
 <p>创客日记-Google OpenSK 快速入门指南
-<a href="https://zhuanlan.zhihu.com/p/109631580">https://zhuanlan.zhihu.com/p/109631580</a></p>
+<a href=https://zhuanlan.zhihu.com/p/109631580>https://zhuanlan.zhihu.com/p/109631580</a></p>
 </li>
 <li>
 <p>makerdiary的OpenSK仓库
-<a href="https://github.com/makerdiary/OpenSK">https://github.com/makerdiary/OpenSK</a></p>
+<a href=https://github.com/makerdiary/OpenSK>https://github.com/makerdiary/OpenSK</a></p>
 </li>
 <li>
 <p>makerdiary的博客
-<a href="https://wiki.makerdiary.com/nrf52840-mdk-usb-dongle/opensk/getting-started/">https://wiki.makerdiary.com/nrf52840-mdk-usb-dongle/opensk/getting-started/</a></p>
+<a href=https://wiki.makerdiary.com/nrf52840-mdk-usb-dongle/opensk/getting-started/>https://wiki.makerdiary.com/nrf52840-mdk-usb-dongle/opensk/getting-started/</a></p>
 </li>
 <li>
 <p>nRF52840-MDK USB Dongle淘宝链接：
-<a href="https://item.taobao.com/item.htm?spm=2013.1.w4004-18605444720.4.54af5ff1ndQwhn&amp;id=578378054977">https://item.taobao.com/item.htm?spm=2013.1.w4004-18605444720.4.54af5ff1ndQwhn&amp;id=578378054977</a></p>
+<a href="https://item.taobao.com/item.htm?spm=2013.1.w4004-18605444720.4.54af5ff1ndQwhn&id=578378054977">https://item.taobao.com/item.htm?spm=2013.1.w4004-18605444720.4.54af5ff1ndQwhn&id=578378054977</a></p>
 </li>
 <li>
 <p>Erase UICR and merge Bootloader problem
-<a href="https://devzone.nordicsemi.com/f/nordic-q-a/50948/erase-uicr-and-merge-bootloader-problem">https://devzone.nordicsemi.com/f/nordic-q-a/50948/erase-uicr-and-merge-bootloader-problem</a></p>
+<a href=https://devzone.nordicsemi.com/f/nordic-q-a/50948/erase-uicr-and-merge-bootloader-problem>https://devzone.nordicsemi.com/f/nordic-q-a/50948/erase-uicr-and-merge-bootloader-problem</a></p>
 </li>
 </ul>
-
 </main>
-
-
-
-<div id="comments">
-    <hr>
-    <script src="https://utteranc.es/client.js" repo='KB5201314/KB5201314.github.io' issue-term="pathname" label='💬 comments 💬'
-        theme='github-light' crossorigin="anonymous" async>
-        </script>
+<div id=comments>
+<hr>
+<script src=https://utteranc.es/client.js repo=KB5201314/KB5201314.github.io issue-term=pathname label="💬 comments 💬" theme=github-light crossorigin=anonymous async></script>
 </div>
-
-
-  <footer>
-  
-  <hr/>
-  © imlk 2017 &ndash; 2021 | <a href="https://blog.imlk.top">imlk's blog</a> | <a href="https://github.com/KB5201314/">Github</a> | <a href="mailto:me@imlk.top">Email</a> | <a href="https://beian.miit.gov.cn/">京ICP备 - 2020042968号</a>
-  
-  </footer>
-  </body>
+<footer>
+<hr>
+© imlk 2017 &ndash; 2021 | <a href=https://blog.imlk.top>imlk's blog</a> | <a href=https://github.com/KB5201314/>Github</a> | <a href=mailto:me@imlk.top>Email</a> | <a href=https://beian.miit.gov.cn/>京ICP备 - 2020042968号</a>
+</footer>
+</body>
 </html>

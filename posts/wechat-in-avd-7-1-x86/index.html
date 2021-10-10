@@ -1,89 +1,62 @@
-<!DOCTYPE html>
-<html lang="zh-cn">
-
+<!doctype html><html lang=zh-cn>
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>在AVD_7.1_x86 emulator上安装微信 | imlk&#39;s blog</title>
-  <link rel="stylesheet" href='/css/style.css' />
-  <link rel="stylesheet" href='/css/fonts.css' />
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&display=swap" rel="stylesheet">
+<meta charset=utf-8>
+<meta name=viewport content="width=device-width,initial-scale=1">
+<title>在AVD_7.1_x86 emulator上安装微信 | imlk's blog</title>
+<link rel=stylesheet href=/css/style.css>
+<link rel=stylesheet href=/css/fonts.css>
+<link rel=preconnect href=https://fonts.googleapis.com>
+<link rel=preconnect href=https://fonts.gstatic.com crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&display=swap" rel=stylesheet>
 </head>
-
 <body>
-  <header class="header">
-    <a class="logo" href='/'> imlk's Blog </a>
-    <nav>
-      <ul class="menu">
-        
-        <li><a href="/">Home</a></li>
-        
-        <li><a href="/about/">About</a></li>
-        
-        <li><a href="/archives/">Archives</a></li>
-        
-        <li><a href="/friends/">Friends</a></li>
-        
-        <li><a href="/index.xml">Subscribe</a></li>
-        
-      </ul>
-    </nav>
-  </header>
-  <hr />
-
-
-
-<div class="article-meta">
-    <h1><span class="title">在AVD_7.1_x86 emulator上安装微信</span></h1>
-    
-    <span>
-        <span class="date">2019-06-13</span>
-        |
-        
-        <span class="cats">
-            
-            
-            <a href='https://blog.imlk.top/categories/android/'>Android</a>
-            
-        </span>
-        
-        |
-        <span class="tags">
-            
-            <a href='https://blog.imlk.top/tags/android/'>#Android</a>
-            
-            <a href='https://blog.imlk.top/tags/avd/'>#AVD</a>
-            
-            <a href='https://blog.imlk.top/tags/xposed/'>#Xposed</a>
-            
-            <a href='https://blog.imlk.top/tags/%E7%9E%8E%E6%90%9E/'>#瞎搞</a>
-            
-        </span>
-        
-    </span>
-    <br>
-    
+<header class=header>
+<a class=logo href=/> imlk's Blog </a>
+<nav>
+<ul class=menu>
+<li><a href=/>Home</a></li>
+<li><a href=/about/>About</a></li>
+<li><a href=/archives/>Archives</a></li>
+<li><a href=/friends/>Friends</a></li>
+<li><a href=/index.xml>Subscribe</a></li>
+</ul>
+</nav>
+</header>
+<hr>
+<div class=article-meta>
+<h1><span class=title>在AVD_7.1_x86 emulator上安装微信</span></h1>
+<span>
+<span class=date>2019-06-13</span>
+|
+<span class=cats>
+<a href=https://blog.imlk.top/categories/android/>Android</a>
+</span>
+|
+<span class=tags>
+<a href=https://blog.imlk.top/tags/android/>#Android</a>
+<a href=https://blog.imlk.top/tags/avd/>#AVD</a>
+<a href=https://blog.imlk.top/tags/xposed/>#Xposed</a>
+<a href=https://blog.imlk.top/tags/%E7%9E%8E%E6%90%9E/>#瞎搞</a>
+</span>
+</span>
+<br>
 </div>
-
-
 <main>
-    <h3 id="起因">起因</h3>
+<h3 id=起因>起因</h3>
 <p>好久没有写博客了，并不是其中没有折腾2333，作业太多好多事情都没写（其实就是懒）</p>
 <p>那啥，手头有两台手机，一台太烂但是7.1.1 root过（曾经的主力机，依然坚挺），另一台是7.0 垃圾索大法，au定制机，没法root。
 前一台没有运动传感器，想拿来计步都不行，第二台有传感器但是不能root，就不能微信刷步数啦23333（真是贪婪的人类）</p>
 <p>寻思着在avd上装微信刷步数。于是有了下面的折腾记录，同时也是做个笔记，避免以后绕弯路，毕竟，博客都是给以后的自己看的23333。</p>
-<h3 id="avd_44">AVD_4.4</h3>
+<h3 id=avd_44>AVD_4.4</h3>
 <p>原先我就有一台Android 4.4的虚拟设备，已经root而且装了xp，接着安装微信和模块打算开刷的时候，我点开微信，悲剧发生了，闪退！！！！
 看一下logcat，傻逼微信在新版用了一个sdk21之后才加入的函数，但是自己又声称最低支持Android4.4，我真是dnlm！！！！</p>
 <p>没办法，看来4.4上是没法折腾的，索性再开一台Android 7.1的AVD吧，说不定以后还要用上呢。</p>
-<h3 id="avd_71">AVD_7.1</h3>
+<h3 id=avd_71>AVD_7.1</h3>
 <p>怎么安装这个就不用我多说啦，困难的地方主要就是root和安装微信这两个。</p>
-<h4 id="root">root</h4>
+<h4 id=root>root</h4>
 <p>root的话，就参考这个了：
 把supersu官网的那一套东西下载下来（虽然各个版本方案不同，但是文件都在里头）
-<a href="https://blog.csdn.net/luvsnow/article/details/79963025">android emulator 获取 Root权限</a></p>
+<a href=https://blog.csdn.net/luvsnow/article/details/79963025>android emulator 获取 Root权限</a></p>
 <p>注意启动的时候加上<code>-writable-system</code>
 可惜的是，这种root好像是短时期的，不能按电源键重启设备，也不能adb reboot重启虚拟设备，这样再开之后root就会没。不过恢复也很简单，只要再走一遍</p>
 <ul>
@@ -91,11 +64,11 @@
 <li>adb remount</li>
 <li>adb shell</li>
 <li>su &ndash;install</li>
-<li>su -d&amp;</li>
+<li>su -d&</li>
 <li>setenforce 0
 然后授权管理里面root又有啦</li>
 </ul>
-<h4 id="装微信">装微信</h4>
+<h4 id=装微信>装微信</h4>
 <p>装微信可没那么简单，毕竟这里可是AVD_x86，要是简单的话你也不会来这里了。</p>
 <p>微信只给了arm的lib，但是AVD普遍是x86的，会发生安装不上提示ABI不兼容的情况，对于这种问题有两个解决办法：</p>
 <ul>
@@ -104,15 +77,15 @@
 <li>ARM-Translation（√）
 这个东西似乎是intel搞个一个闭源的层，能把apk里的arm用的so库在运行时动态地转换成x86的指令，所有x86的Android设备里都有这个，Android-x86和Genymotion据说都内置这个东西，总之牛逼就对了。</li>
 </ul>
-<h5 id="arm-translation">ARM-Translation</h5>
+<h5 id=arm-translation>ARM-Translation</h5>
 <p>先贴一堆参考前人的资料</p>
 <ol>
-<li><a href="https://testerhome.com/topics/14231">移动测试基础 Android 模拟器 Genymotion 安装配置与 ARM 支持</a></li>
-<li><a href="https://android.stackexchange.com/questions/179482/android-emulator-install-failed-no-matching-abis-failed-to-extract-native-lib">Android Emulator - INSTALL_FAILED_NO_MATCHING_ABIS: Failed to extract native libraries, res=-113</a></li>
-<li><a href="https://blog.csdn.net/Roland_Sun/article/details/49735601">如何打开Android X86对houdini的支持</a></li>
-<li><a href="https://blog.csdn.net/wangkai0681080/article/details/79523003">Android模拟器知识以及改造</a></li>
-<li><a href="https://github.com/Rprop/libhoudini">Github/Rprop/libhoudini</a></li>
-<li><a href="http://baba.zhaoxiuyuan.com/2017/11/126_android_x86_houdini/">Android-X86集成houdini(Arm兼容工具)</a></li>
+<li><a href=https://testerhome.com/topics/14231>移动测试基础 Android 模拟器 Genymotion 安装配置与 ARM 支持</a></li>
+<li><a href=https://android.stackexchange.com/questions/179482/android-emulator-install-failed-no-matching-abis-failed-to-extract-native-lib>Android Emulator - INSTALL_FAILED_NO_MATCHING_ABIS: Failed to extract native libraries, res=-113</a></li>
+<li><a href=https://blog.csdn.net/Roland_Sun/article/details/49735601>如何打开Android X86对houdini的支持</a></li>
+<li><a href=https://blog.csdn.net/wangkai0681080/article/details/79523003>Android模拟器知识以及改造</a></li>
+<li><a href=https://github.com/Rprop/libhoudini>Github/Rprop/libhoudini</a></li>
+<li><a href=http://baba.zhaoxiuyuan.com/2017/11/126_android_x86_houdini/>Android-X86集成houdini(Arm兼容工具)</a></li>
 </ol>
 <p>资料这么多，我来梳理一下下吧：
 要使用这个ARM-Translation其实不麻烦。主要下面几个步骤：</p>
@@ -123,12 +96,12 @@
 <li>
 <p>改<code>default.prop</code>里的<code>ro.dalvik.vm.native.bridge=0</code>为<code>ro.dalvik.vm.native.bridge=libhoudini.so</code>，开启系统内的NativeBridge(参考第4篇文章)
 这里必须说一下，这个<code>default.prop</code>不在<code>system.img</code>里面，在<code>ramdisk.img</code>里面，<code>ramdisk.img</code>是只读的，只在启动的时候读一次到内存里。所以对<code>default.prop</code>的修改重启后会丢失，唯一的办法是手动编辑一个<code>ramdisk.img</code>，然后用emulator的<code>-ramdisk</code>选项指定修改后的<code>ramdisk.img</code>文件。</p>
-<p>编辑的方法也不难，参考这个里面的第二种方法<a href="https://blog.csdn.net/linuxdriverdeveloper/article/details/8124319">制作/解压android ramdisk.img镜像</a></p>
+<p>编辑的方法也不难，参考这个里面的第二种方法<a href=https://blog.csdn.net/linuxdriverdeveloper/article/details/8124319>制作/解压android ramdisk.img镜像</a></p>
 <ul>
 <li>从SDK目录里找到ramdisk.img，备份一份到自己的avd目录里，</li>
 <li>用gunzip解压它，再用cpio解包到一个目录里</li>
 <li>在这目录里找到<code>default.prop</code>进行修改</li>
-<li>注意回package的时候，不要用cpio打包，可能会有问题导致开机不了，用<code>mkbootfs ./你之前解包到的目录 | gzip &gt; ramdisk-new.img</code>制作修改后的镜像（可以从这下载mkbootfs <a href="https://github.com/shenyuanv/mkboot-tools">https://github.com/shenyuanv/mkboot-tools</a> ）</li>
+<li>注意回package的时候，不要用cpio打包，可能会有问题导致开机不了，用<code>mkbootfs ./你之前解包到的目录 | gzip > ramdisk-new.img</code>制作修改后的镜像（可以从这下载mkbootfs <a href=https://github.com/shenyuanv/mkboot-tools>https://github.com/shenyuanv/mkboot-tools</a> ）</li>
 <li>最后的<code>ramdisk-new.img</code>就是修改过的<code>ramdisk.img</code>了，在启动avd时用emulator的<code>-ramdisk</code>选项指定它即可。</li>
 </ul>
 </li>
@@ -138,89 +111,89 @@
 <li>
 <p>执行enable_nativebridge
 这几篇文章里都提到了<code>enable_nativebridge</code>这个东西，但是我找了一番，我的AVD里面没有这个脚本啊啊，真的服了，为什么google做了这个东西又不拿出来给我们用呢？？？？咱啥也不知道，咱也不敢问</p>
-<p>不过还好，在万能的github上面找到了一段<code>enable_nativebridge</code>，大概读一读能发现，恰好是Android7用的，而且考虑了各种情况，甚至还可以在线下载文件（显然访问不了，不过有办法解决的），<a href="https://gist.github.com/41a5d8ba498ceecca28e9d1069a32ede">https://gist.github.com/41a5d8ba498ceecca28e9d1069a32ede</a>，访问不了gist的可以用google快照看。方便大家我就贴在下面了：</p>
+<p>不过还好，在万能的github上面找到了一段<code>enable_nativebridge</code>，大概读一读能发现，恰好是Android7用的，而且考虑了各种情况，甚至还可以在线下载文件（显然访问不了，不过有办法解决的），<a href=https://gist.github.com/41a5d8ba498ceecca28e9d1069a32ede>https://gist.github.com/41a5d8ba498ceecca28e9d1069a32ede</a>，访问不了gist的可以用google快照看。方便大家我就贴在下面了：</p>
 </li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh"><span style="color:#75715e">#!/system/bin/sh
-</span><span style="color:#75715e"></span>
-PATH<span style="color:#f92672">=</span>/system/bin:/system/xbin
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-sh data-lang=sh><span style=color:#75715e>#!/system/bin/sh
+</span><span style=color:#75715e></span>
+PATH<span style=color:#f92672>=</span>/system/bin:/system/xbin
 
-houdini_bin<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>
-dest_dir<span style="color:#f92672">=</span>/system/lib$1/arm$1
-binfmt_misc_dir<span style="color:#f92672">=</span>/proc/sys/fs/binfmt_misc
+houdini_bin<span style=color:#f92672>=</span><span style=color:#ae81ff>0</span>
+dest_dir<span style=color:#f92672>=</span>/system/lib$1/arm$1
+binfmt_misc_dir<span style=color:#f92672>=</span>/proc/sys/fs/binfmt_misc
 
-<span style="color:#66d9ef">if</span> <span style="color:#f92672">[</span> -z <span style="color:#e6db74">&#34;</span>$1<span style="color:#e6db74">&#34;</span> <span style="color:#f92672">]</span>; <span style="color:#66d9ef">then</span>
-	<span style="color:#66d9ef">if</span> <span style="color:#f92672">[</span> <span style="color:#e6db74">&#34;`uname -m`&#34;</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;x86_64&#34;</span> <span style="color:#f92672">]</span>; <span style="color:#66d9ef">then</span>
-		v<span style="color:#f92672">=</span>7_y
-		url<span style="color:#f92672">=</span>http://goo.gl/SBU3is
-	<span style="color:#66d9ef">else</span>
-		v<span style="color:#f92672">=</span>7_x
-		url<span style="color:#f92672">=</span>http://goo.gl/0IJs40
-	<span style="color:#66d9ef">fi</span>
-<span style="color:#66d9ef">else</span>
-	v<span style="color:#f92672">=</span>7_z
-	url<span style="color:#f92672">=</span>http://goo.gl/FDrxVN
-<span style="color:#66d9ef">fi</span>
+<span style=color:#66d9ef>if</span> <span style=color:#f92672>[</span> -z <span style=color:#e6db74>&#34;</span>$1<span style=color:#e6db74>&#34;</span> <span style=color:#f92672>]</span>; <span style=color:#66d9ef>then</span>
+	<span style=color:#66d9ef>if</span> <span style=color:#f92672>[</span> <span style=color:#e6db74>&#34;`uname -m`&#34;</span> <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;x86_64&#34;</span> <span style=color:#f92672>]</span>; <span style=color:#66d9ef>then</span>
+		v<span style=color:#f92672>=</span>7_y
+		url<span style=color:#f92672>=</span>http://goo.gl/SBU3is
+	<span style=color:#66d9ef>else</span>
+		v<span style=color:#f92672>=</span>7_x
+		url<span style=color:#f92672>=</span>http://goo.gl/0IJs40
+	<span style=color:#66d9ef>fi</span>
+<span style=color:#66d9ef>else</span>
+	v<span style=color:#f92672>=</span>7_z
+	url<span style=color:#f92672>=</span>http://goo.gl/FDrxVN
+<span style=color:#66d9ef>fi</span>
 
-<span style="color:#66d9ef">if</span> <span style="color:#f92672">[</span> -s /system/lib$1/libhoudini.so <span style="color:#f92672">]</span>; <span style="color:#66d9ef">then</span>
-	log -pi -thoudini <span style="color:#e6db74">&#34;found /system/lib</span>$1<span style="color:#e6db74">/libhoudini.so&#34;</span>
-<span style="color:#66d9ef">elif</span> <span style="color:#f92672">[</span> -e /system/etc/houdini$v.sfs <span style="color:#f92672">]</span>; <span style="color:#66d9ef">then</span>
+<span style=color:#66d9ef>if</span> <span style=color:#f92672>[</span> -s /system/lib$1/libhoudini.so <span style=color:#f92672>]</span>; <span style=color:#66d9ef>then</span>
+	log -pi -thoudini <span style=color:#e6db74>&#34;found /system/lib</span>$1<span style=color:#e6db74>/libhoudini.so&#34;</span>
+<span style=color:#66d9ef>elif</span> <span style=color:#f92672>[</span> -e /system/etc/houdini$v.sfs <span style=color:#f92672>]</span>; <span style=color:#66d9ef>then</span>
 	mount /system/etc/houdini$v.sfs $dest_dir
-<span style="color:#66d9ef">else</span>
-	<span style="color:#66d9ef">if</span> mountpoint -q $dest_dir; <span style="color:#66d9ef">then</span>
-		kill -9 <span style="color:#e6db74">`</span>fuser -m $dest_dir<span style="color:#e6db74">`</span>
+<span style=color:#66d9ef>else</span>
+	<span style=color:#66d9ef>if</span> mountpoint -q $dest_dir; <span style=color:#66d9ef>then</span>
+		kill -9 <span style=color:#e6db74>`</span>fuser -m $dest_dir<span style=color:#e6db74>`</span>
 		umount -f $dest_dir
-	<span style="color:#66d9ef">fi</span>
+	<span style=color:#66d9ef>fi</span>
 	mkdir -p /data/arm
 	cd /data/arm
-	<span style="color:#66d9ef">while</span> ! mount houdini$v.sfs $dest_dir; <span style="color:#66d9ef">do</span>
-		<span style="color:#66d9ef">while</span> <span style="color:#f92672">[</span> <span style="color:#e6db74">&#34;</span><span style="color:#66d9ef">$(</span>getprop net.dns1<span style="color:#66d9ef">)</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;&#34;</span> <span style="color:#f92672">]</span>; <span style="color:#66d9ef">do</span>
-			sleep <span style="color:#ae81ff">10</span>
-		<span style="color:#66d9ef">done</span>
-		wget $url -cO houdini$v.sfs <span style="color:#f92672">&amp;&amp;</span> <span style="color:#66d9ef">continue</span>
+	<span style=color:#66d9ef>while</span> ! mount houdini$v.sfs $dest_dir; <span style=color:#66d9ef>do</span>
+		<span style=color:#66d9ef>while</span> <span style=color:#f92672>[</span> <span style=color:#e6db74>&#34;</span><span style=color:#66d9ef>$(</span>getprop net.dns1<span style=color:#66d9ef>)</span><span style=color:#e6db74>&#34;</span> <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;&#34;</span> <span style=color:#f92672>]</span>; <span style=color:#66d9ef>do</span>
+			sleep <span style=color:#ae81ff>10</span>
+		<span style=color:#66d9ef>done</span>
+		wget $url -cO houdini$v.sfs <span style=color:#f92672>&amp;&amp;</span> <span style=color:#66d9ef>continue</span>
 		rm -f houdini$v.sfs
-		sleep <span style="color:#ae81ff">30</span>
-	<span style="color:#66d9ef">done</span>
-<span style="color:#66d9ef">fi</span>
+		sleep <span style=color:#ae81ff>30</span>
+	<span style=color:#66d9ef>done</span>
+<span style=color:#66d9ef>fi</span>
 
-<span style="color:#f92672">[</span> -s /system/lib$1/libhoudini.so <span style="color:#f92672">]</span> <span style="color:#f92672">||</span> mount --bind $dest_dir/libhoudini.so /system/lib$1/libhoudini.so
+<span style=color:#f92672>[</span> -s /system/lib$1/libhoudini.so <span style=color:#f92672>]</span> <span style=color:#f92672>||</span> mount --bind $dest_dir/libhoudini.so /system/lib$1/libhoudini.so
 
-<span style="color:#75715e"># this is to add the supported binary formats via binfmt_misc</span>
+<span style=color:#75715e># this is to add the supported binary formats via binfmt_misc</span>
 
-<span style="color:#66d9ef">if</span> <span style="color:#f92672">[</span> ! -e $binfmt_misc_dir/register <span style="color:#f92672">]</span>; <span style="color:#66d9ef">then</span>
+<span style=color:#66d9ef>if</span> <span style=color:#f92672>[</span> ! -e $binfmt_misc_dir/register <span style=color:#f92672>]</span>; <span style=color:#66d9ef>then</span>
 	mount -t binfmt_misc none $binfmt_misc_dir
-<span style="color:#66d9ef">fi</span>
+<span style=color:#66d9ef>fi</span>
 
 cd $binfmt_misc_dir
-<span style="color:#66d9ef">if</span> <span style="color:#f92672">[</span> -e register <span style="color:#f92672">]</span>; <span style="color:#66d9ef">then</span>
-	<span style="color:#f92672">[</span> -e /system/bin/houdini$1 <span style="color:#f92672">]</span> <span style="color:#f92672">&amp;&amp;</span> dest_dir<span style="color:#f92672">=</span>/system/bin
-	<span style="color:#75715e"># register Houdini for arm binaries</span>
-	<span style="color:#66d9ef">if</span> <span style="color:#f92672">[</span> -z <span style="color:#e6db74">&#34;</span>$1<span style="color:#e6db74">&#34;</span> <span style="color:#f92672">]</span>; <span style="color:#66d9ef">then</span>
-		echo <span style="color:#e6db74">&#39;:arm_exe:M::\\x7f\\x45\\x4c\\x46\\x01\\x01\\x01\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x02\\x00\\x28::&#39;</span><span style="color:#e6db74">&#34;</span>$dest_dir<span style="color:#e6db74">/houdini:P&#34;</span> &gt; register
-		echo <span style="color:#e6db74">&#39;:arm_dyn:M::\\x7f\\x45\\x4c\\x46\\x01\\x01\\x01\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x03\\x00\\x28::&#39;</span><span style="color:#e6db74">&#34;</span>$dest_dir<span style="color:#e6db74">/houdini:P&#34;</span> &gt; register
-	<span style="color:#66d9ef">else</span>
-		echo <span style="color:#e6db74">&#39;:arm64_exe:M::\\x7f\\x45\\x4c\\x46\\x02\\x01\\x01\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x02\\x00\\xb7::&#39;</span><span style="color:#e6db74">&#34;</span>$dest_dir<span style="color:#e6db74">/houdini64:P&#34;</span> &gt; register
-		echo <span style="color:#e6db74">&#39;:arm64_dyn:M::\\x7f\\x45\\x4c\\x46\\x02\\x01\\x01\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x03\\x00\\xb7::&#39;</span><span style="color:#e6db74">&#34;</span>$dest_dir<span style="color:#e6db74">/houdini64:P&#34;</span> &gt; register
-	<span style="color:#66d9ef">fi</span>
-	<span style="color:#66d9ef">if</span> <span style="color:#f92672">[</span> -e arm<span style="color:#e6db74">${</span>1<span style="color:#e6db74">}</span>_exe <span style="color:#f92672">]</span>; <span style="color:#66d9ef">then</span>
-		houdini_bin<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>
-	<span style="color:#66d9ef">fi</span>
-<span style="color:#66d9ef">else</span>
-	log -pe -thoudini <span style="color:#e6db74">&#34;No binfmt_misc support&#34;</span>
-<span style="color:#66d9ef">fi</span>
+<span style=color:#66d9ef>if</span> <span style=color:#f92672>[</span> -e register <span style=color:#f92672>]</span>; <span style=color:#66d9ef>then</span>
+	<span style=color:#f92672>[</span> -e /system/bin/houdini$1 <span style=color:#f92672>]</span> <span style=color:#f92672>&amp;&amp;</span> dest_dir<span style=color:#f92672>=</span>/system/bin
+	<span style=color:#75715e># register Houdini for arm binaries</span>
+	<span style=color:#66d9ef>if</span> <span style=color:#f92672>[</span> -z <span style=color:#e6db74>&#34;</span>$1<span style=color:#e6db74>&#34;</span> <span style=color:#f92672>]</span>; <span style=color:#66d9ef>then</span>
+		echo <span style=color:#e6db74>&#39;:arm_exe:M::\\x7f\\x45\\x4c\\x46\\x01\\x01\\x01\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x02\\x00\\x28::&#39;</span><span style=color:#e6db74>&#34;</span>$dest_dir<span style=color:#e6db74>/houdini:P&#34;</span> &gt; register
+		echo <span style=color:#e6db74>&#39;:arm_dyn:M::\\x7f\\x45\\x4c\\x46\\x01\\x01\\x01\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x03\\x00\\x28::&#39;</span><span style=color:#e6db74>&#34;</span>$dest_dir<span style=color:#e6db74>/houdini:P&#34;</span> &gt; register
+	<span style=color:#66d9ef>else</span>
+		echo <span style=color:#e6db74>&#39;:arm64_exe:M::\\x7f\\x45\\x4c\\x46\\x02\\x01\\x01\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x02\\x00\\xb7::&#39;</span><span style=color:#e6db74>&#34;</span>$dest_dir<span style=color:#e6db74>/houdini64:P&#34;</span> &gt; register
+		echo <span style=color:#e6db74>&#39;:arm64_dyn:M::\\x7f\\x45\\x4c\\x46\\x02\\x01\\x01\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x03\\x00\\xb7::&#39;</span><span style=color:#e6db74>&#34;</span>$dest_dir<span style=color:#e6db74>/houdini64:P&#34;</span> &gt; register
+	<span style=color:#66d9ef>fi</span>
+	<span style=color:#66d9ef>if</span> <span style=color:#f92672>[</span> -e arm<span style=color:#e6db74>${</span>1<span style=color:#e6db74>}</span>_exe <span style=color:#f92672>]</span>; <span style=color:#66d9ef>then</span>
+		houdini_bin<span style=color:#f92672>=</span><span style=color:#ae81ff>1</span>
+	<span style=color:#66d9ef>fi</span>
+<span style=color:#66d9ef>else</span>
+	log -pe -thoudini <span style=color:#e6db74>&#34;No binfmt_misc support&#34;</span>
+<span style=color:#66d9ef>fi</span>
 
-<span style="color:#66d9ef">if</span> <span style="color:#f92672">[</span> $houdini_bin -eq <span style="color:#ae81ff">0</span> <span style="color:#f92672">]</span>; <span style="color:#66d9ef">then</span>
-	log -pe -thoudini <span style="color:#e6db74">&#34;houdini</span>$1<span style="color:#e6db74"> enabling failed!&#34;</span>
-<span style="color:#66d9ef">else</span>
-	log -pi -thoudini <span style="color:#e6db74">&#34;houdini</span>$1<span style="color:#e6db74"> enabled&#34;</span>
-<span style="color:#66d9ef">fi</span>
+<span style=color:#66d9ef>if</span> <span style=color:#f92672>[</span> $houdini_bin -eq <span style=color:#ae81ff>0</span> <span style=color:#f92672>]</span>; <span style=color:#66d9ef>then</span>
+	log -pe -thoudini <span style=color:#e6db74>&#34;houdini</span>$1<span style=color:#e6db74> enabling failed!&#34;</span>
+<span style=color:#66d9ef>else</span>
+	log -pi -thoudini <span style=color:#e6db74>&#34;houdini</span>$1<span style=color:#e6db74> enabled&#34;</span>
+<span style=color:#66d9ef>fi</span>
 
-<span style="color:#f92672">[</span> <span style="color:#e6db74">&#34;</span><span style="color:#66d9ef">$(</span>getprop ro.zygote<span style="color:#66d9ef">)</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;zygote64_32&#34;</span> -a -z <span style="color:#e6db74">&#34;</span>$1<span style="color:#e6db74">&#34;</span> <span style="color:#f92672">]</span> <span style="color:#f92672">&amp;&amp;</span> exec $0 <span style="color:#ae81ff">64</span>
+<span style=color:#f92672>[</span> <span style=color:#e6db74>&#34;</span><span style=color:#66d9ef>$(</span>getprop ro.zygote<span style=color:#66d9ef>)</span><span style=color:#e6db74>&#34;</span> <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;zygote64_32&#34;</span> -a -z <span style=color:#e6db74>&#34;</span>$1<span style=color:#e6db74>&#34;</span> <span style=color:#f92672>]</span> <span style=color:#f92672>&amp;&amp;</span> exec $0 <span style=color:#ae81ff>64</span>
 
-exit <span style="color:#ae81ff">0</span>
+exit <span style=color:#ae81ff>0</span>
 </code></pre></div><p>把这个脚本放到avd里的<code>/system/bin/</code>目录下，记得把<code>log -pi -thoudini</code>改成<code>echo</code>方便我们最后观察是否成功了。</p>
-<h6 id="houdinisfs">houdini.sfs</h6>
-<p>其中最核心的是那个houdini.sfs文件，当然各个Android版本的文件名不太一样，国内要下载的话，第6篇文章里的作者给了短网址还原的办法，不过我还发现另外一个仓库 <a href="https://github.com/Rprop/libhoudini">https://github.com/Rprop/libhoudini</a> ，这里面各个版本的sfs文件都有，阅读脚本发现，可以<strong>手动下载这个文件</strong>然后放到<code>/system/etc/</code>下面。</p>
+<h6 id=houdinisfs>houdini.sfs</h6>
+<p>其中最核心的是那个houdini.sfs文件，当然各个Android版本的文件名不太一样，国内要下载的话，第6篇文章里的作者给了短网址还原的办法，不过我还发现另外一个仓库 <a href=https://github.com/Rprop/libhoudini>https://github.com/Rprop/libhoudini</a> ，这里面各个版本的sfs文件都有，阅读脚本发现，可以<strong>手动下载这个文件</strong>然后放到<code>/system/etc/</code>下面。</p>
 <p>这个sfs文件其实是<code>squashfs</code>格式的一个影像，脚本里把它挂载到<code>/system/lib/arm</code>文件夹里（64位的情况是另一个文件夹，这里的描述都以x86为准，x86_64看上面的脚本进行变通）。</p>
 <p><strong>一些意外</strong></p>
 <ul>
@@ -229,131 +202,121 @@ exit <span style="color:#ae81ff">0</span>
 </li>
 <li>
 <p>之后说<code>mount: losetup failed 1</code>，改为手动mount加上<code>-v</code>选项后说</p>
-<pre tabindex="0"><code>try '/system/etc/houdini7_x.sfs' type 'ext3' on '/system/lib/arm/'
-</code></pre><pre tabindex="0"><code> 显然它把我文件格式搞错了，这个sfs文件应该是`squashfs`而不是`ext3`，加`-t`选项强制指定`squashfs`格式后告诉我`No such device`，你说你马呢，我文件好端端在这你告诉我没有。无奈之下想到了`strace`大法，给这条命令前加上`strace`，查看系统调用过程，发现其中调用了`mount()`函数：
-</code></pre><pre tabindex="0"><code> mount(&quot;/system/etc/houdini7_x.sfs&quot;, &quot;/system/lib/arm/&quot;, &quot;squashfs&quot;, MS_SILENT, NULL) = -1 ENODEV (No such device)
-</code></pre><pre tabindex="0"><code> man查mount()的手册发现，`ENODEV`表示不支持的文件系统格式，也就是说**这个avd它丫的不支持`squashfs`这个文件系统**，网上说可以在编译的时候加选项，但是显然我们是不会去编译的，费力不讨好。解决办法很简单，在宿主机上mount一下，把里面的文件拿出来`adb push`到avd的`/system/lib/arm`这个目录，大功告成。
+<pre tabindex=0><code>try '/system/etc/houdini7_x.sfs' type 'ext3' on '/system/lib/arm/'
+</code></pre><pre tabindex=0><code> 显然它把我文件格式搞错了，这个sfs文件应该是`squashfs`而不是`ext3`，加`-t`选项强制指定`squashfs`格式后告诉我`No such device`，你说你马呢，我文件好端端在这你告诉我没有。无奈之下想到了`strace`大法，给这条命令前加上`strace`，查看系统调用过程，发现其中调用了`mount()`函数：
+</code></pre><pre tabindex=0><code> mount(&quot;/system/etc/houdini7_x.sfs&quot;, &quot;/system/lib/arm/&quot;, &quot;squashfs&quot;, MS_SILENT, NULL) = -1 ENODEV (No such device)
+</code></pre><pre tabindex=0><code> man查mount()的手册发现，`ENODEV`表示不支持的文件系统格式，也就是说**这个avd它丫的不支持`squashfs`这个文件系统**，网上说可以在编译的时候加选项，但是显然我们是不会去编译的，费力不讨好。解决办法很简单，在宿主机上mount一下，把里面的文件拿出来`adb push`到avd的`/system/lib/arm`这个目录，大功告成。
 
 </code></pre></li>
 <li>
 <p>之后还有个</p>
-<pre tabindex="0"><code>mount --bind $dest_dir/libhoudini.so /system/lib$1/libhoudini.so
-</code></pre><pre tabindex="0"><code> 又失败了（Android终端里的命令好像就没几个好使的），目的主要是把`libhoudini.so`从`/system/lib/arm`文件夹引到`/system/lib`下面去，这个用`ln -s`搞一下就好。
+<pre tabindex=0><code>mount --bind $dest_dir/libhoudini.so /system/lib$1/libhoudini.so
+</code></pre><pre tabindex=0><code> 又失败了（Android终端里的命令好像就没几个好使的），目的主要是把`libhoudini.so`从`/system/lib/arm`文件夹引到`/system/lib`下面去，这个用`ln -s`搞一下就好。
 
 </code></pre></li>
 </ul>
 <p>这么搞一通，终于等来了输出<code>houdini enabled</code>。至此<code>houdini</code>就算是迁进去了。</p>
-<h5 id="装微信-1">装微信</h5>
+<h5 id=装微信-1>装微信</h5>
 <p>微信还是那样装，打开也能登陆，看起来甚至没有任何问题，但是打开微信小程序的时候就出现问题了，直接崩掉。
 logcat里冒出</p>
-<pre tabindex="0"><code>houdini : [17913] Unsupported feature (ID:0x20e000b2).
+<pre tabindex=0><code>houdini : [17913] Unsupported feature (ID:0x20e000b2).
 </code></pre><p>在这之前的一个日志是houdini加载了微信里面的一个<code>libj2v8.so</code>文件，也许是因为这个文件里面的指令有点特殊所以崩的吧。</p>
 <p>上网找了找，发现不少人遇到类似的这种<code>Unsupported feature</code>问题，尝试过ida开<code>libhoudini.so</code>找这个字符串，发现这样的错误一共有六类，字符串好像是<code>Unsupported feature (ID:0x20e%05x)</code>，也就是说后面的<code>0x000b2</code>是变化的，但是字符串引用的地方没找到，因为ida反汇编的时候很多函数没有反汇编成功，再加上我ida用的不太熟，就没看了。最后瞅了一眼<code>houdini.sys</code>里面有个<code>houdini</code>可执行文件，执行一下输出：</p>
-<pre tabindex="0"><code>[18097] 
+<pre tabindex=0><code>[18097] 
 [18097] Please don't use this program directly!
 [18097] Use to check version only.
 [18097] Usage: --version        output version information and exit!
 [18097] 
 </code></pre><p>看了一下我的&ndash;version输出是<code>Houdini version: 6.1.2d_x.48748</code>。它强调<code>don't use this program directly</code>，我就纳闷了，难不成这个程序除了输出version，里面还有东西？？？
 索性拿ida开了一下，不出我所料，里面甚至有完整的<code>libhoudini.so</code>里面的内容，关键是这个文件ida反汇编得比较完善，按字符串找出错地方，发现是落入了一个switch语句的default区域，无奈代码太复杂，看不懂，放弃了。</p>
-<h5 id="现有的其它方案">现有的其它方案</h5>
+<h5 id=现有的其它方案>现有的其它方案</h5>
 <p>参考了现有的Android x86项目，发现它也使用到了houdini这个东西来实现arm架构支持，在它的Android7.1.1(sdk 25)版本中，同样也发现了<code>enable_nativebridge</code>这个脚本文件，在pc上u盘启动Android x86能够完美打开微信小程序，但是奇怪的是，根据脚本语句，它内部使用的不是对应的houdini7_x，而是houdini6_y，下面贴出<code>enable_nativebridge</code>的内容：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-shell" data-lang="shell"><span style="color:#75715e">#!/system/bin/sh
-</span><span style="color:#75715e"></span>
-PATH<span style="color:#f92672">=</span>/system/bin:/system/xbin
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-shell data-lang=shell><span style=color:#75715e>#!/system/bin/sh
+</span><span style=color:#75715e></span>
+PATH<span style=color:#f92672>=</span>/system/bin:/system/xbin
 
-houdini_bin<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>
-dest_dir<span style="color:#f92672">=</span>/system/lib$1/arm$1
-binfmt_misc_dir<span style="color:#f92672">=</span>/proc/sys/fs/binfmt_misc
+houdini_bin<span style=color:#f92672>=</span><span style=color:#ae81ff>0</span>
+dest_dir<span style=color:#f92672>=</span>/system/lib$1/arm$1
+binfmt_misc_dir<span style=color:#f92672>=</span>/proc/sys/fs/binfmt_misc
 
 cd /data/arm
-<span style="color:#66d9ef">if</span> <span style="color:#f92672">[</span> -e /system/lib$1/libhoudini.so <span style="color:#f92672">]</span>; <span style="color:#66d9ef">then</span>
-	log -pi -thoudini <span style="color:#e6db74">&#34;found /system/lib</span>$1<span style="color:#e6db74">/libhoudini.so&#34;</span>
-<span style="color:#66d9ef">elif</span> <span style="color:#f92672">[</span> -e /system/etc/houdini$1.sfs <span style="color:#f92672">]</span>; <span style="color:#66d9ef">then</span>
+<span style=color:#66d9ef>if</span> <span style=color:#f92672>[</span> -e /system/lib$1/libhoudini.so <span style=color:#f92672>]</span>; <span style=color:#66d9ef>then</span>
+	log -pi -thoudini <span style=color:#e6db74>&#34;found /system/lib</span>$1<span style=color:#e6db74>/libhoudini.so&#34;</span>
+<span style=color:#66d9ef>elif</span> <span style=color:#f92672>[</span> -e /system/etc/houdini$1.sfs <span style=color:#f92672>]</span>; <span style=color:#66d9ef>then</span>
 	busybox mount /system/etc/houdini$1.sfs $dest_dir
-<span style="color:#66d9ef">else</span>
-	<span style="color:#66d9ef">if</span> mountpoint -q $dest_dir; <span style="color:#66d9ef">then</span>
-		kill -9 <span style="color:#e6db74">`</span>fuser -m $dest_dir<span style="color:#e6db74">`</span>
+<span style=color:#66d9ef>else</span>
+	<span style=color:#66d9ef>if</span> mountpoint -q $dest_dir; <span style=color:#66d9ef>then</span>
+		kill -9 <span style=color:#e6db74>`</span>fuser -m $dest_dir<span style=color:#e6db74>`</span>
 		umount -f $dest_dir
-	<span style="color:#66d9ef">fi</span>
-	<span style="color:#66d9ef">while</span> ! busybox mount houdini$1.sfs $dest_dir; <span style="color:#66d9ef">do</span>
-		<span style="color:#66d9ef">while</span> <span style="color:#f92672">[</span> <span style="color:#e6db74">&#34;</span><span style="color:#66d9ef">$(</span>getprop net.dns1<span style="color:#66d9ef">)</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;&#34;</span> <span style="color:#f92672">]</span>; <span style="color:#66d9ef">do</span>
-			sleep <span style="color:#ae81ff">10</span>
-		<span style="color:#66d9ef">done</span>
-		<span style="color:#66d9ef">if</span> <span style="color:#f92672">[</span> -z <span style="color:#e6db74">&#34;</span>$1<span style="color:#e6db74">&#34;</span> <span style="color:#f92672">]</span>; <span style="color:#66d9ef">then</span>
-			<span style="color:#f92672">[</span> <span style="color:#e6db74">&#34;`uname -m`&#34;</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;x86_64&#34;</span> <span style="color:#f92672">]</span> <span style="color:#f92672">&amp;&amp;</span> url<span style="color:#f92672">=</span>http://goo.gl/Knnmyl <span style="color:#f92672">||</span> url<span style="color:#f92672">=</span>http://goo.gl/JsoX2C
-		<span style="color:#66d9ef">else</span>
-			url<span style="color:#f92672">=</span>http://goo.gl/n6KtQa
-		<span style="color:#66d9ef">fi</span>
-		wget $url -cO houdini$1.sfs <span style="color:#f92672">&amp;&amp;</span> <span style="color:#66d9ef">continue</span>
+	<span style=color:#66d9ef>fi</span>
+	<span style=color:#66d9ef>while</span> ! busybox mount houdini$1.sfs $dest_dir; <span style=color:#66d9ef>do</span>
+		<span style=color:#66d9ef>while</span> <span style=color:#f92672>[</span> <span style=color:#e6db74>&#34;</span><span style=color:#66d9ef>$(</span>getprop net.dns1<span style=color:#66d9ef>)</span><span style=color:#e6db74>&#34;</span> <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;&#34;</span> <span style=color:#f92672>]</span>; <span style=color:#66d9ef>do</span>
+			sleep <span style=color:#ae81ff>10</span>
+		<span style=color:#66d9ef>done</span>
+		<span style=color:#66d9ef>if</span> <span style=color:#f92672>[</span> -z <span style=color:#e6db74>&#34;</span>$1<span style=color:#e6db74>&#34;</span> <span style=color:#f92672>]</span>; <span style=color:#66d9ef>then</span>
+			<span style=color:#f92672>[</span> <span style=color:#e6db74>&#34;`uname -m`&#34;</span> <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;x86_64&#34;</span> <span style=color:#f92672>]</span> <span style=color:#f92672>&amp;&amp;</span> url<span style=color:#f92672>=</span>http://goo.gl/Knnmyl <span style=color:#f92672>||</span> url<span style=color:#f92672>=</span>http://goo.gl/JsoX2C
+		<span style=color:#66d9ef>else</span>
+			url<span style=color:#f92672>=</span>http://goo.gl/n6KtQa
+		<span style=color:#66d9ef>fi</span>
+		wget $url -cO houdini$1.sfs <span style=color:#f92672>&amp;&amp;</span> <span style=color:#66d9ef>continue</span>
 		rm -f houdini$1.sfs
-		sleep <span style="color:#ae81ff">30</span>
-	<span style="color:#66d9ef">done</span>
-<span style="color:#66d9ef">fi</span>
+		sleep <span style=color:#ae81ff>30</span>
+	<span style=color:#66d9ef>done</span>
+<span style=color:#66d9ef>fi</span>
 
 
-<span style="color:#75715e"># if you don&#39;t see the files &#39;register&#39; and &#39;status&#39; in /proc/sys/fs/binfmt_misc</span>
-<span style="color:#75715e"># then run the following command:</span>
-<span style="color:#75715e"># mount -t binfmt_misc none /proc/sys/fs/binfmt_misc</span>
+<span style=color:#75715e># if you don&#39;t see the files &#39;register&#39; and &#39;status&#39; in /proc/sys/fs/binfmt_misc</span>
+<span style=color:#75715e># then run the following command:</span>
+<span style=color:#75715e># mount -t binfmt_misc none /proc/sys/fs/binfmt_misc</span>
 
-<span style="color:#75715e"># this is to add the supported binary formats via binfmt_misc</span>
+<span style=color:#75715e># this is to add the supported binary formats via binfmt_misc</span>
 
-<span style="color:#66d9ef">if</span> <span style="color:#f92672">[</span> ! -e $binfmt_misc_dir/register <span style="color:#f92672">]</span>; <span style="color:#66d9ef">then</span>
+<span style=color:#66d9ef>if</span> <span style=color:#f92672>[</span> ! -e $binfmt_misc_dir/register <span style=color:#f92672>]</span>; <span style=color:#66d9ef>then</span>
 	mount -t binfmt_misc none $binfmt_misc_dir
-<span style="color:#66d9ef">fi</span>
+<span style=color:#66d9ef>fi</span>
 
 cd $binfmt_misc_dir
-<span style="color:#66d9ef">if</span> <span style="color:#f92672">[</span> -e register <span style="color:#f92672">]</span>; <span style="color:#66d9ef">then</span>
-	<span style="color:#f92672">[</span> -e /system/bin/houdini$1 <span style="color:#f92672">]</span> <span style="color:#f92672">&amp;&amp;</span> dest_dir<span style="color:#f92672">=</span>/system/bin
-	<span style="color:#75715e"># register Houdini for arm binaries</span>
-	<span style="color:#66d9ef">if</span> <span style="color:#f92672">[</span> -z <span style="color:#e6db74">&#34;</span>$1<span style="color:#e6db74">&#34;</span> <span style="color:#f92672">]</span>; <span style="color:#66d9ef">then</span>
-		echo <span style="color:#e6db74">&#39;:arm_exe:M::\\x7f\\x45\\x4c\\x46\\x01\\x01\\x01\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x02\\x00\\x28::&#39;</span><span style="color:#e6db74">&#34;</span>$dest_dir<span style="color:#e6db74">/houdini:P&#34;</span> &gt; register
-		echo <span style="color:#e6db74">&#39;:arm_dyn:M::\\x7f\\x45\\x4c\\x46\\x01\\x01\\x01\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x03\\x00\\x28::&#39;</span><span style="color:#e6db74">&#34;</span>$dest_dir<span style="color:#e6db74">/houdini:P&#34;</span> &gt; register
-	<span style="color:#66d9ef">else</span>
-		echo <span style="color:#e6db74">&#39;:arm64_exe:M::\\x7f\\x45\\x4c\\x46\\x02\\x01\\x01\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x02\\x00\\xb7::&#39;</span><span style="color:#e6db74">&#34;</span>$dest_dir<span style="color:#e6db74">/houdini64:P&#34;</span> &gt; register
-		echo <span style="color:#e6db74">&#39;:arm64_dyn:M::\\x7f\\x45\\x4c\\x46\\x02\\x01\\x01\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x03\\x00\\xb7::&#39;</span><span style="color:#e6db74">&#34;</span>$dest_dir<span style="color:#e6db74">/houdini64:P&#34;</span> &gt; register
-	<span style="color:#66d9ef">fi</span>
-	<span style="color:#66d9ef">if</span> <span style="color:#f92672">[</span> -e arm<span style="color:#e6db74">${</span>1<span style="color:#e6db74">}</span>_exe <span style="color:#f92672">]</span>; <span style="color:#66d9ef">then</span>
-		houdini_bin<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span>
-	<span style="color:#66d9ef">fi</span>
-<span style="color:#66d9ef">else</span>
-	log -pe -thoudini <span style="color:#e6db74">&#34;No binfmt_misc support&#34;</span>
-<span style="color:#66d9ef">fi</span>
+<span style=color:#66d9ef>if</span> <span style=color:#f92672>[</span> -e register <span style=color:#f92672>]</span>; <span style=color:#66d9ef>then</span>
+	<span style=color:#f92672>[</span> -e /system/bin/houdini$1 <span style=color:#f92672>]</span> <span style=color:#f92672>&amp;&amp;</span> dest_dir<span style=color:#f92672>=</span>/system/bin
+	<span style=color:#75715e># register Houdini for arm binaries</span>
+	<span style=color:#66d9ef>if</span> <span style=color:#f92672>[</span> -z <span style=color:#e6db74>&#34;</span>$1<span style=color:#e6db74>&#34;</span> <span style=color:#f92672>]</span>; <span style=color:#66d9ef>then</span>
+		echo <span style=color:#e6db74>&#39;:arm_exe:M::\\x7f\\x45\\x4c\\x46\\x01\\x01\\x01\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x02\\x00\\x28::&#39;</span><span style=color:#e6db74>&#34;</span>$dest_dir<span style=color:#e6db74>/houdini:P&#34;</span> &gt; register
+		echo <span style=color:#e6db74>&#39;:arm_dyn:M::\\x7f\\x45\\x4c\\x46\\x01\\x01\\x01\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x03\\x00\\x28::&#39;</span><span style=color:#e6db74>&#34;</span>$dest_dir<span style=color:#e6db74>/houdini:P&#34;</span> &gt; register
+	<span style=color:#66d9ef>else</span>
+		echo <span style=color:#e6db74>&#39;:arm64_exe:M::\\x7f\\x45\\x4c\\x46\\x02\\x01\\x01\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x02\\x00\\xb7::&#39;</span><span style=color:#e6db74>&#34;</span>$dest_dir<span style=color:#e6db74>/houdini64:P&#34;</span> &gt; register
+		echo <span style=color:#e6db74>&#39;:arm64_dyn:M::\\x7f\\x45\\x4c\\x46\\x02\\x01\\x01\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x00\\x03\\x00\\xb7::&#39;</span><span style=color:#e6db74>&#34;</span>$dest_dir<span style=color:#e6db74>/houdini64:P&#34;</span> &gt; register
+	<span style=color:#66d9ef>fi</span>
+	<span style=color:#66d9ef>if</span> <span style=color:#f92672>[</span> -e arm<span style=color:#e6db74>${</span>1<span style=color:#e6db74>}</span>_exe <span style=color:#f92672>]</span>; <span style=color:#66d9ef>then</span>
+		houdini_bin<span style=color:#f92672>=</span><span style=color:#ae81ff>1</span>
+	<span style=color:#66d9ef>fi</span>
+<span style=color:#66d9ef>else</span>
+	log -pe -thoudini <span style=color:#e6db74>&#34;No binfmt_misc support&#34;</span>
+<span style=color:#66d9ef>fi</span>
 
-<span style="color:#66d9ef">if</span> <span style="color:#f92672">[</span> $houdini_bin -eq <span style="color:#ae81ff">0</span> <span style="color:#f92672">]</span>; <span style="color:#66d9ef">then</span>
-	log -pe -thoudini <span style="color:#e6db74">&#34;houdini</span>$1<span style="color:#e6db74"> enabling failed!&#34;</span>
-<span style="color:#66d9ef">else</span>
-	log -pi -thoudini <span style="color:#e6db74">&#34;houdini</span>$1<span style="color:#e6db74"> enabled&#34;</span>
-<span style="color:#66d9ef">fi</span>
+<span style=color:#66d9ef>if</span> <span style=color:#f92672>[</span> $houdini_bin -eq <span style=color:#ae81ff>0</span> <span style=color:#f92672>]</span>; <span style=color:#66d9ef>then</span>
+	log -pe -thoudini <span style=color:#e6db74>&#34;houdini</span>$1<span style=color:#e6db74> enabling failed!&#34;</span>
+<span style=color:#66d9ef>else</span>
+	log -pi -thoudini <span style=color:#e6db74>&#34;houdini</span>$1<span style=color:#e6db74> enabled&#34;</span>
+<span style=color:#66d9ef>fi</span>
 
-<span style="color:#f92672">[</span> <span style="color:#e6db74">&#34;</span><span style="color:#66d9ef">$(</span>getprop ro.zygote<span style="color:#66d9ef">)</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;zygote64_32&#34;</span> -a -z <span style="color:#e6db74">&#34;</span>$1<span style="color:#e6db74">&#34;</span> <span style="color:#f92672">]</span> <span style="color:#f92672">&amp;&amp;</span> exec $0 <span style="color:#ae81ff">64</span>
+<span style=color:#f92672>[</span> <span style=color:#e6db74>&#34;</span><span style=color:#66d9ef>$(</span>getprop ro.zygote<span style=color:#66d9ef>)</span><span style=color:#e6db74>&#34;</span> <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;zygote64_32&#34;</span> -a -z <span style=color:#e6db74>&#34;</span>$1<span style=color:#e6db74>&#34;</span> <span style=color:#f92672>]</span> <span style=color:#f92672>&amp;&amp;</span> exec $0 <span style=color:#ae81ff>64</span>
 
-exit <span style="color:#ae81ff">0</span>
+exit <span style=color:#ae81ff>0</span>
 </code></pre></div><p>之后有尝试将houdini6_x安装到模拟器（选择x而不是y是因为x86的avd模拟器是32位的而不是64位）中，情况比houdini7_x要糟糕，这次是大概意思是是模拟器缺少x86的某些feature，程序都不能跑起来了，具体情况没有再深究了，后继想要继续弄的话，我想，可以从这个方面继续考虑。另外，houdini的原理可以探究一番，比如试试替代品什么的</p>
-<h5 id="放弃装微信">放弃装微信</h5>
+<h5 id=放弃装微信>放弃装微信</h5>
 <p>似乎模拟器里微信开不了小程序是现在的一种通病，夜神啥的也开不了，据说得上旧版本微信，我这里尝试安装微信7.0前的最后一个版本，但是登录之后就一直给我闪退了，日志也啥都没，emmmm，比较烦躁。</p>
 <p>最后结局是：老老实实买新手机刷步数吧！</p>
-<h3 id="其它">其它</h3>
-<h4 id="install_failed_container_error">INSTALL_FAILED_CONTAINER_ERROR</h4>
+<h3 id=其它>其它</h3>
+<h4 id=install_failed_container_error>INSTALL_FAILED_CONTAINER_ERROR</h4>
 <p>如果adb安装微信的时候提示<code>INSTALL_FAILED_CONTAINER_ERROR</code>，不是网上说的那种因为<code>Manifest.xml</code>里面写的安装位置不对的原因，多半是一些玄学问题，只要在<code>adb install</code>加上<code>-r</code>这个选项就好了。</p>
-
 </main>
-
-
-
-<div id="comments">
-    <hr>
-    <script src="https://utteranc.es/client.js" repo='KB5201314/KB5201314.github.io' issue-term="pathname" label='💬 comments 💬'
-        theme='github-light' crossorigin="anonymous" async>
-        </script>
+<div id=comments>
+<hr>
+<script src=https://utteranc.es/client.js repo=KB5201314/KB5201314.github.io issue-term=pathname label="💬 comments 💬" theme=github-light crossorigin=anonymous async></script>
 </div>
-
-
-  <footer>
-  
-  <hr/>
-  © imlk 2017 &ndash; 2021 | <a href="https://blog.imlk.top">imlk's blog</a> | <a href="https://github.com/KB5201314/">Github</a> | <a href="mailto:me@imlk.top">Email</a> | <a href="https://beian.miit.gov.cn/">京ICP备 - 2020042968号</a>
-  
-  </footer>
-  </body>
+<footer>
+<hr>
+© imlk 2017 &ndash; 2021 | <a href=https://blog.imlk.top>imlk's blog</a> | <a href=https://github.com/KB5201314/>Github</a> | <a href=mailto:me@imlk.top>Email</a> | <a href=https://beian.miit.gov.cn/>京ICP备 - 2020042968号</a>
+</footer>
+</body>
 </html>

@@ -1,72 +1,47 @@
-<!DOCTYPE html>
-<html lang="zh-cn">
-
+<!doctype html><html lang=zh-cn>
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>CodeForces 699D Fix a Tree | imlk&#39;s blog</title>
-  <link rel="stylesheet" href='/css/style.css' />
-  <link rel="stylesheet" href='/css/fonts.css' />
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&display=swap" rel="stylesheet">
+<meta charset=utf-8>
+<meta name=viewport content="width=device-width,initial-scale=1">
+<title>CodeForces 699D Fix a Tree | imlk's blog</title>
+<link rel=stylesheet href=/css/style.css>
+<link rel=stylesheet href=/css/fonts.css>
+<link rel=preconnect href=https://fonts.googleapis.com>
+<link rel=preconnect href=https://fonts.gstatic.com crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&display=swap" rel=stylesheet>
 </head>
-
 <body>
-  <header class="header">
-    <a class="logo" href='/'> imlk's Blog </a>
-    <nav>
-      <ul class="menu">
-        
-        <li><a href="/">Home</a></li>
-        
-        <li><a href="/about/">About</a></li>
-        
-        <li><a href="/archives/">Archives</a></li>
-        
-        <li><a href="/friends/">Friends</a></li>
-        
-        <li><a href="/index.xml">Subscribe</a></li>
-        
-      </ul>
-    </nav>
-  </header>
-  <hr />
-
-
-
-<div class="article-meta">
-    <h1><span class="title">CodeForces 699D Fix a Tree</span></h1>
-    
-    <span>
-        <span class="date">2018-02-08</span>
-        |
-        
-        <span class="cats">
-            
-            
-            <a href='https://blog.imlk.top/categories/algorithm/'>Algorithm</a>
-            
-        </span>
-        
-        |
-        <span class="tags">
-            
-            <a href='https://blog.imlk.top/tags/codeforces/'>#Codeforces</a>
-            
-            <a href='https://blog.imlk.top/tags/tree/'>#Tree</a>
-            
-        </span>
-        
-    </span>
-    <br>
-    
+<header class=header>
+<a class=logo href=/> imlk's Blog </a>
+<nav>
+<ul class=menu>
+<li><a href=/>Home</a></li>
+<li><a href=/about/>About</a></li>
+<li><a href=/archives/>Archives</a></li>
+<li><a href=/friends/>Friends</a></li>
+<li><a href=/index.xml>Subscribe</a></li>
+</ul>
+</nav>
+</header>
+<hr>
+<div class=article-meta>
+<h1><span class=title>CodeForces 699D Fix a Tree</span></h1>
+<span>
+<span class=date>2018-02-08</span>
+|
+<span class=cats>
+<a href=https://blog.imlk.top/categories/algorithm/>Algorithm</a>
+</span>
+|
+<span class=tags>
+<a href=https://blog.imlk.top/tags/codeforces/>#Codeforces</a>
+<a href=https://blog.imlk.top/tags/tree/>#Tree</a>
+</span>
+</span>
+<br>
 </div>
-
-
 <main>
-    <p>并查集优化 给出所有节点的父节点（有向图），用最少的修改生成一颗合法的树（环的判断，去环）</p>
-<pre tabindex="0"><code>D. Fix a Tree
+<p>并查集优化 给出所有节点的父节点（有向图），用最少的修改生成一颗合法的树（环的判断，去环）</p>
+<pre tabindex=0><code>D. Fix a Tree
 time limit per test
 2 seconds
 memory limit per test
@@ -132,7 +107,7 @@ Output
 </code></pre><p>##<strong>0x00</strong></p>
 <p><strong>这题我的第一种解法就是先将多个树合并到一起，然后遍历每一个节点，暴力搜寻环，类似dfs，不断向父元素递进，用一个set储存途经的所有元素，对于查找到节点i时，判断它的父元素在set中是否出现了，如果出现了就说明成了环，然后设置节点i的父节点为一个统一的根节点
 为了优化速度，引入一个visited数组记录某个节点是否已经访问过，如果访问过那么下一次遇到的时候就直接结束向父元素的递进</strong></p>
-<pre tabindex="0"><code>#include &lt;iostream&gt;
+<pre tabindex=0><code>#include &lt;iostream&gt;
 #include &lt;cstdio&gt;
 #include &lt;cstring&gt;
 #include &lt;cmath&gt;
@@ -224,7 +199,7 @@ int main(int argc, char const *argv[])
 抓住这一点，在环即将出现时，我们就可以把i的父节点改成指向统一的根节点，这样就用一个操作就把环消除了</strong></p>
 <p><strong>优化：
 由于最终我们要输出一个最少修改数量的数组，但是find函数的优化是建立在把大量节点直接挂到根节点下的这种操作上的，所以我建立了另一个数组icopy来让find函数得以优化</strong></p>
-<pre tabindex="0"><code>#include &lt;iostream&gt;
+<pre tabindex=0><code>#include &lt;iostream&gt;
 #include &lt;cstdio&gt;
 #include &lt;cstring&gt;
 #include &lt;cmath&gt;
@@ -327,22 +302,13 @@ int main(int argc, char const *argv[])
 
 </code></pre>
 </main>
-
-
-
-<div id="comments">
-    <hr>
-    <script src="https://utteranc.es/client.js" repo='KB5201314/KB5201314.github.io' issue-term="pathname" label='💬 comments 💬'
-        theme='github-light' crossorigin="anonymous" async>
-        </script>
+<div id=comments>
+<hr>
+<script src=https://utteranc.es/client.js repo=KB5201314/KB5201314.github.io issue-term=pathname label="💬 comments 💬" theme=github-light crossorigin=anonymous async></script>
 </div>
-
-
-  <footer>
-  
-  <hr/>
-  © imlk 2017 &ndash; 2021 | <a href="https://blog.imlk.top">imlk's blog</a> | <a href="https://github.com/KB5201314/">Github</a> | <a href="mailto:me@imlk.top">Email</a> | <a href="https://beian.miit.gov.cn/">京ICP备 - 2020042968号</a>
-  
-  </footer>
-  </body>
+<footer>
+<hr>
+© imlk 2017 &ndash; 2021 | <a href=https://blog.imlk.top>imlk's blog</a> | <a href=https://github.com/KB5201314/>Github</a> | <a href=mailto:me@imlk.top>Email</a> | <a href=https://beian.miit.gov.cn/>京ICP备 - 2020042968号</a>
+</footer>
+</body>
 </html>

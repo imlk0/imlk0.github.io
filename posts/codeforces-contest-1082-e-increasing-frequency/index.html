@@ -1,214 +1,179 @@
-<!DOCTYPE html>
-<html lang="zh-cn">
-
+<!doctype html><html lang=zh-cn>
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Codeforces contest 1082 E. Increasing Frequency | imlk&#39;s blog</title>
-  <link rel="stylesheet" href='/css/style.css' />
-  <link rel="stylesheet" href='/css/fonts.css' />
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&display=swap" rel="stylesheet">
+<meta charset=utf-8>
+<meta name=viewport content="width=device-width,initial-scale=1">
+<title>Codeforces contest 1082 E. Increasing Frequency | imlk's blog</title>
+<link rel=stylesheet href=/css/style.css>
+<link rel=stylesheet href=/css/fonts.css>
+<link rel=preconnect href=https://fonts.googleapis.com>
+<link rel=preconnect href=https://fonts.gstatic.com crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&display=swap" rel=stylesheet>
 </head>
-
 <body>
-  <header class="header">
-    <a class="logo" href='/'> imlk's Blog </a>
-    <nav>
-      <ul class="menu">
-        
-        <li><a href="/">Home</a></li>
-        
-        <li><a href="/about/">About</a></li>
-        
-        <li><a href="/archives/">Archives</a></li>
-        
-        <li><a href="/friends/">Friends</a></li>
-        
-        <li><a href="/index.xml">Subscribe</a></li>
-        
-      </ul>
-    </nav>
-  </header>
-  <hr />
-
-
-
-<div class="article-meta">
-    <h1><span class="title">Codeforces contest 1082 E. Increasing Frequency</span></h1>
-    
-    <span>
-        <span class="date">2018-11-30</span>
-        |
-        
-        <span class="cats">
-            
-            
-            <a href='https://blog.imlk.top/categories/algorithm/'>Algorithm</a>
-            
-        </span>
-        
-        |
-        <span class="tags">
-            
-            <a href='https://blog.imlk.top/tags/codeforces/'>#Codeforces</a>
-            
-            <a href='https://blog.imlk.top/tags/%E8%B4%AA%E5%BF%83/'>#贪心</a>
-            
-            <a href='https://blog.imlk.top/tags/dp/'>#dp</a>
-            
-        </span>
-        
-    </span>
-    <br>
-    
+<header class=header>
+<a class=logo href=/> imlk's Blog </a>
+<nav>
+<ul class=menu>
+<li><a href=/>Home</a></li>
+<li><a href=/about/>About</a></li>
+<li><a href=/archives/>Archives</a></li>
+<li><a href=/friends/>Friends</a></li>
+<li><a href=/index.xml>Subscribe</a></li>
+</ul>
+</nav>
+</header>
+<hr>
+<div class=article-meta>
+<h1><span class=title>Codeforces contest 1082 E. Increasing Frequency</span></h1>
+<span>
+<span class=date>2018-11-30</span>
+|
+<span class=cats>
+<a href=https://blog.imlk.top/categories/algorithm/>Algorithm</a>
+</span>
+|
+<span class=tags>
+<a href=https://blog.imlk.top/tags/codeforces/>#Codeforces</a>
+<a href=https://blog.imlk.top/tags/%E8%B4%AA%E5%BF%83/>#贪心</a>
+<a href=https://blog.imlk.top/tags/dp/>#dp</a>
+</span>
+</span>
+<br>
 </div>
-
-
 <main>
-    <p><a href="http://codeforces.com/contest/1082/problem/E">原题在这</a></p>
+<p><a href=http://codeforces.com/contest/1082/problem/E>原题在这</a></p>
 <p>这题搞了好久，大意是讲给一个长为n的数串，让其中<strong>某一个子区间的数</strong>都+k，然后使得整个串里等于c的数个数尽可能大，问最大多少</p>
 <p>串里的数范围挺宽的，先想这个+k，实际上就是尽可能多的把不是c的变成c，尽量少把c变成其它的，要注意这里k选定了以后，能变成c的数就只有是c-k</p>
 <p>由于串里的c一开始的数量是确定的，于是最终c的数量=原来c的数量+(变成了c的数的数量-变成了别的数的c的数量)，其实我们就是要求括号里的最大值</p>
-<h3 id="dp">dp</h3>
+<h3 id=dp>dp</h3>
 <p>代码是我看了别人的提交后写的，感觉这里能想到dp的都是神仙吧，(这都什么人呀!!!!)</p>
 <p>理解了这个dp后我才修好了我下面写的贪心</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#75715e">#include</span><span style="color:#75715e">&lt;cstdio&gt;</span><span style="color:#75715e">
-</span><span style="color:#75715e">#include</span><span style="color:#75715e">&lt;cmath&gt;</span><span style="color:#75715e">
-</span><span style="color:#75715e">#include</span><span style="color:#75715e">&lt;cstring&gt;</span><span style="color:#75715e">
-</span><span style="color:#75715e">#include</span><span style="color:#75715e">&lt;algorithm&gt;</span><span style="color:#75715e">
-</span><span style="color:#75715e">#include</span><span style="color:#75715e">&lt;iostream&gt;</span><span style="color:#75715e">
-</span><span style="color:#75715e"></span>
-<span style="color:#66d9ef">using</span> <span style="color:#66d9ef">namespace</span> std;
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-cpp data-lang=cpp><span style=color:#75715e>#include</span><span style=color:#75715e>&lt;cstdio&gt;</span><span style=color:#75715e>
+</span><span style=color:#75715e>#include</span><span style=color:#75715e>&lt;cmath&gt;</span><span style=color:#75715e>
+</span><span style=color:#75715e>#include</span><span style=color:#75715e>&lt;cstring&gt;</span><span style=color:#75715e>
+</span><span style=color:#75715e>#include</span><span style=color:#75715e>&lt;algorithm&gt;</span><span style=color:#75715e>
+</span><span style=color:#75715e>#include</span><span style=color:#75715e>&lt;iostream&gt;</span><span style=color:#75715e>
+</span><span style=color:#75715e></span>
+<span style=color:#66d9ef>using</span> <span style=color:#66d9ef>namespace</span> std;
 
-<span style="color:#75715e">#define MAXN 500005
-</span><span style="color:#75715e"></span>
-<span style="color:#66d9ef">int</span> n, c;
+<span style=color:#75715e>#define MAXN 500005
+</span><span style=color:#75715e></span>
+<span style=color:#66d9ef>int</span> n, c;
 
-<span style="color:#75715e">// 答案 = c的次数(不变)+最佳的(区间内非c的某种元素出现次数-c的出现次数)
-</span><span style="color:#75715e"></span>
-<span style="color:#66d9ef">int</span> cl[MAXN];
-<span style="color:#66d9ef">int</span> pre[MAXN];<span style="color:#75715e">// 保存遍历过程中i上一次出现的位置
-</span><span style="color:#75715e"></span><span style="color:#66d9ef">int</span> dp[MAXN];<span style="color:#75715e">// dp[i]以i位置结尾处的最佳结果
-</span><span style="color:#75715e"></span><span style="color:#66d9ef">int</span> dpo[MAXN];<span style="color:#75715e">// 以c-i作为k的最佳结果
-</span><span style="color:#75715e"></span>
-<span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>(<span style="color:#66d9ef">int</span> argc, <span style="color:#66d9ef">char</span> <span style="color:#66d9ef">const</span> <span style="color:#f92672">*</span>argv[]) {
+<span style=color:#75715e>// 答案 = c的次数(不变)+最佳的(区间内非c的某种元素出现次数-c的出现次数)
+</span><span style=color:#75715e></span>
+<span style=color:#66d9ef>int</span> cl[MAXN];
+<span style=color:#66d9ef>int</span> pre[MAXN];<span style=color:#75715e>// 保存遍历过程中i上一次出现的位置
+</span><span style=color:#75715e></span><span style=color:#66d9ef>int</span> dp[MAXN];<span style=color:#75715e>// dp[i]以i位置结尾处的最佳结果
+</span><span style=color:#75715e></span><span style=color:#66d9ef>int</span> dpo[MAXN];<span style=color:#75715e>// 以c-i作为k的最佳结果
+</span><span style=color:#75715e></span>
+<span style=color:#66d9ef>int</span> <span style=color:#a6e22e>main</span>(<span style=color:#66d9ef>int</span> argc, <span style=color:#66d9ef>char</span> <span style=color:#66d9ef>const</span> <span style=color:#f92672>*</span>argv[]) {
 
-	scanf(<span style="color:#e6db74">&#34;%d%d&#34;</span>, <span style="color:#f92672">&amp;</span>n, <span style="color:#f92672">&amp;</span>c);
+	scanf(<span style=color:#e6db74>&#34;%d%d&#34;</span>, <span style=color:#f92672>&amp;</span>n, <span style=color:#f92672>&amp;</span>c);
 
-	<span style="color:#66d9ef">int</span> t;
+	<span style=color:#66d9ef>int</span> t;
 
-	<span style="color:#66d9ef">int</span> result <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+	<span style=color:#66d9ef>int</span> result <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>;
 
-	<span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>; i <span style="color:#f92672">&lt;=</span> n; <span style="color:#f92672">++</span>i) {
-		scanf(<span style="color:#e6db74">&#34;%d&#34;</span>, <span style="color:#f92672">&amp;</span>t);
+	<span style=color:#66d9ef>for</span> (<span style=color:#66d9ef>int</span> i <span style=color:#f92672>=</span> <span style=color:#ae81ff>1</span>; i <span style=color:#f92672>&lt;=</span> n; <span style=color:#f92672>++</span>i) {
+		scanf(<span style=color:#e6db74>&#34;%d&#34;</span>, <span style=color:#f92672>&amp;</span>t);
 
-		<span style="color:#66d9ef">if</span> (t <span style="color:#f92672">==</span> c) {
-			cl[i]<span style="color:#f92672">++</span>;
+		<span style=color:#66d9ef>if</span> (t <span style=color:#f92672>==</span> c) {
+			cl[i]<span style=color:#f92672>++</span>;
 		}
-		cl[i] <span style="color:#f92672">+=</span> cl[i <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>];<span style="color:#75715e">// 前缀数组
-</span><span style="color:#75715e"></span>
+		cl[i] <span style=color:#f92672>+=</span> cl[i <span style=color:#f92672>-</span> <span style=color:#ae81ff>1</span>];<span style=color:#75715e>// 前缀数组
+</span><span style=color:#75715e></span>
 
-		<span style="color:#66d9ef">if</span> (t <span style="color:#f92672">==</span> c) {
-			dp[i] <span style="color:#f92672">=</span> max(<span style="color:#ae81ff">0</span>, dp[i <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>] <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>);<span style="color:#75715e">// 要么c所在位置不选，则以此处为结尾的最佳差值为0；要么选上,则继承以上一个位置结尾的差值再减去1
-</span><span style="color:#75715e"></span>		} <span style="color:#66d9ef">else</span> {<span style="color:#75715e">// 不为c时
-</span><span style="color:#75715e"></span>			dpo[i] <span style="color:#f92672">=</span> max(<span style="color:#ae81ff">1</span>, (dpo[pre[t]] <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>) <span style="color:#f92672">-</span> (cl[i] <span style="color:#f92672">-</span> cl[pre[t]])); <span style="color:#75715e">// 从上次这个t出现的位置（不包括）到这个位置结束这段区间，要么从当前位置重新开始一个区间(1)（肯定比不开始(0)好），要么接上上一段区间，其它情况都不如这两种情况；
-</span><span style="color:#75715e"></span>			dp[i] <span style="color:#f92672">=</span> max(dp[i <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>], dpo[i]);<span style="color:#75715e">//要么不是当前的t为参照进行变换(dp[i-1])，要么是(dpo[i])
-</span><span style="color:#75715e"></span>		}
+		<span style=color:#66d9ef>if</span> (t <span style=color:#f92672>==</span> c) {
+			dp[i] <span style=color:#f92672>=</span> max(<span style=color:#ae81ff>0</span>, dp[i <span style=color:#f92672>-</span> <span style=color:#ae81ff>1</span>] <span style=color:#f92672>-</span> <span style=color:#ae81ff>1</span>);<span style=color:#75715e>// 要么c所在位置不选，则以此处为结尾的最佳差值为0；要么选上,则继承以上一个位置结尾的差值再减去1
+</span><span style=color:#75715e></span>		} <span style=color:#66d9ef>else</span> {<span style=color:#75715e>// 不为c时
+</span><span style=color:#75715e></span>			dpo[i] <span style=color:#f92672>=</span> max(<span style=color:#ae81ff>1</span>, (dpo[pre[t]] <span style=color:#f92672>+</span> <span style=color:#ae81ff>1</span>) <span style=color:#f92672>-</span> (cl[i] <span style=color:#f92672>-</span> cl[pre[t]])); <span style=color:#75715e>// 从上次这个t出现的位置（不包括）到这个位置结束这段区间，要么从当前位置重新开始一个区间(1)（肯定比不开始(0)好），要么接上上一段区间，其它情况都不如这两种情况；
+</span><span style=color:#75715e></span>			dp[i] <span style=color:#f92672>=</span> max(dp[i <span style=color:#f92672>-</span> <span style=color:#ae81ff>1</span>], dpo[i]);<span style=color:#75715e>//要么不是当前的t为参照进行变换(dp[i-1])，要么是(dpo[i])
+</span><span style=color:#75715e></span>		}
 
-		pre[t] <span style="color:#f92672">=</span> i;
+		pre[t] <span style=color:#f92672>=</span> i;
 
-		result <span style="color:#f92672">=</span> max(result, dp[i]);
+		result <span style=color:#f92672>=</span> max(result, dp[i]);
 	}
 
-	result <span style="color:#f92672">+=</span> cl[n];<span style="color:#75715e">//最后得加上总序列中c出现的次数
-</span><span style="color:#75715e"></span>
-	printf(<span style="color:#e6db74">&#34;%d</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, result);
+	result <span style=color:#f92672>+=</span> cl[n];<span style=color:#75715e>//最后得加上总序列中c出现的次数
+</span><span style=color:#75715e></span>
+	printf(<span style=color:#e6db74>&#34;%d</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>, result);
 
-	<span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+	<span style=color:#66d9ef>return</span> <span style=color:#ae81ff>0</span>;
 }
-</code></pre></div><h3 id="贪心">贪心</h3>
+</code></pre></div><h3 id=贪心>贪心</h3>
 <p>这题一开始考虑数据范围很大，二层三层循环啥的肯定gg，然后想到<strong>求一段给定数列的子区间和的最大值的方法</strong>，那种方法只要一次遍历数组不断更新前缀和的最小值，然后每次更新max(当前的前缀和-之前找到的最小值)</p>
 <p>这里也效仿一下，对所有除了c以外出现的数都这么求
 注意这里计算最小前缀和的时刻我放到了遇到t并处理之前，然后再计算当前前缀和，然后再相减更新结果</p>
 <p>注意在这里k是有很多取值的（因为串里的数在一个情况下都能变成c），我们这里一并进行运算了，这些k的取值情况之间相互是没有联系的，具体的看代码吧</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cpp" data-lang="cpp"><span style="color:#75715e">#include</span><span style="color:#75715e">&lt;cstdio&gt;</span><span style="color:#75715e">
-</span><span style="color:#75715e">#include</span><span style="color:#75715e">&lt;cmath&gt;</span><span style="color:#75715e">
-</span><span style="color:#75715e">#include</span><span style="color:#75715e">&lt;cstring&gt;</span><span style="color:#75715e">
-</span><span style="color:#75715e">#include</span><span style="color:#75715e">&lt;algorithm&gt;</span><span style="color:#75715e">
-</span><span style="color:#75715e">#include</span><span style="color:#75715e">&lt;iostream&gt;</span><span style="color:#75715e">
-</span><span style="color:#75715e"></span>
-<span style="color:#66d9ef">using</span> <span style="color:#66d9ef">namespace</span> std;
+<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-cpp data-lang=cpp><span style=color:#75715e>#include</span><span style=color:#75715e>&lt;cstdio&gt;</span><span style=color:#75715e>
+</span><span style=color:#75715e>#include</span><span style=color:#75715e>&lt;cmath&gt;</span><span style=color:#75715e>
+</span><span style=color:#75715e>#include</span><span style=color:#75715e>&lt;cstring&gt;</span><span style=color:#75715e>
+</span><span style=color:#75715e>#include</span><span style=color:#75715e>&lt;algorithm&gt;</span><span style=color:#75715e>
+</span><span style=color:#75715e>#include</span><span style=color:#75715e>&lt;iostream&gt;</span><span style=color:#75715e>
+</span><span style=color:#75715e></span>
+<span style=color:#66d9ef>using</span> <span style=color:#66d9ef>namespace</span> std;
 
-<span style="color:#75715e">//用了类似于一次遍历数组求区间最大和的那种办法的思想（即遍历数组不断max(当前前缀和-min(历史上的前缀和))），对除了c以外的那些数都做这种计算
-</span><span style="color:#75715e"></span>
+<span style=color:#75715e>//用了类似于一次遍历数组求区间最大和的那种办法的思想（即遍历数组不断max(当前前缀和-min(历史上的前缀和))），对除了c以外的那些数都做这种计算
+</span><span style=color:#75715e></span>
 
-<span style="color:#75715e">#define MAXN 500005
-</span><span style="color:#75715e"></span>
-<span style="color:#66d9ef">int</span> n, c;
+<span style=color:#75715e>#define MAXN 500005
+</span><span style=color:#75715e></span>
+<span style=color:#66d9ef>int</span> n, c;
 
-<span style="color:#66d9ef">int</span> cl[MAXN];<span style="color:#75715e">//c的出现次数前缀数组
-</span><span style="color:#75715e"></span>
-<span style="color:#66d9ef">int</span> mins[MAXN];<span style="color:#75715e">//历史上(i出现次数-那时c出现次数取最小值的时候)i出现次数的值
-</span><span style="color:#75715e"></span><span style="color:#66d9ef">int</span> minpos[MAXN];<span style="color:#75715e">//i出现上述最小值的位置
-</span><span style="color:#75715e"></span><span style="color:#66d9ef">int</span> nows[MAXN];<span style="color:#75715e">//当前出现i的次数
-</span><span style="color:#75715e"></span>
-<span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>(<span style="color:#66d9ef">int</span> argc, <span style="color:#66d9ef">char</span> <span style="color:#66d9ef">const</span> <span style="color:#f92672">*</span>argv[]) {
+<span style=color:#66d9ef>int</span> cl[MAXN];<span style=color:#75715e>//c的出现次数前缀数组
+</span><span style=color:#75715e></span>
+<span style=color:#66d9ef>int</span> mins[MAXN];<span style=color:#75715e>//历史上(i出现次数-那时c出现次数取最小值的时候)i出现次数的值
+</span><span style=color:#75715e></span><span style=color:#66d9ef>int</span> minpos[MAXN];<span style=color:#75715e>//i出现上述最小值的位置
+</span><span style=color:#75715e></span><span style=color:#66d9ef>int</span> nows[MAXN];<span style=color:#75715e>//当前出现i的次数
+</span><span style=color:#75715e></span>
+<span style=color:#66d9ef>int</span> <span style=color:#a6e22e>main</span>(<span style=color:#66d9ef>int</span> argc, <span style=color:#66d9ef>char</span> <span style=color:#66d9ef>const</span> <span style=color:#f92672>*</span>argv[]) {
 
-	scanf(<span style="color:#e6db74">&#34;%d%d&#34;</span>, <span style="color:#f92672">&amp;</span>n, <span style="color:#f92672">&amp;</span>c);
+	scanf(<span style=color:#e6db74>&#34;%d%d&#34;</span>, <span style=color:#f92672>&amp;</span>n, <span style=color:#f92672>&amp;</span>c);
 
-	<span style="color:#66d9ef">int</span> result <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+	<span style=color:#66d9ef>int</span> result <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>;
 
-	<span style="color:#66d9ef">int</span> t;
+	<span style=color:#66d9ef>int</span> t;
 
-	<span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>; i <span style="color:#f92672">&lt;=</span> n; <span style="color:#f92672">++</span>i) {
-		scanf(<span style="color:#e6db74">&#34;%d&#34;</span>, <span style="color:#f92672">&amp;</span>t);
+	<span style=color:#66d9ef>for</span> (<span style=color:#66d9ef>int</span> i <span style=color:#f92672>=</span> <span style=color:#ae81ff>1</span>; i <span style=color:#f92672>&lt;=</span> n; <span style=color:#f92672>++</span>i) {
+		scanf(<span style=color:#e6db74>&#34;%d&#34;</span>, <span style=color:#f92672>&amp;</span>t);
 
-		cl[i] <span style="color:#f92672">+=</span> cl[i <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>];
+		cl[i] <span style=color:#f92672>+=</span> cl[i <span style=color:#f92672>-</span> <span style=color:#ae81ff>1</span>];
 
-		<span style="color:#66d9ef">if</span> (t <span style="color:#f92672">==</span> c) {
-			cl[i]<span style="color:#f92672">++</span>;
-		} <span style="color:#66d9ef">else</span> {
+		<span style=color:#66d9ef>if</span> (t <span style=color:#f92672>==</span> c) {
+			cl[i]<span style=color:#f92672>++</span>;
+		} <span style=color:#66d9ef>else</span> {
 
-			<span style="color:#75715e">//每次在遇到t时,先计算一下在这次t出现之前的最小前缀和，不考虑除t和c以外的其它元素，因为此时k=c-t已经确定，其它数在这种情况下没有影响
-</span><span style="color:#75715e"></span>			<span style="color:#66d9ef">if</span> (nows[t] <span style="color:#f92672">-</span> cl[i] <span style="color:#f92672">&lt;</span> mins[t] <span style="color:#f92672">-</span> cl[minpos[t]]) {
-				mins[t] <span style="color:#f92672">=</span> nows[t];
-				minpos[t] <span style="color:#f92672">=</span> i <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>;
+			<span style=color:#75715e>//每次在遇到t时,先计算一下在这次t出现之前的最小前缀和，不考虑除t和c以外的其它元素，因为此时k=c-t已经确定，其它数在这种情况下没有影响
+</span><span style=color:#75715e></span>			<span style=color:#66d9ef>if</span> (nows[t] <span style=color:#f92672>-</span> cl[i] <span style=color:#f92672>&lt;</span> mins[t] <span style=color:#f92672>-</span> cl[minpos[t]]) {
+				mins[t] <span style=color:#f92672>=</span> nows[t];
+				minpos[t] <span style=color:#f92672>=</span> i <span style=color:#f92672>-</span> <span style=color:#ae81ff>1</span>;
 			}
 
-			<span style="color:#75715e">//然后再考虑这次t的出现，处理t
-</span><span style="color:#75715e"></span>			nows[t]<span style="color:#f92672">++</span>;
+			<span style=color:#75715e>//然后再考虑这次t的出现，处理t
+</span><span style=color:#75715e></span>			nows[t]<span style=color:#f92672>++</span>;
 
-			<span style="color:#75715e">//相减更新结果
-</span><span style="color:#75715e"></span>			result <span style="color:#f92672">=</span> max(result, ((nows[t] <span style="color:#f92672">-</span> cl[i]) <span style="color:#f92672">-</span> (mins[t] <span style="color:#f92672">-</span> cl[minpos[t]])));
+			<span style=color:#75715e>//相减更新结果
+</span><span style=color:#75715e></span>			result <span style=color:#f92672>=</span> max(result, ((nows[t] <span style=color:#f92672>-</span> cl[i]) <span style=color:#f92672>-</span> (mins[t] <span style=color:#f92672>-</span> cl[minpos[t]])));
 
 		}
 	}
 
-	result <span style="color:#f92672">+=</span> cl[n];
+	result <span style=color:#f92672>+=</span> cl[n];
 
-	printf(<span style="color:#e6db74">&#34;%d</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, result);
-	<span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+	printf(<span style=color:#e6db74>&#34;%d</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>, result);
+	<span style=color:#66d9ef>return</span> <span style=color:#ae81ff>0</span>;
 }
 </code></pre></div>
 </main>
-
-
-
-<div id="comments">
-    <hr>
-    <script src="https://utteranc.es/client.js" repo='KB5201314/KB5201314.github.io' issue-term="pathname" label='💬 comments 💬'
-        theme='github-light' crossorigin="anonymous" async>
-        </script>
+<div id=comments>
+<hr>
+<script src=https://utteranc.es/client.js repo=KB5201314/KB5201314.github.io issue-term=pathname label="💬 comments 💬" theme=github-light crossorigin=anonymous async></script>
 </div>
-
-
-  <footer>
-  
-  <hr/>
-  © imlk 2017 &ndash; 2021 | <a href="https://blog.imlk.top">imlk's blog</a> | <a href="https://github.com/KB5201314/">Github</a> | <a href="mailto:me@imlk.top">Email</a> | <a href="https://beian.miit.gov.cn/">京ICP备 - 2020042968号</a>
-  
-  </footer>
-  </body>
+<footer>
+<hr>
+© imlk 2017 &ndash; 2021 | <a href=https://blog.imlk.top>imlk's blog</a> | <a href=https://github.com/KB5201314/>Github</a> | <a href=mailto:me@imlk.top>Email</a> | <a href=https://beian.miit.gov.cn/>京ICP备 - 2020042968号</a>
+</footer>
+</body>
 </html>
