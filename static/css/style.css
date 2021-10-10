@@ -40,6 +40,10 @@ body {
     line-height: 1.3em;
 }
 
+footer {
+    font-size: smaller;
+}
+
 footer a {
     text-decoration: none;
 }
