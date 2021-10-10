@@ -6,6 +6,7 @@ categories:
   - Android
 tags:
   - Android
+draft: true
 ---
 
 在Android应用中使用JNI时，一般会使用[`System.load(libFilePath)`](https://developer.android.com/reference/java/lang/System#load(java.lang.String))或者[`System.loadLibrary(libName)`](https://developer.android.com/reference/java/lang/System#loadLibrary(java.lang.String))来加载shared objects(.so)文件。

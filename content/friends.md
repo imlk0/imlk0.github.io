@@ -1,5 +1,6 @@
 ---
 title: imlk和他的好朋友们
+aliases: /links/
 ---
 
 欢迎[联系窝](/about) 交换友链呀\\(^o^)/~

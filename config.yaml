@@ -2,6 +2,7 @@ baseURL: https://blog.imlk.top/
 languageCode: zh-cn
 title: imlk's blog
 hasCJKLanguage: true 
+buildDrafts: false
 
 
 # each taxonomies in this form:
@@ -25,7 +26,7 @@ menu:
       url: "archives/"
       weight: 3
     - name: Friends
-      url: "links/"
+      url: "friends/"
       weight: 5
     - name: Subscribe
       url: "index.xml"
