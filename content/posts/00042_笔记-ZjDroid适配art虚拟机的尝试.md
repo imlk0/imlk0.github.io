@@ -5,8 +5,9 @@ id: 42
 categories:
   - 笔记
 tags:
-  - 杂文
-  - 笔记
+  - Android
+  - art
+  - ZjDroid
 ---
 上星期趁着放假玩了玩ZjDroid，自己编译了一个来玩，最终克服万难总算找齐了源码，给编译出来了。
 上一篇文章:

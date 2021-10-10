@@ -8,7 +8,7 @@ title: imlk和他的好朋友们
     [http://w568w.ml/](http://w568w.ml/)
 
 - HeYan的Bug杂货店  
-    [http://heyanle.cn/](http://heyanle.cn/)
+    [http://heyanle.com/](http://heyanle.com/)
 
 - 神楽坂花火  
     [https://blog.yaerin.com/](https://blog.yaerin.com/)
