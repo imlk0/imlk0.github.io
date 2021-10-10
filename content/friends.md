@@ -47,3 +47,7 @@ aliases: /links/
     打CTF的师傅 / NUAA / owner of [@MiaoTonyChannel](https://t.me/MiaoTonyChannel)  
     [https://miaotony.xyz/](https://miaotony.xyz/)
 
+- 天真的小窝  
+    [http://bin.zmide.com](http://bin.zmide.com)
+
+
