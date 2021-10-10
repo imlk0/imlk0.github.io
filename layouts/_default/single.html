@@ -1,0 +1,33 @@
+{{ partial "header.html" . }}
+
+{{ if .Title }}
+<div class="article-meta">
+    <h1><span class="title">{{ .Title | markdownify }}</span></h1>
+    <span>
+        {{ if (gt .Params.date 0) }}<span class="date">{{ .Date.Format "2006-01-02" }}</span> | {{ end }}
+        <!-- <span>{{.WordCount}} words</span> | -->
+        <span class="cats">
+            {{ range $index, $cat := .GetTerms "categories" }}
+            {{ if $index }} / {{ end }}
+            <a href='{{ .Permalink }}'>{{ .LinkTitle }}</a>
+            {{ end }}
+        </span>
+        <span class="tags">
+            {{ range $index, $cat := .GetTerms "tags" }}
+            {{ if not $index }} | {{ end }}
+            <a href='{{ .Permalink }}'>#{{ .LinkTitle }}</a>
+            {{ end }}
+        </span>
+    </span>
+    <br>
+    <br>
+
+</div>
+{{ end }}
+
+<main>
+    {{ .Content }}
+</main>
+
+{{ partial "comments.html" . }}
+{{ partial "footer.html" . }}

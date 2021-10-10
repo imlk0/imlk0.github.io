@@ -1,0 +1,50 @@
+baseURL: https://blog.imlk.top/
+languageCode: zh-cn
+title: imlk's blog
+hasCJKLanguage: true 
+
+
+# each taxonomies in this form:
+#   singular value: plural value
+taxonomies:
+  category: categories
+  tag: tags
+
+disableKinds:
+  - taxonomyTerm
+
+menu:
+  main:
+    - name: Home
+      url: ""
+      weight: 1
+    - name: About
+      url: "about/"
+      weight: 2
+    - name: Archives
+      url: "archives/"
+      weight: 3
+    - name: Friends
+      url: "links/"
+      weight: 5
+    - name: Subscribe
+      url: "index.xml"
+      weight: 6
+    # TODO: consider add a page to show my toy boxes here??
+    # TODO: add a page for guests to leave some message. may be encrypted message can be supported
+
+
+params:
+  footer: "&copy; [imlk](https://blog.imlk.top) 2017 -- 2021 | imlk\\'s blog | [Github](https://github.com/KB5201314/) | [Email](mailto:me@imlk.top) | [京ICP备 - 2020042968号](http://www.miitbeian.gov.cn/)"
+  utteranc:
+    enable: true
+    repo: "KB5201314/KB5201314.github.io"
+    issueTerm: "pathname"
+    theme: "github-light"
+    label: "💬 comments 💬"
+
+markup:
+  goldmark:
+    renderer:
+      unsafe: true
+

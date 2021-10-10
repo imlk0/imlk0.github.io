@@ -1,0 +1,25 @@
+{{ partial "header.html" . }}
+
+<main class="archives">
+
+    <h2>Tags</h2>
+    <div class="tags">
+        {{ range $key, $taxonomy := .Site.Taxonomies.tags }}
+        <a class="tag" href="{{ .Page.RelPermalink }}">#{{ .Page.Title }} ({{ .Count }})</a>
+        {{ end }}
+    </div>
+
+    <hr>
+
+    <h2>Categories</h2>
+    <ul class="terms">
+        {{ range $key, $taxonomy := .Site.Taxonomies.categories }}
+        <li>
+            <a href="{{ .Page.RelPermalink }}">{{ .Page.Title }}</a> ({{ .Count }})
+        </li>
+        {{ end }}
+    </ul>
+
+</main>
+
+{{ partial "footer.html" . }}

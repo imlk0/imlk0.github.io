@@ -1,0 +1,27 @@
+{{ partial "header.html" . }}
+
+{{if not .IsHome }}
+<h1>{{ print .Data.Plural " -> " (.Title | markdownify) }}</h1>
+{{ end }}
+
+{{ .Content }}
+
+<ul class="postindex">
+  {{ $pages := .Pages }}
+  {{ if .IsHome }}{{ $pages = .Site.RegularPages }}{{ end }}
+  {{ range (where $pages "Section" "!=" "") }}
+  <li>
+    <div class="date">{{ .Date.Format "2006-01-02" }}</div>
+    <a href="{{ .RelPermalink }}">{{ .Title | markdownify }}</a>
+
+    <div class="cats">
+      {{ range $index, $cat := .GetTerms "categories" }}
+      {{ if $index }} / {{ end }}
+      <a href='{{ .Permalink }}'>{{ .LinkTitle }}</a>
+      {{ end }}
+    </div>
+  </li>
+  {{ end }}
+</ul>
+
+{{ partial "footer.html" . }}

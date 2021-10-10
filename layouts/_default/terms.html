@@ -1,0 +1,15 @@
+<!-- imlk: for tags and categories, archives.html is used instead -->
+
+{{ partial "header.html" . }}
+
+<h1>{{ .Title }}</h1>
+
+<ul class="terms">
+  {{ range .Data.Terms }}
+  <li>
+    <a href="{{ .Page.RelPermalink }}">{{ .Page.Title }} ({{ .Count }})</a>
+  </li>
+  {{ end }}
+</ul>
+
+{{ partial "footer.html" . }}

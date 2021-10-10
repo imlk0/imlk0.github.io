@@ -1,0 +1,10 @@
+{{ with .Site.Params.utteranc }}
+{{ if .enable }}
+<div id="comments">
+    <hr>
+    <script src="https://utteranc.es/client.js" repo='{{ .repo }}' issue-term="{{ .issueTerm }}" label='{{ .label }}'
+        theme='{{ .theme }}' crossorigin="anonymous" async>
+        </script>
+</div>
+{{ end }}
+{{ end }}
