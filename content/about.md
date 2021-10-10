@@ -5,7 +5,7 @@ title: About me
 # # echo \"${self}\"
 
 
-BUPT~~本科生~~毕业了、酷安应用开发者（~~做Android的~~，曾经）、~~写后端的~~（曾经）、Xposed爱好者（写模块的）、FydeOS former intern、ByteDance former intern、Rustacean（应该算吧）、GSoC 2021 student、Android & Linux爱好者、~~蹲怀柔监狱ing~~
+BUPT~~本科生~~毕业了、酷安应用开发者（~~做Android的~~，曾经）、~~写后端的~~（曾经）、Xposed爱好者（写模块的）、FydeOS former intern、ByteDance former intern、Rustacean（应该算吧）、GSoC 2021 student、Android & Linux爱好者、在怀柔~~蹲监狱~~搬砖ing
 
 折腾Android逆向分析、操作系统、TEE、虚拟化技术
 
