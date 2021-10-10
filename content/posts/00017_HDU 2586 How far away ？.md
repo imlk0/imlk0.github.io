@@ -3,6 +3,8 @@ title: >-
   HDU 2586 How far away ？——树上节点最短距离，LCA， 双亲表示法+暴力从下至上追溯，孩子链表示法+（Tarjan 或
   欧拉环游RMQ+（ST 或 SegmentTree））
 id: 17
+aliases:
+  - /blog/17/
 categories:
   - 动态规划
 date: 2018-03-02T15:58:51+08:00

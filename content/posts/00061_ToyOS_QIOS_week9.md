@@ -2,6 +2,8 @@
 title: '自制玩具操作系统--week9'
 date: 2019-05-01T00:00:08+08:00
 id: 61
+aliases:
+  - /blog/61/
 categories:
   - OS
 tags:

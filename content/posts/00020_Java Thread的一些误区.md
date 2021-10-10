@@ -1,6 +1,8 @@
 ---
 title: Java Thread的一些误区
 id: 20
+aliases:
+  - /blog/20/
 categories:
   - Java
 date: 2017-12-09T16:56:54+08:00

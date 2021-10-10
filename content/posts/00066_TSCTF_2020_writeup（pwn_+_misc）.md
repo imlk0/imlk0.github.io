@@ -2,6 +2,8 @@
 title: 'TSCTF 2020 writeup（pwn + misc）'
 date: 2020-10-19T15:48:21+08:00
 id: 66
+aliases:
+  - /blog/66/
 categories:
     - ctf
 tags:

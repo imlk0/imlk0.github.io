@@ -2,6 +2,8 @@
 title: HDU 1711 Number Sequence ——KMP
 date: 2018-03-14T16:00:31+08:00
 id: 18
+aliases:
+  - /blog/18/
 categories:
   - 算法
 tags:

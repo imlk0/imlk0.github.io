@@ -2,6 +2,8 @@
 title: '[笔记]ZjDroid适配art虚拟机的尝试'
 date: 2018-05-05T22:09:54+08:00
 id: 42
+aliases:
+  - /blog/42/
 categories:
   - 笔记
 tags:

@@ -2,6 +2,8 @@
 title: '在nRF52840 USB Dongle上安装OpenSK'
 date: 2020-10-10T13:36:28+08:00
 id: 65
+aliases:
+  - /blog/65/
 categories:
     - nRF52840
 tags:

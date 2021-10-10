@@ -2,6 +2,8 @@
 title: '[笔记]hexo模块mdjsp的开发心得'
 date: 2018-04-26T22:48:26+08:00
 id: 39
+aliases:
+  - /blog/39/
 categories:
   - 笔记
 tags:

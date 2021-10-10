@@ -1,6 +1,8 @@
 ---
 title: CodeForces 699C Vacations——动态规划
 id: 6
+aliases:
+  - /blog/6/
 categories:
   - 算法
 date: 2018-02-08T11:49:53+08:00

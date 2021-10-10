@@ -2,6 +2,8 @@
 title: '[Codeforces]Contest 1009 E. Intercity Travelling'
 date: 2018-07-15T21:06:24+08:00
 id: 48
+aliases:
+  - /blog/48/
 categories:
   - 算法
   - Codeforces

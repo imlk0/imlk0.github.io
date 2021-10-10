@@ -1,6 +1,8 @@
 ---
 title: 重拾Python之旅
 id: 34
+aliases:
+  - /blog/34/
 categories:
   - Python
 date: 2018-01-21T00:11:50+08:00

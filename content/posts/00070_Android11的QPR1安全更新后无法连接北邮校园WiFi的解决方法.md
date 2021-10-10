@@ -2,6 +2,8 @@
 title: 'Android11的QPR1安全更新后无法连接北邮校园WiFi的解决方法'
 date: 2021-03-17T13:51:32+08:00
 id: 70
+aliases:
+  - /blog/70/
 categories:
     - misc
 tags:

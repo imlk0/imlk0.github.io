@@ -1,6 +1,8 @@
 ---
 title: Fragment != Fragment ? —— Xposed开发时遇到的关于ClassLoader的问题
 id: 10
+aliases:
+  - /blog/10/
 categories:
   - Xposed
 date: 2018-02-25T18:02:56+08:00

@@ -1,6 +1,8 @@
 ---
 title: HDU 2577 How To Type 动态规划
 id: 16
+aliases:
+  - /blog/16/
 categories:
   - 算法
 date: 2018-02-01T17:59:56+08:00

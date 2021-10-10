@@ -1,6 +1,8 @@
 ---
 title: CodeForces 891 A. Pride
 id: 8
+aliases:
+  - /blog/8/
 categories:
   - Codeforces
   - 动态规划

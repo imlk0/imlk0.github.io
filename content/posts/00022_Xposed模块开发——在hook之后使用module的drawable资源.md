@@ -1,6 +1,8 @@
 ---
 title: Xposed模块开发——在hook之后使用module的drawable资源
 id: 22
+aliases:
+  - /blog/22/
 categories:
   - Xposed
 date: 2017-12-30T16:52:36+08:00
