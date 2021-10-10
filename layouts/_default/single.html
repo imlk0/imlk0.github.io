@@ -3,8 +3,9 @@
 {{ if .Title }}
 <div class="article-meta">
     <h1><span class="title">{{ .Title | markdownify }}</span></h1>
+    {{ if (gt .Params.date 0) }}
     <span>
-        {{ if (gt .Params.date 0) }}<span class="date">{{ .Date.Format "2006-01-02" }}</span> | {{ end }}
+        <span class="date">{{ .Date.Format "2006-01-02" }}</span> |
         <!-- <span>{{.WordCount}} words</span> | -->
         <span class="cats">
             {{ range $index, $cat := .GetTerms "categories" }}
@@ -21,7 +22,7 @@
     </span>
     <br>
     <br>
-
+    {{ end }}
 </div>
 {{ end }}
 
