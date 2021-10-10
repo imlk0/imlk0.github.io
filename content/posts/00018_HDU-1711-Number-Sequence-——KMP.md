@@ -5,8 +5,9 @@ id: 18
 aliases:
   - /blog/18/
 categories:
-  - 算法
+  - Algorithm
 tags:
+  - HDU
 ---
 
 [http://acm.hdu.edu.cn/showproblem.php?pid=1711](http://acm.hdu.edu.cn/showproblem.php?pid=1711)

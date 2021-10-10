@@ -8,9 +8,9 @@ categories:
   - Android
 tags:
   - Android
-  - 笔记
   - Binder
   - IPC
+  - 读书笔记
 ---
 
 第二篇读书笔记

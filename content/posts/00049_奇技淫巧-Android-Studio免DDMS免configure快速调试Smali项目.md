@@ -5,10 +5,9 @@ id: 49
 aliases:
   - /blog/49/
 categories:
-  - Android
   - Reverse
 tags:
-  - Android Studio
+  - Android
   - Debug
   - DDMS
 ---

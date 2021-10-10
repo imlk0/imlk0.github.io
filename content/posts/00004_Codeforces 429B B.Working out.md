@@ -4,9 +4,11 @@ id: 4
 aliases:
   - /blog/4/
 categories:
-  - 算法
+  - Algorithm
 date: 2018-01-09T20:47:19+08:00
 tags:
+  - Codeforces
+  - dp
 ---
 
 [http://codeforces.com/problemset/problem/429/B](http://codeforces.com/problemset/problem/429/B)

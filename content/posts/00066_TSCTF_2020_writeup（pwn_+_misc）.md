@@ -5,11 +5,11 @@ id: 66
 aliases:
   - /blog/66/
 categories:
-    - ctf
+  - CTF
 tags:
-    - ctf
-    - pwn
-    - Android
+  - CTF
+  - pwn
+  - Android
 ---
 
 

@@ -5,11 +5,12 @@ id: 65
 aliases:
   - /blog/65/
 categories:
-    - nRF52840
+  - Hardware
 tags:
-    - OpenSK
-    - nRF52840
-    - hardware
+  - OpenSK
+  - nRF52840
+  - Hardware
+  - 瞎搞
 ---
 
 在大佬的推荐下接触了OpenSK，一个开源的安全密钥实现，支持FIDO U2F标准（双因子认证）和FIDO2规范。目前OpenSK支持的硬件主要是基于nordic的nRF52840芯片的三款产品：

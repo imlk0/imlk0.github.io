@@ -4,11 +4,11 @@ id: 8
 aliases:
   - /blog/8/
 categories:
-  - Codeforces
-  - 动态规划
-  - 算法
+  - Algorithm
 date: 2018-02-27T10:30:47+08:00
 tags:
+  - Codeforces
+  - dp
 ---
 
 [http://codeforces.com/problemset/problem/891/A](http://codeforces.com/problemset/problem/891/A)

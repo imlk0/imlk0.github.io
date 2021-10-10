@@ -5,8 +5,7 @@ id: 45
 aliases:
   - /blog/45/
 categories: 
-  - POJ
-  - 算法
+  - Algorithm
 tags:
   - POJ
   - 阶乘

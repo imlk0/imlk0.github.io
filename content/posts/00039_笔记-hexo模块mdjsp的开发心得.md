@@ -5,10 +5,9 @@ id: 39
 aliases:
   - /blog/39/
 categories:
-  - 笔记
+  - JavaScript
 tags:
-  - 杂文
-  - 笔记
+  - 瞎搞
 ---
 
 第一次写npm插件，有点小激动，下面是写插件的坎坷之路

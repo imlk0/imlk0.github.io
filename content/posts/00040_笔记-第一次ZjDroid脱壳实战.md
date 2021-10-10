@@ -5,10 +5,10 @@ id: 40
 aliases:
   - /blog/40/
 categories:
-  - 笔记
+  - Reverse
 tags:
-  - 杂文
-  - 笔记
+  - 瞎搞
+  - ZjDroid
 ---
 
 

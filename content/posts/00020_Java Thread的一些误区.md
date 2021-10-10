@@ -7,6 +7,8 @@ categories:
   - Java
 date: 2017-12-09T16:56:54+08:00
 tags:
+  - Java
+  - 编程语言
 ---
 
 ## Thread

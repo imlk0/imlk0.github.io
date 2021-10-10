@@ -5,10 +5,11 @@ id: 69
 aliases:
   - /blog/69/
 categories:
-    - CTF
+  - CTF
 tags:
-    - meowgame
-    - misc
+  - meowgame
+  - misc
+  - 瞎搞
 ---
 
 # problem1

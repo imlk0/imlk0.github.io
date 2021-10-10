@@ -5,17 +5,18 @@ id: 42
 aliases:
   - /blog/42/
 categories:
-  - 笔记
+  - Reverse
 tags:
   - Android
-  - art
+  - ART
   - ZjDroid
+  - 瞎搞
 ---
 上星期趁着放假玩了玩ZjDroid，自己编译了一个来玩，最终克服万难总算找齐了源码，给编译出来了。
 上一篇文章:
 
 笔记-第一次ZjDroid脱壳实战
-[https://blog.csdn.net/u010746456/article/details/80150250](https://blog.csdn.net/u010746456/article/details/80150250)
+[https://blog.imlk.top/blog/40/](https://blog.imlk.top/blog/40/)
 
 
 虽然，最终拿出来的大数字加固的dex没能恢复onCreate这个native方法（本人实在太菜），但是其他部分还是能看源码的。

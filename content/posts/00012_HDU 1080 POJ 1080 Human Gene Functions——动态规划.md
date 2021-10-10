@@ -4,9 +4,10 @@ id: 12
 aliases:
   - /blog/12/
 categories:
-  - HDU
+  - Algorithm
 date: 2018-02-26T21:53:24+08:00
 tags:
+  - POJ
 ---
 
 [http://poj.org/problem?id=1080](http://poj.org/problem?id=1080)

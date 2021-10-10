@@ -4,9 +4,11 @@ id: 7
 aliases:
   - /blog/7/
 categories:
-  - 未分类
+  - Algorithm
 date: 2018-02-08T18:24:54+08:00
 tags:
+  - Codeforces
+  - Tree
 ---
 
 ```

@@ -5,10 +5,11 @@ id: 70
 aliases:
   - /blog/70/
 categories:
-    - misc
+  - WLAN
 tags:
-    - BUPT
-    - wpa2-enterprise
+  - BUPT
+  - wpa2-enterprise
+  - 瞎搞
 ---
 
 Android11在2020年12月发布的安全更新中进行了一个修复：[PSA: Android 11 will no longer let you insecurely connect to enterprise WiFi networks](https://www.xda-developers.com/android-11-break-enterprise-wifi-connection/)

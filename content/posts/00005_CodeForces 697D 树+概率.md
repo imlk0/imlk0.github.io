@@ -4,9 +4,11 @@ id: 5
 aliases:
   - /blog/5/
 categories:
-  - 算法
+  - Algorithm
 date: 2018-02-01T23:34:57+08:00
 tags:
+  - Codeforces
+  - Tree
 ---
 
 [原题链接](http://codeforces.com/problemset/problem/697/D)

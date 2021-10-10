@@ -5,10 +5,9 @@ id: 43
 aliases:
   - /blog/43/
 categories:
-  - Xposed
+  - Reverse
 tags:
   - Xposed
-  - 笔记
   - Android
   - ClassLoader
 ---

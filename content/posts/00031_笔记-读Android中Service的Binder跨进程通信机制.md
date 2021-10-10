@@ -8,9 +8,9 @@ categories:
   - Android
 tags:
   - Android
-  - 笔记
   - Binder
   - IPC
+  - 读书笔记
 ---
 
 今天拜读了姜维大神的`Android系统篇之----Binder机制和远程服务调用机制分析`

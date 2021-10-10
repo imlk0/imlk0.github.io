@@ -7,7 +7,7 @@ aliases:
 categories:
   - JavaScript
 tags: 
-  - JavaScript
+  - 编程语言
 ---
 
 参考资料：

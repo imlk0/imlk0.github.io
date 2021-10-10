@@ -5,10 +5,10 @@ id: 57
 aliases:
   - /blog/57/
 categories:
-  - OS
+  - OSDev
 tags:
   - 操作系统
-  - 笔记
+  - DIY
 ---
 
 ## DAY 0x0F

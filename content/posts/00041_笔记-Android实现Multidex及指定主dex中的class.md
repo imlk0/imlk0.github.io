@@ -5,10 +5,10 @@ id: 41
 aliases:
   - /blog/41/
 categories:
-  - 笔记
+  - Android
 tags:
-  - 杂文
-  - 笔记
+  - Multidex
+  - ZjDroid
 ---
 
 

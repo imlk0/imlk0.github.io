@@ -5,11 +5,8 @@ id: 48
 aliases:
   - /blog/48/
 categories:
-  - 算法
-  - Codeforces
+  - Algorithm
 tags:
-  - Codeforces contest 1009
-  - Educational Codeforces Round 47 (Rated for Div. 2)
   - Codeforces
 ---
 

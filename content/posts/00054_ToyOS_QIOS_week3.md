@@ -5,10 +5,10 @@ id: 54
 aliases:
   - /blog/54/
 categories:
-  - OS
+  - OSDev
 tags:
   - 操作系统
-  - 笔记
+  - DIY
 ---
 
 ## DAY 0x06

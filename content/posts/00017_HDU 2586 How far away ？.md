@@ -6,9 +6,15 @@ id: 17
 aliases:
   - /blog/17/
 categories:
-  - 动态规划
+  - Algorithm
 date: 2018-03-02T15:58:51+08:00
 tags:
+  - HDU
+  - dp
+  - 树上最短距离
+  - LCA
+  - 树
+  - 线段树
 ---
 
 标题真长。。。

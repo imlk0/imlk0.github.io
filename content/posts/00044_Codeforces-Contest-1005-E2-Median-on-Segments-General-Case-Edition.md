@@ -5,11 +5,8 @@ id: 44
 aliases:
   - /blog/44/
 categories: 
-  - 算法
-  - Codeforces
+  - Algorithm
 tags:
-  - Codeforces contest 1005
-  - Codeforces Round 496 (Div. 3)
   - Codeforces
 ---
 

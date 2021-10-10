@@ -7,6 +7,8 @@ categories:
   - Python
 date: 2018-01-21T00:11:50+08:00
 tags:
+  - 编程语言
+  - Python
 ---
 
 ```

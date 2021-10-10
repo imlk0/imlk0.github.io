@@ -8,7 +8,7 @@ categories:
   - OS
 tags:
   - 操作系统
-  - 笔记
+  - DIY
 ---
 
 ## DAY 0x00

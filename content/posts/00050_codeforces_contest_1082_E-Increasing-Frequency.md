@@ -5,8 +5,7 @@ id: 50
 aliases:
   - /blog/50/
 categories: 
-  - Codeforces
-  - 算法
+  - Algorithm
 tags: 
   - Codeforces
   - 贪心

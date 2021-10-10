@@ -4,9 +4,11 @@ id: 6
 aliases:
   - /blog/6/
 categories:
-  - 算法
+  - Algorithm
 date: 2018-02-08T11:49:53+08:00
 tags:
+  - Codeforces
+  - dp
 ---
 
 [原题链接](http://codeforces.com/problemset/problem/699/C)
