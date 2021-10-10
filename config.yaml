@@ -4,6 +4,12 @@ title: imlk's blog
 hasCJKLanguage: true 
 buildDrafts: false
 
+# ignore files under `content/` fir
+ignoreFiles:
+  - 'posts/images'
+  - 'posts/objects'
+  - 'images'
+  - 'objects'
 
 # each taxonomies in this form:
 #   singular value: plural value

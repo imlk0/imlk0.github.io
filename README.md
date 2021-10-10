@@ -19,3 +19,13 @@ If you are here because you would like to read my blog, please follow this link:
   ```
   These are not hugo generated files. Just a compromise to keep both the local markdown editor and the resource file url working correctly.
   All the static file (e.g. `images` and `objects` should be placed in `/static`)
+
+  However, hugo won't ignore these symbolic link files, cause it copy them multiple times. So remember to modify `ignoreFiles` in `config.yaml` after create new symbolic link files.
+
+  ```yaml
+  ignoreFiles:
+    - 'posts/images'
+    - 'posts/objects'
+    - 'images'
+    - 'objects'
+  ```
