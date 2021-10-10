@@ -1,5 +1,5 @@
 ---
-title: '[笔记]Xposed框架加持下的Android应用ClassLoader的结构关系'
+title: 'Xposed框架加持下的Android应用中ClassLoader的结构关系'
 date: 2018-07-07T21:52:37+08:00
 id: 43
 aliases:

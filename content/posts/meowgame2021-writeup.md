@@ -1,5 +1,5 @@
 ---
-title: '[write up] meowgame2021'
+title: 'meowgame2021 writeup'
 date: 2021-03-16T23:20:16+08:00
 id: 69
 aliases:

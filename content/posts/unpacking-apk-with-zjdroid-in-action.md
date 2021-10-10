@@ -1,5 +1,5 @@
 ---
-title: '[笔记]第一次ZjDroid脱壳实战'
+title: '记一次ZjDroid脱壳实战'
 date: 2018-04-28T00:05:10+08:00
 id: 40
 aliases:

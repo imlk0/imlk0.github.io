@@ -1,5 +1,5 @@
 ---
-title: 对比学习Java和C++时关于方法覆盖Override后外部调用父类方法的区别
+title: Java和C++中方法Override后外部调用父类方法时的区别
 id: 27
 aliases:
   - /blog/27/

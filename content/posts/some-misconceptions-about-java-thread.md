@@ -1,5 +1,5 @@
 ---
-title: Java Thread的一些误区
+title: 关于Java中Thread类的一些误区
 id: 20
 aliases:
   - /blog/20/

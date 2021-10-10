@@ -1,5 +1,5 @@
 ---
-title: '[Codeforces]Contest 1009 E. Intercity Travelling'
+title: 'Codeforces Contest 1009 E. Intercity Travelling'
 date: 2018-07-15T21:06:24+08:00
 id: 48
 aliases:

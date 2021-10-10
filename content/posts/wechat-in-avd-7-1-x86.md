@@ -1,5 +1,5 @@
 ---
-title: AVD_7.1_x86 安装微信经历
+title: 在AVD_7.1_x86 emulator上安装微信
 date: 2019-06-13T16:35:07+08:00
 id: 51
 aliases:

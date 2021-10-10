@@ -1,5 +1,5 @@
 ---
-title: '在nRF52840 USB Dongle上安装OpenSK'
+title: '用nRF52840 USB Dongle和OpenSK制作开源硬件密钥'
 date: 2020-10-10T13:36:28+08:00
 id: 65
 aliases:

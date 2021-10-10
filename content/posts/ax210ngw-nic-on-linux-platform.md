@@ -1,5 +1,5 @@
 ---
-title: '在Linux平台上用上AX210NGW网卡'
+title: '吃螃蟹-在Linux上用上AX210NGW网卡'
 date: 2020-12-11T15:34:07+08:00
 id: 67
 aliases:

@@ -1,7 +1,5 @@
 ---
-title: >-
-  HDU 2586 How far away ？——树上节点最短距离，LCA， 双亲表示法+暴力从下至上追溯，孩子链表示法+（Tarjan 或
-  欧拉环游RMQ+（ST 或 SegmentTree））
+title: HDU 2586 How far away ？
 id: 17
 aliases:
   - /blog/17/
@@ -16,8 +14,6 @@ tags:
   - 树
   - 线段树
 ---
-
-标题真长。。。
 
 HDU 2586 How far away ？——树上节点最短距离，LCA， 双亲表示法+暴力从下至上追溯，孩子链表示法+（Tarjan 或 欧拉环游RMQ+（ST 或 SegmentTree））
 

@@ -1,5 +1,5 @@
 ---
-title: CodeForces 699D Fix a Tree——并查集优化 给出所有节点的父节点（有向图），用最少的修改生成一颗合法的树（环的判断，去环）
+title: CodeForces 699D Fix a Tree
 id: 7
 aliases:
   - /blog/7/
@@ -10,6 +10,8 @@ tags:
   - Codeforces
   - Tree
 ---
+
+并查集优化 给出所有节点的父节点（有向图），用最少的修改生成一颗合法的树（环的判断，去环）
 
 ```
 D. Fix a Tree

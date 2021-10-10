@@ -1,5 +1,5 @@
 ---
-title: '[奇技淫巧]Android Studio免DDMS免configure快速调试Smali项目'
+title: 'Android Studio免DDMS免configure快速调试Smali代码'
 date: 2018-07-19T01:11:30+08:00
 id: 49
 aliases:

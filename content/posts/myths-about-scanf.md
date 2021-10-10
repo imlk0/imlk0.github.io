@@ -1,5 +1,5 @@
 ---
-title: 关于scanf的误区
+title: 遇到scanf的一个小误区
 id: 26
 aliases:
   - /blog/26/

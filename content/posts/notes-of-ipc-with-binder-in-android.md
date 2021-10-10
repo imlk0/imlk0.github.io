@@ -1,5 +1,5 @@
 ---
-title: '[笔记]读Android中Service的Binder跨进程通信机制'
+title: '理解Android中Service的Binder跨进程通信机制'
 date: 2018-04-11T22:38:50+08:00
 id: 31
 aliases:

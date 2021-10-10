@@ -1,5 +1,5 @@
 ---
-title: '[POJ]1150 The Last Non-zero Digit'
+title: 'POJ 1150 The Last Non-zero Digit'
 date: 2018-07-13T16:02:29+08:00
 id: 45
 aliases:

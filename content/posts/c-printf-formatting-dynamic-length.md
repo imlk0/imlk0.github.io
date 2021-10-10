@@ -1,5 +1,5 @@
 ---
-title: C——printf格式化动态长度
+title: printf格式化输出浮点数动态指定长度
 id: 9
 aliases:
   - /blog/9/

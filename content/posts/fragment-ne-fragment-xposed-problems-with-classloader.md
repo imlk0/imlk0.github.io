@@ -1,5 +1,5 @@
 ---
-title: Fragment != Fragment ? —— Xposed开发时遇到的关于ClassLoader的问题
+title: Fragment != Fragment ? —— Xposed开发中多ClassLoader的问题
 id: 10
 aliases:
   - /blog/10/

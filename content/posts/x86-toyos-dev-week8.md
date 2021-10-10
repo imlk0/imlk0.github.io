@@ -1,5 +1,5 @@
 ---
-title: '自制玩具操作系统--week8'
+title: '自制x86玩具操作系统 week8'
 date: 2019-05-01T00:00:07+08:00
 id: 60
 aliases:

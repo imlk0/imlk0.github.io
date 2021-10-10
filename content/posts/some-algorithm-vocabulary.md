@@ -1,5 +1,5 @@
 ---
-title: 算法词汇
+title: 一些算法词汇缩写
 id: 33
 aliases:
   - /blog/33/

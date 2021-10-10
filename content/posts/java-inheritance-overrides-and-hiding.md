@@ -1,5 +1,5 @@
 ---
-title: Java继承的覆盖与隐藏
+title: Java中继承的覆盖与隐藏
 id: 21
 aliases:
   - /blog/21/

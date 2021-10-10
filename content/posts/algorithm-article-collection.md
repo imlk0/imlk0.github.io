@@ -1,5 +1,5 @@
 ---
-title: 算法文章收集
+title: 一些算法文章集合
 id: 32
 aliases:
   - /blog/32/

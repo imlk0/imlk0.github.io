@@ -1,5 +1,5 @@
 ---
-title: '[笔记]hexo模块mdjsp的开发心得'
+title: '为hexo开发一个简单的模块mdjsp'
 date: 2018-04-26T22:48:26+08:00
 id: 39
 aliases:

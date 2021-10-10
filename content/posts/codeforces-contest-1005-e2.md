@@ -1,5 +1,5 @@
 ---
-title: '[Codeforces]Contest 1005 E2. Median on Segments (General Case Edition)'
+title: 'Codeforces Contest 1005 E2. Median on Segments (General Case Edition)'
 date: 2018-07-11T16:58:32+08:00
 id: 44
 aliases:

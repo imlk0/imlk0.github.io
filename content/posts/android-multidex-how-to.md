@@ -1,5 +1,5 @@
 ---
-title: '[笔记]Android实现Multidex及指定主dex中的class'
+title: '为Xposed模块增加Multidex支持并指定主dex中的class'
 date: 2018-04-29T11:19:47+08:00
 id: 41
 aliases:
@@ -9,6 +9,7 @@ categories:
 tags:
   - Multidex
   - ZjDroid
+  - Xposed
 ---
 
 

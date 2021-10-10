@@ -1,5 +1,5 @@
 ---
-title: codeforces contest 1082 E. Increasing Frequency
+title: Codeforces contest 1082 E. Increasing Frequency
 date: 2018-11-30T00:06:03+08:00
 id: 50
 aliases:

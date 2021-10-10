@@ -1,5 +1,5 @@
 ---
-title: '[笔记]JavaScript入门啦'
+title: 'JavaScript入门啦'
 date: 2018-04-17T21:19:19+08:00
 id: 36
 aliases:
