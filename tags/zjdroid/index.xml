@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>ZjDroid on imlk&#39;s blog</title>
+    <link>https://blog.imlk.top/tags/zjdroid/</link>
+    <description>Recent content in ZjDroid on imlk&#39;s blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Sat, 05 May 2018 22:09:54 +0800</lastBuildDate><atom:link href="https://blog.imlk.top/tags/zjdroid/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>为ZjDroid适配ART虚拟机的尝试</title>
+      <link>https://blog.imlk.top/posts/port-zjdroid-to-art/</link>
+      <pubDate>Sat, 05 May 2018 22:09:54 +0800</pubDate>
+      
+      <guid>https://blog.imlk.top/posts/port-zjdroid-to-art/</guid>
+      <description>上星期趁着放假玩了玩ZjDroid，自己编译了一个来玩，最终克服万难总算找齐了源码，给编译出来了。 上一篇文章: 笔记-第一次ZjDroid脱壳</description>
+    </item>
+    
+    <item>
+      <title>为Xposed模块增加Multidex支持并指定主dex中的class</title>
+      <link>https://blog.imlk.top/posts/android-multidex-how-to/</link>
+      <pubDate>Sun, 29 Apr 2018 11:19:47 +0800</pubDate>
+      
+      <guid>https://blog.imlk.top/posts/android-multidex-how-to/</guid>
+      <description>起因 在编译ZjDroid源码的时候遇到了著名的方法数超出65536个的问题。 我的gradle版本 classpath &#39;com.android.tools.build:gradle:3.1.2&#39; 要解决的问题 Xposed模块中的方法数超</description>
+    </item>
+    
+    <item>
+      <title>记一次ZjDroid脱壳实战</title>
+      <link>https://blog.imlk.top/posts/unpacking-apk-with-zjdroid-in-action/</link>
+      <pubDate>Sat, 28 Apr 2018 00:05:10 +0800</pubDate>
+      
+      <guid>https://blog.imlk.top/posts/unpacking-apk-with-zjdroid-in-action/</guid>
+      <description>看了那么多逆向破解的文章，总得来点实战的了，正所谓实践出真知嘛。 拜读了姜维大神的「Android中Xposed框架篇&amp;mdash;基于Xpo</description>
+    </item>
+    
+  </channel>
+</rss>

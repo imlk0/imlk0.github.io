@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>LCS on imlk&#39;s blog</title>
+    <link>https://blog.imlk.top/tags/lcs/</link>
+    <description>Recent content in LCS on imlk&#39;s blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Tue, 06 Feb 2018 21:11:32 +0800</lastBuildDate><atom:link href="https://blog.imlk.top/tags/lcs/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>最长递增子列问题的另一种思路——转化为LCS问题</title>
+      <link>https://blog.imlk.top/posts/slove-the-longest-incremental-subcolumn-by-lcs/</link>
+      <pubDate>Tue, 06 Feb 2018 21:11:32 +0800</pubDate>
+      
+      <guid>https://blog.imlk.top/posts/slove-the-longest-incremental-subcolumn-by-lcs/</guid>
+      <description>利用LCS的解题思路可以解决最长递增子列的问题顺便求出该递增序列 例如 list1 = [1, 2, 3, 1, -1, 0, 4, 5] 将其排序得 list2 = [-1, 0, 1, 1, 2, 3, 4, 5] 则问题转化为 求list</description>
+    </item>
+    
+    <item>
+      <title>两大LCS问题</title>
+      <link>https://blog.imlk.top/posts/two-major-lcs-problems/</link>
+      <pubDate>Thu, 01 Feb 2018 12:09:09 +0800</pubDate>
+      
+      <guid>https://blog.imlk.top/posts/two-major-lcs-problems/</guid>
+      <description>0x00 相同子序：（不要求连续） #include &amp;lt;iostream&amp;gt; #include &amp;lt;algorithm&amp;gt; #include &amp;lt;string&amp;gt; #include &amp;lt;cstdio&amp;gt; // // #define DEBUG // #ifdef DEBUG // #define SHOW // #else // #define SHOW /##/ // #endif // 不可行，注释先于预处理指令被处理 using namespace std; // LCS共同子序不要求</description>
+    </item>
+    
+  </channel>
+</rss>

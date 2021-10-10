@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>用位运算来模拟数组实现一道算法题 | imlk&#39;s blog</title>
+  <link rel="stylesheet" href='/css/style.css' />
+  <link rel="stylesheet" href='/css/fonts.css' />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+  <header class="header">
+    <a class="logo" href='/'> imlk's Blog </a>
+    <nav>
+      <ul class="menu">
+        
+        <li><a href="/">Home</a></li>
+        
+        <li><a href="/about/">About</a></li>
+        
+        <li><a href="/archives/">Archives</a></li>
+        
+        <li><a href="/friends/">Friends</a></li>
+        
+        <li><a href="/index.xml">Subscribe</a></li>
+        
+      </ul>
+    </nav>
+  </header>
+  <hr />
+
+
+
+<div class="article-meta">
+    <h1><span class="title">用位运算来模拟数组实现一道算法题</span></h1>
+    
+    <span>
+        <span class="date">2017-12-09</span> |
+        
+        <span class="cats">
+            
+            
+            <a href='https://blog.imlk.top/categories/algorithm/'>Algorithm</a>
+            
+        </span>
+        <span class="tags">
+            
+        </span>
+    </span>
+    <br>
+    <br>
+    
+</div>
+
+
+<main>
+    <p>输入一串字符串'\n&rsquo;结尾，X代表小偷，#代表普通人，数字代表警察，其数字是警察能巡视到的范围。
+输出小偷个数，换行。</p>
+<pre tabindex="0"><code>#include &lt;stdio.h&gt;
+
+int printBin(unsigned long num){
+	while(num != 0){
+		printf(&quot;%d &quot;, num % 2);
+		num = num &gt;&gt; 1; 
+	}
+	printf(&quot;\n&quot;);
+}
+
+int main(){
+	unsigned long line = 0,rangeLine = 0;
+	int index = 0,range,count = 0;
+	char tmp;
+
+	scanf(&quot;%c&quot;,&amp;tmp);
+	while(tmp != '\n'){
+
+		if(index &lt; 20){
+			if(tmp == 'X'){
+				line = line | (1 &lt;&lt; index);
+			}else if(tmp == '#'){		
+
+			}else{
+				range = tmp - '0';
+
+				for(int i = 0; i &lt;= range; i++){
+
+					rangeLine = rangeLine | (1 &lt;&lt; index + i);
+					rangeLine = rangeLine | (1 &lt;&lt; index - i);
+				}
+			}
+
+			// printBin(line);
+			// printBin(rangeLine);
+
+			index++;
+			scanf(&quot;%c&quot;,&amp;tmp);
+
+		}else{
+			while(index &gt;= 10){
+
+				if(rangeLine &amp; 1){
+					if(line &amp; 1){
+						count++;
+					}
+				}
+				index--;
+				line = line &gt;&gt; 1;
+				rangeLine = rangeLine &gt;&gt; 1;
+			}
+
+		}
+	}
+
+	index--;
+
+	while(index &gt;= 0){
+
+//		printf(&quot;%d %d\n&quot;,line &amp; 1,rangeLine &amp; 1);
+		if(rangeLine &amp; 1){
+			if(line &amp; 1){
+				count++;
+			}
+		}
+		index--;
+		line = line &gt;&gt; 1;
+		rangeLine = rangeLine &gt;&gt; 1;
+
+	}
+
+	printf(&quot;%d&quot;,count);
+	return 0;
+}
+</code></pre>
+</main>
+
+
+
+<div id="comments">
+    <hr>
+    <script src="https://utteranc.es/client.js" repo='KB5201314/KB5201314.github.io' issue-term="pathname" label='💬 comments 💬'
+        theme='github-light' crossorigin="anonymous" async>
+        </script>
+</div>
+
+
+  <footer>
+  
+  <hr/>
+  © <a href="https://blog.imlk.top">imlk</a> 2017 &ndash; 2021 | imlk's blog | <a href="https://github.com/KB5201314/">Github</a> | <a href="mailto:me@imlk.top">Email</a> | <a href="http://www.miitbeian.gov.cn/">京ICP备 - 2020042968号</a>
+  
+  </footer>
+  </body>
+</html>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>最低非零位 on imlk&#39;s blog</title>
+    <link>https://blog.imlk.top/tags/%E6%9C%80%E4%BD%8E%E9%9D%9E%E9%9B%B6%E4%BD%8D/</link>
+    <description>Recent content in 最低非零位 on imlk&#39;s blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Fri, 13 Jul 2018 16:02:29 +0800</lastBuildDate><atom:link href="https://blog.imlk.top/tags/%E6%9C%80%E4%BD%8E%E9%9D%9E%E9%9B%B6%E4%BD%8D/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>POJ 1150 The Last Non-zero Digit</title>
+      <link>https://blog.imlk.top/posts/poj-1150-the-last-nonzero-digit/</link>
+      <pubDate>Fri, 13 Jul 2018 16:02:29 +0800</pubDate>
+      
+      <guid>https://blog.imlk.top/posts/poj-1150-the-last-nonzero-digit/</guid>
+      <description>原题 http://poj.org/problem?id=1150 参考 https://blog.csdn.net/txl199106/article/details/40653579 #include &amp;lt;iostream&amp;gt;#include &amp;lt;algorithm&amp;gt;#include &amp;lt;cstring&amp;gt;#include &amp;lt;string&amp;gt;#include &amp;lt;cstdio&amp;gt;#include &amp;lt;cmath&amp;gt; #define LL long long using namespace std; // 除了统计2，5的总因子数，还统计末尾位为3，7，9的数目 void count(LL co[], int n) { if (n == 0) { return; } for (int m = n; m &amp;gt; 0;</description>
+    </item>
+    
+  </channel>
+</rss>

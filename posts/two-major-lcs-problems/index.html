@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>两大LCS问题 | imlk&#39;s blog</title>
+  <link rel="stylesheet" href='/css/style.css' />
+  <link rel="stylesheet" href='/css/fonts.css' />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+  <header class="header">
+    <a class="logo" href='/'> imlk's Blog </a>
+    <nav>
+      <ul class="menu">
+        
+        <li><a href="/">Home</a></li>
+        
+        <li><a href="/about/">About</a></li>
+        
+        <li><a href="/archives/">Archives</a></li>
+        
+        <li><a href="/friends/">Friends</a></li>
+        
+        <li><a href="/index.xml">Subscribe</a></li>
+        
+      </ul>
+    </nav>
+  </header>
+  <hr />
+
+
+
+<div class="article-meta">
+    <h1><span class="title">两大LCS问题</span></h1>
+    
+    <span>
+        <span class="date">2018-02-01</span> |
+        
+        <span class="cats">
+            
+            
+            <a href='https://blog.imlk.top/categories/algorithm/'>Algorithm</a>
+            
+        </span>
+        <span class="tags">
+            
+             | 
+            <a href='https://blog.imlk.top/tags/lcs/'>#LCS</a>
+            
+        </span>
+    </span>
+    <br>
+    <br>
+    
+</div>
+
+
+<main>
+    <h2 id="0x00-相同子序不要求连续">0x00 相同子序：（不要求连续）</h2>
+<pre tabindex="0"><code>#include &lt;iostream&gt;
+#include &lt;algorithm&gt;
+#include &lt;string&gt;
+#include &lt;cstdio&gt;
+
+// // #define DEBUG
+// #ifdef DEBUG
+// #define SHOW
+// #else
+// #define SHOW /##/
+// #endif
+// 不可行，注释先于预处理指令被处理
+
+using namespace std;
+
+// LCS共同子序不要求连续
+
+int main(int argc, char const *argv[])
+{
+	string s1, s2;
+	while (cin &gt;&gt; s1 &gt;&gt; s2) {
+		int len1 = s1.length();//不包括末尾的'\0'
+		int len2 = s2.length();
+		int ans = 0;
+		int dp[len1 + 5][len2 + 5] = {};//初始化为0避免边界讨论
+
+		// printf(&quot;\t\t&quot;);
+		// for (int y = 0; y &lt; len2; y++) {
+		// 	printf(&quot;%c\t&quot;, s2[y]);
+		// }
+		// printf(&quot;\n\t&quot;);
+
+		// for (int y = 0; y &lt;= len2; y++) {
+		// 	printf(&quot;%d\t&quot;, dp[0][y]);
+
+		// }
+		// printf(&quot;\n&quot;);
+
+		for (int x = 1; x &lt;= len1; x++) {
+			// printf(&quot;%c\t&quot;, s1[x - 1]);
+			// printf(&quot;%d\t&quot;, dp[x][0]);
+			for (int y = 1; y &lt;= len2; y++) {
+				if (s1[x - 1] == s2[y - 1]) {//之所以减一是由于循环变量从1开始
+					dp[x][y] = dp[x - 1][y - 1] + 1;// 等于左上方格子加一
+					// printf(&quot;↖%d\t&quot;, dp[x][y]);
+				} else {
+					dp[x][y] = max(dp[x - 1][y], dp[x][y - 1]);// 向左上方的所有格子取最大值(实际上只需要从左边和上边选取最大值)
+					// if (dp[x][y] == dp[x - 1][y]) {
+					// 	printf(&quot;↑%d\t&quot;, dp[x][y]);
+					// } else {
+					// 	printf(&quot;←%d\t&quot;, dp[x][y]);
+				}
+			}
+
+			// printf(&quot;\n&quot;);
+		}
+
+		/**
+		*	abcfbc abfcab
+		*	dp数组:
+		*
+		*			a	b	f	c	a	b
+		*		0	0	0	0	0	0	0
+		*	a	0	↖1	←1	←1	←1	↖1	←1
+		*	b	0	↑1	↖2	←2	←2	←2	↖2
+		*	c	0	↑1	↑2	↑2	↖3	←3	←3
+		*	f	0	↑1	↑2	↖3	↑3	↑3	↑3
+		*	b	0	↑1	↖2	↑3	↑3	↑3	↖4
+		*	c	0	↑1	↑2	↑3	↖4	←4	↑4
+		*	
+		*	out:4
+		*/
+
+		for (int x = 1; x &lt;= len1; x++) {
+			for (int y = 1; y &lt;= len2; y++) {
+				ans = max(ans, dp[x][y]);
+			}
+		}
+		printf(&quot;%d\n&quot;, ans);
+
+	}
+	return 0;
+}
+</code></pre><h2 id="0x01-相同子列连续">0x01 相同子列（连续）</h2>
+<pre tabindex="0"><code>
+#include &lt;iostream&gt;
+#include &lt;algorithm&gt;
+#include &lt;string&gt;
+#include &lt;cstdio&gt;
+
+using namespace std;
+
+// LCS共同连续子列
+
+int main(int argc, char const *argv[])
+{
+	string s1, s2;
+	while (cin &gt;&gt; s1 &gt;&gt; s2) {
+		int len1 = s1.length();//不包括末尾的'\0'
+		int len2 = s2.length();
+		int ans = 0;
+		int dp[len1 + 5][len2 + 5] = {};//初始化为0避免边界讨论
+
+		// printf(&quot;\t\t&quot;);
+		// for (int y = 0; y &lt; len2; y++) {
+		// 	printf(&quot;%c\t&quot;, s2[y]);
+		// }
+		// printf(&quot;\n\t&quot;);
+
+		// for (int y = 0; y &lt;= len2; y++) {
+		// 	printf(&quot;%d\t&quot;, dp[0][y]);
+
+		// }
+		// printf(&quot;\n&quot;);
+
+		for (int x = 1; x &lt;= len1; x++) {
+			// printf(&quot;%c\t&quot;, s1[x - 1]);
+			// printf(&quot;%d\t&quot;, dp[x][0]);
+			for (int y = 1; y &lt;= len2; y++) {
+				if (s1[x - 1] == s2[y - 1]) {//之所以减一是由于循环变量从1开始
+					dp[x][y] = dp[x - 1][y - 1] + 1;// 等于左上方格子加一
+					// printf(&quot;↖%d\t&quot;, dp[x][y]);
+				}//不相等则无需处理
+				// else {
+				// 	printf(&quot;%d\t&quot;, dp[x][y]);
+				// }
+			}
+
+			// printf(&quot;\n&quot;);
+		}
+
+		/**
+		*	abcfbc abfcab
+		*	dp数组:
+		*
+		*			a	b	f	c	a	b
+		*		0	0	0	0	0	0	0
+		*	a	0	↖1	0	0	0	↖1	0
+		*	b	0	0	↖2	0	0	0	↖2
+		*	c	0	0	0	0	↖1	0	0
+		*	f	0	0	0	↖1	0	0	0
+		*	b	0	0	↖1	0	0	0	↖1
+		*	c	0	0	0	0	↖1	0	0
+		*
+		*	out:2
+		*/
+
+		for (int x = 1; x &lt;= len1; x++) {
+			for (int y = 1; y &lt;= len2; y++) {
+				ans = max(ans, dp[x][y]);
+			}
+		}
+		printf(&quot;%d\n&quot;, ans);
+
+	}
+	return 0;
+}
+
+</code></pre>
+</main>
+
+
+
+<div id="comments">
+    <hr>
+    <script src="https://utteranc.es/client.js" repo='KB5201314/KB5201314.github.io' issue-term="pathname" label='💬 comments 💬'
+        theme='github-light' crossorigin="anonymous" async>
+        </script>
+</div>
+
+
+  <footer>
+  
+  <hr/>
+  © <a href="https://blog.imlk.top">imlk</a> 2017 &ndash; 2021 | imlk's blog | <a href="https://github.com/KB5201314/">Github</a> | <a href="mailto:me@imlk.top">Email</a> | <a href="http://www.miitbeian.gov.cn/">京ICP备 - 2020042968号</a>
+  
+  </footer>
+  </body>
+</html>

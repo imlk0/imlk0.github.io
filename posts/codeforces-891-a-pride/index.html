@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CodeForces 891 A. Pride | imlk&#39;s blog</title>
+  <link rel="stylesheet" href='/css/style.css' />
+  <link rel="stylesheet" href='/css/fonts.css' />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+  <header class="header">
+    <a class="logo" href='/'> imlk's Blog </a>
+    <nav>
+      <ul class="menu">
+        
+        <li><a href="/">Home</a></li>
+        
+        <li><a href="/about/">About</a></li>
+        
+        <li><a href="/archives/">Archives</a></li>
+        
+        <li><a href="/friends/">Friends</a></li>
+        
+        <li><a href="/index.xml">Subscribe</a></li>
+        
+      </ul>
+    </nav>
+  </header>
+  <hr />
+
+
+
+<div class="article-meta">
+    <h1><span class="title">CodeForces 891 A. Pride</span></h1>
+    
+    <span>
+        <span class="date">2018-02-27</span> |
+        
+        <span class="cats">
+            
+            
+            <a href='https://blog.imlk.top/categories/algorithm/'>Algorithm</a>
+            
+        </span>
+        <span class="tags">
+            
+             | 
+            <a href='https://blog.imlk.top/tags/codeforces/'>#Codeforces</a>
+            
+            
+            <a href='https://blog.imlk.top/tags/dp/'>#dp</a>
+            
+        </span>
+    </span>
+    <br>
+    <br>
+    
+</div>
+
+
+<main>
+    <p><a href="http://codeforces.com/problemset/problem/891/A">http://codeforces.com/problemset/problem/891/A</a></p>
+<pre tabindex="0"><code>#include &lt;iostream&gt;
+#include &lt;cstdio&gt;
+#include &lt;cstring&gt;
+#include &lt;cmath&gt;
+
+using namespace std;
+
+long long dp[2005][2005]; // dp[x][y]表示gcd(x...(x + y))
+/*
+x是起始点位置,y是距离
+a1, a2, a3, a4, a5, a6, a7, a8
+	↑	←	y	→	↑
+	x				x + y
+*/
+
+// gcd(a1, a2, a3) = gcd(gcd(a1, a2), a3) = gcd(gcd(a1, a2), gcd(a2, a3))
+// 所以
+
+// 状态方程
+// dp[x][y] = gcd(dp[x][y - 1], dp[x + 1][y - 1])
+
+long long gcd(long long a, long long b) {
+	while (1) {
+		a = a % b;
+		if (!a) {
+			return b;
+		}
+		b = b % a;
+		if (!b) {
+			return a;
+		}
+	}
+}
+
+int main(int argc, char const *argv[])
+{
+	int n;
+	int ones = 0;
+	scanf(&quot;%d&quot;, &amp;n);
+
+	for (int x = 0; x &lt; n; x++) {
+		scanf(&quot;%lld&quot;, dp[x]);
+		if (dp[x][0] == 1) {
+			ones++;
+		}
+
+		// printf(&quot;%lld\t&quot;, dp[x][0]);
+	}
+
+	// printf(&quot;\n&quot;);
+
+	if (ones) {
+		printf(&quot;%d\n&quot;, n - ones);
+		return 0;
+	}
+
+	for (int y = 1; y &lt; n; y++) {//跨度距离从1开始
+		for (int x = 0; x + y &lt; n; x++) {//起始位置从x开始
+
+			dp[x][y] = gcd(dp[x][y - 1], dp[x + 1][y - 1]);
+
+			// printf(&quot;%lld\t&quot;, dp[x][y]);
+
+			if (dp[x][y] == 1) {
+				// printf(&quot;\n&quot;);
+				printf(&quot;%d\n&quot;, n + y - 1);
+				return 0;
+			}
+
+		}
+	}
+
+	printf(&quot;-1\n&quot;);
+	return 0;
+
+/**
+*	
+*	in:
+*	
+*	5
+*	2 2 3 4 6
+*	
+*	out:
+*	
+*	2		2		3		4		6
+*	↑↗		↑↗
+*	2		1
+*	
+*	result：
+*	
+*	5
+*	
+*	
+*/
+
+}
+
+</code></pre>
+</main>
+
+
+
+<div id="comments">
+    <hr>
+    <script src="https://utteranc.es/client.js" repo='KB5201314/KB5201314.github.io' issue-term="pathname" label='💬 comments 💬'
+        theme='github-light' crossorigin="anonymous" async>
+        </script>
+</div>
+
+
+  <footer>
+  
+  <hr/>
+  © <a href="https://blog.imlk.top">imlk</a> 2017 &ndash; 2021 | imlk's blog | <a href="https://github.com/KB5201314/">Github</a> | <a href="mailto:me@imlk.top">Email</a> | <a href="http://www.miitbeian.gov.cn/">京ICP备 - 2020042968号</a>
+  
+  </footer>
+  </body>
+</html>

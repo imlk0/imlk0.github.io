@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>理解Android中Service的Binder跨进程通信机制 | imlk&#39;s blog</title>
+  <link rel="stylesheet" href='/css/style.css' />
+  <link rel="stylesheet" href='/css/fonts.css' />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+  <header class="header">
+    <a class="logo" href='/'> imlk's Blog </a>
+    <nav>
+      <ul class="menu">
+        
+        <li><a href="/">Home</a></li>
+        
+        <li><a href="/about/">About</a></li>
+        
+        <li><a href="/archives/">Archives</a></li>
+        
+        <li><a href="/friends/">Friends</a></li>
+        
+        <li><a href="/index.xml">Subscribe</a></li>
+        
+      </ul>
+    </nav>
+  </header>
+  <hr />
+
+
+
+<div class="article-meta">
+    <h1><span class="title">理解Android中Service的Binder跨进程通信机制</span></h1>
+    
+    <span>
+        <span class="date">2018-04-11</span> |
+        
+        <span class="cats">
+            
+            
+            <a href='https://blog.imlk.top/categories/android/'>Android</a>
+            
+        </span>
+        <span class="tags">
+            
+             | 
+            <a href='https://blog.imlk.top/tags/android/'>#Android</a>
+            
+            
+            <a href='https://blog.imlk.top/tags/binder/'>#Binder</a>
+            
+            
+            <a href='https://blog.imlk.top/tags/ipc/'>#IPC</a>
+            
+            
+            <a href='https://blog.imlk.top/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/'>#读书笔记</a>
+            
+        </span>
+    </span>
+    <br>
+    <br>
+    
+</div>
+
+
+<main>
+    <p>今天拜读了姜维大神的<code>Android系统篇之----Binder机制和远程服务调用机制分析</code></p>
+<p><a href="https://blog.csdn.net/jiangwei0910410003/article/details/52467919">Android系统篇之&mdash;-Binder机制和远程服务调用机制分析</a></p>
+<p>读完有一个疑惑，就是
+文中</p>
+<blockquote>
+<p>6、最后返回的对象其实就是这个<code>Proxy</code>对象，而这个对象内部使用了静态代理方式，内部有一个来自远端的<code>mRemote</code>变量即<code>IBinder</code>对象。然后直接调用方法其实就是调用<code>mRemote</code>的<code>transact</code>方法进行通信了。</p>
+</blockquote>
+<p><code>IBinder</code>是一个接口，具体的实现类没有说明，一开始以为是<code>Binder</code>，看了一下<code>Binder</code>的<code>transact</code>方法实现，发现直接调用了<code>Stub</code>的<code>onTransact</code>，真是简直了，一脸懵逼啊，这不是就在自己的进程执行了嘛，<code>native</code>呢？后来上网查发现这里的<code>mRemote</code>实际上是</p>
+<pre tabindex="0"><code>final class BinderProxy implements IBinder 
+</code></pre><p>但在as里面搜不到这个类，于是取出<code>framework.jar</code>用jadx开，果然看到<code>android.os.BinderProxy</code>
+其中有：</p>
+<pre tabindex="0"><code>    public boolean transact(int code, Parcel data, Parcel reply, int flags) throws RemoteException {
+        Binder.checkParcel(this, code, data, &quot;Unreasonably large binder buffer&quot;);
+        return transactNative(code, data, reply, flags);
+    }
+</code></pre><p>和</p>
+<pre tabindex="0"><code>	public native boolean transactNative(int i, Parcel parcel, Parcel parcel2, int i2) throws RemoteException;
+</code></pre><p><img src="/images/blog/31_0.png" alt="jadx反编译的framework.jar"></p>
+<p>这里<code>Proxy</code>类中的<code>mRemote</code>类型是<code>BinderProxy</code></p>
+<pre tabindex="0"><code>mRemote.transact(Stub.TRANSACTION_getData, _data, _reply, 0);
+</code></pre><p>这句实际上调用了<code>BinderProxy</code>的<code>transact</code>方法，上面看到它转而调用了一个<code>transactNative</code>的native方法实现和内核通信</p>
+<p>猜想这个因为是系统的实现，所以as里面搜不到这个类，真的是找了好久。终于明白了</p>
+<p><strong><code>BinderProxy</code>源码(Android 6.0.1)</strong></p>
+<pre tabindex="0"><code>package android.os;
+
+import android.os.IBinder.DeathRecipient;
+import android.util.Log;
+import java.io.FileDescriptor;
+import java.lang.ref.WeakReference;
+
+/* compiled from: Binder */
+final class BinderProxy implements IBinder {
+    private long mObject;
+    private long mOrgue;
+    private final WeakReference mSelf = new WeakReference(this);
+
+    private final native void destroy();
+
+    public native String getInterfaceDescriptor() throws RemoteException;
+
+    public native boolean isBinderAlive();
+
+    public native void linkToDeath(DeathRecipient deathRecipient, int i) throws RemoteException;
+
+    public native boolean pingBinder();
+
+    public native boolean transactNative(int i, Parcel parcel, Parcel parcel2, int i2) throws RemoteException;
+
+    public native boolean unlinkToDeath(DeathRecipient deathRecipient, int i);
+
+    public IInterface queryLocalInterface(String descriptor) {
+        return null;
+    }
+
+    public boolean transact(int code, Parcel data, Parcel reply, int flags) throws RemoteException {
+        Binder.checkParcel(this, code, data, &quot;Unreasonably large binder buffer&quot;);
+        return transactNative(code, data, reply, flags);
+    }
+
+    public void dump(FileDescriptor fd, String[] args) throws RemoteException {
+        Parcel data = Parcel.obtain();
+        Parcel reply = Parcel.obtain();
+        data.writeFileDescriptor(fd);
+        data.writeStringArray(args);
+        try {
+            transact(IBinder.DUMP_TRANSACTION, data, reply, 0);
+            reply.readException();
+        } finally {
+            data.recycle();
+            reply.recycle();
+        }
+    }
+
+    public void dumpAsync(FileDescriptor fd, String[] args) throws RemoteException {
+        Parcel data = Parcel.obtain();
+        Parcel reply = Parcel.obtain();
+        data.writeFileDescriptor(fd);
+        data.writeStringArray(args);
+        try {
+            transact(IBinder.DUMP_TRANSACTION, data, reply, 1);
+        } finally {
+            data.recycle();
+            reply.recycle();
+        }
+    }
+
+    BinderProxy() {
+    }
+
+    protected void finalize() throws Throwable {
+        try {
+            destroy();
+        } finally {
+            super.finalize();
+        }
+    }
+
+    private static final void sendDeathNotice(DeathRecipient recipient) {
+        try {
+            recipient.binderDied();
+        } catch (RuntimeException exc) {
+            Log.w(&quot;BinderNative&quot;, &quot;Uncaught exception from death notification&quot;, exc);
+        }
+    }
+}
+</code></pre><p>参考：
+Android系统篇之&mdash;-Binder机制和远程服务调用机制分析
+<a href="https://blog.csdn.net/jiangwei0910410003/article/details/52467919">https://blog.csdn.net/jiangwei0910410003/article/details/52467919</a>
+Android系统进程间通信Binder机制在应用程序框架层的Java接口源代码分析
+<a href="https://www.linuxidc.com/Linux/2011-07/39620p9.htm">https://www.linuxidc.com/Linux/2011-07/39620p9.htm</a></p>
+
+</main>
+
+
+
+<div id="comments">
+    <hr>
+    <script src="https://utteranc.es/client.js" repo='KB5201314/KB5201314.github.io' issue-term="pathname" label='💬 comments 💬'
+        theme='github-light' crossorigin="anonymous" async>
+        </script>
+</div>
+
+
+  <footer>
+  
+  <hr/>
+  © <a href="https://blog.imlk.top">imlk</a> 2017 &ndash; 2021 | imlk's blog | <a href="https://github.com/KB5201314/">Github</a> | <a href="mailto:me@imlk.top">Email</a> | <a href="http://www.miitbeian.gov.cn/">京ICP备 - 2020042968号</a>
+  
+  </footer>
+  </body>
+</html>

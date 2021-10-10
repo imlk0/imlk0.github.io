@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>HDU 1325 1272 并查集判断有向图和无向图是否构成一棵树型 | imlk&#39;s blog</title>
+  <link rel="stylesheet" href='/css/style.css' />
+  <link rel="stylesheet" href='/css/fonts.css' />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+  <header class="header">
+    <a class="logo" href='/'> imlk's Blog </a>
+    <nav>
+      <ul class="menu">
+        
+        <li><a href="/">Home</a></li>
+        
+        <li><a href="/about/">About</a></li>
+        
+        <li><a href="/archives/">Archives</a></li>
+        
+        <li><a href="/friends/">Friends</a></li>
+        
+        <li><a href="/index.xml">Subscribe</a></li>
+        
+      </ul>
+    </nav>
+  </header>
+  <hr />
+
+
+
+<div class="article-meta">
+    <h1><span class="title">HDU 1325 1272 并查集判断有向图和无向图是否构成一棵树型</span></h1>
+    
+    <span>
+        <span class="date">2018-02-09</span> |
+        
+        <span class="cats">
+            
+            
+            <a href='https://blog.imlk.top/categories/algorithm/'>Algorithm</a>
+            
+        </span>
+        <span class="tags">
+            
+             | 
+            <a href='https://blog.imlk.top/tags/hdu/'>#HDU</a>
+            
+            
+            <a href='https://blog.imlk.top/tags/%E5%9B%BE/'>#图</a>
+            
+        </span>
+    </span>
+    <br>
+    <br>
+    
+</div>
+
+
+<main>
+    <p><a href="http://acm.hdu.edu.cn/showproblem.php?pid=1325">HDU 1325</a>
+<a href="http://acm.hdu.edu.cn/showproblem.php?pid=1272">HDU 1272</a></p>
+<p>HDU 1325是有向图，给定某个节点是另一个元素的父节点
+HDU 1272是无向图，将两个节点连接起来</p>
+<p>共同点：判断是否成环，判断是树木还是森林</p>
+<p>区别：有向图可能出现多个箭头指向同一个节点的情况（即一个节点多个父节点）
+例如
+<img src="http://acm.hdu.edu.cn/data/images/1325-3.gif" alt="多节点指向同一节点"></p>
+<p>另外，关于HDU 1272</p>
+<p>评论区看到一种利用离散数学结论的解法
+（对于无向图）
+如果m个节点被连成环，那么边的条数就是 m
+如果m个节点形成了n个树，那么边的条数就是 m - n
+（这个动动笔画画就能明白）
+<a href="http://acm.hdu.edu.cn/discuss/problem/post/reply.php?postid=28804%EF%BF%BDmessageid=1%EF%BF%BDdeep=0">链接：这题目干嘛都用并查集做啊</a>
+那么按照题目要求：Yes的条件就是
+1.边的条数 = 所有节点数 - 1
+或
+2.节点数为0</p>
+<p>上代码：
+HDU 1325</p>
+<pre tabindex="0"><code>#include &lt;iostream&gt;
+#include &lt;cstdio&gt;
+#include &lt;cstring&gt;
+#include &lt;cmath&gt;
+
+#define maxlen 200005
+
+using namespace std;
+
+//并查集实现
+
+int roots, ok;
+
+int fa[maxlen];
+
+// 这个栈和栈顶指针只是用来记录出现过的元素，用来清空fa数组用的，
+// 记录fa数组的哪些地方被用过了，
+// 完成一个示例以后就根据这个栈里面记录的位置来把fa数组里面对应的位置恢复成0
+// 之所以不用memset，是因为fa数组很大，不是所有部分都用上了，每次都把整个数组写0太浪费时间了
+int stack[maxlen];
+int top = -1;
+
+int find(int i) {//非递归实现
+	int icopy = i;
+	while (i != fa[i]) {//找到根元素
+		i = fa[i];
+	}
+
+	while (icopy != fa[icopy]) {
+		icopy = fa[icopy];//获取父节点
+		fa[icopy] = i;//挂到根节点下
+	}
+
+	return i;
+}
+
+int main(int argc, char const *argv[]) {
+
+	int a, b, t = 1;
+
+	int count = 0;
+	while (1) {
+
+		ok = 1;
+		count = 0;
+
+		// memset(fa, 0, sizeof(fa));//每次都全部写0，耗时长，改为用栈记录修改过的位置
+
+		while (scanf(&quot;%d%d&quot;, &amp;a, &amp;b) &amp;&amp; a &gt; 0 &amp;&amp; b &gt; 0) {
+
+			// a --&gt; b
+			// a是b的父节点
+
+			if (ok) {
+				if (!fa[a]) { //若a没有出现过,就初始化为自己
+					fa[a] = a;
+					count++;
+
+					top++;
+					stack[top] = a;
+					// printf(&quot;add\n&quot;);
+				}
+				if (!fa[b]) {
+					fa[b] = b;
+
+					top++;
+					stack[top] = b;
+
+				} else {
+					if (fa[b] == b) {
+						count--;
+						// printf(&quot;sub\n&quot;);
+					}
+				}
+
+				if (fa[b] != b &amp;&amp; fa[b] != a) {//若出现多指一,则不ok
+					ok = 0;
+					// printf(&quot;die 1\n&quot;);
+					continue;
+				} else {
+					a = find(a);//把a换为a的根节点
+					if (b == a) {//环
+						ok = 0;
+						// printf(&quot;die 2\n&quot;);
+						continue;
+					} else {
+						fa[b] = a;//直接挂在根节点
+					}
+				}
+			}
+		}
+
+		if (a &lt; 0 &amp;&amp; b &lt; 0) {
+			break;
+		}
+		if (ok) {
+			if (count != 1) {
+				ok = 0;
+				// printf(&quot;die 3\n&quot;);
+			}
+		}
+
+		printf(&quot;Case %d is %sa tree.\n&quot;, t, ok ? &quot;&quot; : &quot;not &quot;);
+
+		while (top != -1) {
+			fa[stack[top]] = 0;
+			top--;
+		}
+
+		t++;
+	}
+
+	return 0;
+}
+</code></pre><p>HDU 1272</p>
+<pre tabindex="0"><code>#include &lt;iostream&gt;
+#include &lt;cstdio&gt;
+#include &lt;cstring&gt;
+#include &lt;cmath&gt;
+
+#define maxlen 200005
+
+using namespace std;
+
+//并查集实现
+//虽然给的输入似乎是无向的，但最终我们构造的依然是一个有向的树，我们只要考虑是否会出现环和森林，所以这题和hdu1325性质相同
+
+int ok;
+
+int fa[maxlen];
+
+// 这个栈和栈顶指针只是用来记录出现过的元素，用来清空fa数组用的，
+// 记录fa数组的哪些地方被用过了，
+// 完成一个示例以后就根据这个栈里面记录的位置来把fa数组里面对应的位置恢复成0
+// 之所以不用memset，是因为fa数组很大，不是所有部分都用上了，每次都把整个数组写0太浪费时间了
+int stack[maxlen];
+int top = -1;
+
+int find(int i) {//非递归实现
+	int icopy = i;
+	while (i != fa[i]) {//找到根元素
+		i = fa[i];
+	}
+
+	while (icopy != fa[icopy]) {
+		icopy = fa[icopy];//获取父节点
+		fa[icopy] = i;//挂到根节点下
+	}
+
+	return i;
+}
+
+int main(int argc, char const *argv[]) {
+
+	int a, b;
+
+	int countOfRoots = 0;
+	while (1) {
+
+		ok = 1;
+		countOfRoots = 0;
+
+		// memset(fa, 0, sizeof(fa));//每次都全部写0，耗时长，改为用栈记录修改过的位置
+
+		while (scanf(&quot;%d%d&quot;, &amp;a, &amp;b) &amp;&amp; a &gt; 0 &amp;&amp; b &gt; 0) {
+
+			if (ok) {
+
+				if (!fa[a]) { //若a没有出现过,就初始化为自己
+
+					top++;
+					stack[top] = a;//所有出现过的节点都记录在stack中
+
+					if (!fa[b]) {//若b也没有出现过
+
+						top++;
+						stack[top] = b;
+
+						//指定a为b的父节点,a为独立的根节点
+
+						fa[a] = a;
+						fa[b] = a;
+						countOfRoots++;//根节点数量+1
+
+					} else {//若b出现过
+
+						fa[a] = find(b);//把a直接挂到b的根节点下
+
+					}
+
+				} else {//若a出现过
+
+					if (!fa[b]) {//而b没出现过
+
+						top++;
+						stack[top] = b;
+
+						fa[b] = find(a);//把b直接挂到a的根节点下
+					} else {//b也出现过
+
+						if (find(a) == find(b)) {//同一根节点
+							//成环
+							ok = 0;
+						} else {
+							// 把两个树合并
+							fa[find(a)] = find(b);
+							countOfRoots--;
+						}
+					}
+				}
+			}
+		}
+
+		if (a &lt; 0 &amp;&amp; b &lt; 0) {
+			break;
+		}
+
+		if (ok) {
+			if (top != -1) {//排除掉一个元素都没有的情况（空树）
+				if (countOfRoots != 1) {
+					ok = 0;
+				}
+			}
+		}
+
+		printf(&quot;%s\n&quot;, ok ? &quot;Yes&quot; : &quot;No&quot;);
+
+		while (top != -1) {
+			fa[stack[top]] = 0;
+			top--;
+		}
+	}
+
+	return 0;
+}
+</code></pre>
+</main>
+
+
+
+<div id="comments">
+    <hr>
+    <script src="https://utteranc.es/client.js" repo='KB5201314/KB5201314.github.io' issue-term="pathname" label='💬 comments 💬'
+        theme='github-light' crossorigin="anonymous" async>
+        </script>
+</div>
+
+
+  <footer>
+  
+  <hr/>
+  © <a href="https://blog.imlk.top">imlk</a> 2017 &ndash; 2021 | imlk's blog | <a href="https://github.com/KB5201314/">Github</a> | <a href="mailto:me@imlk.top">Email</a> | <a href="http://www.miitbeian.gov.cn/">京ICP备 - 2020042968号</a>
+  
+  </footer>
+  </body>
+</html>

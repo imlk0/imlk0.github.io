@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>最长递增子列问题的另一种思路——转化为LCS问题 | imlk&#39;s blog</title>
+  <link rel="stylesheet" href='/css/style.css' />
+  <link rel="stylesheet" href='/css/fonts.css' />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+  <header class="header">
+    <a class="logo" href='/'> imlk's Blog </a>
+    <nav>
+      <ul class="menu">
+        
+        <li><a href="/">Home</a></li>
+        
+        <li><a href="/about/">About</a></li>
+        
+        <li><a href="/archives/">Archives</a></li>
+        
+        <li><a href="/friends/">Friends</a></li>
+        
+        <li><a href="/index.xml">Subscribe</a></li>
+        
+      </ul>
+    </nav>
+  </header>
+  <hr />
+
+
+
+<div class="article-meta">
+    <h1><span class="title">最长递增子列问题的另一种思路——转化为LCS问题</span></h1>
+    
+    <span>
+        <span class="date">2018-02-06</span> |
+        
+        <span class="cats">
+            
+            
+            <a href='https://blog.imlk.top/categories/algorithm/'>Algorithm</a>
+            
+        </span>
+        <span class="tags">
+            
+             | 
+            <a href='https://blog.imlk.top/tags/lcs/'>#LCS</a>
+            
+        </span>
+    </span>
+    <br>
+    <br>
+    
+</div>
+
+
+<main>
+    <h2 id="利用lcs的解题思路可以解决最长递增子列的问题顺便求出该递增序列">利用LCS的解题思路可以解决最长递增子列的问题顺便求出该递增序列</h2>
+<blockquote>
+<p>例如
+list1 = [1, 2, 3, 1, -1, 0, 4, 5]
+将其排序得
+list2 = [-1, 0, 1, 1, 2, 3, 4, 5]
+则问题转化为
+求list1和list2的最长的不要求连续的公共子列及其长度</p>
+</blockquote>
+<p>资料：
+<a href="http://blog.csdn.net/u013178472/article/details/54926531">http://blog.csdn.net/u013178472/article/details/54926531</a></p>
+
+</main>
+
+
+
+<div id="comments">
+    <hr>
+    <script src="https://utteranc.es/client.js" repo='KB5201314/KB5201314.github.io' issue-term="pathname" label='💬 comments 💬'
+        theme='github-light' crossorigin="anonymous" async>
+        </script>
+</div>
+
+
+  <footer>
+  
+  <hr/>
+  © <a href="https://blog.imlk.top">imlk</a> 2017 &ndash; 2021 | imlk's blog | <a href="https://github.com/KB5201314/">Github</a> | <a href="mailto:me@imlk.top">Email</a> | <a href="http://www.miitbeian.gov.cn/">京ICP备 - 2020042968号</a>
+  
+  </footer>
+  </body>
+</html>

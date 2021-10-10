@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>为hexo开发一个简单的模块mdjsp | imlk&#39;s blog</title>
+  <link rel="stylesheet" href='/css/style.css' />
+  <link rel="stylesheet" href='/css/fonts.css' />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+  <header class="header">
+    <a class="logo" href='/'> imlk's Blog </a>
+    <nav>
+      <ul class="menu">
+        
+        <li><a href="/">Home</a></li>
+        
+        <li><a href="/about/">About</a></li>
+        
+        <li><a href="/archives/">Archives</a></li>
+        
+        <li><a href="/friends/">Friends</a></li>
+        
+        <li><a href="/index.xml">Subscribe</a></li>
+        
+      </ul>
+    </nav>
+  </header>
+  <hr />
+
+
+
+<div class="article-meta">
+    <h1><span class="title">为hexo开发一个简单的模块mdjsp</span></h1>
+    
+    <span>
+        <span class="date">2018-04-26</span> |
+        
+        <span class="cats">
+            
+            
+            <a href='https://blog.imlk.top/categories/javascript/'>JavaScript</a>
+            
+        </span>
+        <span class="tags">
+            
+             | 
+            <a href='https://blog.imlk.top/tags/%E7%9E%8E%E6%90%9E/'>#瞎搞</a>
+            
+        </span>
+    </span>
+    <br>
+    <br>
+    
+</div>
+
+
+<main>
+    <p>第一次写npm插件，有点小激动，下面是写插件的坎坷之路</p>
+<h2 id="0x00-开局错误">0x00 开局错误</h2>
+<ul>
+<li>在<code>node_modules</code>文件夹下新建<code>hexo-mdjsp-util</code>文件夹，</li>
+<li>新建<code>package.json</code>和<code>index.jsp</code>并填好内容</li>
+</ul>
+<pre tabindex="0"><code>{
+  &quot;name&quot;: &quot;hexo-mdjsp-util&quot;,
+  &quot;version&quot;: &quot;0.0.1&quot;,
+  &quot;main&quot;: &quot;index&quot;,
+}
+</code></pre><p>这是网上的教程中查到的步骤依葫芦画瓢，好像没啥问题了，执行<code>hexo g</code>，我在<code>index.js</code>中只写了<code>console.log(&quot;mdjsp_loaded&quot;);</code>，但并没有看到任何输出</p>
+<p>百度找遍了以后，遂上google
+找到别人的博客：
+编写Hexo插件
+<a href="http://xtutu.me/write-hexo-plugin/">http://xtutu.me/write-hexo-plugin/</a></p>
+<p>看了下原来是没在hexo中加依赖。。。</p>
+<h2 id="0x01-祸不单行">0x01 祸不单行</h2>
+<p>加了依赖以后：</p>
+<pre tabindex="0"><code>...
+    &quot;hexo-renderer-marked&quot;: &quot;^0.3.0&quot;,
+    &quot;hexo-renderer-stylus&quot;: &quot;^0.3.1&quot;,
+    &quot;hexo-server&quot;: &quot;^0.2.0&quot;,
+    &quot;hexo-mdjsp-util&quot;: &quot;^0.0.1&quot;,
+  }
+}
+...
+</code></pre><p>执行<code>hexo</code>
+直接：</p>
+<pre tabindex="0"><code>ERROR Plugin load failed: hexo-mdjsp-util
+TypeError: this.log is not a function
+    at /mnt/d/hexo/node_modules/hexo-mdjsp-util/index.js:9:6
+...
+</code></pre><p>google:</p>
+<p>Hexo：如何解决 FATAL Cannot read property &lsquo;code&rsquo; of undefined：
+<a href="http://meiweiping.cn/Hexo%EF%BC%9A%E5%A6%82%E4%BD%95%E8%A7%A3%E5%86%B3-FATAL-Cannot-read-property-code-of-undefined/">http://meiweiping.cn/Hexo%EF%BC%9A%E5%A6%82%E4%BD%95%E8%A7%A3%E5%86%B3-FATAL-Cannot-read-property-code-of-undefined/</a>
+原来是末尾多了个<code>,</code>
+真恶心的错误啊</p>
+<p>接下来的事情就是jsp语句匹配啦！
+先找几个开源项目看看</p>
+
+</main>
+
+
+
+<div id="comments">
+    <hr>
+    <script src="https://utteranc.es/client.js" repo='KB5201314/KB5201314.github.io' issue-term="pathname" label='💬 comments 💬'
+        theme='github-light' crossorigin="anonymous" async>
+        </script>
+</div>
+
+
+  <footer>
+  
+  <hr/>
+  © <a href="https://blog.imlk.top">imlk</a> 2017 &ndash; 2021 | imlk's blog | <a href="https://github.com/KB5201314/">Github</a> | <a href="mailto:me@imlk.top">Email</a> | <a href="http://www.miitbeian.gov.cn/">京ICP备 - 2020042968号</a>
+  
+  </footer>
+  </body>
+</html>

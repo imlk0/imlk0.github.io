@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Hardware on imlk&#39;s blog</title>
+    <link>https://blog.imlk.top/tags/hardware/</link>
+    <description>Recent content in Hardware on imlk&#39;s blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Sat, 10 Oct 2020 13:36:28 +0800</lastBuildDate><atom:link href="https://blog.imlk.top/tags/hardware/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>用nRF52840 USB Dongle和OpenSK制作开源硬件密钥</title>
+      <link>https://blog.imlk.top/posts/opensk-on-nrf52840-usb-dongle/</link>
+      <pubDate>Sat, 10 Oct 2020 13:36:28 +0800</pubDate>
+      
+      <guid>https://blog.imlk.top/posts/opensk-on-nrf52840-usb-dongle/</guid>
+      <description>在大佬的推荐下接触了OpenSK，一个开源的安全密钥实现，支持FIDO U2F标准（双因子认证）和FIDO2规范。目前OpenSK支持的硬件主</description>
+    </item>
+    
+  </channel>
+</rss>

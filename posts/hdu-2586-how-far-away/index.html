@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>HDU 2586 How far away ？ | imlk&#39;s blog</title>
+  <link rel="stylesheet" href='/css/style.css' />
+  <link rel="stylesheet" href='/css/fonts.css' />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+  <header class="header">
+    <a class="logo" href='/'> imlk's Blog </a>
+    <nav>
+      <ul class="menu">
+        
+        <li><a href="/">Home</a></li>
+        
+        <li><a href="/about/">About</a></li>
+        
+        <li><a href="/archives/">Archives</a></li>
+        
+        <li><a href="/friends/">Friends</a></li>
+        
+        <li><a href="/index.xml">Subscribe</a></li>
+        
+      </ul>
+    </nav>
+  </header>
+  <hr />
+
+
+
+<div class="article-meta">
+    <h1><span class="title">HDU 2586 How far away ？</span></h1>
+    
+    <span>
+        <span class="date">2018-03-02</span> |
+        
+        <span class="cats">
+            
+            
+            <a href='https://blog.imlk.top/categories/algorithm/'>Algorithm</a>
+            
+        </span>
+        <span class="tags">
+            
+             | 
+            <a href='https://blog.imlk.top/tags/hdu/'>#HDU</a>
+            
+            
+            <a href='https://blog.imlk.top/tags/dp/'>#dp</a>
+            
+            
+            <a href='https://blog.imlk.top/tags/%E6%A0%91%E4%B8%8A%E6%9C%80%E7%9F%AD%E8%B7%9D%E7%A6%BB/'>#树上最短距离</a>
+            
+            
+            <a href='https://blog.imlk.top/tags/lca/'>#LCA</a>
+            
+            
+            <a href='https://blog.imlk.top/tags/%E6%A0%91/'>#树</a>
+            
+            
+            <a href='https://blog.imlk.top/tags/%E7%BA%BF%E6%AE%B5%E6%A0%91/'>#线段树</a>
+            
+        </span>
+    </span>
+    <br>
+    <br>
+    
+</div>
+
+
+<main>
+    <p>HDU 2586 How far away ？——树上节点最短距离，LCA， 双亲表示法+暴力从下至上追溯，孩子链表示法+（Tarjan 或 欧拉环游RMQ+（ST 或 SegmentTree））</p>
+<p><a href="http://acm.hdu.edu.cn/showproblem.php?pid=2586">http://acm.hdu.edu.cn/showproblem.php?pid=2586</a></p>
+<h2 id="四种解法">四种解法：</h2>
+<p>- 双亲表示法+暴力从下至上追溯
+- 孩子链表示法+Tarjan
+- 孩子链表示法+欧拉环游RMQ+ST
+- 孩子链表示法+欧拉环游RMQ+SegmentTree</p>
+<h2 id="对于建树的问题要解决父节点和子节点的问题">对于建树的问题，要解决父节点和子节点的问题：</h2>
+<p>- 第一种解法中，双亲表示法，用一个一维数组houses来储存所有节点，houses[x].fa表示该节点的父节点，当两个子树被合并造成冲突时，将其中一棵树倒置</p>
+<p>如：</p>
+<blockquote>
+<p>1    2
+↑    ↑
+3    4
+↑    ↑
+5    6</p>
+</blockquote>
+<p>此时要连接3和4，必定会造成冲突，因为，若将3作为4的父节点（3 → 4），4就会有两个父节点，于是把4 ← 6这一支倒置成 4 → 6
+于是：</p>
+<blockquote>
+<p>1    2
+↑    ↑
+3  → 4
+↑    ↓
+5    6
+（5成为合并以后的根元素）</p>
+</blockquote>
+<p>- 剩下三种解法则利用孩子链表示法，记录所有与目标节点相连接的节点（包括一个父节点和一个子节点），然后随便选取一个节点作为父节点，用dfs遍历这些连接的节点，同时用visited数组来跳过其中的父节点</p>
+<h1 id="解法1">解法1：</h1>
+<pre tabindex="0"><code>#include &lt;iostream&gt;
+#include &lt;algorithm&gt;
+#include &lt;cstring&gt;
+#include &lt;string&gt;
+#include &lt;cstdio&gt;
+#include &lt;cmath&gt;
+
+using namespace std;
+
+//31ms
+
+//双亲表示法
+
+//当建树遇到冲突时，将冲突的一支树倒置
+
+struct Node
+{
+	int disToFa;
+	int fa;
+};
+
+Node houses[40005];
+int visited[40005];
+
+void add(int x, int y, int z) {
+	if (!houses[x].fa) {//若x还没有父元素
+		//把x挂在y下
+		houses[x].fa = y;
+		houses[x].disToFa = z;
+
+	} else {
+
+		if (!houses[y].fa) { //若y还没有父元素
+			//把y挂在x下
+			houses[y].fa = x;
+			houses[y].disToFa = z;
+		} else {
+			//x和y都有父元素了
+
+			//将x的父元素向上追溯全部变成子元素（将这一支箭头全部倒置）
+
+			//修改前的副本
+			Node temp_x = houses[x];
+			Node temp_x_fa = houses[temp_x.fa];
+
+			//把x挂在y下
+			houses[x].fa = y;
+			houses[x].disToFa = z;
+
+			while (temp_x_fa.fa) {
+
+				houses[temp_x.fa].disToFa = temp_x.disToFa;
+				houses[temp_x.fa].fa = x;
+
+				x = temp_x.fa;
+				temp_x = houses[x];
+				temp_x_fa = houses[temp_x.fa];
+
+			}
+
+		}
+
+	}
+}
+
+int cal(int x, int y) {
+//先从x开始一直追溯到根节点，沿途标记所有经过的节点（visited数组两个作用，一是用来标记是否访问过，二是用来记录从x节点出发以后走过的距离）
+	int sum_x = 0;
+	visited[x] = -1;
+
+	sum_x += houses[x].disToFa;
+	x = houses[x].fa;
+
+	while (houses[x].fa) {//当未到树顶时
+		visited[x] = sum_x;
+		sum_x += houses[x].disToFa;
+		x = houses[x].fa;
+	}
+
+	//此时x是树顶
+	if (visited[x] != -1) {
+		visited[x] = sum_x;
+	}
+
+	//接下来从y开始向上追溯
+	int sum_y = 0;
+	while (!visited[y]) {
+		sum_y += houses[y].disToFa;
+		y = houses[y].fa;
+	}
+
+	//根据之前留下的-1判断原始的x是否为y的父元素
+	if (visited[y] == -1) {//这种情况表明y向上追溯的过程中遇到了x
+		return sum_y;//直接返回y向上追溯到x的距离
+	} else {//这种情况表明y追溯到了x的某一个祖先元素
+		return sum_y + visited[y];//返回y向上追溯到x的距离 + 从x到这个祖先元素的距离
+	}
+
+}
+
+int main(int argc, char const *argv[])
+{
+	int T, n, m, cp_n, a1, a2, a3;
+	scanf(&quot;%d&quot;, &amp;T);
+	while (T--) {
+		scanf(&quot;%d%d&quot;, &amp;n, &amp;m);
+
+		cp_n = n;
+
+		memset(houses, 0, sizeof(Node) * (n + 1));
+
+		while (--n) {
+			scanf(&quot;%d%d%d&quot;, &amp;a1, &amp;a2, &amp;a3);
+
+			add(a1, a2, a3);
+
+		}
+
+		while (m--) {
+			scanf(&quot;%d%d&quot;, &amp;a1, &amp;a2);
+
+			memset(visited, 0, sizeof(int) * (cp_n + 1));//每处理一个问题前刷新一次
+
+			printf(&quot;%d\n&quot;, cal(a1, a2));
+
+		}
+
+	}
+
+	return 0;
+}
+</code></pre><h1 id="解法2">解法2：</h1>
+<pre tabindex="0"><code>#include &lt;iostream&gt;
+#include &lt;algorithm&gt;
+#include &lt;cstring&gt;
+#include &lt;string&gt;
+#include &lt;cstdio&gt;
+#include &lt;cmath&gt;
+
+using namespace std;
+
+//31ms
+//Tarjan
+
+//孩子链表示法(链表)
+//这里的孩子不一定是子节点，可能还有一个父节点，但是可以用visited数组来区别
+//随便选取一个hand作为根节点，就可以建成一棵树
+
+int hand[40005];//保存第x号房子的所有孩子节点链表的起始节点编号
+
+struct Node//链表节点
+{
+	int distance;//权值
+	int to;
+	int next;//保存下一个Node的位置（并非指房子的编号，是节点的编号），即孩子组成的链表中的下一个节点的位置
+};
+
+Node nodes[40005 &lt;&lt; 1];//需要两倍空间
+int pos;//pos为nodes的当前可用的Node的位置编号
+int disToRoot[40005];//代表到根节点的距离
+// 结果 = disToRoot[x] + disToRoot[y] - 2 * disToRoot[LCA(x, y)]
+
+//Tarjan
+int fa[40005];
+int visited[40005];
+int qhand[40005];
+Node ques[40005 &lt;&lt; 1];
+int qpos;
+
+void addToTree(int x, int y, int z) {//表示为x号房子添加一个子节点 y ,距离为z
+	//为pos号节点写入数据
+	nodes[pos].to = y;
+	nodes[pos].distance = z;
+	nodes[pos].next = hand[x];
+	hand[x] = pos;
+
+	pos++;//当前可用的节点编号+1
+}
+
+void addToQue(int x, int y) {
+	ques[qpos].to = y;
+	ques[qpos].distance = 0;
+	ques[qpos].next = qhand[x];
+	qhand[x] = qpos;
+
+	qpos++;
+}
+
+int tarjanFind(int x) {//并查集查找（非递归压缩路径）
+	int cp_x = x;
+	while (fa[x] != x) {
+		x = fa[x];
+	}
+
+	while (fa[cp_x] != cp_x) {
+		cp_x = fa[cp_x];
+		fa[cp_x] = x;
+	}
+
+	return x;
+}
+
+void tarjan(int which) {
+
+	visited[which] = 1;
+
+	fa[which] = which;
+
+	int childPos = hand[which];
+
+	while (childPos) {
+
+		if (visited[nodes[childPos].to]) {//跳过父元素
+			childPos = nodes[childPos].next;
+			continue;
+		}
+
+		disToRoot[nodes[childPos].to] = disToRoot[which] + nodes[childPos].distance;//写入到根节点的距离
+		tarjan(nodes[childPos].to);
+
+		fa[nodes[childPos].to] = which;
+
+		childPos = nodes[childPos].next;
+
+	}
+
+//处理询问
+	int quesPos = qhand[which];
+
+	while (quesPos) {
+
+		if (visited[ques[quesPos].to]) {
+			ques[quesPos].distance = disToRoot[which] + disToRoot[ques[quesPos].to] - 2 * disToRoot[tarjanFind(ques[quesPos].to)];
+		}
+
+		quesPos = ques[quesPos].next;
+	}
+
+}
+
+int main(int argc, char const *argv[])
+{
+	int T, n, m, a1, a2, a3;
+	scanf(&quot;%d&quot;, &amp;T);
+	while (T--) {
+		scanf(&quot;%d%d&quot;, &amp;n, &amp;m);
+
+		memset(hand, 0, sizeof(int) * (n + 1));
+		memset(qhand, 0, sizeof(int) * (n + 1));
+		memset(visited, 0, sizeof(int) * (n + 1));
+
+		pos = 1;
+
+		while (--n) {
+			scanf(&quot;%d%d%d&quot;, &amp;a1, &amp;a2, &amp;a3);
+
+			addToTree(a1, a2, a3);
+			addToTree(a2, a1, a3);
+
+		}
+
+		qpos = 1;
+
+		//离线算法（先收集所有问题，然后统一遍历）
+		while (m--) {
+
+			scanf(&quot;%d%d&quot;, &amp;a1, &amp;a2);
+
+			//建立链表的方法和上面建树的方法类似
+			addToQue(a1, a2);
+			addToQue(a2, a1);
+
+		}
+
+		disToRoot[1] = 0;
+		tarjan(1);
+
+		for (int i = 1; i &lt; qpos; i += 2) {
+			printf(&quot;%d\n&quot;, ques[i].distance ? ques[i].distance : ques[i + 1].distance);
+		}
+
+	}
+
+	return 0;
+}
+</code></pre><h1 id="解法3">解法3：</h1>
+<pre tabindex="0"><code>#include &lt;iostream&gt;
+#include &lt;algorithm&gt;
+#include &lt;cstring&gt;
+#include &lt;string&gt;
+#include &lt;cstdio&gt;
+#include &lt;cmath&gt;
+
+using namespace std;
+
+//46ms
+//转化为RMQ问题_ST
+//在线算法
+
+//孩子链表示法(链表)
+//这里的孩子不一定是子节点，可能还有一个父节点，但是可以用visited数组来区别
+//随便选取一个hand作为根节点，就可以建成一棵树
+
+int hand[40005];//保存第x号房子的所有孩子节点链表的起始节点编号
+
+struct Node//链表节点
+{
+	int distance;//权值
+	int to;
+	int next;//保存下一个Node的位置（并非指房子的编号，是节点的编号），即孩子组成的链表中的下一个节点的位置
+};
+
+Node nodes[40005 &lt;&lt; 1];//需要两倍空间
+
+int pos;//pos为nodes的当前可用的Node的位置编号
+int disToRoot[40005];//代表到根节点的距离
+// 结果 = disToRoot[x] + disToRoot[y] - 2 * disToRoot[LCA(x, y)]
+
+//RMQ
+int rmq_which[40005 &lt;&lt; 1];//RMQ数组长度约为节点数的两倍（实际上是2n-1），储存欧拉环游经过的所有节点号
+int rmq_deep[40005 &lt;&lt; 1];//储存环游中节点的深度
+int rmq_first[40005];//储存循环中 x 号节点（房子）第一次出现的位置
+int rmq_pos;
+
+int visited[40005];//排除父节点
+
+//ST
+int st[40005 &lt;&lt; 1][18]; //2的17次方大于 40005
+// st[x][y] = 代表rmq_deep数组中从x开始持续长为（2的y次方）长的区间范围内的最小deep 的位置
+
+void addToTree(int x, int y, int z) {//表示为x号房子添加一个子节点 y ,距离为z
+	//为pos号节点写入数据
+	nodes[pos].to = y;
+	nodes[pos].distance = z;
+	nodes[pos].next = hand[x];
+	hand[x] = pos;
+
+	pos++;//当前可用的节点编号+1
+}
+
+/**
+* rmq函数用欧拉环游生成了rmq_which 和 rmq_deep 和 rmq_first 和 disToRoot 四个数组
+*/
+void rmq(int which, int deep) {
+	visited[which] = 1;
+
+	rmq_which[rmq_pos] = which;
+	rmq_deep[rmq_pos] = deep;
+	rmq_first[which] = rmq_pos;
+	rmq_pos++;
+
+	int childPos = hand[which];
+
+	while (childPos) {
+		if (visited[nodes[childPos].to]) {
+			childPos = nodes[childPos].next;
+			continue;
+		}
+
+		disToRoot[nodes[childPos].to] = disToRoot[which] + nodes[childPos].distance;
+
+		rmq(nodes[childPos].to, deep + 1);
+
+		rmq_which[rmq_pos] = which;
+		rmq_deep[rmq_pos] = deep;
+		rmq_pos++;
+
+		childPos = nodes[childPos].next;
+
+	}
+
+}
+
+//初始化st数组
+void init_st() {
+	for (int i = 0; i &lt; rmq_pos; ++i) {//根据st的定义，y为0时，st[i][0] = i;
+		st[i][0] = i;
+	}
+
+	for (int y = 1 ; y &lt; 18; ++y) {
+		for (int i = 0; i + (1 &lt;&lt; y) - 1 &lt; rmq_pos; ++i) {
+			st[i][y] =	rmq_deep[st[i][y - 1]] &lt; rmq_deep[st[i + (1 &lt;&lt; (y - 1))][y - 1]] ? st[i][y - 1] : st[i + (1 &lt;&lt; (y - 1))][y - 1];
+		}
+	}
+}
+
+// 返回rmq_deep数组区间[x, y]之间的最小元素的位置
+int min_st(int x, int y) {
+
+	if (x &gt; y) {//保证输入的x &lt;= y;若不满足，则反过来
+		return min_st(y, x);
+	}
+
+	for (int i = 17; i &gt;= 0; --i) {
+		if (x + (1 &lt;&lt; i) - 1 &gt; y) {
+			continue;
+		}
+
+		if (x + (1 &lt;&lt; i) - 1 == y) {
+			return st[x][i];
+		} else {
+			int temp = min_st(x + (1 &lt;&lt; i), y);
+			return rmq_deep[st[x][i]] &lt; rmq_deep[temp] ? st[x][i] : temp;
+		}
+	}
+
+	return 0;
+}
+
+int main(int argc, char const *argv[])
+{
+	int T, n, m, a1, a2, a3, first = 1;
+	scanf(&quot;%d&quot;, &amp;T);
+	while (T--) {
+		scanf(&quot;%d%d&quot;, &amp;n, &amp;m);
+
+		memset(hand, 0, sizeof(int) * (n + 1));
+		memset(visited, 0, sizeof(int) * (n + 1));
+
+		pos = 1;
+
+		while (--n) {
+			scanf(&quot;%d%d%d&quot;, &amp;a1, &amp;a2, &amp;a3);
+
+			addToTree(a1, a2, a3);
+			addToTree(a2, a1, a3);
+
+		}
+
+		disToRoot[1] = 0;
+
+		//在线算法（逐个回答问题）
+
+		rmq_pos = 0;
+
+		rmq(1, 1);
+
+		init_st();
+
+		if (first) {
+			first = 0;
+		} else {
+			printf(&quot;\n&quot;);
+		}
+
+		// for (int i = 0; i &lt; rmq_pos; i++) {
+		// 	printf(&quot;%d &quot;, rmq_which[i]);
+		// }
+		// printf(&quot;\n&quot;);
+		// for (int i = 0; i &lt; rmq_pos; i++) {
+		// 	printf(&quot;%d &quot;, rmq_deep[i]);
+		// }
+		// printf(&quot;\n&quot;);
+		// for (int i = 1; i &lt;= 6; i++) {
+		// 	printf(&quot;%d &quot;, rmq_first[i]);
+		// }
+		// printf(&quot;\n&quot;);
+
+		// for (int x = 0; x &lt; 18; x++) {
+		// 	for (int i = 0; i &lt; rmq_pos; i++) {
+		// 		printf(&quot;%d &quot;, st[i][x]);
+		// 	}
+		// 	printf(&quot;\n&quot;);
+		// }
+
+		while (m--) {
+
+			scanf(&quot;%d%d&quot;, &amp;a1, &amp;a2);
+
+			printf(&quot;%d\n&quot;, disToRoot[a1] + disToRoot[a2] - 2 * disToRoot[rmq_which[min_st(rmq_first[a1], rmq_first[a2])]]);
+
+		}
+
+	}
+
+	return 0;
+}
+</code></pre><h1 id="解法4">解法4：</h1>
+<pre tabindex="0"><code>#include &lt;iostream&gt;
+#include &lt;algorithm&gt;
+#include &lt;cstring&gt;
+#include &lt;string&gt;
+#include &lt;cstdio&gt;
+#include &lt;cmath&gt;
+
+using namespace std;
+
+//31ms
+//转化为RMQ问题_Segment_Tree
+
+/**
+*	注意线段树需要4倍空间
+*	注意线段树需要4倍空间
+*	注意线段树需要4倍空间
+*/
+
+//在线算法
+
+//孩子链表示法(链表)
+//这里的孩子不一定是子节点，可能还有一个父节点，但是可以用visited数组来区别
+//随便选取一个hand作为根节点，就可以建成一棵树
+
+int hand[40005];//保存第x号房子的所有孩子节点链表的起始节点编号
+
+struct Node//链表节点
+{
+	int distance;//权值
+	int to;
+	int next;//保存下一个Node的位置（并非指房子的编号，是节点的编号），即孩子组成的链表中的下一个节点的位置
+};
+
+Node nodes[40005 &lt;&lt; 1];//需要两倍空间
+
+int pos;//pos为nodes的当前可用的Node的位置编号
+int disToRoot[40005];//代表到根节点的距离
+// 结果 = disToRoot[x] + disToRoot[y] - 2 * disToRoot[LCA(x, y)]
+
+//RMQ
+int rmq_which[40005 &lt;&lt; 1];//RMQ数组长度约为节点数的两倍（实际上是2n-1），储存欧拉环游经过的所有节点号
+int rmq_deep[40005 &lt;&lt; 1];//储存环游中节点的深度
+int rmq_first[40005];//储存循环中 x 号节点（房子）第一次出现的位置
+int rmq_pos;
+
+int visited[40005];//排除父节点
+
+//Segment_Tree
+struct SegNode
+{
+	int left;
+	int right;
+	int minPos;//储存[left, right]区间内deep最小值所处的位置
+};
+
+//线段树需要原基础数组长度四倍的空间
+SegNode segs[40005 &lt;&lt; 3];//从1开始
+
+void addToTree(int x, int y, int z) {//表示为x号房子添加一个子节点 y ,距离为z
+	//为pos号节点写入数据
+	nodes[pos].to = y;
+	nodes[pos].distance = z;
+	nodes[pos].next = hand[x];
+	hand[x] = pos;
+
+	pos++;//当前可用的节点编号+1
+}
+
+/**
+* rmq函数用欧拉环游生成了rmq_which 和 rmq_deep 和 rmq_first 和 disToRoot 四个数组
+*/
+void rmq(int which, int deep) {
+	visited[which] = 1;
+
+	rmq_which[rmq_pos] = which;
+	rmq_deep[rmq_pos] = deep;
+	rmq_first[which] = rmq_pos;
+	rmq_pos++;
+
+	int childPos = hand[which];
+
+	while (childPos) {
+		if (visited[nodes[childPos].to]) {
+			childPos = nodes[childPos].next;
+			continue;
+		}
+
+		disToRoot[nodes[childPos].to] = disToRoot[which] + nodes[childPos].distance;
+
+		rmq(nodes[childPos].to, deep + 1);
+
+		rmq_which[rmq_pos] = which;
+		rmq_deep[rmq_pos] = deep;
+		rmq_pos++;
+
+		childPos = nodes[childPos].next;
+
+	}
+
+}
+
+//初始化segment数组
+void build_seg(int spos, int left, int right) {
+	// printf(&quot;spos -&gt; %d\n&quot;, spos);
+	segs[spos].left = left;
+	segs[spos].right = right;
+
+	if (left == right) {
+		segs[spos].minPos = left;
+		return;
+	}
+
+	build_seg(spos &lt;&lt; 1, left, (left + right) / 2);
+	build_seg((spos &lt;&lt; 1) | 1, ((left + right) / 2) + 1, right);
+
+	segs[spos].minPos = rmq_deep[segs[spos &lt;&lt; 1].minPos] &lt; rmq_deep[segs[(spos &lt;&lt; 1) | 1].minPos] ? segs[spos &lt;&lt; 1].minPos : segs[(spos &lt;&lt; 1) | 1].minPos;
+
+}
+
+// 返回rmq_deep数组区间[x, y]之间的最小元素的位置
+int min_seg(int pos, int x, int y) {
+	if (x == segs[pos].left &amp;&amp; y == segs[pos].right) {
+		return segs[pos].minPos;
+	} else if (y &lt;= ((segs[pos].left + segs[pos].right) / 2)) {
+		return min_seg(pos &lt;&lt; 1, x, y);
+	} else if (x &gt; ((segs[pos].left + segs[pos].right) / 2)) {
+		return min_seg((pos &lt;&lt; 1) | 1, x, y);
+	} else {
+		int temp1, temp2;
+		temp1 = min_seg(pos &lt;&lt; 1, x, (segs[pos].left + segs[pos].right) / 2);
+		temp2 = min_seg((pos &lt;&lt; 1) | 1, ((segs[pos].left + segs[pos].right) / 2) + 1, y);
+
+		return rmq_deep[temp1] &lt; rmq_deep[temp2] ? temp1 : temp2;
+	}
+}
+
+int main(int argc, char const *argv[])
+{
+	int T, n, m, a1, a2, a3, first = 1;
+	scanf(&quot;%d&quot;, &amp;T);
+	while (T--) {
+		scanf(&quot;%d%d&quot;, &amp;n, &amp;m);
+
+		memset(hand, 0, sizeof(int) * (n + 1));
+		memset(visited, 0, sizeof(int) * (n + 1));
+
+		pos = 1;
+
+		while (--n) {
+			scanf(&quot;%d%d%d&quot;, &amp;a1, &amp;a2, &amp;a3);
+
+			addToTree(a1, a2, a3);
+			addToTree(a2, a1, a3);
+
+		}
+
+		disToRoot[1] = 0;
+
+		//在线算法（逐个回答问题）
+
+		rmq_pos = 0;
+
+		rmq(1, 1);
+
+		// printf(&quot;rmq_pos -&gt; %d\n&quot;, rmq_pos);
+
+		build_seg(1, 0, rmq_pos - 1);
+
+		if (first) {//好像没有空行也能过
+			first = 0;
+		} else {
+			printf(&quot;\n&quot;);
+		}
+
+		// for (int i = 0; i &lt; rmq_pos; i++) {
+		// 	printf(&quot;%d &quot;, rmq_which[i]);
+		// }
+		// printf(&quot;\n&quot;);
+		// for (int i = 0; i &lt; rmq_pos; i++) {
+		// 	printf(&quot;%d &quot;, rmq_deep[i]);
+		// }
+		// printf(&quot;\n&quot;);
+		// for (int i = 1; i &lt;= 6; i++) {
+		// 	printf(&quot;%d &quot;, rmq_first[i]);
+		// }
+		// printf(&quot;\n&quot;);
+
+		while (m--) {
+
+			scanf(&quot;%d%d&quot;, &amp;a1, &amp;a2);
+
+			if (rmq_first[a1] &lt; rmq_first[a2]) {
+
+				printf(&quot;%d\n&quot;, disToRoot[a1] + disToRoot[a2] - 2 * disToRoot[rmq_which[min_seg(1, rmq_first[a1], rmq_first[a2])]]);
+			} else {
+				printf(&quot;%d\n&quot;, disToRoot[a1] + disToRoot[a2] - 2 * disToRoot[rmq_which[min_seg(1, rmq_first[a2], rmq_first[a1])]]);
+			}
+
+		}
+
+	}
+
+	return 0;
+}
+</code></pre>
+</main>
+
+
+
+<div id="comments">
+    <hr>
+    <script src="https://utteranc.es/client.js" repo='KB5201314/KB5201314.github.io' issue-term="pathname" label='💬 comments 💬'
+        theme='github-light' crossorigin="anonymous" async>
+        </script>
+</div>
+
+
+  <footer>
+  
+  <hr/>
+  © <a href="https://blog.imlk.top">imlk</a> 2017 &ndash; 2021 | imlk's blog | <a href="https://github.com/KB5201314/">Github</a> | <a href="mailto:me@imlk.top">Email</a> | <a href="http://www.miitbeian.gov.cn/">京ICP备 - 2020042968号</a>
+  
+  </footer>
+  </body>
+</html>

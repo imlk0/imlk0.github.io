@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>C/C&#43;&#43; on imlk&#39;s blog</title>
+    <link>https://blog.imlk.top/tags/c/c&#43;&#43;/</link>
+    <description>Recent content in C/C&#43;&#43; on imlk&#39;s blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language><atom:link href="https://blog.imlk.top/tags/c/c++/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>遇到scanf的一个小误区</title>
+      <link>https://blog.imlk.top/posts/myths-about-scanf/</link>
+      <pubDate>Wed, 06 Dec 2017 18:43:21 +0800</pubDate>
+      
+      <guid>https://blog.imlk.top/posts/myths-about-scanf/</guid>
+      <description>#include &amp;lt;stdio.h&amp;gt; int main(){ int a, b; while(scanf(&amp;quot;%d%d&amp;quot;,&amp;amp;a,&amp;amp;b) == EOF){ printf(&amp;quot;%d\n&amp;quot;, a + b); } return 0; } scanf() 遇到文件末尾时，如果什么都没有读取到，就返回EOF(-1)， 如果有变量已经赋值那就返回赋值了的变量个数</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>线段树 on imlk&#39;s blog</title>
+    <link>https://blog.imlk.top/tags/%E7%BA%BF%E6%AE%B5%E6%A0%91/</link>
+    <description>Recent content in 线段树 on imlk&#39;s blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Fri, 02 Mar 2018 15:58:51 +0800</lastBuildDate><atom:link href="https://blog.imlk.top/tags/%E7%BA%BF%E6%AE%B5%E6%A0%91/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>HDU 2586 How far away ？</title>
+      <link>https://blog.imlk.top/posts/hdu-2586-how-far-away/</link>
+      <pubDate>Fri, 02 Mar 2018 15:58:51 +0800</pubDate>
+      
+      <guid>https://blog.imlk.top/posts/hdu-2586-how-far-away/</guid>
+      <description>HDU 2586 How far away ？——树上节点最短距离，LCA， 双亲表示法+暴力从下至上追溯，孩子链表示法+（Tarjan 或 欧拉环游RMQ+（ST 或 Segment</description>
+    </item>
+    
+    <item>
+      <title>HDU 1166 敌兵布阵——线段树，树状数组</title>
+      <link>https://blog.imlk.top/posts/hdu-1166-enemy-arrays-line-trees-tree-arrays/</link>
+      <pubDate>Tue, 06 Feb 2018 17:33:38 +0800</pubDate>
+      
+      <guid>https://blog.imlk.top/posts/hdu-1166-enemy-arrays-line-trees-tree-arrays/</guid>
+      <description>这题本来我打算用前缀数组实现源数据的处理，并把更变用map&amp;lt;int ,int&amp;gt;实现，发现后来还是超时了； 借机学习了一下线段树，虽然</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Algorithm on imlk&#39;s blog</title>
+    <link>https://blog.imlk.top/categories/algorithm/</link>
+    <description>Recent content in Algorithm on imlk&#39;s blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Fri, 30 Nov 2018 00:06:03 +0800</lastBuildDate><atom:link href="https://blog.imlk.top/categories/algorithm/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Codeforces contest 1082 E. Increasing Frequency</title>
+      <link>https://blog.imlk.top/posts/codeforces-contest-1082-e-increasing-frequency/</link>
+      <pubDate>Fri, 30 Nov 2018 00:06:03 +0800</pubDate>
+      
+      <guid>https://blog.imlk.top/posts/codeforces-contest-1082-e-increasing-frequency/</guid>
+      <description>原题在这 这题搞了好久，大意是讲给一个长为n的数串，让其中某一个子区间的数都+k，然后使得整个串里等于c的数个数尽可能大，问最大多少 串里的数范</description>
+    </item>
+    
+    <item>
+      <title>Codeforces Contest 1009 E. Intercity Travelling</title>
+      <link>https://blog.imlk.top/posts/codeforces-contest-1009-e/</link>
+      <pubDate>Sun, 15 Jul 2018 21:06:24 +0800</pubDate>
+      
+      <guid>https://blog.imlk.top/posts/codeforces-contest-1009-e/</guid>
+      <description>链接 Educational Codeforces Round 47 (Rated for Div. 2) - E. Intercity Travelling http://codeforces.com/contest/1009/problem/E 思路 n千米，有n段路，共有n-1个可能可以休息的地方，则共有2^(n-1)种可能的休息方式; 要计算 p⋅2^(n</description>
+    </item>
+    
+    <item>
+      <title>[hihoCoder]1777 彩球</title>
+      <link>https://blog.imlk.top/posts/hihocoder-1777-colorful-balls/</link>
+      <pubDate>Fri, 13 Jul 2018 16:28:27 +0800</pubDate>
+      
+      <guid>https://blog.imlk.top/posts/hihocoder-1777-colorful-balls/</guid>
+      <description>原题 https://hihocoder.com/problemset/problem/1777 输入 第一行三个正整数 n, k, P 对于50%的数据，有1 ≤ n, k, P ≤ 10^9 对于100%的数据，有1 ≤ n, k, P ≤ 10^18 解法 考察大数的幂次取模 乘法溢出 用快速幂</description>
+    </item>
+    
+    <item>
+      <title>POJ 1061 青蛙的约会</title>
+      <link>https://blog.imlk.top/posts/poj-1061-frogs-date/</link>
+      <pubDate>Fri, 13 Jul 2018 16:08:54 +0800</pubDate>
+      
+      <guid>https://blog.imlk.top/posts/poj-1061-frogs-date/</guid>
+      <description>原题 http://poj.org/problem?id=1061 解法 此题用扩展欧几里得计算 (n-m) * X ≡ (x-y) (mod l) 的最小正整数解 即(n-m) * X + l * Y = (x-y) 贝祖定理： ax + by = m 有整数解时当且仅当m是gcd(a</description>
+    </item>
+    
+    <item>
+      <title>POJ 1150 The Last Non-zero Digit</title>
+      <link>https://blog.imlk.top/posts/poj-1150-the-last-nonzero-digit/</link>
+      <pubDate>Fri, 13 Jul 2018 16:02:29 +0800</pubDate>
+      
+      <guid>https://blog.imlk.top/posts/poj-1150-the-last-nonzero-digit/</guid>
+      <description>原题 http://poj.org/problem?id=1150 参考 https://blog.csdn.net/txl199106/article/details/40653579 #include &amp;lt;iostream&amp;gt;#include &amp;lt;algorithm&amp;gt;#include &amp;lt;cstring&amp;gt;#include &amp;lt;string&amp;gt;#include &amp;lt;cstdio&amp;gt;#include &amp;lt;cmath&amp;gt; #define LL long long using namespace std; // 除了统计2，5的总因子数，还统计末尾位为3，7，9的数目 void count(LL co[], int n) { if (n == 0) { return; } for (int m = n; m &amp;gt; 0;</description>
+    </item>
+    
+    <item>
+      <title>Codeforces Contest 1005 E2. Median on Segments (General Case Edition)</title>
+      <link>https://blog.imlk.top/posts/codeforces-contest-1005-e2/</link>
+      <pubDate>Wed, 11 Jul 2018 16:58:32 +0800</pubDate>
+      
+      <guid>https://blog.imlk.top/posts/codeforces-contest-1005-e2/</guid>
+      <description>链接 Codeforces Round #496 (Div. 3) - E2. Median on Segments (General Case Edition) 0x00问题转化 为求得中位数为m的所有区间组合，可以将问题转化为两个更容易的问题 “求&amp;lt;中位数为大于等于m</description>
+    </item>
+    
+    <item>
+      <title>一些关于数据结构的文章集合</title>
+      <link>https://blog.imlk.top/posts/data-structures-article-collection/</link>
+      <pubDate>Thu, 19 Apr 2018 19:22:18 +0800</pubDate>
+      
+      <guid>https://blog.imlk.top/posts/data-structures-article-collection/</guid>
+      <description>串 模式匹配 从头到尾彻底理解KMP： https://www.cnblogs.com/zhangtianq/p/5839909.html 树 二叉树 搜索二叉树的旋转操作和平衡判断： https://www.cnblogs.com/zhanghaiba/p/3537221.html 数据结构—平衡二叉树，树的平衡旋转： https://www.cnblogs.com/PerkinsZhu/p/5824015.html</description>
+    </item>
+    
+    <item>
+      <title>HDU 1711 Number Sequence ——KMP</title>
+      <link>https://blog.imlk.top/posts/hdu-1711-number-sequence-kmp/</link>
+      <pubDate>Wed, 14 Mar 2018 16:00:31 +0800</pubDate>
+      
+      <guid>https://blog.imlk.top/posts/hdu-1711-number-sequence-kmp/</guid>
+      <description>http://acm.hdu.edu.cn/showproblem.php?pid=1711 ##Problem Description Given two sequences of numbers : a[1], a[2], &amp;hellip;&amp;hellip; , a[N], and b[1], b[2], &amp;hellip;&amp;hellip; , b[M] (1 &amp;lt;= M &amp;lt;= 10000, 1 &amp;lt;= N &amp;lt;= 1000000). Your task is to find a number K which make a[K] = b[1], a[K + 1] = b[2], &amp;hellip;&amp;hellip; , a[K + M - 1] = b[M]. If there are more than one K exist, output the smallest one. Input</description>
+    </item>
+    
+    <item>
+      <title>HDU 2586 How far away ？</title>
+      <link>https://blog.imlk.top/posts/hdu-2586-how-far-away/</link>
+      <pubDate>Fri, 02 Mar 2018 15:58:51 +0800</pubDate>
+      
+      <guid>https://blog.imlk.top/posts/hdu-2586-how-far-away/</guid>
+      <description>HDU 2586 How far away ？——树上节点最短距离，LCA， 双亲表示法+暴力从下至上追溯，孩子链表示法+（Tarjan 或 欧拉环游RMQ+（ST 或 Segment</description>
+    </item>
+    
+    <item>
+      <title>CodeForces 891 A. Pride</title>
+      <link>https://blog.imlk.top/posts/codeforces-891-a-pride/</link>
+      <pubDate>Tue, 27 Feb 2018 10:30:47 +0800</pubDate>
+      
+      <guid>https://blog.imlk.top/posts/codeforces-891-a-pride/</guid>
+      <description>http://codeforces.com/problemset/problem/891/A #include &amp;lt;iostream&amp;gt; #include &amp;lt;cstdio&amp;gt; #include &amp;lt;cstring&amp;gt; #include &amp;lt;cmath&amp;gt; using namespace std; long long dp[2005][2005]; // dp[x][y]表示gcd(x...(x + y)) /* x是起始点位置,y是距离 a1, a2, a3, a4, a5, a6, a7, a8 ↑ ← y → ↑ x x + y */ //</description>
+    </item>
+    
+    <item>
+      <title>HDU 1080 POJ 1080 Human Gene Functions——动态规划</title>
+      <link>https://blog.imlk.top/posts/hdu-1080-poj-1080-human-gene-functions-dp/</link>
+      <pubDate>Mon, 26 Feb 2018 21:53:24 +0800</pubDate>
+      
+      <guid>https://blog.imlk.top/posts/hdu-1080-poj-1080-human-gene-functions-dp/</guid>
+      <description>http://poj.org/problem?id=1080 http://acm.hdu.edu.cn/showproblem.php?pid=1080 #include &amp;lt;iostream&amp;gt; #include &amp;lt;cstdio&amp;gt; #include &amp;lt;map&amp;gt; #include &amp;lt;cstring&amp;gt; #define MAX(x,y,z) ((x)&amp;gt;(y)?((x)&amp;gt;(z)?(x):(z)):((y)&amp;gt;(z)?(y):(z))) using namespace std; char str1[105]; char str2[105]; int list[6][6] = { // { \0, A, C, G, T, -} /*\0*/ { 0, 0, 0, 0, 0, 0}, /*A*/ { 0, 5, -1, -2, -1, -3}, /*C*/ { 0, -1, 5, -3, -2, -4}, /*G*/ { 0, -2, -3, 5, -2, -2}, /*T*/ { 0, -1, -2, -2,</description>
+    </item>
+    
+    <item>
+      <title>HDU 1325 1272 并查集判断有向图和无向图是否构成一棵树型</title>
+      <link>https://blog.imlk.top/posts/hdu-1325-1272-concurrent-set-checking-is-tree/</link>
+      <pubDate>Fri, 09 Feb 2018 16:49:34 +0800</pubDate>
+      
+      <guid>https://blog.imlk.top/posts/hdu-1325-1272-concurrent-set-checking-is-tree/</guid>
+      <description>HDU 1325 HDU 1272 HDU 1325是有向图，给定某个节点是另一个元素的父节点 HDU 1272是无向图，将两个节点连接起来 共同点：判断是否成环，判断是树木还是森林 区</description>
+    </item>
+    
+    <item>
+      <title>CodeForces 699D Fix a Tree</title>
+      <link>https://blog.imlk.top/posts/codeforces-699d-fix-a-tree/</link>
+      <pubDate>Thu, 08 Feb 2018 18:24:54 +0800</pubDate>
+      
+      <guid>https://blog.imlk.top/posts/codeforces-699d-fix-a-tree/</guid>
+      <description>并查集优化 给出所有节点的父节点（有向图），用最少的修改生成一颗合法的树（环的判断，去环） D. Fix a Tree time limit per test 2 seconds memory limit per test 256 megabytes input standard input output standard output A tree is an</description>
+    </item>
+    
+    <item>
+      <title>CodeForces 699C Vacations——动态规划</title>
+      <link>https://blog.imlk.top/posts/codeforces-699c-vacations-dp/</link>
+      <pubDate>Thu, 08 Feb 2018 11:49:53 +0800</pubDate>
+      
+      <guid>https://blog.imlk.top/posts/codeforces-699c-vacations-dp/</guid>
+      <description>原题链接 C. Vacations time limit per test 1 second memory limit per test 256 megabytes input standard input output standard output Vasya has n days of vacations! So he decided to improve his IT skills and do sport. Vasya knows the following information about each of this n days: whether that gym opened and whether a contest was carried out in the Internet on that day. For</description>
+    </item>
+    
+    <item>
+      <title>HYSBZ 1216: [HNOI2003]操作系统</title>
+      <link>https://blog.imlk.top/posts/hysbz-1216-hnoi2003-operating-system/</link>
+      <pubDate>Wed, 07 Feb 2018 23:27:09 +0800</pubDate>
+      
+      <guid>https://blog.imlk.top/posts/hysbz-1216-hnoi2003-operating-system/</guid>
+      <description>题目链接 1216: [HNOI2003]操作系统 Time Limit: 10 Sec Memory Limit: 162 MB Submit: 1045 Solved: 565 [Submit][Status][Discuss] Description 写一个程序来模拟操作系统的进程调度。假设该系统只有一个CPU，每一个进程的</description>
+    </item>
+    
+    <item>
+      <title>最长递增子列问题的另一种思路——转化为LCS问题</title>
+      <link>https://blog.imlk.top/posts/slove-the-longest-incremental-subcolumn-by-lcs/</link>
+      <pubDate>Tue, 06 Feb 2018 21:11:32 +0800</pubDate>
+      
+      <guid>https://blog.imlk.top/posts/slove-the-longest-incremental-subcolumn-by-lcs/</guid>
+      <description>利用LCS的解题思路可以解决最长递增子列的问题顺便求出该递增序列 例如 list1 = [1, 2, 3, 1, -1, 0, 4, 5] 将其排序得 list2 = [-1, 0, 1, 1, 2, 3, 4, 5] 则问题转化为 求list</description>
+    </item>
+    
+    <item>
+      <title>HDU 1166 敌兵布阵——线段树，树状数组</title>
+      <link>https://blog.imlk.top/posts/hdu-1166-enemy-arrays-line-trees-tree-arrays/</link>
+      <pubDate>Tue, 06 Feb 2018 17:33:38 +0800</pubDate>
+      
+      <guid>https://blog.imlk.top/posts/hdu-1166-enemy-arrays-line-trees-tree-arrays/</guid>
+      <description>这题本来我打算用前缀数组实现源数据的处理，并把更变用map&amp;lt;int ,int&amp;gt;实现，发现后来还是超时了； 借机学习了一下线段树，虽然</description>
+    </item>
+    
+    <item>
+      <title>一些算法词汇缩写</title>
+      <link>https://blog.imlk.top/posts/some-algorithm-vocabulary/</link>
+      <pubDate>Fri, 02 Feb 2018 23:41:28 +0800</pubDate>
+      
+      <guid>https://blog.imlk.top/posts/some-algorithm-vocabulary/</guid>
+      <description>https://segmentfault.com/a/1190000002641054 LCS Longest Common Subsequence 最长公共子列 LIS Longest Increasing Subsequence 最长上升子列 https://segmentfault.com/a/1190000002646526 LRS Longest Repeated Substring 重复子串 https://www.cnblogs.com/JVxie/p/4854719.html LCA Least Common Ancestors 最近的公共祖先 http://blog.csdn.net/ywcpig/article/details/52336496 RMQ Range Maximum/Minimm Query 区间最值查询</description>
+    </item>
+    
+    <item>
+      <title>CodeForces 697D 树&#43;概率</title>
+      <link>https://blog.imlk.top/posts/codeforces-697d-tree-and-probability/</link>
+      <pubDate>Thu, 01 Feb 2018 23:34:57 +0800</pubDate>
+      
+      <guid>https://blog.imlk.top/posts/codeforces-697d-tree-and-probability/</guid>
+      <description>原题链接 D. Puzzles time limit per test 1 second memory limit per test 256 megabytes input standard input output standard output Barney lives in country USC (United States of Charzeh). USC has n cities numbered from 1 through n and n - 1 roads between them. Cities and roads of USC form a rooted tree (Barney&#39;s not sure why it is rooted). Root of the tree is</description>
+    </item>
+    
+    <item>
+      <title>HDU 2577 How To Type 动态规划</title>
+      <link>https://blog.imlk.top/posts/hdu-2577-how-to-type-dynamic-programming/</link>
+      <pubDate>Thu, 01 Feb 2018 17:59:56 +0800</pubDate>
+      
+      <guid>https://blog.imlk.top/posts/hdu-2577-how-to-type-dynamic-programming/</guid>
+      <description>How to Type Time Limit: 2000/1000 MS (Java/Others) Memory Limit: 32768/32768 K (Java/Others) Total Submission(s): 7448 Accepted Submission(s): 3374 Problem Description Pirates have finished developing the typing software. He called Cathy to test his typing software. She is good at thinking. After testing for several days, she finds that if she types a string by some ways, she will type the key at least. But she has a bad habit</description>
+    </item>
+    
+    <item>
+      <title>两大LCS问题</title>
+      <link>https://blog.imlk.top/posts/two-major-lcs-problems/</link>
+      <pubDate>Thu, 01 Feb 2018 12:09:09 +0800</pubDate>
+      
+      <guid>https://blog.imlk.top/posts/two-major-lcs-problems/</guid>
+      <description>0x00 相同子序：（不要求连续） #include &amp;lt;iostream&amp;gt; #include &amp;lt;algorithm&amp;gt; #include &amp;lt;string&amp;gt; #include &amp;lt;cstdio&amp;gt; // // #define DEBUG // #ifdef DEBUG // #define SHOW // #else // #define SHOW /##/ // #endif // 不可行，注释先于预处理指令被处理 using namespace std; // LCS共同子序不要求</description>
+    </item>
+    
+    <item>
+      <title>HDU 2089的类似题（62换成了38） 数位dp解释</title>
+      <link>https://blog.imlk.top/posts/hdu-2089-another-a-question-similar-to/</link>
+      <pubDate>Sun, 28 Jan 2018 23:41:21 +0800</pubDate>
+      
+      <guid>https://blog.imlk.top/posts/hdu-2089-another-a-question-similar-to/</guid>
+      <description>链接 来源：牛客网 杭州人称傻乎乎的人为62，而嘟嘟家这里没有这样的习俗。 相比62，他那里的人更加讨厌数字38，当然啦，还有4这个 数字！所以啊，</description>
+    </item>
+    
+    <item>
+      <title>Codeforces 429B B.Working out</title>
+      <link>https://blog.imlk.top/posts/codeforces-429b-b-working-out/</link>
+      <pubDate>Tue, 09 Jan 2018 20:47:19 +0800</pubDate>
+      
+      <guid>https://blog.imlk.top/posts/codeforces-429b-b-working-out/</guid>
+      <description>http://codeforces.com/problemset/problem/429/B 对于题中刁钻的要求，仔细分析所给条件的等价条件，有时候，所给条件符合的情形只有很少的几种。 http://blog.csdn.net/cc_again/article/details/25691925 题目意思： 给n*m的矩阵，每个格子有个数，A从</description>
+    </item>
+    
+    <item>
+      <title>一些算法文章集合</title>
+      <link>https://blog.imlk.top/posts/algorithm-article-collection/</link>
+      <pubDate>Sat, 06 Jan 2018 16:44:51 +0800</pubDate>
+      
+      <guid>https://blog.imlk.top/posts/algorithm-article-collection/</guid>
+      <description>0x00 OJ网站 projecteuler https://projecteuler.net/archives 0x01 算法集合 http://blog.51cto.com/ahalei/p2 0x02 动态规划 题集 http://blog.csdn.net/eagle_or_snail/article/details/50987044 最长公共子序列（LCS）问题 http://blog.csdn.net/lisonglisonglisong/article/details/4154855 http://blog.csdn.net/lisonglisonglisong/article/details/41596309 最长递增子序列 http://blog.csdn.net/u013074465/article/details/45442067 0x03 图算法 图算法之最短路径（Dijkstra） https://www.cnblogs.com/nigang/p/3658990.html</description>
+    </item>
+    
+    <item>
+      <title>用位运算来模拟数组实现一道算法题</title>
+      <link>https://blog.imlk.top/posts/an-algorithm-problem-need-no-arrays/</link>
+      <pubDate>Sat, 09 Dec 2017 12:26:58 +0800</pubDate>
+      
+      <guid>https://blog.imlk.top/posts/an-algorithm-problem-need-no-arrays/</guid>
+      <description>输入一串字符串&#39;\n&amp;rsquo;结尾，X代表小偷，#代表普通人，数字代表警察，其数字是警察能巡视到的范围。 输出小偷个数，换行。 #include &amp;lt;stdio.h&amp;gt; int printBin(unsigned long num){</description>
+    </item>
+    
+    <item>
+      <title>HDU 1003 Max sum——分治法的应用，动态规划，前缀数组</title>
+      <link>https://blog.imlk.top/posts/hdu-1003-max-sum/</link>
+      <pubDate>Wed, 06 Dec 2017 23:10:33 +0800</pubDate>
+      
+      <guid>https://blog.imlk.top/posts/hdu-1003-max-sum/</guid>
+      <description>原题： http://acm.hdu.edu.cn/showproblem.php?pid=1003 看到这题的时候一脸懵逼，网上寻找解答，发现都讲的不详细，变量声明也很短，根本看不出是什么用途，这里给出了我的解答，参考了网上各位大神</description>
+    </item>
+    
+  </channel>
+</rss>

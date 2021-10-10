@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>wpa2-enterprise on imlk&#39;s blog</title>
+    <link>https://blog.imlk.top/tags/wpa2-enterprise/</link>
+    <description>Recent content in wpa2-enterprise on imlk&#39;s blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Wed, 17 Mar 2021 13:51:32 +0800</lastBuildDate><atom:link href="https://blog.imlk.top/tags/wpa2-enterprise/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Android11的QPR1安全更新后无法连接北邮校园WiFi的解决方法</title>
+      <link>https://blog.imlk.top/posts/connect-to-bput-campus-wifi-on-android-11/</link>
+      <pubDate>Wed, 17 Mar 2021 13:51:32 +0800</pubDate>
+      
+      <guid>https://blog.imlk.top/posts/connect-to-bput-campus-wifi-on-android-11/</guid>
+      <description>Android11在2020年12月发布的安全更新中进行了一个修复：PSA: Android 11 will no longer let you insecurely connect to enterprise WiFi networks 这项变更直接导致的是连接安全性为wpa</description>
+    </item>
+    
+  </channel>
+</rss>

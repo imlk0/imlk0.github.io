@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>分治法 on imlk&#39;s blog</title>
+    <link>https://blog.imlk.top/tags/%E5%88%86%E6%B2%BB%E6%B3%95/</link>
+    <description>Recent content in 分治法 on imlk&#39;s blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Wed, 06 Dec 2017 23:10:33 +0800</lastBuildDate><atom:link href="https://blog.imlk.top/tags/%E5%88%86%E6%B2%BB%E6%B3%95/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>HDU 1003 Max sum——分治法的应用，动态规划，前缀数组</title>
+      <link>https://blog.imlk.top/posts/hdu-1003-max-sum/</link>
+      <pubDate>Wed, 06 Dec 2017 23:10:33 +0800</pubDate>
+      
+      <guid>https://blog.imlk.top/posts/hdu-1003-max-sum/</guid>
+      <description>原题： http://acm.hdu.edu.cn/showproblem.php?pid=1003 看到这题的时候一脸懵逼，网上寻找解答，发现都讲的不详细，变量声明也很短，根本看不出是什么用途，这里给出了我的解答，参考了网上各位大神</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>路由器 on imlk&#39;s blog</title>
+    <link>https://blog.imlk.top/tags/%E8%B7%AF%E7%94%B1%E5%99%A8/</link>
+    <description>Recent content in 路由器 on imlk&#39;s blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Sun, 04 Oct 2020 20:24:05 +0800</lastBuildDate><atom:link href="https://blog.imlk.top/tags/%E8%B7%AF%E7%94%B1%E5%99%A8/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>PXE无盘启动树莓派集群</title>
+      <link>https://blog.imlk.top/posts/boot-a-raspberry-pi-cluster-without-disk/</link>
+      <pubDate>Sun, 04 Oct 2020 20:24:05 +0800</pubDate>
+      
+      <guid>https://blog.imlk.top/posts/boot-a-raspberry-pi-cluster-without-disk/</guid>
+      <description>最近从同学那里拿到了几个闲置的树莓派，外加一个路由器和一块2T的硬盘，于是乎想用这些派来搭建一个简单的集群。但是发现SD卡实在是不够，遂尝试</description>
+    </item>
+    
+    <item>
+      <title>newifi 3 路由器刷padavan固件</title>
+      <link>https://blog.imlk.top/posts/newifi-3-router-flash-firmware/</link>
+      <pubDate>Thu, 12 Mar 2020 17:26:11 +0800</pubDate>
+      
+      <guid>https://blog.imlk.top/posts/newifi-3-router-flash-firmware/</guid>
+      <description>新路由器到了两星期了，期间总是出现突然wan网络不通的情况，而且信号也没有上一台强（严重影响蹲坑时玩手机的体验）。参考网友们的建议，准备给n</description>
+    </item>
+    
+  </channel>
+</rss>

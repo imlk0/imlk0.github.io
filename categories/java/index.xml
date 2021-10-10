@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Java on imlk&#39;s blog</title>
+    <link>https://blog.imlk.top/categories/java/</link>
+    <description>Recent content in Java on imlk&#39;s blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Sun, 21 Jan 2018 22:39:20 +0800</lastBuildDate><atom:link href="https://blog.imlk.top/categories/java/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Java中继承的覆盖与隐藏</title>
+      <link>https://blog.imlk.top/posts/java-inheritance-overrides-and-hiding/</link>
+      <pubDate>Sun, 21 Jan 2018 22:39:20 +0800</pubDate>
+      
+      <guid>https://blog.imlk.top/posts/java-inheritance-overrides-and-hiding/</guid>
+      <description>参考： https://www.cnblogs.com/it12345/p/5221673.html 隐藏和覆盖的区别 隐藏：将类型转换为父类的类型 即可解除 隐藏 覆盖：将类型转换为父类的类型也 不能 解除覆盖 成员变量 只可能被隐藏，不存在覆盖一</description>
+    </item>
+    
+    <item>
+      <title>关于Java中Thread类的一些误区</title>
+      <link>https://blog.imlk.top/posts/some-misconceptions-about-java-thread/</link>
+      <pubDate>Sat, 09 Dec 2017 16:56:54 +0800</pubDate>
+      
+      <guid>https://blog.imlk.top/posts/some-misconceptions-about-java-thread/</guid>
+      <description>Thread interrupt() 1.这个方法只会给线程设置一个为true的中断标志。 2.该方法可在需要中断的线程内自己调用，也可在其他线程中调用需要中断的线程对象的这个</description>
+    </item>
+    
+    <item>
+      <title>Java和C&#43;&#43;中方法Override后外部调用父类方法时的区别</title>
+      <link>https://blog.imlk.top/posts/methods-overriding-in-java-and-c&#43;&#43;/</link>
+      <pubDate>Tue, 21 Nov 2017 17:30:03 +0800</pubDate>
+      
+      <guid>https://blog.imlk.top/posts/methods-overriding-in-java-and-c&#43;&#43;/</guid>
+      <description>以Java语法示范： 面向对象中，B extends A // Java中 B objectB = new B(); objectB.foo();//输出 from Child Class A objectA = new B(); objectA.foo();</description>
+    </item>
+    
+  </channel>
+</rss>

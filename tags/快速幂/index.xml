@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>快速幂 on imlk&#39;s blog</title>
+    <link>https://blog.imlk.top/tags/%E5%BF%AB%E9%80%9F%E5%B9%82/</link>
+    <description>Recent content in 快速幂 on imlk&#39;s blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Fri, 13 Jul 2018 16:28:27 +0800</lastBuildDate><atom:link href="https://blog.imlk.top/tags/%E5%BF%AB%E9%80%9F%E5%B9%82/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>[hihoCoder]1777 彩球</title>
+      <link>https://blog.imlk.top/posts/hihocoder-1777-colorful-balls/</link>
+      <pubDate>Fri, 13 Jul 2018 16:28:27 +0800</pubDate>
+      
+      <guid>https://blog.imlk.top/posts/hihocoder-1777-colorful-balls/</guid>
+      <description>原题 https://hihocoder.com/problemset/problem/1777 输入 第一行三个正整数 n, k, P 对于50%的数据，有1 ≤ n, k, P ≤ 10^9 对于100%的数据，有1 ≤ n, k, P ≤ 10^18 解法 考察大数的幂次取模 乘法溢出 用快速幂</description>
+    </item>
+    
+  </channel>
+</rss>
