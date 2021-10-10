@@ -1,3 +1,8 @@
+html {
+    -ms-text-size-adjust: 100%;
+    -webkit-text-size-adjust: 100%;
+}
+
 body {
     max-width: 800px;
     margin: auto;
@@ -111,6 +116,12 @@ a:hover {
     border: 0
 }
 
+ul.postindex {
+    list-style-type: none;
+    padding-inline: 0px;
+    line-height: 2.4em;
+}
+
 ul.postindex .date {
     width: 11ex;
     display: inline-block;
@@ -137,6 +148,7 @@ ul.postindex div.cats a {
     font-weight: bold;
     border: 0px;
     margin-right: auto;
+    line-height: 1em;
 }
 
 .archives .tags .tag {

@@ -1,6 +1,10 @@
 body {
     /* font-family: Optima, Candara, Calibri, Arial, sans-serif; */
-    font-family: Optima, Candara, Calibri, Arial, 'Noto Serif SC', serif;
+    /* font-family: Optima, Candara, Calibri, Arial, 'Noto Serif SC', serif; */
+    /* font-family: Optima, Candara, 'Noto Serif', 'Noto Serif SC', serif; */
+    font-family: "Noto Serif SC", serif;
+    /* font-size: 95%; */
+    /* font-family: serif; */
 }
 
 code {
