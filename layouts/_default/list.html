@@ -1,7 +1,10 @@
 {{ partial "header.html" . }}
 
 {{if not .IsHome }}
-<h1>{{ print .Data.Plural " -> " (.Title | markdownify) }}</h1>
+<h1>
+  <a href='{{ "/" | relLangURL }}{{ .Data.Plural | urlize }}'>{{ .Data.Plural }}</a>
+  {{ print " -> " (.Title | markdownify) }}
+</h1>
 {{ end }}
 
 {{ .Content }}
