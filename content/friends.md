@@ -6,10 +6,10 @@ aliases: /links/
 欢迎[联系窝](/about) 交换友链呀\\(^o^)/~
 
 - w568w  
-    [http://w568w.ml/](http://w568w.ml/)
+    [https://w568w.eu.org/](https://w568w.eu.org/)
 
 - HeYan的Bug杂货店  
-    [http://heyanle.com/](http://heyanle.com/)
+    [https://heyanle.com/](https://heyanle.com/)
 
 - 神楽坂花火  
     [https://blog.yaerin.com/](https://blog.yaerin.com/)
