@@ -60,7 +60,7 @@ public void handleInitPackageResources(InitPackageResourcesParam resparam) throw
 	XModuleResources modRes = XModuleResources.createInstance(MODULE_PATH, resparam.res);
 	mFakeId = resparam.res.addResource(modRes, R.drawable.ic_launcher);
 }
-</code></pre><p><a href=http://api.xposed.info/reference/android/content/res/XResources.html#addResource(android.content.res.Resources,>http://api.xposed.info/reference/android/content/res/XResources.html#addResource(android.content.res.Resources,</a> int)</p>
+</code></pre><p><a href=http://api.xposed.info/reference/android/content/res/XResources.html#addResource(android.content.res.Resources>http://api.xposed.info/reference/android/content/res/XResources.html#addResource(android.content.res.Resources</a>, int)</p>
 <p>获得<code>mFakeld</code>变量，它储存的是在被hook应用内植入的一个假id，这个id对应的是module里面的<code>R.drawable.ic_launcher</code>这个资源，通过这个假id就可以使用到我们的module内的drawable资源。</p>
 <h3 id=再次遇到问题>再次遇到问题</h3>
 <p>在实际使用中</p>

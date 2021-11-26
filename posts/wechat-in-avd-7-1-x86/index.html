@@ -203,15 +203,15 @@ exit <span style=color:#ae81ff>0</span>
 <li>
 <p>之后说<code>mount: losetup failed 1</code>，改为手动mount加上<code>-v</code>选项后说</p>
 <pre tabindex=0><code>try '/system/etc/houdini7_x.sfs' type 'ext3' on '/system/lib/arm/'
-</code></pre><pre tabindex=0><code> 显然它把我文件格式搞错了，这个sfs文件应该是`squashfs`而不是`ext3`，加`-t`选项强制指定`squashfs`格式后告诉我`No such device`，你说你马呢，我文件好端端在这你告诉我没有。无奈之下想到了`strace`大法，给这条命令前加上`strace`，查看系统调用过程，发现其中调用了`mount()`函数：
-</code></pre><pre tabindex=0><code> mount(&quot;/system/etc/houdini7_x.sfs&quot;, &quot;/system/lib/arm/&quot;, &quot;squashfs&quot;, MS_SILENT, NULL) = -1 ENODEV (No such device)
-</code></pre><pre tabindex=0><code> man查mount()的手册发现，`ENODEV`表示不支持的文件系统格式，也就是说**这个avd它丫的不支持`squashfs`这个文件系统**，网上说可以在编译的时候加选项，但是显然我们是不会去编译的，费力不讨好。解决办法很简单，在宿主机上mount一下，把里面的文件拿出来`adb push`到avd的`/system/lib/arm`这个目录，大功告成。
+</code></pre><pre tabindex=0><code>�然它把我文件格式搞错了，这个sfs文件应该是`squashfs`而不是`ext3`，加`-t`选项强制指定`squashfs`格式后告诉我`No such device`，你说你马呢，我文件好端端在这你告诉我没有。无奈之下想到了`strace`大法，给这条命令前加上`strace`，查看系统调用过程，发现其中调用了`mount()`函数：
+</code></pre><pre tabindex=0><code>unt(&quot;/system/etc/houdini7_x.sfs&quot;, &quot;/system/lib/arm/&quot;, &quot;squashfs&quot;, MS_SILENT, NULL) = -1 ENODEV (No such device)
+</code></pre><pre tabindex=0><code>n查mount()的手册发现，`ENODEV`表示不支持的文件系统格式，也就是说**这个avd它丫的不支持`squashfs`这个文件系统**，网上说可以在编译的时候加选项，但是显然我们是不会去编译的，费力不讨好。解决办法很简单，在宿主机上mount一下，把里面的文件拿出来`adb push`到avd的`/system/lib/arm`这个目录，大功告成。
 
 </code></pre></li>
 <li>
 <p>之后还有个</p>
 <pre tabindex=0><code>mount --bind $dest_dir/libhoudini.so /system/lib$1/libhoudini.so
-</code></pre><pre tabindex=0><code> 又失败了（Android终端里的命令好像就没几个好使的），目的主要是把`libhoudini.so`从`/system/lib/arm`文件夹引到`/system/lib`下面去，这个用`ln -s`搞一下就好。
+</code></pre><pre tabindex=0><code>�失败了（Android终端里的命令好像就没几个好使的），目的主要是把`libhoudini.so`从`/system/lib/arm`文件夹引到`/system/lib`下面去，这个用`ln -s`搞一下就好。
 
 </code></pre></li>
 </ul>
