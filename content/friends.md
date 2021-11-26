@@ -5,6 +5,10 @@ aliases: /links/
 
 欢迎[联系窝](/about) 交换友链呀\\(^o^)/~
 
+- LeiWang1999's blog
+    计算所巨巨 / I love everything and create value.
+    [https://leiblog.wang](https://leiblog.wang)
+
 - w568w  
     FDU大二在读  
     [https://w568w.eu.org/](https://w568w.eu.org/)
