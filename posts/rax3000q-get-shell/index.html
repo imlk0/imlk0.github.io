@@ -146,7 +146,10 @@ export SYS_USER_LOGIN_PWD<span style=color:#f92672>=</span><span style=color:#e6
 </ul>
 </li>
 </ul>
-<h3 id=更换软件源>更换软件源</h3>
+<h3 id=更换软件源不推荐>更换软件源(不推荐)</h3>
+<blockquote>
+<p>注意：不建议直接在QSDK固件上直接更新使用openwrt官方的仓库，<a href=https://blog.imlk.top/posts/rax3000q-compile-qsdk/>下一篇文章</a>介绍了怎么从QSDK源码编译能够兼容的软件包ipk文件</p>
+</blockquote>
 <p>IPQ5018是双核Cortex-A53处理器，opkg默认的架构为<code>ipq</code>，但是OpenWrt软件源里并没有这种架构，我们需要选择一个相近的架构。</p>
 <p>由于目前运行的QSDK是32位的，无法像<a href=https://xn--m80a.ml/openwrt/dev/10.html>这篇文章</a>一样直接使用<code>aarch64_cortex-a53</code>的软件源。根据cpuinfo信息判断应该是armv7l且支持vfpv4硬件浮点，但是内置的interpreter却是<code>/lib/ld-musl-arm.so.1</code>，只支持软件浮点，这个问题可以创建一个软链接来解决。</p>
 <div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-sh data-lang=sh>ln -s /lib/ld-musl-arm.so.1 /lib/ld-musl-armhf.so.1
