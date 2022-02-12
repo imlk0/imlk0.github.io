@@ -139,7 +139,9 @@ export SYS_USER_LOGIN_PWD="******"
   - 指定WAN口
   - 本地对指定interface抓包并保存到文件
 
-### 更换软件源
+### 更换软件源(不推荐)
+
+> 注意：不建议直接在QSDK固件上直接更新使用openwrt官方的仓库，[下一篇文章](https://blog.imlk.top/posts/rax3000q-compile-qsdk/)介绍了怎么从QSDK源码编译能够兼容的软件包ipk文件
 
 IPQ5018是双核Cortex-A53处理器，opkg默认的架构为`ipq`，但是OpenWrt软件源里并没有这种架构，我们需要选择一个相近的架构。
 
