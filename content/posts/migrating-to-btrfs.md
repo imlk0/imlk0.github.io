@@ -44,8 +44,8 @@ btrfs的子卷布局很随意，一般有三种范式：Flat、Nested、Mixed，
 /               <root卷，不挂载>
 ├── snapshots   <目录，用于之后存放快照卷>
 └── subvolumes  <目录，新增的子卷也都放在这下面>
-    ├── home    <子卷，挂载为/>
-    └── root    <子卷，挂载为/home>
+    ├── home    <子卷，挂载为/home>
+    └── root    <子卷，挂载为/>
 ```
 
 ### 创建子卷
@@ -75,8 +75,8 @@ btrfs的子卷布局很随意，一般有三种范式：Flat、Nested、Mixed，
 挂载两个subvolume：
 
 ```bash
-sudo mount -t btrfs -o compress=zstd,subvol=/subvolumes/root /dev/sdb4 /mnt/btrfs-root
-sudo mount -t btrfs -o compress=zstd,subvol=/subvolumes/home /dev/sdb4 /mnt/btrfs-root/home
+sudo mount -t btrfs -o noatime,compress=zstd,subvol=/subvolumes/root /dev/sdb4 /mnt/btrfs-root
+sudo mount -t btrfs -o noatime,compress=zstd,subvol=/subvolumes/home /dev/sdb4 /mnt/btrfs-root/home
 ```
 
 mount bind必要的文件系统，然后chroot。（如果你的`/boot`目录在别的分区的，那么还需要额外挂载`/boot`）
