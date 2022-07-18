@@ -1,7 +1,8 @@
 <!doctype html><html lang=zh-cn><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><title>自制x86玩具操作系统 week6 | imlk's blog</title><link rel=stylesheet href=/css/style.css><link rel=stylesheet href=/css/fonts.css><link rel=preconnect href=https://fonts.googleapis.com><link rel=preconnect href=https://fonts.gstatic.com crossorigin><link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&display=swap" rel=stylesheet></head><body><header class=header><a class=logo href=/>imlk's Blog</a><nav><ul class=menu><li><a href=/>Home</a></li><li><a href=/about/>About</a></li><li><a href=/archives/>Archives</a></li><li><a href=/friends/>Friends</a></li><li><a href=/index.xml>Subscribe</a></li></ul></nav></header><hr><div class=article-meta><h1><span class=title>自制x86玩具操作系统 week6</span></h1><span><span class=date>2019-05-01</span>
-|
+<span class=date>(更新于2021-10-10)</span>
+/
 <span class=cats><a href=https://blog.imlk.top/categories/osdev/>OSDev</a></span>
-|
+/
 <span class=tags><a href=https://blog.imlk.top/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/>#操作系统</a>
 <a href=https://blog.imlk.top/tags/diy/>#DIY</a></span></span><br></div><main><h2 id=day-0x0f>DAY 0x0F</h2><h4 id=两种jmp指令>两种JMP指令</h4><p><code>near jmp</code>只修改IP寄存器的值，而<code>far jmp</code>同时修改<code>IP</code>寄存器和<code>CS</code>寄存器的值(用<code>:</code>隔开)
 用于任务切换的JMP命令就属于far-JMP命令，用于任务切换的JMP命令在切换回这个任务后，会从这条JMP命令后继续执行。</p><h4 id=gdt中的tss段>GDT中的TSS段</h4><p>TSS(task status segment)，全称任务状态段

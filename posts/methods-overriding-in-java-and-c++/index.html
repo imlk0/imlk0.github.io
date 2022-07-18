@@ -1,9 +1,10 @@
 <!doctype html><html lang=zh-cn><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><title>Java和C++中方法Override后外部调用父类方法时的区别 | imlk's blog</title><link rel=stylesheet href=/css/style.css><link rel=stylesheet href=/css/fonts.css><link rel=preconnect href=https://fonts.googleapis.com><link rel=preconnect href=https://fonts.gstatic.com crossorigin><link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&display=swap" rel=stylesheet></head><body><header class=header><a class=logo href=/>imlk's Blog</a><nav><ul class=menu><li><a href=/>Home</a></li><li><a href=/about/>About</a></li><li><a href=/archives/>Archives</a></li><li><a href=/friends/>Friends</a></li><li><a href=/index.xml>Subscribe</a></li></ul></nav></header><hr><div class=article-meta><h1><span class=title>Java和C++中方法Override后外部调用父类方法时的区别</span></h1><span><span class=date>2017-11-21</span>
-|
+<span class=date>(更新于2021-10-10)</span>
+/
 <span class=cats><a href=https://blog.imlk.top/categories/c/c++/>C/C++</a>
 /
 <a href=https://blog.imlk.top/categories/java/>Java</a></span>
-|
+/
 <span class=tags><a href=https://blog.imlk.top/tags/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/>#编程语言</a>
 <a href=https://blog.imlk.top/tags/c++/>#C++</a>
 <a href=https://blog.imlk.top/tags/java/>#Java</a></span></span><br></div><main><p>以Java语法示范：</p><p><img src=/images/blog/27_0.png alt></p><p>面向对象中，B extends A</p><blockquote><p>// Java中</p><p>B objectB = new B();</p><p>objectB.foo();//输出 from Child Class</p><p>A objectA = new B();</p><p>objectA.foo();//依然输出 from Child Class</p><p>//类型转换不会导致父类方法被调用</p><p>//而，C++中，通过类型转换，可以达到调用父类被覆盖的方法的效果</p></blockquote><p>参考：http://bbs.csdn.net/wap/topics/390171251</p></main><div id=comments><hr><script src=https://utteranc.es/client.js repo=KB5201314/KB5201314.github.io issue-term=pathname label='💬 comments 💬' theme=github-light crossorigin=anonymous async></script></div><footer><hr>© imlk 2017 &ndash; 2021 | <a href=https://blog.imlk.top>imlk's blog</a> | <a href=https://github.com/KB5201314/>Github</a> | <a href=mailto:me@imlk.top>Email</a> | <a href=https://beian.miit.gov.cn/>京ICP备 - 2020042968号</a></footer></body></html>

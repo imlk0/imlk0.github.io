@@ -1,7 +1,8 @@
 <!doctype html><html lang=zh-cn><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><title>为Xposed模块增加Multidex支持并指定主dex中的class | imlk's blog</title><link rel=stylesheet href=/css/style.css><link rel=stylesheet href=/css/fonts.css><link rel=preconnect href=https://fonts.googleapis.com><link rel=preconnect href=https://fonts.gstatic.com crossorigin><link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&display=swap" rel=stylesheet></head><body><header class=header><a class=logo href=/>imlk's Blog</a><nav><ul class=menu><li><a href=/>Home</a></li><li><a href=/about/>About</a></li><li><a href=/archives/>Archives</a></li><li><a href=/friends/>Friends</a></li><li><a href=/index.xml>Subscribe</a></li></ul></nav></header><hr><div class=article-meta><h1><span class=title>为Xposed模块增加Multidex支持并指定主dex中的class</span></h1><span><span class=date>2018-04-29</span>
-|
+<span class=date>(更新于2021-10-10)</span>
+/
 <span class=cats><a href=https://blog.imlk.top/categories/android/>Android</a></span>
-|
+/
 <span class=tags><a href=https://blog.imlk.top/tags/multidex/>#Multidex</a>
 <a href=https://blog.imlk.top/tags/zjdroid/>#ZjDroid</a>
 <a href=https://blog.imlk.top/tags/xposed/>#Xposed</a></span></span><br></div><main><h3 id=起因>起因</h3><p>在编译ZjDroid源码的时候遇到了著名的方法数超出<code>65536</code>个的问题。</p><p>我的<code>gradle</code>版本</p><pre tabindex=0><code>        classpath &#39;com.android.tools.build:gradle:3.1.2&#39;

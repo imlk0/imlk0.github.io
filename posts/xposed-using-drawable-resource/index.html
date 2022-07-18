@@ -1,7 +1,8 @@
 <!doctype html><html lang=zh-cn><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><title>Xposed模块开发——在hook之后使用module的drawable资源 | imlk's blog</title><link rel=stylesheet href=/css/style.css><link rel=stylesheet href=/css/fonts.css><link rel=preconnect href=https://fonts.googleapis.com><link rel=preconnect href=https://fonts.gstatic.com crossorigin><link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&display=swap" rel=stylesheet></head><body><header class=header><a class=logo href=/>imlk's Blog</a><nav><ul class=menu><li><a href=/>Home</a></li><li><a href=/about/>About</a></li><li><a href=/archives/>Archives</a></li><li><a href=/friends/>Friends</a></li><li><a href=/index.xml>Subscribe</a></li></ul></nav></header><hr><div class=article-meta><h1><span class=title>Xposed模块开发——在hook之后使用module的drawable资源</span></h1><span><span class=date>2017-12-30</span>
-|
+<span class=date>(更新于2021-10-10)</span>
+/
 <span class=cats><a href=https://blog.imlk.top/categories/xposed/>Xposed</a></span>
-|
+/
 <span class=tags><a href=https://blog.imlk.top/tags/android/>#Android</a>
 <a href=https://blog.imlk.top/tags/java/>#Java</a>
 <a href=https://blog.imlk.top/tags/xposed/>#Xposed</a></span></span><br></div><main><p>在xposed开发过程中遇到了直接使用模块内置资源失效的问题，而且这个问题很诡异，有时候失效，有时候有效果，没效果的时候一般是显示一把叉叉</p><p>在上网搜索后发现，hook函数是在被hook应用内部执行的，环境不一样，所以直接用R.drawable.xxx的方式使用会出现问题。</p><h3 id=解决办法>解决办法：</h3><p><a href=https://forum.xda-developers.com/xposed/access-resources-module-t2805276>https://forum.xda-developers.com/xposed/access-resources-module-t2805276</a></p><p>参考了rovo89大神在xda上面的回复，改用</p><pre tabindex=0><code>private static String MODULE_PATH = null;

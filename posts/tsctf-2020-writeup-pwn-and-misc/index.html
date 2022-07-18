@@ -1,7 +1,8 @@
 <!doctype html><html lang=zh-cn><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><title>TSCTF 2020 writeup（pwn + misc） | imlk's blog</title><link rel=stylesheet href=/css/style.css><link rel=stylesheet href=/css/fonts.css><link rel=preconnect href=https://fonts.googleapis.com><link rel=preconnect href=https://fonts.gstatic.com crossorigin><link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&display=swap" rel=stylesheet></head><body><header class=header><a class=logo href=/>imlk's Blog</a><nav><ul class=menu><li><a href=/>Home</a></li><li><a href=/about/>About</a></li><li><a href=/archives/>Archives</a></li><li><a href=/friends/>Friends</a></li><li><a href=/index.xml>Subscribe</a></li></ul></nav></header><hr><div class=article-meta><h1><span class=title>TSCTF 2020 writeup（pwn + misc）</span></h1><span><span class=date>2020-10-19</span>
-|
+<span class=date>(更新于2021-10-10)</span>
+/
 <span class=cats><a href=https://blog.imlk.top/categories/ctf/>CTF</a></span>
-|
+/
 <span class=tags><a href=https://blog.imlk.top/tags/ctf/>#CTF</a>
 <a href=https://blog.imlk.top/tags/pwn/>#pwn</a>
 <a href=https://blog.imlk.top/tags/android/>#Android</a></span></span><br></div><main><p>部分题目的binary下载：<a href=/objects/tsctf-bin.tar.gz>tsctf-bin.tar.gz</a></p><h2 id=easy_adb>easy_adb</h2><p>这题我们拿到的是一个<code>.pcapng</code>格式的文件，用wireshark可以直接打开，发现是wireshark抓取的一系列的TCP包，分析内容后可以发现这是通过TCP建立的adb shell连接。</p><p>点击<code>Analyze</code>-><code>Follow TCP Stream</code>就可以看到TCP流信息：</p><p><img src=/images/blog/66/image-20201019120452409.png alt=image-20201019120452409></p><p>我们只关注字符串部分，所有的<code>raw:</code>后面的内容都是shell执行的指令。一开始执行了一些echo语句打印欢迎语。之后出现了<code>getevent -lp</code>、<code>getevent -p</code>、、<code>getevent -l</code>、<code>getevent -t</code>四条和输入事件有关 的指令。</p><p>通过分析得知，插入了一个<code>Yubico Yubikey NEO OTP+U2F+CCID</code>设备，它通过模拟一个键盘向Android输入信息，键和事件ID表如下：</p><pre tabindex=0><code>add device 1: /dev/input/event4

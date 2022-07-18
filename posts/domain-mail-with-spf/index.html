@@ -1,7 +1,8 @@
 <!doctype html><html lang=zh-cn><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><title>使用SPF来保护你的域名邮箱 | imlk's blog</title><link rel=stylesheet href=/css/style.css><link rel=stylesheet href=/css/fonts.css><link rel=preconnect href=https://fonts.googleapis.com><link rel=preconnect href=https://fonts.gstatic.com crossorigin><link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&display=swap" rel=stylesheet></head><body><header class=header><a class=logo href=/>imlk's Blog</a><nav><ul class=menu><li><a href=/>Home</a></li><li><a href=/about/>About</a></li><li><a href=/archives/>Archives</a></li><li><a href=/friends/>Friends</a></li><li><a href=/index.xml>Subscribe</a></li></ul></nav></header><hr><div class=article-meta><h1><span class=title>使用SPF来保护你的域名邮箱</span></h1><span><span class=date>2022-01-18</span>
-|
+<span class=date>(更新于2022-01-18)</span>
+/
 <span class=cats><a href=https://blog.imlk.top/categories/security/>Security</a></span>
-|
+/
 <span class=tags><a href=https://blog.imlk.top/tags/spf/>#SPF</a>
 <a href=https://blog.imlk.top/tags/dns/>#DNS</a>
 <a href=https://blog.imlk.top/tags/mail/>#Mail</a></span></span><br></div><main><p>今天翻看邮箱，偶然看到之前课程助教让我们做作业时使用S/MIME签名和加密的邮件，然后想起邮件系统的设计似乎可以轻松伪造Sender这一问题，结果就看到一个叫SPF的东西，遂把它配置到自己的域名邮箱上，记录一下。</p><h2 id=何为spf>何为SPF</h2><blockquote><p>发件人策略框架（英语：Sender Policy Framework；简称SPF； RFC 4408）是一套电子邮件认证机制，可以确认电子邮件确实是由网域授权的邮件服务器寄出，防止有人伪冒身份网络钓鱼或寄出垃圾电邮。SPF允许管理员设定一个DNS TXT记录或SPF记录设定发送邮件服务器的IP范围，如有任何邮件并非从上述指明授权的IP地址寄出，则很可能该邮件并非确实由真正的寄件者寄出（邮件上声称的“寄件者”为假冒）</p><p><em>From：<a href=https://zh.wikipedia.org/wiki/%E5%8F%91%E4%BB%B6%E4%BA%BA%E7%AD%96%E7%95%A5%E6%A1%86%E6%9E%B6>Wikipedia-发件人策略框架</a></em></p></blockquote><p>简单来说，就是发送方可以在自己域名的TXT字段上配置一些允许的ip地址范围，只有在这些ip地址发出的邮件才被认为是真实的。如果其它ip的主机以这个域名下的邮箱身份发出邮件，接收者可以认为邮件是假冒的。</p><p>（算是又一个基于DNS来保证安全的例子了）</p><p>拿我们常用的gmail为例，查询<code>google.com</code>的TXT记录，其中一个结果就是SPF配置：</p><pre tabindex=0><code>google.com.             19      IN      TXT     &#34;v=spf1 include:_spf.google.com ~all&#34;

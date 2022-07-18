@@ -1,7 +1,8 @@
 <!doctype html><html lang=zh-cn><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><title>为hexo开发一个简单的模块mdjsp | imlk's blog</title><link rel=stylesheet href=/css/style.css><link rel=stylesheet href=/css/fonts.css><link rel=preconnect href=https://fonts.googleapis.com><link rel=preconnect href=https://fonts.gstatic.com crossorigin><link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&display=swap" rel=stylesheet></head><body><header class=header><a class=logo href=/>imlk's Blog</a><nav><ul class=menu><li><a href=/>Home</a></li><li><a href=/about/>About</a></li><li><a href=/archives/>Archives</a></li><li><a href=/friends/>Friends</a></li><li><a href=/index.xml>Subscribe</a></li></ul></nav></header><hr><div class=article-meta><h1><span class=title>为hexo开发一个简单的模块mdjsp</span></h1><span><span class=date>2018-04-26</span>
-|
+<span class=date>(更新于2021-10-10)</span>
+/
 <span class=cats><a href=https://blog.imlk.top/categories/javascript/>JavaScript</a></span>
-|
+/
 <span class=tags><a href=https://blog.imlk.top/tags/%E7%9E%8E%E6%90%9E/>#瞎搞</a></span></span><br></div><main><p>第一次写npm插件，有点小激动，下面是写插件的坎坷之路</p><h2 id=0x00-开局错误>0x00 开局错误</h2><ul><li>在<code>node_modules</code>文件夹下新建<code>hexo-mdjsp-util</code>文件夹，</li><li>新建<code>package.json</code>和<code>index.jsp</code>并填好内容</li></ul><pre tabindex=0><code>{
   &#34;name&#34;: &#34;hexo-mdjsp-util&#34;,
   &#34;version&#34;: &#34;0.0.1&#34;,

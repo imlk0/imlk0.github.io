@@ -1,7 +1,8 @@
 <!doctype html><html lang=zh-cn><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><title>Codeforces Contest 1005 E2. Median on Segments (General Case Edition) | imlk's blog</title><link rel=stylesheet href=/css/style.css><link rel=stylesheet href=/css/fonts.css><link rel=preconnect href=https://fonts.googleapis.com><link rel=preconnect href=https://fonts.gstatic.com crossorigin><link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&display=swap" rel=stylesheet></head><body><header class=header><a class=logo href=/>imlk's Blog</a><nav><ul class=menu><li><a href=/>Home</a></li><li><a href=/about/>About</a></li><li><a href=/archives/>Archives</a></li><li><a href=/friends/>Friends</a></li><li><a href=/index.xml>Subscribe</a></li></ul></nav></header><hr><div class=article-meta><h1><span class=title>Codeforces Contest 1005 E2. Median on Segments (General Case Edition)</span></h1><span><span class=date>2018-07-11</span>
-|
+<span class=date>(更新于2021-10-10)</span>
+/
 <span class=cats><a href=https://blog.imlk.top/categories/algorithm/>Algorithm</a></span>
-|
+/
 <span class=tags><a href=https://blog.imlk.top/tags/codeforces/>#Codeforces</a></span></span><br></div><main><h3 id=链接>链接</h3><p><a href=http://codeforces.com/contest/1005/problem/E2>Codeforces Round #496 (Div. 3) - E2. Median on Segments (General Case Edition)</a></p><h3 id=0x00问题转化>0x00问题转化</h3><p>为求得中位数为m的所有区间组合，可以将问题转化为两个更容易的问题</p><blockquote><p>“求&lt;中位数为大于等于m的数>的所有组合数量 - &lt;中位数为大于等于m+1的数>的所有组合数量”</p></blockquote><h3 id=0x00求解问题>0x00求解问题</h3><p>求&lt;中位数为大于等于m的数>的所有组合数量</p><p>从左到右遍历输入数据，若遇到大于等于m的则+1，否则-1
 <strong>若某个区间[a,b]中+1 -1的和最终大于0(即大于等于m的数多于小于等于m的数)，则[a,b]区间的中位数大于等于m</strong></p><p>统计这些区间的数目，就是答案
 但是遍历区间复杂度是n^2，要计算每一个子区间的和值，可以采用类似于前缀数组的思想，

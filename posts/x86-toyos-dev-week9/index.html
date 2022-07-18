@@ -1,7 +1,8 @@
 <!doctype html><html lang=zh-cn><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><title>自制x86玩具操作系统 week9 | imlk's blog</title><link rel=stylesheet href=/css/style.css><link rel=stylesheet href=/css/fonts.css><link rel=preconnect href=https://fonts.googleapis.com><link rel=preconnect href=https://fonts.gstatic.com crossorigin><link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&display=swap" rel=stylesheet></head><body><header class=header><a class=logo href=/>imlk's Blog</a><nav><ul class=menu><li><a href=/>Home</a></li><li><a href=/about/>About</a></li><li><a href=/archives/>Archives</a></li><li><a href=/friends/>Friends</a></li><li><a href=/index.xml>Subscribe</a></li></ul></nav></header><hr><div class=article-meta><h1><span class=title>自制x86玩具操作系统 week9</span></h1><span><span class=date>2019-05-01</span>
-|
+<span class=date>(更新于2021-10-10)</span>
+/
 <span class=cats><a href=https://blog.imlk.top/categories/osdev/>OSDev</a></span>
-|
+/
 <span class=tags><a href=https://blog.imlk.top/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/>#操作系统</a>
 <a href=https://blog.imlk.top/tags/diy/>#DIY</a></span></span><br></div><main><h2 id=day-0x18>DAY 0x18</h2><h4 id=分页前的准备>分页前的准备</h4><p>Linux并没有非常依赖于段表，而是采用的分页结构，将内核和用户程序的段设置为覆盖整个内存区域以此来绕过分段结构，但是显然这个30天操作系统的作者并不打算这样做，它把内核数据段设置为整个内存区域，但是却把代码段设置成0x00280000开始的空间。这对于之后加入类似于Linux的分页模式造成了不便，首先我们想办法把内核数据段改为覆盖整个内存区。</p><p>先看一下内存区域图：</p><pre tabindex=0><code>|-------------------------------------------------------|0x00280000
 |	512KB	0x00080000Byte								|
