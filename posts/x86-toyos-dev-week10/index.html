@@ -1,134 +1,70 @@
-<!doctype html><html lang=zh-cn>
-<head>
-<meta charset=utf-8>
-<meta name=viewport content="width=device-width,initial-scale=1">
-<title>自制x86玩具操作系统 week10 | imlk's blog</title>
-<link rel=stylesheet href=/css/style.css>
-<link rel=stylesheet href=/css/fonts.css>
-<link rel=preconnect href=https://fonts.googleapis.com>
-<link rel=preconnect href=https://fonts.gstatic.com crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&display=swap" rel=stylesheet>
-</head>
-<body>
-<header class=header>
-<a class=logo href=/> imlk's Blog </a>
-<nav>
-<ul class=menu>
-<li><a href=/>Home</a></li>
-<li><a href=/about/>About</a></li>
-<li><a href=/archives/>Archives</a></li>
-<li><a href=/friends/>Friends</a></li>
-<li><a href=/index.xml>Subscribe</a></li>
-</ul>
-</nav>
-</header>
-<hr>
-<div class=article-meta>
-<h1><span class=title>自制x86玩具操作系统 week10</span></h1>
-<span>
-<span class=date>2019-05-01</span>
+<!doctype html><html lang=zh-cn><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><title>自制x86玩具操作系统 week10 | imlk's blog</title><link rel=stylesheet href=/css/style.css><link rel=stylesheet href=/css/fonts.css><link rel=preconnect href=https://fonts.googleapis.com><link rel=preconnect href=https://fonts.gstatic.com crossorigin><link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&display=swap" rel=stylesheet></head><body><header class=header><a class=logo href=/>imlk's Blog</a><nav><ul class=menu><li><a href=/>Home</a></li><li><a href=/about/>About</a></li><li><a href=/archives/>Archives</a></li><li><a href=/friends/>Friends</a></li><li><a href=/index.xml>Subscribe</a></li></ul></nav></header><hr><div class=article-meta><h1><span class=title>自制x86玩具操作系统 week10</span></h1><span><span class=date>2019-05-01</span>
 |
-<span class=cats>
-<a href=https://blog.imlk.top/categories/osdev/>OSDev</a>
-</span>
+<span class=cats><a href=https://blog.imlk.top/categories/osdev/>OSDev</a></span>
 |
-<span class=tags>
-<a href=https://blog.imlk.top/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/>#操作系统</a>
-<a href=https://blog.imlk.top/tags/diy/>#DIY</a>
-</span>
-</span>
-<br>
-</div>
-<main>
-<h2 id=day-0x1b>DAY 0x1B</h2>
-<p>回顾<code>TSS</code>结构体，其中有一<code>CR3</code>字段，该字段在task切换的时候会自动赋值给<code>CR3</code>寄存器，我们可以在这里给用户程序设置额外的页目录地址（物理地址），</p>
-<p>首先需要分配一张页表</p>
-<p>按照内存中的结构来构造页目录结构体和页表结构体</p>
-<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-cpp data-lang=cpp><span style=color:#66d9ef>struct</span> <span style=color:#a6e22e>PAGE_DE</span> {
-	<span style=color:#66d9ef>unsigned</span> <span style=color:#66d9ef>int</span> entrys[PAGE_DE_ENTRY_NUM];
-};
-
-PAGE_DE<span style=color:#f92672>*</span> <span style=color:#a6e22e>alloc_page_de</span>(MEMMAN<span style=color:#f92672>*</span> memman) {
-	PAGE_DE<span style=color:#f92672>*</span> p <span style=color:#f92672>=</span> (PAGE_DE<span style=color:#f92672>*</span>)memman_alloc_4k(memman, <span style=color:#66d9ef>sizeof</span>(PAGE_DE));
-	utils<span style=color:#f92672>::</span>memset(p, <span style=color:#ae81ff>0</span>, <span style=color:#66d9ef>sizeof</span>(PAGE_DE));
-	<span style=color:#66d9ef>return</span> p;
-}
-</code></pre></div><p>获得页表以后，可以分配一定的内存区域来存放用户程序数据，作者在运行用户程序时，采用新增一项段表的方法将逻辑地址映射到物理地址，但是我们这里依然绕过段表，直接用页表映射到物理地址。
-所以，我们将从<code>0x00000000</code>开始的线性地址区域映射到我们刚刚分配的用户程序区域的物理地址：</p>
-<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-cpp data-lang=cpp>map_page_addr2addr(sys<span style=color:#f92672>::</span>memman, pagede, <span style=color:#ae81ff>0</span>, segsiz, (<span style=color:#66d9ef>unsigned</span> <span style=color:#66d9ef>int</span>)q <span style=color:#f92672>-</span> LADDR_K_BASE, <span style=color:#ae81ff>7</span>, <span style=color:#ae81ff>7</span>); <span style=color:#75715e>// user access | write | present
-</span></code></pre></div><p>注意flag设置为“用户态可访问、可写、该页存在”</p>
-<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-cpp data-lang=cpp>
-<span style=color:#75715e>// 映射地址到页目录，要求start_laddr和start_paddr低12位相同
-</span><span style=color:#75715e></span><span style=color:#66d9ef>void</span> <span style=color:#a6e22e>map_page_addr2addr</span>(MEMMAN<span style=color:#f92672>*</span> memman, PAGE_DE<span style=color:#f92672>*</span> pagede, <span style=color:#66d9ef>unsigned</span> <span style=color:#66d9ef>int</span> start_laddr, <span style=color:#66d9ef>unsigned</span> <span style=color:#66d9ef>int</span> size,
-                        <span style=color:#66d9ef>unsigned</span> <span style=color:#66d9ef>int</span> start_paddr, <span style=color:#66d9ef>unsigned</span> <span style=color:#66d9ef>int</span> demode, <span style=color:#66d9ef>unsigned</span> <span style=color:#66d9ef>int</span> tamode) {
-
-	<span style=color:#66d9ef>unsigned</span> <span style=color:#66d9ef>int</span> end_laddr <span style=color:#f92672>=</span> start_laddr <span style=color:#f92672>+</span> size;
-	end_laddr <span style=color:#f92672>=</span> (end_laddr <span style=color:#f92672>-</span> <span style=color:#ae81ff>1</span> <span style=color:#f92672>+</span> <span style=color:#ae81ff>0x1000</span>) <span style=color:#f92672>/</span> <span style=color:#ae81ff>0x1000</span>  <span style=color:#f92672>*</span> <span style=color:#ae81ff>0x1000</span>;<span style=color:#75715e>// 4k向上对齐
-</span><span style=color:#75715e></span>	start_laddr <span style=color:#f92672>=</span> start_laddr <span style=color:#f92672>/</span> <span style=color:#ae81ff>0x1000</span> <span style=color:#f92672>*</span> <span style=color:#ae81ff>0x1000</span>;<span style=color:#75715e>// 4k向下对齐
-</span><span style=color:#75715e></span>	start_paddr <span style=color:#f92672>=</span> start_paddr <span style=color:#f92672>/</span> <span style=color:#ae81ff>0x1000</span> <span style=color:#f92672>*</span> <span style=color:#ae81ff>0x1000</span>;<span style=color:#75715e>// 4k向下对齐
-</span><span style=color:#75715e></span>
-	<span style=color:#66d9ef>unsigned</span> <span style=color:#66d9ef>int</span> start_entry <span style=color:#f92672>=</span> start_laddr <span style=color:#f92672>&gt;&gt;</span> <span style=color:#ae81ff>22</span>;
-	<span style=color:#66d9ef>unsigned</span> <span style=color:#66d9ef>int</span> end_entry <span style=color:#f92672>=</span> ((end_laddr <span style=color:#f92672>-</span> <span style=color:#ae81ff>1</span> <span style=color:#f92672>+</span> <span style=color:#ae81ff>0x400000</span>) <span style=color:#f92672>/</span> <span style=color:#ae81ff>0x400000</span>  <span style=color:#f92672>*</span> <span style=color:#ae81ff>0x400000</span>) <span style=color:#f92672>&gt;&gt;</span> <span style=color:#ae81ff>22</span>;<span style=color:#75715e>// 4MB对齐
-</span><span style=color:#75715e></span>	<span style=color:#66d9ef>unsigned</span> <span style=color:#66d9ef>int</span> sub_start_laddr <span style=color:#f92672>=</span> start_laddr;
-	<span style=color:#66d9ef>unsigned</span> <span style=color:#66d9ef>int</span> sub_end_laddr <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>;
-	<span style=color:#66d9ef>unsigned</span> <span style=color:#66d9ef>int</span> sub_start_paddr <span style=color:#f92672>=</span> start_paddr;
-	<span style=color:#66d9ef>unsigned</span> <span style=color:#66d9ef>int</span> sub_size <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>;
-
-	<span style=color:#66d9ef>for</span> (<span style=color:#66d9ef>int</span> i <span style=color:#f92672>=</span> start_entry; i <span style=color:#f92672>&lt;</span> end_entry <span style=color:#f92672>&amp;&amp;</span> i <span style=color:#f92672>&lt;</span> PAGE_DE_ENTRY_NUM; <span style=color:#f92672>++</span>i) {
-		PAGE_TA<span style=color:#f92672>*</span> pta <span style=color:#f92672>=</span> (PAGE_TA<span style=color:#f92672>*</span>)((pagede<span style=color:#f92672>-&gt;</span>entrys[i]) <span style=color:#f92672>&amp;</span> <span style=color:#ae81ff>0xFFFFF000</span>);
-		<span style=color:#66d9ef>if</span> (pta <span style=color:#f92672>==</span> <span style=color:#66d9ef>nullptr</span>) {
-			pta <span style=color:#f92672>=</span> alloc_page_ta(memman);
-		} <span style=color:#66d9ef>else</span> {
-			pta <span style=color:#f92672>=</span> (PAGE_TA<span style=color:#f92672>*</span>)(((<span style=color:#66d9ef>unsigned</span> <span style=color:#66d9ef>int</span>)pta) <span style=color:#f92672>+</span> LADDR_K_BASE);
-		}
-
-		sub_end_laddr <span style=color:#f92672>=</span> utils<span style=color:#f92672>::</span>min(end_laddr, (i <span style=color:#f92672>+</span> <span style=color:#ae81ff>1</span>) <span style=color:#f92672>&lt;&lt;</span> <span style=color:#ae81ff>22</span>);
-		sub_size <span style=color:#f92672>=</span> utils<span style=color:#f92672>::</span>max(<span style=color:#ae81ff>0</span>, sub_end_laddr <span style=color:#f92672>-</span> sub_start_laddr);
-		map_page_addr2addr(pta, sub_start_laddr, sub_size, sub_start_paddr, tamode);<span style=color:#75715e>// 填充pta指向的页表
-</span><span style=color:#75715e></span>		sub_start_paddr <span style=color:#f92672>+=</span> sub_size;
-		sub_start_laddr <span style=color:#f92672>+=</span> sub_size;
-		set_page_ta2de(pagede, pta, i, demode);
-	}
-}
-</code></pre></div><p>需要注意的是，分页结构要求页表映射的内存是按4k对齐的，即线性地址的一页映射物理内存一帧。而作者之前编写的<code>memman_alloc_4k</code>函数仅仅保证了内存区域大小4k对齐，因此我们要对该函数进行修改，让它分配的空间在初始地址和内存大小都按4k对齐。</p>
-<p>除了用户程序的页表外，我们还需要把内核程序的页表加入到用户态页目录里面，这样的话，用户态程序调用内核中的api执行内核程序时，就不用更变CR3,直接从当前的task（带有我们准备的用户态页目录）里面映射到内核态的代码了</p>
-<p>用户态task的分页：</p>
-<pre tabindex=0><code>cr3: 0x00000077e000
+<span class=tags><a href=https://blog.imlk.top/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/>#操作系统</a>
+<a href=https://blog.imlk.top/tags/diy/>#DIY</a></span></span><br></div><main><h2 id=day-0x1b>DAY 0x1B</h2><p>回顾<code>TSS</code>结构体，其中有一<code>CR3</code>字段，该字段在task切换的时候会自动赋值给<code>CR3</code>寄存器，我们可以在这里给用户程序设置额外的页目录地址（物理地址），</p><p>首先需要分配一张页表</p><p>按照内存中的结构来构造页目录结构体和页表结构体</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-cpp data-lang=cpp><span style=display:flex><span><span style=color:#66d9ef>struct</span> <span style=color:#a6e22e>PAGE_DE</span> {
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>unsigned</span> <span style=color:#66d9ef>int</span> entrys[PAGE_DE_ENTRY_NUM];
+</span></span><span style=display:flex><span>};
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>PAGE_DE<span style=color:#f92672>*</span> <span style=color:#a6e22e>alloc_page_de</span>(MEMMAN<span style=color:#f92672>*</span> memman) {
+</span></span><span style=display:flex><span>	PAGE_DE<span style=color:#f92672>*</span> p <span style=color:#f92672>=</span> (PAGE_DE<span style=color:#f92672>*</span>)memman_alloc_4k(memman, <span style=color:#66d9ef>sizeof</span>(PAGE_DE));
+</span></span><span style=display:flex><span>	utils<span style=color:#f92672>::</span>memset(p, <span style=color:#ae81ff>0</span>, <span style=color:#66d9ef>sizeof</span>(PAGE_DE));
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>return</span> p;
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><p>获得页表以后，可以分配一定的内存区域来存放用户程序数据，作者在运行用户程序时，采用新增一项段表的方法将逻辑地址映射到物理地址，但是我们这里依然绕过段表，直接用页表映射到物理地址。
+所以，我们将从<code>0x00000000</code>开始的线性地址区域映射到我们刚刚分配的用户程序区域的物理地址：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-cpp data-lang=cpp><span style=display:flex><span>map_page_addr2addr(sys<span style=color:#f92672>::</span>memman, pagede, <span style=color:#ae81ff>0</span>, segsiz, (<span style=color:#66d9ef>unsigned</span> <span style=color:#66d9ef>int</span>)q <span style=color:#f92672>-</span> LADDR_K_BASE, <span style=color:#ae81ff>7</span>, <span style=color:#ae81ff>7</span>); <span style=color:#75715e>// user access | write | present
+</span></span></span></code></pre></div><p>注意flag设置为“用户态可访问、可写、该页存在”</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-cpp data-lang=cpp><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e>// 映射地址到页目录，要求start_laddr和start_paddr低12位相同
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>void</span> <span style=color:#a6e22e>map_page_addr2addr</span>(MEMMAN<span style=color:#f92672>*</span> memman, PAGE_DE<span style=color:#f92672>*</span> pagede, <span style=color:#66d9ef>unsigned</span> <span style=color:#66d9ef>int</span> start_laddr, <span style=color:#66d9ef>unsigned</span> <span style=color:#66d9ef>int</span> size,
+</span></span><span style=display:flex><span>                        <span style=color:#66d9ef>unsigned</span> <span style=color:#66d9ef>int</span> start_paddr, <span style=color:#66d9ef>unsigned</span> <span style=color:#66d9ef>int</span> demode, <span style=color:#66d9ef>unsigned</span> <span style=color:#66d9ef>int</span> tamode) {
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>unsigned</span> <span style=color:#66d9ef>int</span> end_laddr <span style=color:#f92672>=</span> start_laddr <span style=color:#f92672>+</span> size;
+</span></span><span style=display:flex><span>	end_laddr <span style=color:#f92672>=</span> (end_laddr <span style=color:#f92672>-</span> <span style=color:#ae81ff>1</span> <span style=color:#f92672>+</span> <span style=color:#ae81ff>0x1000</span>) <span style=color:#f92672>/</span> <span style=color:#ae81ff>0x1000</span>  <span style=color:#f92672>*</span> <span style=color:#ae81ff>0x1000</span>;<span style=color:#75715e>// 4k向上对齐
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>	start_laddr <span style=color:#f92672>=</span> start_laddr <span style=color:#f92672>/</span> <span style=color:#ae81ff>0x1000</span> <span style=color:#f92672>*</span> <span style=color:#ae81ff>0x1000</span>;<span style=color:#75715e>// 4k向下对齐
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>	start_paddr <span style=color:#f92672>=</span> start_paddr <span style=color:#f92672>/</span> <span style=color:#ae81ff>0x1000</span> <span style=color:#f92672>*</span> <span style=color:#ae81ff>0x1000</span>;<span style=color:#75715e>// 4k向下对齐
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>unsigned</span> <span style=color:#66d9ef>int</span> start_entry <span style=color:#f92672>=</span> start_laddr <span style=color:#f92672>&gt;&gt;</span> <span style=color:#ae81ff>22</span>;
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>unsigned</span> <span style=color:#66d9ef>int</span> end_entry <span style=color:#f92672>=</span> ((end_laddr <span style=color:#f92672>-</span> <span style=color:#ae81ff>1</span> <span style=color:#f92672>+</span> <span style=color:#ae81ff>0x400000</span>) <span style=color:#f92672>/</span> <span style=color:#ae81ff>0x400000</span>  <span style=color:#f92672>*</span> <span style=color:#ae81ff>0x400000</span>) <span style=color:#f92672>&gt;&gt;</span> <span style=color:#ae81ff>22</span>;<span style=color:#75715e>// 4MB对齐
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>	<span style=color:#66d9ef>unsigned</span> <span style=color:#66d9ef>int</span> sub_start_laddr <span style=color:#f92672>=</span> start_laddr;
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>unsigned</span> <span style=color:#66d9ef>int</span> sub_end_laddr <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>;
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>unsigned</span> <span style=color:#66d9ef>int</span> sub_start_paddr <span style=color:#f92672>=</span> start_paddr;
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>unsigned</span> <span style=color:#66d9ef>int</span> sub_size <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>for</span> (<span style=color:#66d9ef>int</span> i <span style=color:#f92672>=</span> start_entry; i <span style=color:#f92672>&lt;</span> end_entry <span style=color:#f92672>&amp;&amp;</span> i <span style=color:#f92672>&lt;</span> PAGE_DE_ENTRY_NUM; <span style=color:#f92672>++</span>i) {
+</span></span><span style=display:flex><span>		PAGE_TA<span style=color:#f92672>*</span> pta <span style=color:#f92672>=</span> (PAGE_TA<span style=color:#f92672>*</span>)((pagede<span style=color:#f92672>-&gt;</span>entrys[i]) <span style=color:#f92672>&amp;</span> <span style=color:#ae81ff>0xFFFFF000</span>);
+</span></span><span style=display:flex><span>		<span style=color:#66d9ef>if</span> (pta <span style=color:#f92672>==</span> <span style=color:#66d9ef>nullptr</span>) {
+</span></span><span style=display:flex><span>			pta <span style=color:#f92672>=</span> alloc_page_ta(memman);
+</span></span><span style=display:flex><span>		} <span style=color:#66d9ef>else</span> {
+</span></span><span style=display:flex><span>			pta <span style=color:#f92672>=</span> (PAGE_TA<span style=color:#f92672>*</span>)(((<span style=color:#66d9ef>unsigned</span> <span style=color:#66d9ef>int</span>)pta) <span style=color:#f92672>+</span> LADDR_K_BASE);
+</span></span><span style=display:flex><span>		}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>		sub_end_laddr <span style=color:#f92672>=</span> utils<span style=color:#f92672>::</span>min(end_laddr, (i <span style=color:#f92672>+</span> <span style=color:#ae81ff>1</span>) <span style=color:#f92672>&lt;&lt;</span> <span style=color:#ae81ff>22</span>);
+</span></span><span style=display:flex><span>		sub_size <span style=color:#f92672>=</span> utils<span style=color:#f92672>::</span>max(<span style=color:#ae81ff>0</span>, sub_end_laddr <span style=color:#f92672>-</span> sub_start_laddr);
+</span></span><span style=display:flex><span>		map_page_addr2addr(pta, sub_start_laddr, sub_size, sub_start_paddr, tamode);<span style=color:#75715e>// 填充pta指向的页表
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>		sub_start_paddr <span style=color:#f92672>+=</span> sub_size;
+</span></span><span style=display:flex><span>		sub_start_laddr <span style=color:#f92672>+=</span> sub_size;
+</span></span><span style=display:flex><span>		set_page_ta2de(pagede, pta, i, demode);
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><p>需要注意的是，分页结构要求页表映射的内存是按4k对齐的，即线性地址的一页映射物理内存一帧。而作者之前编写的<code>memman_alloc_4k</code>函数仅仅保证了内存区域大小4k对齐，因此我们要对该函数进行修改，让它分配的空间在初始地址和内存大小都按4k对齐。</p><p>除了用户程序的页表外，我们还需要把内核程序的页表加入到用户态页目录里面，这样的话，用户态程序调用内核中的api执行内核程序时，就不用更变CR3,直接从当前的task（带有我们准备的用户态页目录）里面映射到内核态的代码了</p><p>用户态task的分页：</p><pre tabindex=0><code>cr3: 0x00000077e000
 0x00000000-0x00000fff -&gt; 0x000020000000-0x000020000fff  /* 低线性地址区域用户程序 */
 0xc0000000-0xdfffffff -&gt; 0x000000000000-0x00001fffffff  /* 高线性地址区域内核程序 */
 0xe0000000-0xffffffff -&gt; 0x0000e0000000-0x0000ffffffff  /* 高线性地址区域硬件区域 */
-</code></pre><p>编写函数执行这一拷贝过程</p>
-<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-cpp data-lang=cpp><span style=color:#66d9ef>void</span> <span style=color:#a6e22e>copy_page_de2de</span>(PAGE_DE<span style=color:#f92672>*</span> fromde, <span style=color:#66d9ef>int</span> fromstart, PAGE_DE<span style=color:#f92672>*</span> tode, <span style=color:#66d9ef>int</span> tostart, <span style=color:#66d9ef>int</span> count) {
-	<span style=color:#66d9ef>for</span> (<span style=color:#66d9ef>int</span> i <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>; i <span style=color:#f92672>&lt;</span> count <span style=color:#f92672>&amp;&amp;</span> fromstart <span style=color:#f92672>+</span> i <span style=color:#f92672>&lt;</span> PAGE_DE_ENTRY_NUM <span style=color:#f92672>&amp;&amp;</span> tostart <span style=color:#f92672>+</span> i <span style=color:#f92672>&lt;</span> PAGE_DE_ENTRY_NUM; <span style=color:#f92672>++</span>i) {
-		tode<span style=color:#f92672>-&gt;</span>entrys[tostart <span style=color:#f92672>+</span> i] <span style=color:#f92672>=</span> fromde<span style=color:#f92672>-&gt;</span>entrys[fromstart <span style=color:#f92672>+</span> i];
-	}
-}
-</code></pre></div><p>增加两项用户态的gdt</p>
-<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-cpp data-lang=cpp>	set_segmdesc(gdt <span style=color:#f92672>+</span> ((<span style=color:#66d9ef>unsigned</span> <span style=color:#66d9ef>int</span>)__USER_CS <span style=color:#f92672>&gt;&gt;</span> <span style=color:#ae81ff>3</span>), <span style=color:#ae81ff>0xFFFFFFFF</span>, <span style=color:#ae81ff>0</span>, AR_CODE32_ER <span style=color:#f92672>+</span> <span style=color:#ae81ff>0x60</span>);
-	set_segmdesc(gdt <span style=color:#f92672>+</span> ((<span style=color:#66d9ef>unsigned</span> <span style=color:#66d9ef>int</span>)__USER_DS <span style=color:#f92672>&gt;&gt;</span> <span style=color:#ae81ff>3</span>), <span style=color:#ae81ff>0xFFFFFFFF</span>, <span style=color:#ae81ff>0</span>, AR_DATA32_RW <span style=color:#f92672>+</span> <span style=color:#ae81ff>0x60</span>);
-</code></pre></div><p>以用户态运行我们加载的程序</p>
-<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-cpp data-lang=cpp>	start_app(<span style=color:#ae81ff>0x1b</span>, __USER_CS, esp, __USER_DS, <span style=color:#f92672>&amp;</span>(task<span style=color:#f92672>-&gt;</span>tss.esp0));<span style=color:#75715e>// 入口地址0x1b,那里是一个jmp跳板
-</span></code></pre></div><p>运行hello
-<img src=/images/blog/os/21.png alt></p>
-<p>可能会质疑如果将内核的页表放到用户态程序的页目录里面会不会导致从用户态直接访问内核数据，毕竟我们绕过了段表，段表的limit已经不能起保护作用了。
-实际上是不用担心的，因为内核页表的flag中设定了User位为0，只允许内核态代码访问。</p>
-<p>编写以下程序<code>touch_kernel.cpp</code>来测试：</p>
-<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-cpp data-lang=cpp><span style=color:#66d9ef>void</span> <span style=color:#a6e22e>HariMain</span>() {
-	<span style=color:#66d9ef>int</span><span style=color:#f92672>*</span> kp <span style=color:#f92672>=</span> (<span style=color:#66d9ef>int</span><span style=color:#f92672>*</span>)<span style=color:#ae81ff>0xC0000000</span>;
-	(<span style=color:#f92672>*</span>kp) <span style=color:#f92672>=</span> <span style=color:#ae81ff>0xFFFFFFFF</span>;
-}
-</code></pre></div><p><img src=/images/blog/os/22.png alt>
+</code></pre><p>编写函数执行这一拷贝过程</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-cpp data-lang=cpp><span style=display:flex><span><span style=color:#66d9ef>void</span> <span style=color:#a6e22e>copy_page_de2de</span>(PAGE_DE<span style=color:#f92672>*</span> fromde, <span style=color:#66d9ef>int</span> fromstart, PAGE_DE<span style=color:#f92672>*</span> tode, <span style=color:#66d9ef>int</span> tostart, <span style=color:#66d9ef>int</span> count) {
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>for</span> (<span style=color:#66d9ef>int</span> i <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>; i <span style=color:#f92672>&lt;</span> count <span style=color:#f92672>&amp;&amp;</span> fromstart <span style=color:#f92672>+</span> i <span style=color:#f92672>&lt;</span> PAGE_DE_ENTRY_NUM <span style=color:#f92672>&amp;&amp;</span> tostart <span style=color:#f92672>+</span> i <span style=color:#f92672>&lt;</span> PAGE_DE_ENTRY_NUM; <span style=color:#f92672>++</span>i) {
+</span></span><span style=display:flex><span>		tode<span style=color:#f92672>-&gt;</span>entrys[tostart <span style=color:#f92672>+</span> i] <span style=color:#f92672>=</span> fromde<span style=color:#f92672>-&gt;</span>entrys[fromstart <span style=color:#f92672>+</span> i];
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><p>增加两项用户态的gdt</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-cpp data-lang=cpp><span style=display:flex><span>	set_segmdesc(gdt <span style=color:#f92672>+</span> ((<span style=color:#66d9ef>unsigned</span> <span style=color:#66d9ef>int</span>)__USER_CS <span style=color:#f92672>&gt;&gt;</span> <span style=color:#ae81ff>3</span>), <span style=color:#ae81ff>0xFFFFFFFF</span>, <span style=color:#ae81ff>0</span>, AR_CODE32_ER <span style=color:#f92672>+</span> <span style=color:#ae81ff>0x60</span>);
+</span></span><span style=display:flex><span>	set_segmdesc(gdt <span style=color:#f92672>+</span> ((<span style=color:#66d9ef>unsigned</span> <span style=color:#66d9ef>int</span>)__USER_DS <span style=color:#f92672>&gt;&gt;</span> <span style=color:#ae81ff>3</span>), <span style=color:#ae81ff>0xFFFFFFFF</span>, <span style=color:#ae81ff>0</span>, AR_DATA32_RW <span style=color:#f92672>+</span> <span style=color:#ae81ff>0x60</span>);
+</span></span></code></pre></div><p>以用户态运行我们加载的程序</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-cpp data-lang=cpp><span style=display:flex><span>	start_app(<span style=color:#ae81ff>0x1b</span>, __USER_CS, esp, __USER_DS, <span style=color:#f92672>&amp;</span>(task<span style=color:#f92672>-&gt;</span>tss.esp0));<span style=color:#75715e>// 入口地址0x1b,那里是一个jmp跳板
+</span></span></span></code></pre></div><p>运行hello
+<img src=/images/blog/os/21.png alt></p><p>可能会质疑如果将内核的页表放到用户态程序的页目录里面会不会导致从用户态直接访问内核数据，毕竟我们绕过了段表，段表的limit已经不能起保护作用了。
+实际上是不用担心的，因为内核页表的flag中设定了User位为0，只允许内核态代码访问。</p><p>编写以下程序<code>touch_kernel.cpp</code>来测试：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-cpp data-lang=cpp><span style=display:flex><span><span style=color:#66d9ef>void</span> <span style=color:#a6e22e>HariMain</span>() {
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>int</span><span style=color:#f92672>*</span> kp <span style=color:#f92672>=</span> (<span style=color:#66d9ef>int</span><span style=color:#f92672>*</span>)<span style=color:#ae81ff>0xC0000000</span>;
+</span></span><span style=display:flex><span>	(<span style=color:#f92672>*</span>kp) <span style=color:#f92672>=</span> <span style=color:#ae81ff>0xFFFFFFFF</span>;
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><p><img src=/images/blog/os/22.png alt>
 bochs检测到了页错误PE
-<img src=/images/blog/os/23.png alt></p>
-<p>至此，不考虑虚拟内存的用户态分页实现完成</p>
-</main>
-<div id=comments>
-<hr>
-<script src=https://utteranc.es/client.js repo=KB5201314/KB5201314.github.io issue-term=pathname label="💬 comments 💬" theme=github-light crossorigin=anonymous async></script>
-</div>
-<footer>
-<hr>
-© imlk 2017 &ndash; 2021 | <a href=https://blog.imlk.top>imlk's blog</a> | <a href=https://github.com/KB5201314/>Github</a> | <a href=mailto:me@imlk.top>Email</a> | <a href=https://beian.miit.gov.cn/>京ICP备 - 2020042968号</a>
-</footer>
-</body>
-</html>
+<img src=/images/blog/os/23.png alt></p><p>至此，不考虑虚拟内存的用户态分页实现完成</p></main><div id=comments><hr><script src=https://utteranc.es/client.js repo=KB5201314/KB5201314.github.io issue-term=pathname label='💬 comments 💬' theme=github-light crossorigin=anonymous async></script></div><footer><hr>© imlk 2017 &ndash; 2021 | <a href=https://blog.imlk.top>imlk's blog</a> | <a href=https://github.com/KB5201314/>Github</a> | <a href=mailto:me@imlk.top>Email</a> | <a href=https://beian.miit.gov.cn/>京ICP备 - 2020042968号</a></footer></body></html>

@@ -1,49 +1,9 @@
-<!doctype html><html lang=zh-cn>
-<head>
-<meta charset=utf-8>
-<meta name=viewport content="width=device-width,initial-scale=1">
-<title>HDU 1003 Max sum——分治法的应用，动态规划，前缀数组 | imlk's blog</title>
-<link rel=stylesheet href=/css/style.css>
-<link rel=stylesheet href=/css/fonts.css>
-<link rel=preconnect href=https://fonts.googleapis.com>
-<link rel=preconnect href=https://fonts.gstatic.com crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&display=swap" rel=stylesheet>
-</head>
-<body>
-<header class=header>
-<a class=logo href=/> imlk's Blog </a>
-<nav>
-<ul class=menu>
-<li><a href=/>Home</a></li>
-<li><a href=/about/>About</a></li>
-<li><a href=/archives/>Archives</a></li>
-<li><a href=/friends/>Friends</a></li>
-<li><a href=/index.xml>Subscribe</a></li>
-</ul>
-</nav>
-</header>
-<hr>
-<div class=article-meta>
-<h1><span class=title>HDU 1003 Max sum——分治法的应用，动态规划，前缀数组</span></h1>
-<span>
-<span class=date>2017-12-06</span>
+<!doctype html><html lang=zh-cn><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><title>HDU 1003 Max sum——分治法的应用，动态规划，前缀数组 | imlk's blog</title><link rel=stylesheet href=/css/style.css><link rel=stylesheet href=/css/fonts.css><link rel=preconnect href=https://fonts.googleapis.com><link rel=preconnect href=https://fonts.gstatic.com crossorigin><link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&display=swap" rel=stylesheet></head><body><header class=header><a class=logo href=/>imlk's Blog</a><nav><ul class=menu><li><a href=/>Home</a></li><li><a href=/about/>About</a></li><li><a href=/archives/>Archives</a></li><li><a href=/friends/>Friends</a></li><li><a href=/index.xml>Subscribe</a></li></ul></nav></header><hr><div class=article-meta><h1><span class=title>HDU 1003 Max sum——分治法的应用，动态规划，前缀数组</span></h1><span><span class=date>2017-12-06</span>
 |
-<span class=cats>
-<a href=https://blog.imlk.top/categories/algorithm/>Algorithm</a>
-</span>
+<span class=cats><a href=https://blog.imlk.top/categories/algorithm/>Algorithm</a></span>
 |
-<span class=tags>
-<a href=https://blog.imlk.top/tags/hdu/>#HDU</a>
-<a href=https://blog.imlk.top/tags/%E5%88%86%E6%B2%BB%E6%B3%95/>#分治法</a>
-</span>
-</span>
-<br>
-</div>
-<main>
-<p>原题： <a href="http://acm.hdu.edu.cn/showproblem.php?pid=1003">http://acm.hdu.edu.cn/showproblem.php?pid=1003</a></p>
-<p>看到这题的时候一脸懵逼，网上寻找解答，发现都讲的不详细，变量声明也很短，根本看不出是什么用途，这里给出了我的解答，参考了网上各位大神的方法，加上了注释，方便学习。</p>
-<p>##<strong>0x00 分治法解题</strong></p>
-<pre tabindex=0><code>#include &lt;stdio.h&gt;
+<span class=tags><a href=https://blog.imlk.top/tags/hdu/>#HDU</a>
+<a href=https://blog.imlk.top/tags/%E5%88%86%E6%B2%BB%E6%B3%95/>#分治法</a></span></span><br></div><main><p>原题： <a href="http://acm.hdu.edu.cn/showproblem.php?pid=1003">http://acm.hdu.edu.cn/showproblem.php?pid=1003</a></p><p>看到这题的时候一脸懵逼，网上寻找解答，发现都讲的不详细，变量声明也很短，根本看不出是什么用途，这里给出了我的解答，参考了网上各位大神的方法，加上了注释，方便学习。</p><p>##<strong>0x00 分治法解题</strong></p><pre tabindex=0><code>#include &lt;stdio.h&gt;
 
 struct Sequence
 {
@@ -65,7 +25,7 @@ struct Sequence
 
 struct Sequence getMaxSequence(int * sourceSequence, int leftPosition, int rightPosition) {
 
-	// printf(&quot;into： %d, %d\n&quot;,leftPosition,rightPosition);
+	// printf(&#34;into： %d, %d\n&#34;,leftPosition,rightPosition);
 	int mediumPosition;
 
 	//范围：[leftPosition, rightPosition]
@@ -76,7 +36,7 @@ struct Sequence getMaxSequence(int * sourceSequence, int leftPosition, int right
 
 		sequence.rightPosition = rightPosition;
 		sequence.sum = sourceSequence[leftPosition];
-		// printf(&quot;return: %d, %d\n&quot;,sequence.leftPosition,sequence.rightPosition);
+		// printf(&#34;return: %d, %d\n&#34;,sequence.leftPosition,sequence.rightPosition);
 
 		return sequence;
 		    //将这个元素返回
@@ -134,23 +94,23 @@ struct Sequence getMaxSequence(int * sourceSequence, int leftPosition, int right
 
 	//三选一返回，选sum最长的那个返回
 
-	// printf(&quot;return: %d, %d\n&quot;,finalSequence.leftPosition,finalSequence.rightPosition);
+	// printf(&#34;return: %d, %d\n&#34;,finalSequence.leftPosition,finalSequence.rightPosition);
 	return (leftSequence.sum &gt; rightSequence.sum) ? ((leftSequence.sum &gt; aroundSequence.sum) ? leftSequence : aroundSequence) : ((rightSequence.sum &gt; aroundSequence.sum) ? rightSequence : aroundSequence);
 
 }
 int main() {
 	int numOfCase , indexOfCase = 1,lengthOfSquence;
-	scanf(&quot;%d&quot;, &amp;numOfCase);
+	scanf(&#34;%d&#34;, &amp;numOfCase);
 	while (indexOfCase &lt;= numOfCase) {
-		scanf(&quot;%d&quot;,&amp;lengthOfSquence);
+		scanf(&#34;%d&#34;,&amp;lengthOfSquence);
 		int sourceSequence[100000];
 		for(int index = 0;index &lt;lengthOfSquence;index++){
-			scanf(&quot;%d&quot;,sourceSequence + index); 
+			scanf(&#34;%d&#34;,sourceSequence + index); 
 		}
 		struct Sequence aimSequence =  getMaxSequence(sourceSequence,0,lengthOfSquence - 1);
-		printf(&quot;Case %d:\n%d %d %d\n&quot;, indexOfCase ,aimSequence.sum,aimSequence.leftPosition + 1,aimSequence.rightPosition + 1);
+		printf(&#34;Case %d:\n%d %d %d\n&#34;, indexOfCase ,aimSequence.sum,aimSequence.leftPosition + 1,aimSequence.rightPosition + 1);
 		if(indexOfCase != numOfCase){
-			printf(&quot;\n&quot;);
+			printf(&#34;\n&#34;);
 		}
 		indexOfCase++;
 	}
@@ -158,9 +118,7 @@ int main() {
 	return 0;
 }
 </code></pre><p>寒假看到这样一篇文章，讲的很详细
-<a href=http://conw.net/archives/9/#comment-25>http://conw.net/archives/9/#comment-25</a></p>
-<p>##<strong>0x01 动态规划</strong></p>
-<pre tabindex=0><code>#include &lt;iostream&gt;
+<a href=http://conw.net/archives/9/#comment-25>http://conw.net/archives/9/#comment-25</a></p><p>##<strong>0x01 动态规划</strong></p><pre tabindex=0><code>#include &lt;iostream&gt;
 #include &lt;cstdio&gt;
 #include &lt;cstring&gt;
 
@@ -179,16 +137,16 @@ int main(int argc, char const *argv[])
 {
 
 	int T, N, last, now, ans, startpos, l, r;
-	scanf(&quot;%d&quot;, &amp;T);
+	scanf(&#34;%d&#34;, &amp;T);
 	for (int j = 1; j &lt;= T; j++) {
 		last = -1;
 		ans = -iinf;
 		l = 1;
 		r = 1;
-		scanf(&quot;%d&quot;, &amp;N);
+		scanf(&#34;%d&#34;, &amp;N);
 
 		for (int i = 1; i &lt;= N; i++) {
-			scanf(&quot;%d&quot;, &amp;now);
+			scanf(&#34;%d&#34;, &amp;now);
 			if (last &gt;= 0) {
 				last = now + last;
 
@@ -207,21 +165,18 @@ int main(int argc, char const *argv[])
 		}
 
 		if (j == 1) {
-			printf(&quot;Case 1:\n&quot;);
+			printf(&#34;Case 1:\n&#34;);
 		} else {
-			printf(&quot;\nCase %d:\n&quot;, j);
+			printf(&#34;\nCase %d:\n&#34;, j);
 		}
 
-		printf(&quot;%d %d %d\n&quot;, ans, l, r);
+		printf(&#34;%d %d %d\n&#34;, ans, l, r);
 
 	}
 
 	return 0;
 }
-
-</code></pre><p>##<strong>0x02 结合优化后的前缀数组</strong></p>
-<p>用这种用法的人似乎更多</p>
-<pre tabindex=0><code>#include &lt;iostream&gt;
+</code></pre><p>##<strong>0x02 结合优化后的前缀数组</strong></p><p>用这种用法的人似乎更多</p><pre tabindex=0><code>#include &lt;iostream&gt;
 #include &lt;cstdio&gt;
 #include &lt;cstring&gt;
 #include &lt;algorithm&gt;
@@ -246,7 +201,7 @@ int main(int argc, char const *argv[])
 {
 
 	int T, N, sum, now, ans, min, minpos, l, r;
-	scanf(&quot;%d&quot;, &amp;T);
+	scanf(&#34;%d&#34;, &amp;T);
 	for (int j = 1; j &lt;= T; j++) {
 		sum = 0;
 		ans = -iinf;
@@ -254,10 +209,10 @@ int main(int argc, char const *argv[])
 		minpos = 0;
 		l = 1;
 		r = 1;
-		scanf(&quot;%d&quot;, &amp;N);
+		scanf(&#34;%d&#34;, &amp;N);
 
 		for (int i = 1; i &lt;= N; i++) {
-			scanf(&quot;%d&quot;, &amp;now);
+			scanf(&#34;%d&#34;, &amp;now);
 			sum += now;
 			if (sum - min &gt; ans) {//更新答案，这里使用的是上一次循环的min值
 				r = i;
@@ -271,26 +226,15 @@ int main(int argc, char const *argv[])
 		}
 
 		if (j == 1) {
-			printf(&quot;Case 1:\n&quot;);
+			printf(&#34;Case 1:\n&#34;);
 		} else {
-			printf(&quot;\nCase %d:\n&quot;, j);
+			printf(&#34;\nCase %d:\n&#34;, j);
 		}
 
-		printf(&quot;%d %d %d\n&quot;, ans, l, r);
+		printf(&#34;%d %d %d\n&#34;, ans, l, r);
 
 	}
 
 	return 0;
 }
-</code></pre>
-</main>
-<div id=comments>
-<hr>
-<script src=https://utteranc.es/client.js repo=KB5201314/KB5201314.github.io issue-term=pathname label="💬 comments 💬" theme=github-light crossorigin=anonymous async></script>
-</div>
-<footer>
-<hr>
-© imlk 2017 &ndash; 2021 | <a href=https://blog.imlk.top>imlk's blog</a> | <a href=https://github.com/KB5201314/>Github</a> | <a href=mailto:me@imlk.top>Email</a> | <a href=https://beian.miit.gov.cn/>京ICP备 - 2020042968号</a>
-</footer>
-</body>
-</html>
+</code></pre></main><div id=comments><hr><script src=https://utteranc.es/client.js repo=KB5201314/KB5201314.github.io issue-term=pathname label='💬 comments 💬' theme=github-light crossorigin=anonymous async></script></div><footer><hr>© imlk 2017 &ndash; 2021 | <a href=https://blog.imlk.top>imlk's blog</a> | <a href=https://github.com/KB5201314/>Github</a> | <a href=mailto:me@imlk.top>Email</a> | <a href=https://beian.miit.gov.cn/>京ICP备 - 2020042968号</a></footer></body></html>

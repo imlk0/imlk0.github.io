@@ -1,46 +1,9 @@
-<!doctype html><html lang=zh-cn>
-<head>
-<meta charset=utf-8>
-<meta name=viewport content="width=device-width,initial-scale=1">
-<title>重拾Python之旅 | imlk's blog</title>
-<link rel=stylesheet href=/css/style.css>
-<link rel=stylesheet href=/css/fonts.css>
-<link rel=preconnect href=https://fonts.googleapis.com>
-<link rel=preconnect href=https://fonts.gstatic.com crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&display=swap" rel=stylesheet>
-</head>
-<body>
-<header class=header>
-<a class=logo href=/> imlk's Blog </a>
-<nav>
-<ul class=menu>
-<li><a href=/>Home</a></li>
-<li><a href=/about/>About</a></li>
-<li><a href=/archives/>Archives</a></li>
-<li><a href=/friends/>Friends</a></li>
-<li><a href=/index.xml>Subscribe</a></li>
-</ul>
-</nav>
-</header>
-<hr>
-<div class=article-meta>
-<h1><span class=title>重拾Python之旅</span></h1>
-<span>
-<span class=date>2018-01-21</span>
+<!doctype html><html lang=zh-cn><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><title>重拾Python之旅 | imlk's blog</title><link rel=stylesheet href=/css/style.css><link rel=stylesheet href=/css/fonts.css><link rel=preconnect href=https://fonts.googleapis.com><link rel=preconnect href=https://fonts.gstatic.com crossorigin><link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&display=swap" rel=stylesheet></head><body><header class=header><a class=logo href=/>imlk's Blog</a><nav><ul class=menu><li><a href=/>Home</a></li><li><a href=/about/>About</a></li><li><a href=/archives/>Archives</a></li><li><a href=/friends/>Friends</a></li><li><a href=/index.xml>Subscribe</a></li></ul></nav></header><hr><div class=article-meta><h1><span class=title>重拾Python之旅</span></h1><span><span class=date>2018-01-21</span>
 |
-<span class=cats>
-<a href=https://blog.imlk.top/categories/python/>Python</a>
-</span>
+<span class=cats><a href=https://blog.imlk.top/categories/python/>Python</a></span>
 |
-<span class=tags>
-<a href=https://blog.imlk.top/tags/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/>#编程语言</a>
-<a href=https://blog.imlk.top/tags/python/>#Python</a>
-</span>
-</span>
-<br>
-</div>
-<main>
-<pre tabindex=0><code>#!/usr/bin/env python
+<span class=tags><a href=https://blog.imlk.top/tags/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/>#编程语言</a>
+<a href=https://blog.imlk.top/tags/python/>#Python</a></span></span><br></div><main><pre tabindex=0><code>#!/usr/bin/env python
 #coding:utf-8
 
 # http://www.he11oworld.com/course/54
@@ -51,13 +14,13 @@
 
 # #单行注释
 # 
-# '''
+# &#39;&#39;&#39;
 # 多行注释
-# '''
+# &#39;&#39;&#39;
 # 
-# &quot;&quot;&quot;
+# &#34;&#34;&#34;
 # 或多行注释
-# &quot;&quot;&quot;
+# &#34;&#34;&#34;
 
 # python3:
 
@@ -75,8 +38,8 @@ not #!
 # python没有++和--
 
 type(10**100)
-#&lt;type 'long'&gt;	py2
-#&lt;class 'int'&gt;	py3
+#&lt;type &#39;long&#39;&gt;	py2
+#&lt;class &#39;int&#39;&gt;	py3
 #两个版本有区别，在Python 3中，不再有long类型对象了，都归类为int类型。
 
 id(233)
@@ -86,7 +49,7 @@ id(233)
 #     Return the identity of an object.
 
 #     This is guaranteed to be unique among simultaneously existing objects.
-#     (CPython uses the object's memory address.)
+#     (CPython uses the object&#39;s memory address.)
 
 # 除了使用%求余数，还有内建函数divmod()——返回的是商和余数。
 divmod(5, 2)	#表示5除以2，返回了商和余数
@@ -128,15 +91,15 @@ math.pow(4, 2)
 #     Some types, such as ints, are able to use a more efficient algorithm when
 #     invoked using the three argument form.
 
-print(&quot;123\b123&quot;)#'\b'等于backspace键，会在光标处删去一个字符并前移
+print(&#34;123\b123&#34;)#&#39;\b&#39;等于backspace键，会在光标处删去一个字符并前移
 #12123
-print(&quot;123\000123&quot;)
+print(&#34;123\000123&#34;)
 #123 123
 # 转义字符描述
 # \(在行尾时) 续行符
 # \反斜杠符号
-# \'单引号
-# \&quot;双引号
+# \&#39;单引号
+# \&#34;双引号
 # \a响铃
 # \b退格(Backspace)
 # \e转义
@@ -151,51 +114,51 @@ print(&quot;123\000123&quot;)
 # \other其它的字符以普通格式输出，如\q输出\q
 
 # str类型切片[x:y:z]	z步长,z不可为0,z不写默认为1
-lang = &quot;012345678&quot;
+lang = &#34;012345678&#34;
 # 从x开始以z为步长,满足在x与y直接且不等于y的位置的所有元素
 lang[:1]
-# '0'
-# 若什么都没截取到，返回 ''
+# &#39;0&#39;
+# 若什么都没截取到，返回 &#39;&#39;
 lang[:0]
-# ''
+# &#39;&#39;
 lang[:9]
-# '012345678'
+# &#39;012345678&#39;
 # 若x或y的值为正数或零，则“边界指针”从字符串的左边数起，
 # 若为负数，则先按绝对值从右边数起转换为对应的正数
-lang = &quot;012345678&quot;
+lang = &#34;012345678&#34;
 # 		012345678 正数索引
 # 		-9-8-7-6-5-4-3-2-1 负数索引
 # 当x或者y不写时,看z,
 # 若z为正,则x默认为0,y默认为总长度,
 # 若z为负,则y默认为 -1 (不转换为正数),x默认为 总长度 - 1.
 lang[-1:]	# == lang[8:]
-# '8'
+# &#39;8&#39;
 lang[:-1]	# == lang[:8]
-# '01234567'
+# &#39;01234567&#39;
 lang[1:7:2]
-# '135'
+# &#39;135&#39;
 lang[1:7:-2]
-# ''
+# &#39;&#39;
 lang[7:1:-2]
-# '753'
+# &#39;753&#39;
 lang[:7:2]	# == lang[0:7:2]
-# '0246'
+# &#39;0246&#39;
 lang[:5:-2]
-# '86'
+# &#39;86&#39;
 lang[-1::-2]	#== lang[8::-2]
-# '86420'
+# &#39;86420&#39;
 
-ord('a')
-# 97	#'a'的Unicode码(与ascii一致)
-ord(' ')
-# 32	#' '的Unicode码(与ascii一致)
+ord(&#39;a&#39;)
+# 97	#&#39;a&#39;的Unicode码(与ascii一致)
+ord(&#39; &#39;)
+# 32	#&#39; &#39;的Unicode码(与ascii一致)
 # Help on built-in function ord in module builtins:
 
 # ord(c, /)
 #     Return the Unicode code point for a one-character string.
 
 chr(97)
-# 'a'
+# &#39;a&#39;
 # Help on built-in function chr in module builtins:
 
 # chr(i, /)
@@ -211,52 +174,52 @@ cmp()
 #关于 bool 类型
 # python 没有 ! 运算符，改用 not 运算符，对 bool 类型取反
 !True
-#   File &quot;&lt;stdin&gt;&quot;, line 1
+#   File &#34;&lt;stdin&gt;&#34;, line 1
 #     !True
 #     ^
 # SyntaxError: invalid syntax
 not True
 # False
 
-# 在python中 None,  False, 空字符串&quot;&quot;, 0, 空列表[], 空字典{}, 空元组()都相当于False
+# 在python中 None,  False, 空字符串&#34;&#34;, 0, 空列表[], 空字典{}, 空元组()都相当于False
 
 # 格式化字符串 %
-&quot;I like %s&quot; % &quot;python&quot;
-# 'I like python'
-&quot;%s like %s&quot; % (&quot;imlk&quot;,&quot;python&quot;)
-# 'imlk like python'
+&#34;I like %s&#34; % &#34;python&#34;
+# &#39;I like python&#39;
+&#34;%s like %s&#34; % (&#34;imlk&#34;,&#34;python&#34;)
+# &#39;imlk like python&#39;
 # 多个参数时使用 tuple (元组)
-&quot;%(name)s like %(what)s&quot; % {'name':'imlk', 'what':'python'}
-# 'imlk like python'
-# &quot;%(name)s like %(what)s&quot; % {'name':'imlk', 'what':'python'}
+&#34;%(name)s like %(what)s&#34; % {&#39;name&#39;:&#39;imlk&#39;, &#39;what&#39;:&#39;python&#39;}
+# &#39;imlk like python&#39;
+# &#34;%(name)s like %(what)s&#34; % {&#39;name&#39;:&#39;imlk&#39;, &#39;what&#39;:&#39;python&#39;}
 #		  ^				^
 # 配合字典使用注意标注参数类型
 
 # 格式化字符串 format
 # 占位符
 # {[序号或唯一标识符][若该占位符参数为列表,此处可索引列表中元素,如[1]]:[填充字符][对齐方式 &lt;^&gt;(&lt;是字符默认,&gt;是整数和浮点数默认)][宽度][.n若明确参数类型f,则表示小数点后精度n,若不明确,对于str,截取前n个字符,对于浮点型,用科学记数法表示并把e以前的数字个数限制为n个][参数类型,如f,d,b二进制,o八进制,x十六进制]}
-&quot;{} like {}&quot; .format(&quot;imlk&quot;,&quot;python&quot;)
-# 'imlk like python'
-&quot;{1} like {0}&quot; .format(&quot;python&quot;,&quot;imlk&quot;)#指定序号
-# 'imlk like python'
-&quot;{name}s like {what}&quot; .format(name ='imlk', what='python')#这样写,函数内部得到的是一个字典{'name':'imlk', 'what':'python'}
-# 'imlks like python'
-'{0[0]} like {0[1]}'.format(l)
-# 'imlk like python'
-'{:20}'.format(111)
-# '                 111'
-'{:20}'.format(111.0)
-# '               111.0'
-'{:20}'.format('111')
-# '111                 '
-'{:20.2}'.format(111.0)
-# '             1.1e+02'
-'{:20.3}'.format(111.1111)
-# '            1.11e+02'
-'{:20.2f}'.format(111.1111)
-# '              111.11'
-'{:20.4}'.format('111.1111')
-# '111\.                '
+&#34;{} like {}&#34; .format(&#34;imlk&#34;,&#34;python&#34;)
+# &#39;imlk like python&#39;
+&#34;{1} like {0}&#34; .format(&#34;python&#34;,&#34;imlk&#34;)#指定序号
+# &#39;imlk like python&#39;
+&#34;{name}s like {what}&#34; .format(name =&#39;imlk&#39;, what=&#39;python&#39;)#这样写,函数内部得到的是一个字典{&#39;name&#39;:&#39;imlk&#39;, &#39;what&#39;:&#39;python&#39;}
+# &#39;imlks like python&#39;
+&#39;{0[0]} like {0[1]}&#39;.format(l)
+# &#39;imlk like python&#39;
+&#39;{:20}&#39;.format(111)
+# &#39;                 111&#39;
+&#39;{:20}&#39;.format(111.0)
+# &#39;               111.0&#39;
+&#39;{:20}&#39;.format(&#39;111&#39;)
+# &#39;111                 &#39;
+&#39;{:20.2}&#39;.format(111.0)
+# &#39;             1.1e+02&#39;
+&#39;{:20.3}&#39;.format(111.1111)
+# &#39;            1.11e+02&#39;
+&#39;{:20.2f}&#39;.format(111.1111)
+# &#39;              111.11&#39;
+&#39;{:20.4}&#39;.format(&#39;111.1111&#39;)
+# &#39;111\.                &#39;
 
 # Help on method_descriptor:
 
@@ -264,7 +227,7 @@ not True
 #     S.format(*args, **kwargs) -&gt; str
 
 #     Return a formatted version of S, using substitutions from args and kwargs.
-#     The substitutions are identified by braces ('{' and '}').
+#     The substitutions are identified by braces (&#39;{&#39; and &#39;}&#39;).
 
 # 可变长度函数参数
 # *args 表示任何多个无名参数，它是一个 tuple (元组)
@@ -273,14 +236,14 @@ not True
 
 # 可将元组作为参数列表传入
 # 例如:
-t = (&quot;python&quot;,&quot;imlk&quot;)
-&quot;{1} like {0}&quot; .format(*t)	# *接元组表示把元组解开作为参数传入
-# 'imlk like python'
+t = (&#34;python&#34;,&#34;imlk&#34;)
+&#34;{1} like {0}&#34; .format(*t)	# *接元组表示把元组解开作为参数传入
+# &#39;imlk like python&#39;
 # 同理可将字典作为参数列表传入
 # 例如:
-d = {'name':'imlk', 'what':'python'}
-&quot;{name} like {what}&quot; .format(**d)# **接字典表示把字典解开作为参数传入
-# 'imlk like python'
+d = {&#39;name&#39;:&#39;imlk&#39;, &#39;what&#39;:&#39;python&#39;}
+&#34;{name} like {what}&#34; .format(**d)# **接字典表示把字典解开作为参数传入
+# &#39;imlk like python&#39;
 
 # 参考:
 # https://www.cnblogs.com/fengmk2/archive/2008/04/21/1163766.html
@@ -299,7 +262,7 @@ d = {'name':'imlk', 'what':'python'}
 
 # [] list 列表
 # 类型不限 元素类型可异 有序 元素可重复 内容可变(原地改变,id不变)(append,insert,pop,extend等) 不可做为dic的key
-list = [1,'233','imlk',True]
+list = [1,&#39;233&#39;,&#39;imlk&#39;,True]
 bool(list)	#判断是否空列表若列表为空则返回False
 int(list)	#不合法！！！！！
 
@@ -321,12 +284,12 @@ list1 = [1,2]
 list2 = [1,1]
 list1 &lt; list2
 # False
-list2 = [1,'1']
+list2 = [1,&#39;1&#39;]
 list1 &lt; list2
 # Traceback (most recent call last):
-#   File &quot;&lt;stdin&gt;&quot;, line 1, in &lt;module&gt;
+#   File &#34;&lt;stdin&gt;&#34;, line 1, in &lt;module&gt;
 # TypeError: unorderable types: int() &lt; str()
-list2 = [2,'1']
+list2 = [2,&#39;1&#39;]
 list1 &lt; list2
 # True
 
@@ -337,38 +300,38 @@ reversed(list)#返回一个迭代器
 
 # list 中的每一个位置实际上维护的是对对象的引用
 l
-# ['imlk', 'python']
+# [&#39;imlk&#39;, &#39;python&#39;]
 l.append(l)
 l
-# ['imlk', 'python', [...]]
+# [&#39;imlk&#39;, &#39;python&#39;, [...]]
 l[2]
-# ['imlk', 'python', [...]]
+# [&#39;imlk&#39;, &#39;python&#39;, [...]]
 l[2]
-# ['imlk', 'python', [...]]
+# [&#39;imlk&#39;, &#39;python&#39;, [...]]
 l[2][2][2][2]
-# ['imlk', 'python', [...]]
-li = ['emmmm']
+# [&#39;imlk&#39;, &#39;python&#39;, [...]]
+li = [&#39;emmmm&#39;]
 l.append(li)
 l
-# ['imlk', 'python', [...], ['emmmm']]
-li.append('233')
+# [&#39;imlk&#39;, &#39;python&#39;, [...], [&#39;emmmm&#39;]]
+li.append(&#39;233&#39;)
 l
-# ['imlk', 'python', [...], ['emmmm', '233']]
+# [&#39;imlk&#39;, &#39;python&#39;, [...], [&#39;emmmm&#39;, &#39;233&#39;]]
 l.extend(l)	#将一共可迭代的对象的全体内容加到该列表中
 l
-# ['imlk', 'python', [...], ['emmmm', '233'], 'imlk', 'python', [...], ['emmmm', '233']]
+# [&#39;imlk&#39;, &#39;python&#39;, [...], [&#39;emmmm&#39;, &#39;233&#39;], &#39;imlk&#39;, &#39;python&#39;, [...], [&#39;emmmm&#39;, &#39;233&#39;]]
 # Help on method_descriptor:
 
 # extend(...)
 #     L.extend(iterable) -&gt; None -- extend list by appending elements from the iterable
 
-l.count('imlk')	#找出某个元素出现的次数
+l.count(&#39;imlk&#39;)	#找出某个元素出现的次数
 # 2
 
 # attribute
 # vt.	认为…是; 把…归于; 把…品质归于某人; 认为某事[物]属于某人[物];
 # n.	属性; （人或物的） 特征; 价值; [语法学] 定语;
-hasattr(lang, '__iter__')
+hasattr(lang, &#39;__iter__&#39;)
 # 判断某个类或者对象,模块(module)是否有某种属性,函数
 # Help on built-in function hasattr in module builtins:
 
@@ -385,12 +348,12 @@ keyword.kwlist
 # 网络 	空白符; 空白字符; 空格; 白空格; 白空间;
 # separator
 # n. 	分离器，分离装置; 防胀器; 
-s = &quot;I am, writing\npython\tbook on line&quot; #这个字符串中有空格，逗号，换行\n，tab缩进\t 符号
+s = &#34;I am, writing\npython\tbook on line&#34; #这个字符串中有空格，逗号，换行\n，tab缩进\t 符号
 print s #输出之后的样式
 # I am, writing
 # python book on line
 s.split() #用split(),但是括号中不输入任何参数
-# ['I', 'am,', 'writing', 'python', 'book', 'on', 'line']
+# [&#39;I&#39;, &#39;am,&#39;, &#39;writing&#39;, &#39;python&#39;, &#39;book&#39;, &#39;on&#39;, &#39;line&#39;]
 # 如果split()不输入任何参数，显示就是见到任何空白符号，就用其分割了。
 
 # Help on method_descriptor:
@@ -406,44 +369,44 @@ s.split() #用split(),但是括号中不输入任何参数
 
 # () tuple 元组
 # 类型不限 元素类型可异 有序 长度不可变 元素可重复 速度快 相当于常量 可以作为dic的key 可用在字符串的格式化中
-t = 1,&quot;23&quot;,[123,&quot;abc&quot;],(&quot;python&quot;,&quot;learn&quot;)   #元素多样性，近list
+t = 1,&#34;23&#34;,[123,&#34;abc&#34;],(&#34;python&#34;,&#34;learn&#34;)   #元素多样性，近list
 t
-# (1, '23', [123, 'abc'], ('python', 'learn'))
+# (1, &#39;23&#39;, [123, &#39;abc&#39;], (&#39;python&#39;, &#39;learn&#39;))
 # 元组中只有一个元素时，应该加上逗号,以免造成误解	
 t = (3)
 type(t)
-# &lt;class 'int'&gt;
+# &lt;class &#39;int&#39;&gt;
 t = (3,)
 type(t)
-# &lt;class 'tuple'&gt;
+# &lt;class &#39;tuple&#39;&gt;
 
 # {} dict 字典
 # 键/值对 原地修改 key不可重复 内容可变 键key必须是不可改变的数据类型，值value可以是任意类型
 d = {}
 # 利用元组建构字典
-name = ([&quot;first&quot;, &quot;Google&quot;], [&quot;second&quot;, &quot;Yahoo&quot;])
+name = ([&#34;first&#34;, &#34;Google&#34;], [&#34;second&#34;, &#34;Yahoo&#34;])
 website = dict(name)
 website
-# {'second': 'Yahoo', 'first': 'Google'}
+# {&#39;second&#39;: &#39;Yahoo&#39;, &#39;first&#39;: &#39;Google&#39;}
 # 增加键值对
-d['name'] = 'imlk'
+d[&#39;name&#39;] = &#39;imlk&#39;
 d
-# {'name': 'imlk'}
+# {&#39;name&#39;: &#39;imlk&#39;}
 # 删除键值对
-del d['name']
+del d[&#39;name&#39;]
 # 清空dict
 d.clear()
 d
 # {}
 # 检查字典中是否含有某个key
-'name' in d
+&#39;name&#39; in d
 # False
-d['name'] = 'imlk'
+d[&#39;name&#39;] = &#39;imlk&#39;
 # 通过key获取字典中的value
-d['name']
-'imlk'
+d[&#39;name&#39;]
+&#39;imlk&#39;
 # 或者
-d.get('name')	#若不存在则返回None
+d.get(&#39;name&#39;)	#若不存在则返回None
 # Help on method_descriptor:
 
 # get(...)
@@ -458,12 +421,12 @@ d.get('name')	#若不存在则返回None
 # 可变集合都是unhashable类型的。
 
 # 数据类型的拷贝
-l = ['imlk','python']
+l = [&#39;imlk&#39;,&#39;python&#39;]
 li = l.copy() #list,dict支持copy，tuple不支持
 (1,).copy()
 # Traceback (most recent call last):
-#   File &quot;&lt;stdin&gt;&quot;, line 1, in &lt;module&gt;
-# AttributeError: 'tuple' object has no attribute 'copy'
+#   File &#34;&lt;stdin&gt;&#34;, line 1, in &lt;module&gt;
+# AttributeError: &#39;tuple&#39; object has no attribute &#39;copy&#39;
 
 # 深拷贝
 import copy
@@ -475,12 +438,12 @@ li = copy.deepcopy(l)
 # frozenset([]) 不可变集合 与 set([]) 区别是hashable，不可变
 
 # 集合运算
-a = set('python')
-b = set('python3')
+a = set(&#39;python&#39;)
+b = set(&#39;python3&#39;)
 a
-# {'y', 't', 'h', 'p', 'o', 'n'}
+# {&#39;y&#39;, &#39;t&#39;, &#39;h&#39;, &#39;p&#39;, &#39;o&#39;, &#39;n&#39;}
 b
-# {'y', 't', '3', 'h', 'p', 'o', 'n'}
+# {&#39;y&#39;, &#39;t&#39;, &#39;3&#39;, &#39;h&#39;, &#39;p&#39;, &#39;o&#39;, &#39;n&#39;}
 # 集合相等
 a == b
 # False
@@ -492,21 +455,21 @@ a &gt; b
 # False
 # 并集
 a | b
-# {'y', 't', '3', 'h', 'p', 'o', 'n'}
+# {&#39;y&#39;, &#39;t&#39;, &#39;3&#39;, &#39;h&#39;, &#39;p&#39;, &#39;o&#39;, &#39;n&#39;}
 # 交集
 a &amp; b
-# {'y', 't', 'h', 'p', 'o', 'n'}
+# {&#39;y&#39;, &#39;t&#39;, &#39;h&#39;, &#39;p&#39;, &#39;o&#39;, &#39;n&#39;}
 # A相对B的差（补）
 a - b
 # set()
 b - a
-# {'3'}
+# {&#39;3&#39;}
 
 print()
 # Help on built-in function print in module builtins:
 
 # print(...)
-#     print(value, ..., sep=' ', end='\n', file=sys.stdout, flush=False)
+#     print(value, ..., sep=&#39; &#39;, end=&#39;\n&#39;, file=sys.stdout, flush=False)
 
 #     Prints the values to a stream, or to sys.stdout by default.
 #     Optional keyword arguments:
@@ -514,16 +477,4 @@ print()
 #     sep:   string inserted between values, default a space.
 #     end:   string appended after the last value, default a newline.
 #     flush: whether to forcibly flush the stream.
-
-</code></pre>
-</main>
-<div id=comments>
-<hr>
-<script src=https://utteranc.es/client.js repo=KB5201314/KB5201314.github.io issue-term=pathname label="💬 comments 💬" theme=github-light crossorigin=anonymous async></script>
-</div>
-<footer>
-<hr>
-© imlk 2017 &ndash; 2021 | <a href=https://blog.imlk.top>imlk's blog</a> | <a href=https://github.com/KB5201314/>Github</a> | <a href=mailto:me@imlk.top>Email</a> | <a href=https://beian.miit.gov.cn/>京ICP备 - 2020042968号</a>
-</footer>
-</body>
-</html>
+</code></pre></main><div id=comments><hr><script src=https://utteranc.es/client.js repo=KB5201314/KB5201314.github.io issue-term=pathname label='💬 comments 💬' theme=github-light crossorigin=anonymous async></script></div><footer><hr>© imlk 2017 &ndash; 2021 | <a href=https://blog.imlk.top>imlk's blog</a> | <a href=https://github.com/KB5201314/>Github</a> | <a href=mailto:me@imlk.top>Email</a> | <a href=https://beian.miit.gov.cn/>京ICP备 - 2020042968号</a></footer></body></html>

@@ -1,46 +1,8 @@
-<!doctype html><html lang=zh-cn>
-<head>
-<meta charset=utf-8>
-<meta name=viewport content="width=device-width,initial-scale=1">
-<title>HDU 1166 敌兵布阵——线段树，树状数组 | imlk's blog</title>
-<link rel=stylesheet href=/css/style.css>
-<link rel=stylesheet href=/css/fonts.css>
-<link rel=preconnect href=https://fonts.googleapis.com>
-<link rel=preconnect href=https://fonts.gstatic.com crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&display=swap" rel=stylesheet>
-</head>
-<body>
-<header class=header>
-<a class=logo href=/> imlk's Blog </a>
-<nav>
-<ul class=menu>
-<li><a href=/>Home</a></li>
-<li><a href=/about/>About</a></li>
-<li><a href=/archives/>Archives</a></li>
-<li><a href=/friends/>Friends</a></li>
-<li><a href=/index.xml>Subscribe</a></li>
-</ul>
-</nav>
-</header>
-<hr>
-<div class=article-meta>
-<h1><span class=title>HDU 1166 敌兵布阵——线段树，树状数组</span></h1>
-<span>
-<span class=date>2018-02-06</span>
+<!doctype html><html lang=zh-cn><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><title>HDU 1166 敌兵布阵——线段树，树状数组 | imlk's blog</title><link rel=stylesheet href=/css/style.css><link rel=stylesheet href=/css/fonts.css><link rel=preconnect href=https://fonts.googleapis.com><link rel=preconnect href=https://fonts.gstatic.com crossorigin><link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&display=swap" rel=stylesheet></head><body><header class=header><a class=logo href=/>imlk's Blog</a><nav><ul class=menu><li><a href=/>Home</a></li><li><a href=/about/>About</a></li><li><a href=/archives/>Archives</a></li><li><a href=/friends/>Friends</a></li><li><a href=/index.xml>Subscribe</a></li></ul></nav></header><hr><div class=article-meta><h1><span class=title>HDU 1166 敌兵布阵——线段树，树状数组</span></h1><span><span class=date>2018-02-06</span>
 |
-<span class=cats>
-<a href=https://blog.imlk.top/categories/algorithm/>Algorithm</a>
-</span>
+<span class=cats><a href=https://blog.imlk.top/categories/algorithm/>Algorithm</a></span>
 |
-<span class=tags>
-<a href=https://blog.imlk.top/tags/%E7%BA%BF%E6%AE%B5%E6%A0%91/>#线段树</a>
-</span>
-</span>
-<br>
-</div>
-<main>
-<p>这题本来我打算用前缀数组实现源数据的处理，并把更变用map&lt;int ,int>实现，发现后来还是超时了；</p>
-<p>借机学习了一下线段树，虽然没怎么看懂，但大概还是理解了一点；
+<span class=tags><a href=https://blog.imlk.top/tags/%E7%BA%BF%E6%AE%B5%E6%A0%91/>#线段树</a></span></span><br></div><main><p>这题本来我打算用前缀数组实现源数据的处理，并把更变用map&lt;int ,int>实现，发现后来还是超时了；</p><p>借机学习了一下线段树，虽然没怎么看懂，但大概还是理解了一点；
 这题用 指针构成的线段树 和 数组构成的线段树 分别来实现了一下
 资料：
 线段树从零开始 - CSDN博客
@@ -50,16 +12,11 @@
 看到有人用树状数组实现，学习了一下树状数组，代码贴在最后：
 资料：
 树状数组入门
-<a href=https://www.cnblogs.com/hsd-/p/6139376.html>https://www.cnblogs.com/hsd-/p/6139376.html</a></p>
-<p>题目来源：<a href="http://acm.hdu.edu.cn/showproblem.php?pid=1166">http://acm.hdu.edu.cn/showproblem.php?pid=1166</a></p>
-<blockquote>
-<p>敌兵布阵
+<a href=https://www.cnblogs.com/hsd-/p/6139376.html>https://www.cnblogs.com/hsd-/p/6139376.html</a></p><p>题目来源：<a href="http://acm.hdu.edu.cn/showproblem.php?pid=1166">http://acm.hdu.edu.cn/showproblem.php?pid=1166</a></p><blockquote><p>敌兵布阵
 Time Limit: 2000/1000 MS (Java/Others) Memory Limit: 65536/32768 K (Java/Others)
-Total Submission(s): 106625 Accepted Submission(s): 44789</p>
-<p>Problem Description
+Total Submission(s): 106625 Accepted Submission(s): 44789</p><p>Problem Description
 C国的死对头A国这段时间正在进行军事演习，所以C国间谍头子Derek和他手下Tidy又开始忙乎了。A国在海岸线沿直线布置了N个工兵营地,Derek和Tidy的任务就是要监视这些工兵营地的活动情况。由于采取了某种先进的监测手段，所以每个工兵营地的人数C国都掌握的一清二楚,每个工兵营地的人数都有可能发生变动，可能增加或减少若干人手,但这些都逃不过C国的监视。
-中央情报局要研究敌人究竟演习什么战术,所以Tidy要随时向Derek汇报某一段连续的工兵营地一共有多少人,例如Derek问:“Tidy,马上汇报第3个营地到第10个营地共有多少人!”Tidy就要马上开始计算这一段的总人数并汇报。但敌兵营地的人数经常变动，而Derek每次询问的段都不一样，所以Tidy不得不每次都一个一个营地的去数，很快就精疲力尽了，Derek对Tidy的计算速度越来越不满:&ldquo;你个死肥仔，算得这么慢，我炒你鱿鱼!”Tidy想：“你自己来算算看，这可真是一项累人的工作!我恨不得你炒我鱿鱼呢!”无奈之下，Tidy只好打电话向计算机专家Windbreaker求救,Windbreaker说：“死肥仔，叫你平时做多点acm题和看多点算法书，现在尝到苦果了吧!”Tidy说：&ldquo;我知错了。。。&ldquo;但Windbreaker已经挂掉电话了。Tidy很苦恼，这么算他真的会崩溃的，聪明的读者，你能写个程序帮他完成这项工作吗？不过如果你的程序效率不够高的话，Tidy还是会受到Derek的责骂的.</p>
-<p>Input
+中央情报局要研究敌人究竟演习什么战术,所以Tidy要随时向Derek汇报某一段连续的工兵营地一共有多少人,例如Derek问:“Tidy,马上汇报第3个营地到第10个营地共有多少人!”Tidy就要马上开始计算这一段的总人数并汇报。但敌兵营地的人数经常变动，而Derek每次询问的段都不一样，所以Tidy不得不每次都一个一个营地的去数，很快就精疲力尽了，Derek对Tidy的计算速度越来越不满:&ldquo;你个死肥仔，算得这么慢，我炒你鱿鱼!”Tidy想：“你自己来算算看，这可真是一项累人的工作!我恨不得你炒我鱿鱼呢!”无奈之下，Tidy只好打电话向计算机专家Windbreaker求救,Windbreaker说：“死肥仔，叫你平时做多点acm题和看多点算法书，现在尝到苦果了吧!”Tidy说：&ldquo;我知错了。。。&ldquo;但Windbreaker已经挂掉电话了。Tidy很苦恼，这么算他真的会崩溃的，聪明的读者，你能写个程序帮他完成这项工作吗？不过如果你的程序效率不够高的话，Tidy还是会受到Derek的责骂的.</p><p>Input
 第一行一个整数T，表示有T组数据。
 每组数据第一行一个正整数N（N&lt;=50000）,表示敌人有N个工兵营地，接下来有N个正整数,第i个正整数ai代表第i个工兵营地里开始时有ai个人（1&lt;=ai&lt;=50）。
 接下来每行有一条命令，命令有4种形式：
@@ -67,12 +24,9 @@ C国的死对头A国这段时间正在进行军事演习，所以C国间谍头�
 (2)Sub i j ,i和j为正整数,表示第i个营地减少j个人（j不超过30）;
 (3)Query i j ,i和j为正整数,i&lt;=j，表示询问第i到第j个营地的总人数;
 (4)End 表示结束，这条命令在每组数据最后出现;
-每组数据最多有40000条命令</p>
-<p>Output
+每组数据最多有40000条命令</p><p>Output
 对第i组数据,首先输出“Case i:”和回车,
-对于每个Query询问，输出一个整数并回车,表示询问的段中的总人数,这个数保持在int以内。</p>
-<p>Sample Input</p>
-<p>1
+对于每个Query询问，输出一个整数并回车,表示询问的段中的总人数,这个数保持在int以内。</p><p>Sample Input</p><p>1
 10
 1 2 3 4 5 6 7 8 9 10
 Query 1 3
@@ -81,19 +35,12 @@ Query 2 7
 Sub 10 2
 Add 6 3
 Query 3 10
-End</p>
-<p>Sample Output</p>
-<p>Case 1:
+End</p><p>Sample Output</p><p>Case 1:
 6
 33
-59</p>
-<p>Author
-Windbreaker</p>
-<p>Recommend
-Eddy | We have carefully selected several similar problems for you: 1394 1698 1754 1542 1540</p>
-</blockquote>
-<p>指针线段树：</p>
-<pre tabindex=0><code>#include &lt;iostream&gt;
+59</p><p>Author
+Windbreaker</p><p>Recommend
+Eddy | We have carefully selected several similar problems for you: 1394 1698 1754 1542 1540</p></blockquote><p>指针线段树：</p><pre tabindex=0><code>#include &lt;iostream&gt;
 #include &lt;cstdio&gt;
 #include &lt;cstring&gt;
 
@@ -170,36 +117,36 @@ int main(int argc, char const *argv[])
 {
 
 	char cmd[10];
-	scanf(&quot;%d&quot;, &amp;T);
+	scanf(&#34;%d&#34;, &amp;T);
 
 	for (int t = 1; t &lt;= T; t++) {
 
 		memset(list, 0, sizeof(list));
 
-		scanf(&quot;%d&quot;, &amp;N);
+		scanf(&#34;%d&#34;, &amp;N);
 
 		for (int i = 0; i &lt; N; i++) {
-			scanf(&quot;%d&quot;, list + i);
+			scanf(&#34;%d&#34;, list + i);
 		}
 
 		Node* root = buildTree(0, N - 1);
 
-		printf(&quot;Case %d:\n&quot;, t);
+		printf(&#34;Case %d:\n&#34;, t);
 		while (1) {
-			scanf(&quot;%s&quot;, cmd);
-			if ('E' == cmd[0]) {
+			scanf(&#34;%s&#34;, cmd);
+			if (&#39;E&#39; == cmd[0]) {
 				break;
 			}
-			scanf(&quot;%d%d&quot;, &amp;a, &amp;b);
+			scanf(&#34;%d%d&#34;, &amp;a, &amp;b);
 			switch (cmd[0]) {
-			case 'Q':
-				printf(&quot;%d\n&quot;, calSum(root, a - 1, b - 1));
+			case &#39;Q&#39;:
+				printf(&#34;%d\n&#34;, calSum(root, a - 1, b - 1));
 				break;
-			case 'A':
+			case &#39;A&#39;:
 				list[a - 1] += b;
 				treeAdd(root, a - 1, b);
 				break;
-			case 'S':
+			case &#39;S&#39;:
 				list[a - 1] -= b;
 				treeAdd(root, a - 1, -b);
 				break;
@@ -213,8 +160,7 @@ int main(int argc, char const *argv[])
 
 	return 0;
 }
-</code></pre><p>自定义结构体组成的数组实现线段树：</p>
-<pre tabindex=0><code>#include &lt;iostream&gt;
+</code></pre><p>自定义结构体组成的数组实现线段树：</p><pre tabindex=0><code>#include &lt;iostream&gt;
 #include &lt;cstdio&gt;
 #include &lt;cstring&gt;
 
@@ -260,7 +206,7 @@ void treeAdd(int which, int where, int what) {
 
 int calSum(int which, int from, int to) {
 
-	// printf(&quot;from_%d,to_%d,and_now_is_%d,%d\n&quot;, from, to, nodes[which].lp, nodes[which].rp);
+	// printf(&#34;from_%d,to_%d,and_now_is_%d,%d\n&#34;, from, to, nodes[which].lp, nodes[which].rp);
 	if (from == nodes[which].lp &amp;&amp; to == nodes[which].rp) {
 		return nodes[which].sum;
 	}
@@ -282,37 +228,37 @@ int main(int argc, char const *argv[])
 {
 
 	char cmd[10];
-	scanf(&quot;%d&quot;, &amp;T);
+	scanf(&#34;%d&#34;, &amp;T);
 
 	for (int t = 1; t &lt;= T; t++) {
 
 		memset(list, 0, sizeof(list));
 		memset(nodes, 0, sizeof(nodes));
 
-		scanf(&quot;%d&quot;, &amp;N);
+		scanf(&#34;%d&#34;, &amp;N);
 
 		for (int i = 0; i &lt; N; i++) {
-			scanf(&quot;%d&quot;, list + i);
+			scanf(&#34;%d&#34;, list + i);
 		}
 
 		buildTree(1, 0, N - 1);
 
-		printf(&quot;Case %d:\n&quot;, t);
+		printf(&#34;Case %d:\n&#34;, t);
 		while (1) {
-			scanf(&quot;%s&quot;, cmd);
-			if ('E' == cmd[0]) {
+			scanf(&#34;%s&#34;, cmd);
+			if (&#39;E&#39; == cmd[0]) {
 				break;
 			}
-			scanf(&quot;%d%d&quot;, &amp;a, &amp;b);
+			scanf(&#34;%d%d&#34;, &amp;a, &amp;b);
 			switch (cmd[0]) {
-			case 'Q':
-				printf(&quot;%d\n&quot;, calSum(1, a - 1, b - 1));
+			case &#39;Q&#39;:
+				printf(&#34;%d\n&#34;, calSum(1, a - 1, b - 1));
 				break;
-			case 'A':
+			case &#39;A&#39;:
 				list[a - 1] += b;
 				treeAdd(1, a - 1, b);
 				break;
-			case 'S':
+			case &#39;S&#39;:
 				list[a - 1] -= b;
 				treeAdd(1, a - 1, -b);
 				break;
@@ -323,8 +269,7 @@ int main(int argc, char const *argv[])
 
 	return 0;
 }
-</code></pre><p>树状数组实现：代码量超少！！！</p>
-<pre tabindex=0><code>#include &lt;iostream&gt;
+</code></pre><p>树状数组实现：代码量超少！！！</p><pre tabindex=0><code>#include &lt;iostream&gt;
 #include &lt;cstdio&gt;
 #include &lt;cstring&gt;
 
@@ -393,7 +338,7 @@ int main(int argc, char const *argv[])
 {
 
 	char cmd[10];
-	scanf(&quot;%d&quot;, &amp;T);
+	scanf(&#34;%d&#34;, &amp;T);
 
 	for (int t = 1; t &lt;= T; t++) {
 
@@ -401,30 +346,30 @@ int main(int argc, char const *argv[])
 		memset(data, 0, sizeof(data));
 		memset(s, 0, sizeof(s));
 
-		scanf(&quot;%d&quot;, &amp;N);
+		scanf(&#34;%d&#34;, &amp;N);
 
 		for (int i = 1; i &lt;= N; i++) {
-			scanf(&quot;%d&quot;, data + i);
+			scanf(&#34;%d&#34;, data + i);
 			s[i] = s[i - 1] + data[i];
 		}
 
 		init();
 
-		printf(&quot;Case %d:\n&quot;, t);
+		printf(&#34;Case %d:\n&#34;, t);
 		for (;;) {
-			scanf(&quot;%s&quot;, cmd);
-			if ('E' == cmd[0]) {
+			scanf(&#34;%s&#34;, cmd);
+			if (&#39;E&#39; == cmd[0]) {
 				break;
 			}
-			scanf(&quot;%d%d&quot;, &amp;a, &amp;b);
+			scanf(&#34;%d%d&#34;, &amp;a, &amp;b);
 			switch (cmd[0]) {
-			case 'Q':
-				printf(&quot;%d\n&quot;, calSum(b) - calSum(a - 1));
+			case &#39;Q&#39;:
+				printf(&#34;%d\n&#34;, calSum(b) - calSum(a - 1));
 				break;
-			case 'A':
+			case &#39;A&#39;:
 				add(a, b);
 				break;
-			case 'S':
+			case &#39;S&#39;:
 				add(a, -b);
 				break;
 			}
@@ -433,15 +378,4 @@ int main(int argc, char const *argv[])
 
 	return 0;
 }
-</code></pre>
-</main>
-<div id=comments>
-<hr>
-<script src=https://utteranc.es/client.js repo=KB5201314/KB5201314.github.io issue-term=pathname label="💬 comments 💬" theme=github-light crossorigin=anonymous async></script>
-</div>
-<footer>
-<hr>
-© imlk 2017 &ndash; 2021 | <a href=https://blog.imlk.top>imlk's blog</a> | <a href=https://github.com/KB5201314/>Github</a> | <a href=mailto:me@imlk.top>Email</a> | <a href=https://beian.miit.gov.cn/>京ICP备 - 2020042968号</a>
-</footer>
-</body>
-</html>
+</code></pre></main><div id=comments><hr><script src=https://utteranc.es/client.js repo=KB5201314/KB5201314.github.io issue-term=pathname label='💬 comments 💬' theme=github-light crossorigin=anonymous async></script></div><footer><hr>© imlk 2017 &ndash; 2021 | <a href=https://blog.imlk.top>imlk's blog</a> | <a href=https://github.com/KB5201314/>Github</a> | <a href=mailto:me@imlk.top>Email</a> | <a href=https://beian.miit.gov.cn/>京ICP备 - 2020042968号</a></footer></body></html>

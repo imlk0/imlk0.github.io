@@ -1,79 +1,26 @@
-<!doctype html><html lang=zh-cn>
-<head>
-<meta charset=utf-8>
-<meta name=viewport content="width=device-width,initial-scale=1">
-<title>HDU 2586 How far away ？ | imlk's blog</title>
-<link rel=stylesheet href=/css/style.css>
-<link rel=stylesheet href=/css/fonts.css>
-<link rel=preconnect href=https://fonts.googleapis.com>
-<link rel=preconnect href=https://fonts.gstatic.com crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&display=swap" rel=stylesheet>
-</head>
-<body>
-<header class=header>
-<a class=logo href=/> imlk's Blog </a>
-<nav>
-<ul class=menu>
-<li><a href=/>Home</a></li>
-<li><a href=/about/>About</a></li>
-<li><a href=/archives/>Archives</a></li>
-<li><a href=/friends/>Friends</a></li>
-<li><a href=/index.xml>Subscribe</a></li>
-</ul>
-</nav>
-</header>
-<hr>
-<div class=article-meta>
-<h1><span class=title>HDU 2586 How far away ？</span></h1>
-<span>
-<span class=date>2018-03-02</span>
+<!doctype html><html lang=zh-cn><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><title>HDU 2586 How far away ？ | imlk's blog</title><link rel=stylesheet href=/css/style.css><link rel=stylesheet href=/css/fonts.css><link rel=preconnect href=https://fonts.googleapis.com><link rel=preconnect href=https://fonts.gstatic.com crossorigin><link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&display=swap" rel=stylesheet></head><body><header class=header><a class=logo href=/>imlk's Blog</a><nav><ul class=menu><li><a href=/>Home</a></li><li><a href=/about/>About</a></li><li><a href=/archives/>Archives</a></li><li><a href=/friends/>Friends</a></li><li><a href=/index.xml>Subscribe</a></li></ul></nav></header><hr><div class=article-meta><h1><span class=title>HDU 2586 How far away ？</span></h1><span><span class=date>2018-03-02</span>
 |
-<span class=cats>
-<a href=https://blog.imlk.top/categories/algorithm/>Algorithm</a>
-</span>
+<span class=cats><a href=https://blog.imlk.top/categories/algorithm/>Algorithm</a></span>
 |
-<span class=tags>
-<a href=https://blog.imlk.top/tags/hdu/>#HDU</a>
+<span class=tags><a href=https://blog.imlk.top/tags/hdu/>#HDU</a>
 <a href=https://blog.imlk.top/tags/dp/>#dp</a>
 <a href=https://blog.imlk.top/tags/%E6%A0%91%E4%B8%8A%E6%9C%80%E7%9F%AD%E8%B7%9D%E7%A6%BB/>#树上最短距离</a>
 <a href=https://blog.imlk.top/tags/lca/>#LCA</a>
 <a href=https://blog.imlk.top/tags/%E6%A0%91/>#树</a>
-<a href=https://blog.imlk.top/tags/%E7%BA%BF%E6%AE%B5%E6%A0%91/>#线段树</a>
-</span>
-</span>
-<br>
-</div>
-<main>
-<p>HDU 2586 How far away ？——树上节点最短距离，LCA， 双亲表示法+暴力从下至上追溯，孩子链表示法+（Tarjan 或 欧拉环游RMQ+（ST 或 SegmentTree））</p>
-<p><a href="http://acm.hdu.edu.cn/showproblem.php?pid=2586">http://acm.hdu.edu.cn/showproblem.php?pid=2586</a></p>
-<h2 id=四种解法>四种解法：</h2>
-<p>- 双亲表示法+暴力从下至上追溯
+<a href=https://blog.imlk.top/tags/%E7%BA%BF%E6%AE%B5%E6%A0%91/>#线段树</a></span></span><br></div><main><p>HDU 2586 How far away ？——树上节点最短距离，LCA， 双亲表示法+暴力从下至上追溯，孩子链表示法+（Tarjan 或 欧拉环游RMQ+（ST 或 SegmentTree））</p><p><a href="http://acm.hdu.edu.cn/showproblem.php?pid=2586">http://acm.hdu.edu.cn/showproblem.php?pid=2586</a></p><h2 id=四种解法>四种解法：</h2><p>- 双亲表示法+暴力从下至上追溯
 - 孩子链表示法+Tarjan
 - 孩子链表示法+欧拉环游RMQ+ST
-- 孩子链表示法+欧拉环游RMQ+SegmentTree</p>
-<h2 id=对于建树的问题要解决父节点和子节点的问题>对于建树的问题，要解决父节点和子节点的问题：</h2>
-<p>- 第一种解法中，双亲表示法，用一个一维数组houses来储存所有节点，houses[x].fa表示该节点的父节点，当两个子树被合并造成冲突时，将其中一棵树倒置</p>
-<p>如：</p>
-<blockquote>
-<p>1 2
+- 孩子链表示法+欧拉环游RMQ+SegmentTree</p><h2 id=对于建树的问题要解决父节点和子节点的问题>对于建树的问题，要解决父节点和子节点的问题：</h2><p>- 第一种解法中，双亲表示法，用一个一维数组houses来储存所有节点，houses[x].fa表示该节点的父节点，当两个子树被合并造成冲突时，将其中一棵树倒置</p><p>如：</p><blockquote><p>1 2
 ↑ ↑
 3 4
 ↑ ↑
-5 6</p>
-</blockquote>
-<p>此时要连接3和4，必定会造成冲突，因为，若将3作为4的父节点（3 → 4），4就会有两个父节点，于是把4 ← 6这一支倒置成 4 → 6
-于是：</p>
-<blockquote>
-<p>1 2
+5 6</p></blockquote><p>此时要连接3和4，必定会造成冲突，因为，若将3作为4的父节点（3 → 4），4就会有两个父节点，于是把4 ← 6这一支倒置成 4 → 6
+于是：</p><blockquote><p>1 2
 ↑ ↑
 3 → 4
 ↑ ↓
 5 6
-（5成为合并以后的根元素）</p>
-</blockquote>
-<p>- 剩下三种解法则利用孩子链表示法，记录所有与目标节点相连接的节点（包括一个父节点和一个子节点），然后随便选取一个节点作为父节点，用dfs遍历这些连接的节点，同时用visited数组来跳过其中的父节点</p>
-<h1 id=解法1>解法1：</h1>
-<pre tabindex=0><code>#include &lt;iostream&gt;
+（5成为合并以后的根元素）</p></blockquote><p>- 剩下三种解法则利用孩子链表示法，记录所有与目标节点相连接的节点（包括一个父节点和一个子节点），然后随便选取一个节点作为父节点，用dfs遍历这些连接的节点，同时用visited数组来跳过其中的父节点</p><h1 id=解法1>解法1：</h1><pre tabindex=0><code>#include &lt;iostream&gt;
 #include &lt;algorithm&gt;
 #include &lt;cstring&gt;
 #include &lt;string&gt;
@@ -176,27 +123,27 @@ int cal(int x, int y) {
 int main(int argc, char const *argv[])
 {
 	int T, n, m, cp_n, a1, a2, a3;
-	scanf(&quot;%d&quot;, &amp;T);
+	scanf(&#34;%d&#34;, &amp;T);
 	while (T--) {
-		scanf(&quot;%d%d&quot;, &amp;n, &amp;m);
+		scanf(&#34;%d%d&#34;, &amp;n, &amp;m);
 
 		cp_n = n;
 
 		memset(houses, 0, sizeof(Node) * (n + 1));
 
 		while (--n) {
-			scanf(&quot;%d%d%d&quot;, &amp;a1, &amp;a2, &amp;a3);
+			scanf(&#34;%d%d%d&#34;, &amp;a1, &amp;a2, &amp;a3);
 
 			add(a1, a2, a3);
 
 		}
 
 		while (m--) {
-			scanf(&quot;%d%d&quot;, &amp;a1, &amp;a2);
+			scanf(&#34;%d%d&#34;, &amp;a1, &amp;a2);
 
 			memset(visited, 0, sizeof(int) * (cp_n + 1));//每处理一个问题前刷新一次
 
-			printf(&quot;%d\n&quot;, cal(a1, a2));
+			printf(&#34;%d\n&#34;, cal(a1, a2));
 
 		}
 
@@ -204,8 +151,7 @@ int main(int argc, char const *argv[])
 
 	return 0;
 }
-</code></pre><h1 id=解法2>解法2：</h1>
-<pre tabindex=0><code>#include &lt;iostream&gt;
+</code></pre><h1 id=解法2>解法2：</h1><pre tabindex=0><code>#include &lt;iostream&gt;
 #include &lt;algorithm&gt;
 #include &lt;cstring&gt;
 #include &lt;string&gt;
@@ -316,9 +262,9 @@ void tarjan(int which) {
 int main(int argc, char const *argv[])
 {
 	int T, n, m, a1, a2, a3;
-	scanf(&quot;%d&quot;, &amp;T);
+	scanf(&#34;%d&#34;, &amp;T);
 	while (T--) {
-		scanf(&quot;%d%d&quot;, &amp;n, &amp;m);
+		scanf(&#34;%d%d&#34;, &amp;n, &amp;m);
 
 		memset(hand, 0, sizeof(int) * (n + 1));
 		memset(qhand, 0, sizeof(int) * (n + 1));
@@ -327,7 +273,7 @@ int main(int argc, char const *argv[])
 		pos = 1;
 
 		while (--n) {
-			scanf(&quot;%d%d%d&quot;, &amp;a1, &amp;a2, &amp;a3);
+			scanf(&#34;%d%d%d&#34;, &amp;a1, &amp;a2, &amp;a3);
 
 			addToTree(a1, a2, a3);
 			addToTree(a2, a1, a3);
@@ -339,7 +285,7 @@ int main(int argc, char const *argv[])
 		//离线算法（先收集所有问题，然后统一遍历）
 		while (m--) {
 
-			scanf(&quot;%d%d&quot;, &amp;a1, &amp;a2);
+			scanf(&#34;%d%d&#34;, &amp;a1, &amp;a2);
 
 			//建立链表的方法和上面建树的方法类似
 			addToQue(a1, a2);
@@ -351,15 +297,14 @@ int main(int argc, char const *argv[])
 		tarjan(1);
 
 		for (int i = 1; i &lt; qpos; i += 2) {
-			printf(&quot;%d\n&quot;, ques[i].distance ? ques[i].distance : ques[i + 1].distance);
+			printf(&#34;%d\n&#34;, ques[i].distance ? ques[i].distance : ques[i + 1].distance);
 		}
 
 	}
 
 	return 0;
 }
-</code></pre><h1 id=解法3>解法3：</h1>
-<pre tabindex=0><code>#include &lt;iostream&gt;
+</code></pre><h1 id=解法3>解法3：</h1><pre tabindex=0><code>#include &lt;iostream&gt;
 #include &lt;algorithm&gt;
 #include &lt;cstring&gt;
 #include &lt;string&gt;
@@ -485,9 +430,9 @@ int min_st(int x, int y) {
 int main(int argc, char const *argv[])
 {
 	int T, n, m, a1, a2, a3, first = 1;
-	scanf(&quot;%d&quot;, &amp;T);
+	scanf(&#34;%d&#34;, &amp;T);
 	while (T--) {
-		scanf(&quot;%d%d&quot;, &amp;n, &amp;m);
+		scanf(&#34;%d%d&#34;, &amp;n, &amp;m);
 
 		memset(hand, 0, sizeof(int) * (n + 1));
 		memset(visited, 0, sizeof(int) * (n + 1));
@@ -495,7 +440,7 @@ int main(int argc, char const *argv[])
 		pos = 1;
 
 		while (--n) {
-			scanf(&quot;%d%d%d&quot;, &amp;a1, &amp;a2, &amp;a3);
+			scanf(&#34;%d%d%d&#34;, &amp;a1, &amp;a2, &amp;a3);
 
 			addToTree(a1, a2, a3);
 			addToTree(a2, a1, a3);
@@ -515,34 +460,34 @@ int main(int argc, char const *argv[])
 		if (first) {
 			first = 0;
 		} else {
-			printf(&quot;\n&quot;);
+			printf(&#34;\n&#34;);
 		}
 
 		// for (int i = 0; i &lt; rmq_pos; i++) {
-		// 	printf(&quot;%d &quot;, rmq_which[i]);
+		// 	printf(&#34;%d &#34;, rmq_which[i]);
 		// }
-		// printf(&quot;\n&quot;);
+		// printf(&#34;\n&#34;);
 		// for (int i = 0; i &lt; rmq_pos; i++) {
-		// 	printf(&quot;%d &quot;, rmq_deep[i]);
+		// 	printf(&#34;%d &#34;, rmq_deep[i]);
 		// }
-		// printf(&quot;\n&quot;);
+		// printf(&#34;\n&#34;);
 		// for (int i = 1; i &lt;= 6; i++) {
-		// 	printf(&quot;%d &quot;, rmq_first[i]);
+		// 	printf(&#34;%d &#34;, rmq_first[i]);
 		// }
-		// printf(&quot;\n&quot;);
+		// printf(&#34;\n&#34;);
 
 		// for (int x = 0; x &lt; 18; x++) {
 		// 	for (int i = 0; i &lt; rmq_pos; i++) {
-		// 		printf(&quot;%d &quot;, st[i][x]);
+		// 		printf(&#34;%d &#34;, st[i][x]);
 		// 	}
-		// 	printf(&quot;\n&quot;);
+		// 	printf(&#34;\n&#34;);
 		// }
 
 		while (m--) {
 
-			scanf(&quot;%d%d&quot;, &amp;a1, &amp;a2);
+			scanf(&#34;%d%d&#34;, &amp;a1, &amp;a2);
 
-			printf(&quot;%d\n&quot;, disToRoot[a1] + disToRoot[a2] - 2 * disToRoot[rmq_which[min_st(rmq_first[a1], rmq_first[a2])]]);
+			printf(&#34;%d\n&#34;, disToRoot[a1] + disToRoot[a2] - 2 * disToRoot[rmq_which[min_st(rmq_first[a1], rmq_first[a2])]]);
 
 		}
 
@@ -550,8 +495,7 @@ int main(int argc, char const *argv[])
 
 	return 0;
 }
-</code></pre><h1 id=解法4>解法4：</h1>
-<pre tabindex=0><code>#include &lt;iostream&gt;
+</code></pre><h1 id=解法4>解法4：</h1><pre tabindex=0><code>#include &lt;iostream&gt;
 #include &lt;algorithm&gt;
 #include &lt;cstring&gt;
 #include &lt;string&gt;
@@ -654,7 +598,7 @@ void rmq(int which, int deep) {
 
 //初始化segment数组
 void build_seg(int spos, int left, int right) {
-	// printf(&quot;spos -&gt; %d\n&quot;, spos);
+	// printf(&#34;spos -&gt; %d\n&#34;, spos);
 	segs[spos].left = left;
 	segs[spos].right = right;
 
@@ -690,9 +634,9 @@ int min_seg(int pos, int x, int y) {
 int main(int argc, char const *argv[])
 {
 	int T, n, m, a1, a2, a3, first = 1;
-	scanf(&quot;%d&quot;, &amp;T);
+	scanf(&#34;%d&#34;, &amp;T);
 	while (T--) {
-		scanf(&quot;%d%d&quot;, &amp;n, &amp;m);
+		scanf(&#34;%d%d&#34;, &amp;n, &amp;m);
 
 		memset(hand, 0, sizeof(int) * (n + 1));
 		memset(visited, 0, sizeof(int) * (n + 1));
@@ -700,7 +644,7 @@ int main(int argc, char const *argv[])
 		pos = 1;
 
 		while (--n) {
-			scanf(&quot;%d%d%d&quot;, &amp;a1, &amp;a2, &amp;a3);
+			scanf(&#34;%d%d%d&#34;, &amp;a1, &amp;a2, &amp;a3);
 
 			addToTree(a1, a2, a3);
 			addToTree(a2, a1, a3);
@@ -715,38 +659,38 @@ int main(int argc, char const *argv[])
 
 		rmq(1, 1);
 
-		// printf(&quot;rmq_pos -&gt; %d\n&quot;, rmq_pos);
+		// printf(&#34;rmq_pos -&gt; %d\n&#34;, rmq_pos);
 
 		build_seg(1, 0, rmq_pos - 1);
 
 		if (first) {//好像没有空行也能过
 			first = 0;
 		} else {
-			printf(&quot;\n&quot;);
+			printf(&#34;\n&#34;);
 		}
 
 		// for (int i = 0; i &lt; rmq_pos; i++) {
-		// 	printf(&quot;%d &quot;, rmq_which[i]);
+		// 	printf(&#34;%d &#34;, rmq_which[i]);
 		// }
-		// printf(&quot;\n&quot;);
+		// printf(&#34;\n&#34;);
 		// for (int i = 0; i &lt; rmq_pos; i++) {
-		// 	printf(&quot;%d &quot;, rmq_deep[i]);
+		// 	printf(&#34;%d &#34;, rmq_deep[i]);
 		// }
-		// printf(&quot;\n&quot;);
+		// printf(&#34;\n&#34;);
 		// for (int i = 1; i &lt;= 6; i++) {
-		// 	printf(&quot;%d &quot;, rmq_first[i]);
+		// 	printf(&#34;%d &#34;, rmq_first[i]);
 		// }
-		// printf(&quot;\n&quot;);
+		// printf(&#34;\n&#34;);
 
 		while (m--) {
 
-			scanf(&quot;%d%d&quot;, &amp;a1, &amp;a2);
+			scanf(&#34;%d%d&#34;, &amp;a1, &amp;a2);
 
 			if (rmq_first[a1] &lt; rmq_first[a2]) {
 
-				printf(&quot;%d\n&quot;, disToRoot[a1] + disToRoot[a2] - 2 * disToRoot[rmq_which[min_seg(1, rmq_first[a1], rmq_first[a2])]]);
+				printf(&#34;%d\n&#34;, disToRoot[a1] + disToRoot[a2] - 2 * disToRoot[rmq_which[min_seg(1, rmq_first[a1], rmq_first[a2])]]);
 			} else {
-				printf(&quot;%d\n&quot;, disToRoot[a1] + disToRoot[a2] - 2 * disToRoot[rmq_which[min_seg(1, rmq_first[a2], rmq_first[a1])]]);
+				printf(&#34;%d\n&#34;, disToRoot[a1] + disToRoot[a2] - 2 * disToRoot[rmq_which[min_seg(1, rmq_first[a2], rmq_first[a1])]]);
 			}
 
 		}
@@ -755,15 +699,4 @@ int main(int argc, char const *argv[])
 
 	return 0;
 }
-</code></pre>
-</main>
-<div id=comments>
-<hr>
-<script src=https://utteranc.es/client.js repo=KB5201314/KB5201314.github.io issue-term=pathname label="💬 comments 💬" theme=github-light crossorigin=anonymous async></script>
-</div>
-<footer>
-<hr>
-© imlk 2017 &ndash; 2021 | <a href=https://blog.imlk.top>imlk's blog</a> | <a href=https://github.com/KB5201314/>Github</a> | <a href=mailto:me@imlk.top>Email</a> | <a href=https://beian.miit.gov.cn/>京ICP备 - 2020042968号</a>
-</footer>
-</body>
-</html>
+</code></pre></main><div id=comments><hr><script src=https://utteranc.es/client.js repo=KB5201314/KB5201314.github.io issue-term=pathname label='💬 comments 💬' theme=github-light crossorigin=anonymous async></script></div><footer><hr>© imlk 2017 &ndash; 2021 | <a href=https://blog.imlk.top>imlk's blog</a> | <a href=https://github.com/KB5201314/>Github</a> | <a href=mailto:me@imlk.top>Email</a> | <a href=https://beian.miit.gov.cn/>京ICP备 - 2020042968号</a></footer></body></html>

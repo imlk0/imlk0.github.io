@@ -1,172 +1,50 @@
-<!doctype html><html lang=zh-cn>
-<head>
-<meta charset=utf-8>
-<meta name=viewport content="width=device-width,initial-scale=1">
-<title>自制x86玩具操作系统 week2 | imlk's blog</title>
-<link rel=stylesheet href=/css/style.css>
-<link rel=stylesheet href=/css/fonts.css>
-<link rel=preconnect href=https://fonts.googleapis.com>
-<link rel=preconnect href=https://fonts.gstatic.com crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&display=swap" rel=stylesheet>
-</head>
-<body>
-<header class=header>
-<a class=logo href=/> imlk's Blog </a>
-<nav>
-<ul class=menu>
-<li><a href=/>Home</a></li>
-<li><a href=/about/>About</a></li>
-<li><a href=/archives/>Archives</a></li>
-<li><a href=/friends/>Friends</a></li>
-<li><a href=/index.xml>Subscribe</a></li>
-</ul>
-</nav>
-</header>
-<hr>
-<div class=article-meta>
-<h1><span class=title>自制x86玩具操作系统 week2</span></h1>
-<span>
-<span class=date>2019-05-01</span>
+<!doctype html><html lang=zh-cn><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><title>自制x86玩具操作系统 week2 | imlk's blog</title><link rel=stylesheet href=/css/style.css><link rel=stylesheet href=/css/fonts.css><link rel=preconnect href=https://fonts.googleapis.com><link rel=preconnect href=https://fonts.gstatic.com crossorigin><link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&display=swap" rel=stylesheet></head><body><header class=header><a class=logo href=/>imlk's Blog</a><nav><ul class=menu><li><a href=/>Home</a></li><li><a href=/about/>About</a></li><li><a href=/archives/>Archives</a></li><li><a href=/friends/>Friends</a></li><li><a href=/index.xml>Subscribe</a></li></ul></nav></header><hr><div class=article-meta><h1><span class=title>自制x86玩具操作系统 week2</span></h1><span><span class=date>2019-05-01</span>
 |
-<span class=cats>
-<a href=https://blog.imlk.top/categories/osdev/>OSDev</a>
-</span>
+<span class=cats><a href=https://blog.imlk.top/categories/osdev/>OSDev</a></span>
 |
-<span class=tags>
-<a href=https://blog.imlk.top/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/>#操作系统</a>
-<a href=https://blog.imlk.top/tags/diy/>#DIY</a>
-</span>
-</span>
-<br>
-</div>
-<main>
-<h2 id=day-0x03>DAY 0x03</h2>
-<h4 id=makefile>Makefile</h4>
-<ul>
-<li>命令块中<code>-del + 文件</code>表示让make中删除该文件</li>
-</ul>
-<h4 id=汇编>汇编</h4>
-<ul>
-<li><code>INT 0x13</code>中断表示操作磁盘
-<table>
-<thead>
-<tr>
-<th>参数</th>
-<th>取值和含义</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>AH</td>
-<td><code>0x00</code>复位磁盘,<code>0x02</code>读盘,<code>0x3</code>写盘,<code>0x4</code>校验,<code>0xc</code>寻道</td>
-</tr>
-<tr>
-<td>AL</td>
-<td>要处理的扇区数目(最少为1)</td>
-</tr>
-<tr>
-<td>CH</td>
-<td>表示柱面号&0xff (从0开始)</td>
-</tr>
-<tr>
-<td>DH</td>
-<td>磁头号(从0开始)</td>
-</tr>
-<tr>
-<td>CL</td>
-<td>扇区号(0-5位)</td>
-</tr>
-<tr>
-<td>DL</td>
-<td>驱动器号(从0开始)</td>
-</tr>
-<tr>
-<td>ES:BX</td>
-<td>ES*16+BX缓冲区地址(ES左移4位,即十六进制后面追加一个0)</td>
-</tr>
-<tr>
-<td>读盘成功后CF置0,失败则置1</td>
-<td></td>
-</tr>
-</tbody>
-</table>
-</li>
-</ul>
-<p>例如</p>
-<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-nasm data-lang=nasm>		<span style=color:#a6e22e>MOV</span>		AX,<span style=color:#ae81ff>0x0820</span>
-		<span style=color:#a6e22e>MOV</span>		ES,AX			<span style=color:#75715e>; 缓冲区段地址</span>
-		<span style=color:#a6e22e>MOV</span>		CH,<span style=color:#ae81ff>0</span>			<span style=color:#75715e>; 柱面号为0</span>
-		<span style=color:#a6e22e>MOV</span>		DH,<span style=color:#ae81ff>0</span>			<span style=color:#75715e>; 磁头号0</span>
-		<span style=color:#a6e22e>MOV</span>		CL,<span style=color:#ae81ff>2</span>			<span style=color:#75715e>; 扇区号2</span>
-
-		<span style=color:#a6e22e>MOV</span>		AH,<span style=color:#ae81ff>0x02</span>			<span style=color:#75715e>; AH=0x02 : 从磁盘读入</span>
-		<span style=color:#a6e22e>MOV</span>		AL,<span style=color:#ae81ff>1</span>			<span style=color:#75715e>; 1读取一个扇区</span>
-		<span style=color:#a6e22e>MOV</span>		BX,<span style=color:#ae81ff>0</span>			<span style=color:#75715e>; 缓冲区地址</span>
-		<span style=color:#a6e22e>MOV</span>		DL,<span style=color:#ae81ff>0x00</span>			<span style=color:#75715e>; 0号驱动器</span>
-		<span style=color:#a6e22e>INT</span>		<span style=color:#ae81ff>0x13</span>			<span style=color:#75715e>; 磁盘BIOS调用</span>
-		<span style=color:#a6e22e>JC</span>		error
-</code></pre></div><p>该1.44Md的3.5寸软盘共有<strong>80个柱面(cylinder)(0-79),2个磁头(0-1),18个扇区(1-18)</strong>
-启动区位于C0-H0-S1,扇区序号按<code>扇区→磁头→柱面</code>的顺序进位</p>
-<ul>
-<li><code>JC</code>(Jump if Carry)(CF)条件跳转,产生进位时跳转</li>
-<li><code>JNC</code></li>
-<li><code>JAE</code>(Jump if above or equal)大于等于时跳转</li>
-<li><code>JBE</code>(Jump if below or equal)大于等于时跳转</li>
-<li><code>JB</code></li>
-<li><code>EQU</code>是queal的缩写,<code>CYLS EQU 10</code>表示定义符号<code>CYLS</code>为数字10</li>
-</ul>
-<h4 id=内存区域x86>内存区域(x86)</h4>
-<p>低地址区域</p>
-<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-txt data-lang=txt>|-------------------------------------------------------|0x00000000
-|	1 KiB 	RAM - partially unusable (see above) 		|
-|	Real Mode IVT (Interrupt Vector Table)			 	|0x000003FF
-|-------------------------------------------------------|0x00000400
-|	256 bytes 	RAM - partially unusable (see above)	|
-|	BDA (BIOS data area)								|0x000004FF
-|-------------------------------------------------------|0x00000500
-|	almost 30 KiB 	RAM (guaranteed free for use)		|
-|	Conventional memory									|0x00007BFF
-|-------------------------------------------------------|0x00007C00 ←
-|	512 bytes 	RAM - partially unusable (see above)	|
-|	Your OS BootSector									|0x00007DFF
-|-------------------------------------------------------|0x00007E00
-|	480.5 KiB 	RAM (guaranteed free for use)			|
-|	Conventional memory									|0x0007FFFF
-|-------------------------------------------------------|0x00080000
-|	128 KiB 	RAM - partially unusable (see above)	|
-|	EBDA (Extended BIOS Data Area)						|0x0009FFFF
-|-------------------------------------------------------|0x000A0000
-|	384 KiB 	various (unusable)						|
-|	Video memory, ROM Area								|0x000FFFFF
-|-------------------------------------------------------|
-</code></pre></div><h3 id=参考>参考</h3>
-<ul>
-<li>Memory Map (x86):<br>
-<a href=https://wiki.osdev.org/Memory_Map_(x86)>https://wiki.osdev.org/Memory_Map_(x86)</a></li>
-</ul>
-<p>关于作者开发的<code>edimg.exe</code>工具</p>
-<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-Makefile data-lang=Makefile><span style=color:#a6e22e>edimg imgin</span><span style=color:#f92672>:</span>../z_tools/fdimg0at.tek \ <span style=color:#75715e>#读取映像文件
-</span><span style=color:#75715e></span>		wbinimg src:ipl.bin len:512 from:0 to:0 <span style=color:#ae81ff>\ </span><span style=color:#75715e>#将指定文件的内容写入映像的指定位置，一般用于写入引导扇区</span>
-		copy from:haribote.sys to:@: <span style=color:#ae81ff>\ </span><span style=color:#75715e>#将文件写入磁盘映像中或从中取出文件,@:表示盘符，类似于C:和D:等</span>
-		imgout:haribote.img <span style=color:#75715e>#输出文件名</span>
-</code></pre></div><p><code>ipl.nas</code>启动后从C0-H0-S2开始加载，加载到0x08200地址处，略过了启动区。
+<span class=tags><a href=https://blog.imlk.top/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/>#操作系统</a>
+<a href=https://blog.imlk.top/tags/diy/>#DIY</a></span></span><br></div><main><h2 id=day-0x03>DAY 0x03</h2><h4 id=makefile>Makefile</h4><ul><li>命令块中<code>-del + 文件</code>表示让make中删除该文件</li></ul><h4 id=汇编>汇编</h4><ul><li><code>INT 0x13</code>中断表示操作磁盘<table><thead><tr><th>参数</th><th>取值和含义</th></tr></thead><tbody><tr><td>AH</td><td><code>0x00</code>复位磁盘,<code>0x02</code>读盘,<code>0x3</code>写盘,<code>0x4</code>校验,<code>0xc</code>寻道</td></tr><tr><td>AL</td><td>要处理的扇区数目(最少为1)</td></tr><tr><td>CH</td><td>表示柱面号&0xff (从0开始)</td></tr><tr><td>DH</td><td>磁头号(从0开始)</td></tr><tr><td>CL</td><td>扇区号(0-5位)</td></tr><tr><td>DL</td><td>驱动器号(从0开始)</td></tr><tr><td>ES:BX</td><td>ES*16+BX缓冲区地址(ES左移4位,即十六进制后面追加一个0)</td></tr><tr><td>读盘成功后CF置0,失败则置1</td><td></td></tr></tbody></table></li></ul><p>例如</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-nasm data-lang=nasm><span style=display:flex><span>		<span style=color:#a6e22e>MOV</span>		AX,<span style=color:#ae81ff>0x0820</span>
+</span></span><span style=display:flex><span>		<span style=color:#a6e22e>MOV</span>		ES,AX			<span style=color:#75715e>; 缓冲区段地址</span>
+</span></span><span style=display:flex><span>		<span style=color:#a6e22e>MOV</span>		CH,<span style=color:#ae81ff>0</span>			<span style=color:#75715e>; 柱面号为0</span>
+</span></span><span style=display:flex><span>		<span style=color:#a6e22e>MOV</span>		DH,<span style=color:#ae81ff>0</span>			<span style=color:#75715e>; 磁头号0</span>
+</span></span><span style=display:flex><span>		<span style=color:#a6e22e>MOV</span>		CL,<span style=color:#ae81ff>2</span>			<span style=color:#75715e>; 扇区号2</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>		<span style=color:#a6e22e>MOV</span>		AH,<span style=color:#ae81ff>0x02</span>			<span style=color:#75715e>; AH=0x02 : 从磁盘读入</span>
+</span></span><span style=display:flex><span>		<span style=color:#a6e22e>MOV</span>		AL,<span style=color:#ae81ff>1</span>			<span style=color:#75715e>; 1读取一个扇区</span>
+</span></span><span style=display:flex><span>		<span style=color:#a6e22e>MOV</span>		BX,<span style=color:#ae81ff>0</span>			<span style=color:#75715e>; 缓冲区地址</span>
+</span></span><span style=display:flex><span>		<span style=color:#a6e22e>MOV</span>		DL,<span style=color:#ae81ff>0x00</span>			<span style=color:#75715e>; 0号驱动器</span>
+</span></span><span style=display:flex><span>		<span style=color:#a6e22e>INT</span>		<span style=color:#ae81ff>0x13</span>			<span style=color:#75715e>; 磁盘BIOS调用</span>
+</span></span><span style=display:flex><span>		<span style=color:#a6e22e>JC</span>		error
+</span></span></code></pre></div><p>该1.44Md的3.5寸软盘共有<strong>80个柱面(cylinder)(0-79),2个磁头(0-1),18个扇区(1-18)</strong>
+启动区位于C0-H0-S1,扇区序号按<code>扇区→磁头→柱面</code>的顺序进位</p><ul><li><code>JC</code>(Jump if Carry)(CF)条件跳转,产生进位时跳转</li><li><code>JNC</code></li><li><code>JAE</code>(Jump if above or equal)大于等于时跳转</li><li><code>JBE</code>(Jump if below or equal)大于等于时跳转</li><li><code>JB</code></li><li><code>EQU</code>是queal的缩写,<code>CYLS EQU 10</code>表示定义符号<code>CYLS</code>为数字10</li></ul><h4 id=内存区域x86>内存区域(x86)</h4><p>低地址区域</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-txt data-lang=txt><span style=display:flex><span>|-------------------------------------------------------|0x00000000
+</span></span><span style=display:flex><span>|	1 KiB 	RAM - partially unusable (see above) 		|
+</span></span><span style=display:flex><span>|	Real Mode IVT (Interrupt Vector Table)			 	|0x000003FF
+</span></span><span style=display:flex><span>|-------------------------------------------------------|0x00000400
+</span></span><span style=display:flex><span>|	256 bytes 	RAM - partially unusable (see above)	|
+</span></span><span style=display:flex><span>|	BDA (BIOS data area)								|0x000004FF
+</span></span><span style=display:flex><span>|-------------------------------------------------------|0x00000500
+</span></span><span style=display:flex><span>|	almost 30 KiB 	RAM (guaranteed free for use)		|
+</span></span><span style=display:flex><span>|	Conventional memory									|0x00007BFF
+</span></span><span style=display:flex><span>|-------------------------------------------------------|0x00007C00 ←
+</span></span><span style=display:flex><span>|	512 bytes 	RAM - partially unusable (see above)	|
+</span></span><span style=display:flex><span>|	Your OS BootSector									|0x00007DFF
+</span></span><span style=display:flex><span>|-------------------------------------------------------|0x00007E00
+</span></span><span style=display:flex><span>|	480.5 KiB 	RAM (guaranteed free for use)			|
+</span></span><span style=display:flex><span>|	Conventional memory									|0x0007FFFF
+</span></span><span style=display:flex><span>|-------------------------------------------------------|0x00080000
+</span></span><span style=display:flex><span>|	128 KiB 	RAM - partially unusable (see above)	|
+</span></span><span style=display:flex><span>|	EBDA (Extended BIOS Data Area)						|0x0009FFFF
+</span></span><span style=display:flex><span>|-------------------------------------------------------|0x000A0000
+</span></span><span style=display:flex><span>|	384 KiB 	various (unusable)						|
+</span></span><span style=display:flex><span>|	Video memory, ROM Area								|0x000FFFFF
+</span></span><span style=display:flex><span>|-------------------------------------------------------|
+</span></span></code></pre></div><h3 id=参考>参考</h3><ul><li>Memory Map (x86):<br><a href=https://wiki.osdev.org/Memory_Map_(x86)>https://wiki.osdev.org/Memory_Map_(x86)</a></li></ul><p>关于作者开发的<code>edimg.exe</code>工具</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-Makefile data-lang=Makefile><span style=display:flex><span><span style=color:#a6e22e>edimg imgin</span><span style=color:#f92672>:</span>../z_tools/fdimg0at.tek \ <span style=color:#75715e>#读取映像文件
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>		wbinimg src:ipl.bin len:512 from:0 to:0 <span style=color:#ae81ff>\ </span><span style=color:#75715e>#将指定文件的内容写入映像的指定位置，一般用于写入引导扇区</span>
+</span></span><span style=display:flex><span>		copy from:haribote.sys to:@: <span style=color:#ae81ff>\ </span><span style=color:#75715e>#将文件写入磁盘映像中或从中取出文件,@:表示盘符，类似于C:和D:等</span>
+</span></span><span style=display:flex><span>		imgout:haribote.img <span style=color:#75715e>#输出文件名</span>
+</span></span></code></pre></div><p><code>ipl.nas</code>启动后从C0-H0-S2开始加载，加载到0x08200地址处，略过了启动区。
 <code>haribote.nas</code>开头设置<code>ORG 0xc200</code>，其中<code>0xc200=0x08200-0x00200+0x04200</code>,意味着这段程序将被加载到<code>0xc200</code>这个地址
-作者书中说整个磁盘上的内容被加载到<code>0x08000</code>号地址，但实际上代码只加载了第二扇区开始的内容到<code>0x08000</code>，调试查看<code>0x08000-0x08200</code>并没有找到启动区的数据，发现该系统采用小端字节序，不知道和我用的是bochs还是qemu也没有关系</p>
-<ul>
-<li><code>0x04200</code>，查阅资料得知这是FAT12文件系统的文件数据区（第33扇区）,所以用<code>edimg</code>进行<code>copy</code>操作到磁盘中的第一个文件的地址偏移量就是<code>0x04200</code></li>
-</ul>
-<h3 id=参考-1>参考</h3>
-<ul>
-<li>edimg工具的使用:<br>
-<a href="http://webcache.googleusercontent.com/search?q=cache:hex7N0E90QkJ:hrb.osask.jp/wiki/%3Ftools/edimg+&cd=2&hl=zh-CN&ct=clnk">http://webcache.googleusercontent.com/search?q=cache:hex7N0E90QkJ:hrb.osask.jp/wiki/%3Ftools/edimg+&cd=2&hl=zh-CN&ct=clnk</a></li>
-<li>【文件系统】FAT12文件系统简介:<br>
-<a href=https://blog.csdn.net/xhyzjiji/article/details/49027013>https://blog.csdn.net/xhyzjiji/article/details/49027013</a></li>
-</ul>
-<p>启动程序加载器完成磁盘数据的加载以后，跳转到第一个文件的位置开始执行，确认无误以后<code>make run</code>但是究竟程序有没有出错呢，屏幕一片黑啥也看不出，于是在切换显卡模式以后，往屏幕上输出一段信息确定启动没有问题。</p>
-<p>然后是加了一堆预定义的地址，记录一堆数据，其中有一个图像缓冲区的初始地址<code>0xa0000</code>，于是尝试直接debug往这个地址以及后面的那块区域里面写东西，但是并没有像预想的那样在屏幕上出现图案。emmm先留着。</p>
-<p>查看网页发现<code>0xa0000到0xaffff</code>是VRAM的空间，一个像素点是一个字节，分辨率是320*200，试试循环画点？</p>
-<p>尝试了如下代码，</p>
-<pre tabindex=0><code>		MOV		DX,0xf0
+作者书中说整个磁盘上的内容被加载到<code>0x08000</code>号地址，但实际上代码只加载了第二扇区开始的内容到<code>0x08000</code>，调试查看<code>0x08000-0x08200</code>并没有找到启动区的数据，发现该系统采用小端字节序，不知道和我用的是bochs还是qemu也没有关系</p><ul><li><code>0x04200</code>，查阅资料得知这是FAT12文件系统的文件数据区（第33扇区）,所以用<code>edimg</code>进行<code>copy</code>操作到磁盘中的第一个文件的地址偏移量就是<code>0x04200</code></li></ul><h3 id=参考-1>参考</h3><ul><li>edimg工具的使用:<br><a href="http://webcache.googleusercontent.com/search?q=cache:hex7N0E90QkJ:hrb.osask.jp/wiki/%3Ftools/edimg+&cd=2&hl=zh-CN&ct=clnk">http://webcache.googleusercontent.com/search?q=cache:hex7N0E90QkJ:hrb.osask.jp/wiki/%3Ftools/edimg+&cd=2&hl=zh-CN&ct=clnk</a></li><li>【文件系统】FAT12文件系统简介:<br><a href=https://blog.csdn.net/xhyzjiji/article/details/49027013>https://blog.csdn.net/xhyzjiji/article/details/49027013</a></li></ul><p>启动程序加载器完成磁盘数据的加载以后，跳转到第一个文件的位置开始执行，确认无误以后<code>make run</code>但是究竟程序有没有出错呢，屏幕一片黑啥也看不出，于是在切换显卡模式以后，往屏幕上输出一段信息确定启动没有问题。</p><p>然后是加了一堆预定义的地址，记录一堆数据，其中有一个图像缓冲区的初始地址<code>0xa0000</code>，于是尝试直接debug往这个地址以及后面的那块区域里面写东西，但是并没有像预想的那样在屏幕上出现图案。emmm先留着。</p><p>查看网页发现<code>0xa0000到0xaffff</code>是VRAM的空间，一个像素点是一个字节，分辨率是320*200，试试循环画点？</p><p>尝试了如下代码，</p><pre tabindex=0><code>		MOV		DX,0xf0
 		MOV		CX,0
 		MOV		BX,0
 		MOV		AX,0xa000
@@ -180,129 +58,28 @@ write_VRAM:
 		MOV		[ES:BX],DX
 		JBE		write_VRAM
 </code></pre><p>结果整个屏幕果然呈现了棕绿色，吧DX改为0x0f，结果屏幕变成了全白色
-最后选定了<code>0x08</code>，深灰色</p>
-<p>证实了，确实能直接在显示内存区域直接写数据然后显示出来</p>
-<p>接下来在<code>asmhead.nas</code>里加上一堆汇编代码，然后最终调用了<code>bootpack.c</code>的<code>HariMain()</code>，然后用汇编编写了一个输出模式为<code>WCOFF</code>的<code>naskfunc.nas</code>文件，其中编写了执行HLT指令的函数<code>io_hlt()</code>，然后编译成目标文件让<code>bootpack.c</code>链接,暴露的函数名称要声明为<code>GLOBAL</code>。
-在</p>
-<ul>
-<li><code>bim</code>是作者设计的一种文件格式，意思是<code>binary image</code></li>
-</ul>
-<p>将目标文件用作者的工具链接起来以后就会得到bim文件</p>
-<ul>
-<li><code>hrb</code>是机器指令组成的文件
+最后选定了<code>0x08</code>，深灰色</p><p>证实了，确实能直接在显示内存区域直接写数据然后显示出来</p><p>接下来在<code>asmhead.nas</code>里加上一堆汇编代码，然后最终调用了<code>bootpack.c</code>的<code>HariMain()</code>，然后用汇编编写了一个输出模式为<code>WCOFF</code>的<code>naskfunc.nas</code>文件，其中编写了执行HLT指令的函数<code>io_hlt()</code>，然后编译成目标文件让<code>bootpack.c</code>链接,暴露的函数名称要声明为<code>GLOBAL</code>。
+在</p><ul><li><code>bim</code>是作者设计的一种文件格式，意思是<code>binary image</code></li></ul><p>将目标文件用作者的工具链接起来以后就会得到bim文件</p><ul><li><code>hrb</code>是机器指令组成的文件
 作者将c文件编译(cc1)，转为nas(gas2nask)，汇编编译(nask)得到目标文件，目标文件链接(obj2bim)得到bim文件，bim文件转换为hrb文件(bim2hrb)，然后asmhead.nas汇编(nask)出来的文件和这个hrb文件拼接起来就得到了最终的机器指令文件(haribote.sys)，由ipl加载并执行
-（真麻烦）</li>
-</ul>
-<p>总之这样超长的第三天过去了，还剩下asmhead里面加的100行代码作者没有解释
-不如先试着看看吧，能看多少是多少</p>
-<h4 id=汇编-1>汇编</h4>
-<ul>
-<li><code>OUT</code>指令和<code>IN</code>指令是对外设的操作的读写指令(访问系统的io空间)
-<code>OUT 0x21,AL</code>表示将AL寄存器的值写入0x21端口</li>
-<li><code>CLI</code>指令禁止中断发生，<code>STL</code>指令允许中断发生</li>
-<li><code>CALL</code>命令在跳转前将下一条指令的地址（段和偏移）压入栈中，执行<code>RET</code>时则从栈中取出地址回到<code>CALL</code>的下一跳地址处执行</li>
-</ul>
-<h2 id=day-0x04>DAY 0x04</h2>
-<p>因为自带的cc1不支持最高只支持c99，用着很不爽，改成了电脑上装的gcc输出汇编指令，发现也能运行，只是gas2nask的时候程序状态值为1，但是不影响运行，修改makefile在该条指令前加上<code>-</code>就能避免整个make进程的中断</p>
-<h4 id=汇编-2>汇编</h4>
-<ul>
-<li>编写C语言函数的的汇编函数体时，寄存器要慎用，自由读写的只有<code>EAX,ECX,EDX</code>
-这三个，其他的只能使用其值而不能改变</li>
-<li><code>[INSTRSET "i486p"]</code>指令(instr set,判断指令集)标识这个汇编程序是提供给486使用的（EAX等寄存器名不能16位的8086中使用，自386开始的cpu都是32位的）</li>
-</ul>
-<h4 id=makefile-1>Makefile</h4>
-<ul>
-<li>命令前加上<code>-</code>表示即使这条命令即使出错也继续执行</li>
-</ul>
-<p>作者第四天一开始在c程序里面进行了绘制操作，但是我在第三天的时候已经用汇编指令对图像内存缓存地址区域进行了写值，因此，这里验证了<code>write_mem8</code>以后注释这一段了
-在第三天的时候我也用汇编的形式在<code>asmhead.nas</code>里做了作者第四天做的第二件事情，写入条纹图案，只不过我写入的条纹时写入的是<code>i</code>而不是<code>i&0x0f</code>，不过也看到了一些奇怪的条纹</p>
-<p>之后作者长篇叙述了指针的概念及其实现,这些已经懂了的知识就草草看完进入第四天的第6小节了</p>
-<h4 id=vga8位色号>VGA8位色号</h4>
-<p>作者定义的调色板:</p>
-<pre tabindex=0><code> 0:#000000:黑	 6:#00ffff:浅亮蓝	12:#000084:暗蓝
+（真麻烦）</li></ul><p>总之这样超长的第三天过去了，还剩下asmhead里面加的100行代码作者没有解释
+不如先试着看看吧，能看多少是多少</p><h4 id=汇编-1>汇编</h4><ul><li><code>OUT</code>指令和<code>IN</code>指令是对外设的操作的读写指令(访问系统的io空间)
+<code>OUT 0x21,AL</code>表示将AL寄存器的值写入0x21端口</li><li><code>CLI</code>指令禁止中断发生，<code>STL</code>指令允许中断发生</li><li><code>CALL</code>命令在跳转前将下一条指令的地址（段和偏移）压入栈中，执行<code>RET</code>时则从栈中取出地址回到<code>CALL</code>的下一跳地址处执行</li></ul><h2 id=day-0x04>DAY 0x04</h2><p>因为自带的cc1不支持最高只支持c99，用着很不爽，改成了电脑上装的gcc输出汇编指令，发现也能运行，只是gas2nask的时候程序状态值为1，但是不影响运行，修改makefile在该条指令前加上<code>-</code>就能避免整个make进程的中断</p><h4 id=汇编-2>汇编</h4><ul><li>编写C语言函数的的汇编函数体时，寄存器要慎用，自由读写的只有<code>EAX,ECX,EDX</code>
+这三个，其他的只能使用其值而不能改变</li><li><code>[INSTRSET "i486p"]</code>指令(instr set,判断指令集)标识这个汇编程序是提供给486使用的（EAX等寄存器名不能16位的8086中使用，自386开始的cpu都是32位的）</li></ul><h4 id=makefile-1>Makefile</h4><ul><li>命令前加上<code>-</code>表示即使这条命令即使出错也继续执行</li></ul><p>作者第四天一开始在c程序里面进行了绘制操作，但是我在第三天的时候已经用汇编指令对图像内存缓存地址区域进行了写值，因此，这里验证了<code>write_mem8</code>以后注释这一段了
+在第三天的时候我也用汇编的形式在<code>asmhead.nas</code>里做了作者第四天做的第二件事情，写入条纹图案，只不过我写入的条纹时写入的是<code>i</code>而不是<code>i&0x0f</code>，不过也看到了一些奇怪的条纹</p><p>之后作者长篇叙述了指针的概念及其实现,这些已经懂了的知识就草草看完进入第四天的第6小节了</p><h4 id=vga8位色号>VGA8位色号</h4><p>作者定义的调色板:</p><pre tabindex=0><code> 0:#000000:黑	 6:#00ffff:浅亮蓝	12:#000084:暗蓝
  1:#ff0000:亮红	 7:#ffffff:白		13:#840084:暗紫
  2:#00ff00:亮绿	 8:#c6c6c6:亮灰		14:#008484:浅暗蓝
  3:#ffff00:亮黄	 9:#840000:暗红		15:#848484:暗灰
  4:#0000ff:亮藍	10:#008400:暗绿
  5:#ff00ff:亮紫	11:#848400:暗黄
-</code></pre><h4 id=vgaega调色板技术>VGA/EGA调色板技术</h4>
-<p>调色板是当初为了节约宝贵的内存空间而设计的一种解决方案，屏幕上最多可以显示16种颜色，在EGA的16个颜色寄存器存储颜色的。每个颜色存储器有<code>3*6=18</code>位，其中R、G、B各用6位表示，即R、G、B各有64种取值，从0到63代表颜色的程度，所以一种颜色用18位表示。这样机器能够显示的颜色总共有<code>64*64*64=256k</code>种，但是同一时刻在屏幕上显示的颜色只有16种，图像缓存区域中每个像素点只需用一个字节（实际上是0-15的值）来表示这16种颜色的索引号。</p>
-<ul>
-<li>c语言中,函数内定义的static类型的数据会被存放到栈外的一块单独的内存区域,如果指定了初始值,相当于<code>DB 初始数据</code></li>
-</ul>
-<p><code>EFLAGS</code>寄存器(32位，由FLAGS扩展而来)，<code>FLAGS</code>的各个位含义</p>
-<pre tabindex=0><code>-------------------------------------------------
+</code></pre><h4 id=vgaega调色板技术>VGA/EGA调色板技术</h4><p>调色板是当初为了节约宝贵的内存空间而设计的一种解决方案，屏幕上最多可以显示16种颜色，在EGA的16个颜色寄存器存储颜色的。每个颜色存储器有<code>3*6=18</code>位，其中R、G、B各用6位表示，即R、G、B各有64种取值，从0到63代表颜色的程度，所以一种颜色用18位表示。这样机器能够显示的颜色总共有<code>64*64*64=256k</code>种，但是同一时刻在屏幕上显示的颜色只有16种，图像缓存区域中每个像素点只需用一个字节（实际上是0-15的值）来表示这16种颜色的索引号。</p><ul><li>c语言中,函数内定义的static类型的数据会被存放到栈外的一块单独的内存区域,如果指定了初始值,相当于<code>DB 初始数据</code></li></ul><p><code>EFLAGS</code>寄存器(32位，由FLAGS扩展而来)，<code>FLAGS</code>的各个位含义</p><pre tabindex=0><code>-------------------------------------------------
 |15|14|13|12|11|10| 9| 8| 7| 6| 5| 4| 3| 2| 1| 0|
 |  |NT| IOPL|OF|DF|IF|TF|SF|ZF|  |AF|  |PF|  |CF|
 -------------------------------------------------
-</code></pre><p>中断标志位在第9位</p>
-<h4 id=汇编-3>汇编</h4>
-<ul>
-<li><code>PUSHFD</code>(push flags double-word)，将32位的EFLAGS压栈，对应的还有<code>POPFD</code><br>
-因为<code>EFLAGS</code>和其他寄存器，比如<code>EAX</code>之间没有直接的汇编指令相互传送，因而需要用栈作为中介</li>
-<li>根据C语言的规约，执行<code>RET</code>语句时，EAX寄存器中的值被看作是函数的返回值</li>
-</ul>
-<h3 id=参考-2>参考</h3>
-<ul>
-<li>视频图形阵列-视频DA转换器
-<a href="http://webcache.googleusercontent.com/search?q=cache:http://oswiki.osask.jp/?VGA">http://webcache.googleusercontent.com/search?q=cache:http://oswiki.osask.jp/?VGA</a></li>
-</ul>
-<h2 id=day-0x05>DAY 0x05</h2>
-<p>由hankaku.txt生成的obj文件中，<code>.data</code>段存的是连续的字符数据，该obj文件导出了一个符号<code>_hankaku</code>
-要使用该外部obj导出的符号，只要在c文件里用<code>extern char hankaku[4096]</code>即可</p>
-<p>第五天的实验开始出现了问题，因为之前由于忍受不了只允许使用c99标准，我改成了用gcc -S 输出代码，但是现在似乎问题更大了，gcc输出的汇编中包含一个叫<code>.section .rdata</code>的段，这个段不能被<code>gas2nask</code>识别，而函数调用参数中的字符串字面量就在这个段里存着
-比如</p>
-<pre tabindex=0><code>putfonts8_asc(vram, xsize, ysize, 0, 0, COL8_FFFFFF, &quot;test it!&quot;);
+</code></pre><p>中断标志位在第9位</p><h4 id=汇编-3>汇编</h4><ul><li><code>PUSHFD</code>(push flags double-word)，将32位的EFLAGS压栈，对应的还有<code>POPFD</code><br>因为<code>EFLAGS</code>和其他寄存器，比如<code>EAX</code>之间没有直接的汇编指令相互传送，因而需要用栈作为中介</li><li>根据C语言的规约，执行<code>RET</code>语句时，EAX寄存器中的值被看作是函数的返回值</li></ul><h3 id=参考-2>参考</h3><ul><li>视频图形阵列-视频DA转换器
+<a href="http://webcache.googleusercontent.com/search?q=cache:http://oswiki.osask.jp/?VGA">http://webcache.googleusercontent.com/search?q=cache:http://oswiki.osask.jp/?VGA</a></li></ul><h2 id=day-0x05>DAY 0x05</h2><p>由hankaku.txt生成的obj文件中，<code>.data</code>段存的是连续的字符数据，该obj文件导出了一个符号<code>_hankaku</code>
+要使用该外部obj导出的符号，只要在c文件里用<code>extern char hankaku[4096]</code>即可</p><p>第五天的实验开始出现了问题，因为之前由于忍受不了只允许使用c99标准，我改成了用gcc -S 输出代码，但是现在似乎问题更大了，gcc输出的汇编中包含一个叫<code>.section .rdata</code>的段，这个段不能被<code>gas2nask</code>识别，而函数调用参数中的字符串字面量就在这个段里存着
+比如</p><pre tabindex=0><code>putfonts8_asc(vram, xsize, ysize, 0, 0, COL8_FFFFFF, &#34;test it!&#34;);
 </code></pre><p>这条里面的<code>"test it!"</code>就在这个段里，被gas2nask忽略掉了以后，导致生成的nas文件里头缺失了这部分内容，nask编译出错。
 上网意外找到了作者的github，clone下来编译不过关，缺少个文件，遂放弃。
-有意外找到OSASK项目的项目中文首页，从中下载了2010年的版本，没想到这个作者依然没有注意到这个bug，我绝望了，删光了下载的东西，决心不用nask了，另外想办法整一下</p>
-<p>回忆编译流程，发现bootpack.c最终是为了生成.obj目标文件，而这个作者偏偏要先生成.gas，再生成.nas，再用他那个nask编译成.obj，其实这其中的步骤完全就可以省略嘛，我之前就用了gcc，现在，直接可以<code>gcc -c</code>生成目标文件，于是乎改写Makefile，直接通过编译！（坑爹的作者）</p>
-<p>既然改了这么多，代码也越来越乱，干脆一改到底，就用c++，反正c++也是兼容c的问题不大。</p>
-<p>但是用c++编译，链接时出现问题</p>
-<pre tabindex=0><code>Warning : can't link _HariMain
-</code></pre><p>原因是c++编译的名字修饰规则和c的不匹配，入口函数被编译成了<code>__Z8HariMainv</code>，这下我大概明白它的原理了，我们在写的<code>bootpack.cpp</code>是要被作为类库一样被链接的，而另外一边是已经写好了的，所以只能让我们这边做妥协，到解决办法是定义处套上<code>extern "C"</code>就好了</p>
-<p>在引入了c++的基础上，我新建了几个文件，还增加了Cursor类和Mouse类，Cursor对象相当于一个隐形的光标，封装的函数，可以方便地进行定位，比如，下一格，换行等操作，这样代码也更加清晰。</p>
-<h4 id=分段>分段</h4>
-<ul>
-<li>32位模式，<code>DS:EBX</code>不再表示DS*16+EBX，而是<code>EBX+(DS所表示的段的起始地址)</code>，而且缺省时也默认使用DS这个段寄存器。</li>
-</ul>
-<h5 id=段的有关信息cpu用8个字节即64位的数据来表示这些信息>段的有关信息（CPU用8个字节，即64位的数据来表示这些信息）</h5>
-<ul>
-<li>
-<p>段的大小(存储时存储段的大小-1后的值，以节省空间，limit)</p>
-</li>
-<li>
-<p>段的起始地址(base)</p>
-</li>
-<li>
-<p>段的管理属性（禁止写入，禁止执行，系统专用等，ar）</p>
-</li>
-<li>
-<p>段寄存器只有16位，即使是在32位模式下也是如此</p>
-</li>
-<li>
-<p>段寄存器的底三位由于设计原因不能使用，因此只剩下13位，只能表示8192个段</p>
-</li>
-</ul>
-<h5 id=gdt-全局段号记录表global-segment-descriptor-table>GDT 全局段号记录表(global segment descriptor table)</h5>
-<ul>
-<li>和调色板一样的思想，8192个段</li>
-<li>GDT存在于内存中，用来存储段的有关信息，表中每一项需要8个字节（8192*8个字节=64KB）</li>
-<li><code>GDTR</code>寄存器存储了这个表的起始位置和这个表的长度（字节数-1）</li>
-</ul>
-<h5 id=idt-中断记录表interrupt-descriptor-table>IDT 中断记录表(interrupt descriptor table)</h5>
-<ul>
-<li>IDT记录了0-255的中断号吗和调用函数的对应关系，表中的每一项也是8个字节</li>
-</ul>
-<p>数据的组织形式应该是和机器是小端模式有关系，因为GDT的数据结构中base字段的低24位被储存到16位的base_low和base_mid的低八位中了，但是base剩下的最高8位为什么被存储到与前面两个字段不相邻的base_high字段我就不清楚了。</p>
-</main>
-<div id=comments>
-<hr>
-<script src=https://utteranc.es/client.js repo=KB5201314/KB5201314.github.io issue-term=pathname label="💬 comments 💬" theme=github-light crossorigin=anonymous async></script>
-</div>
-<footer>
-<hr>
-© imlk 2017 &ndash; 2021 | <a href=https://blog.imlk.top>imlk's blog</a> | <a href=https://github.com/KB5201314/>Github</a> | <a href=mailto:me@imlk.top>Email</a> | <a href=https://beian.miit.gov.cn/>京ICP备 - 2020042968号</a>
-</footer>
-</body>
-</html>
+有意外找到OSASK项目的项目中文首页，从中下载了2010年的版本，没想到这个作者依然没有注意到这个bug，我绝望了，删光了下载的东西，决心不用nask了，另外想办法整一下</p><p>回忆编译流程，发现bootpack.c最终是为了生成.obj目标文件，而这个作者偏偏要先生成.gas，再生成.nas，再用他那个nask编译成.obj，其实这其中的步骤完全就可以省略嘛，我之前就用了gcc，现在，直接可以<code>gcc -c</code>生成目标文件，于是乎改写Makefile，直接通过编译！（坑爹的作者）</p><p>既然改了这么多，代码也越来越乱，干脆一改到底，就用c++，反正c++也是兼容c的问题不大。</p><p>但是用c++编译，链接时出现问题</p><pre tabindex=0><code>Warning : can&#39;t link _HariMain
+</code></pre><p>原因是c++编译的名字修饰规则和c的不匹配，入口函数被编译成了<code>__Z8HariMainv</code>，这下我大概明白它的原理了，我们在写的<code>bootpack.cpp</code>是要被作为类库一样被链接的，而另外一边是已经写好了的，所以只能让我们这边做妥协，到解决办法是定义处套上<code>extern "C"</code>就好了</p><p>在引入了c++的基础上，我新建了几个文件，还增加了Cursor类和Mouse类，Cursor对象相当于一个隐形的光标，封装的函数，可以方便地进行定位，比如，下一格，换行等操作，这样代码也更加清晰。</p><h4 id=分段>分段</h4><ul><li>32位模式，<code>DS:EBX</code>不再表示DS*16+EBX，而是<code>EBX+(DS所表示的段的起始地址)</code>，而且缺省时也默认使用DS这个段寄存器。</li></ul><h5 id=段的有关信息cpu用8个字节即64位的数据来表示这些信息>段的有关信息（CPU用8个字节，即64位的数据来表示这些信息）</h5><ul><li><p>段的大小(存储时存储段的大小-1后的值，以节省空间，limit)</p></li><li><p>段的起始地址(base)</p></li><li><p>段的管理属性（禁止写入，禁止执行，系统专用等，ar）</p></li><li><p>段寄存器只有16位，即使是在32位模式下也是如此</p></li><li><p>段寄存器的底三位由于设计原因不能使用，因此只剩下13位，只能表示8192个段</p></li></ul><h5 id=gdt-全局段号记录表global-segment-descriptor-table>GDT 全局段号记录表(global segment descriptor table)</h5><ul><li>和调色板一样的思想，8192个段</li><li>GDT存在于内存中，用来存储段的有关信息，表中每一项需要8个字节（8192*8个字节=64KB）</li><li><code>GDTR</code>寄存器存储了这个表的起始位置和这个表的长度（字节数-1）</li></ul><h5 id=idt-中断记录表interrupt-descriptor-table>IDT 中断记录表(interrupt descriptor table)</h5><ul><li>IDT记录了0-255的中断号吗和调用函数的对应关系，表中的每一项也是8个字节</li></ul><p>数据的组织形式应该是和机器是小端模式有关系，因为GDT的数据结构中base字段的低24位被储存到16位的base_low和base_mid的低八位中了，但是base剩下的最高8位为什么被存储到与前面两个字段不相邻的base_high字段我就不清楚了。</p></main><div id=comments><hr><script src=https://utteranc.es/client.js repo=KB5201314/KB5201314.github.io issue-term=pathname label='💬 comments 💬' theme=github-light crossorigin=anonymous async></script></div><footer><hr>© imlk 2017 &ndash; 2021 | <a href=https://blog.imlk.top>imlk's blog</a> | <a href=https://github.com/KB5201314/>Github</a> | <a href=mailto:me@imlk.top>Email</a> | <a href=https://beian.miit.gov.cn/>京ICP备 - 2020042968号</a></footer></body></html>

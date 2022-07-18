@@ -1,131 +1,67 @@
-<!doctype html><html lang=zh-cn>
-<head>
-<meta charset=utf-8>
-<meta name=viewport content="width=device-width,initial-scale=1">
-<title>Codeforces Contest 1005 E2. Median on Segments (General Case Edition) | imlk's blog</title>
-<link rel=stylesheet href=/css/style.css>
-<link rel=stylesheet href=/css/fonts.css>
-<link rel=preconnect href=https://fonts.googleapis.com>
-<link rel=preconnect href=https://fonts.gstatic.com crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&display=swap" rel=stylesheet>
-</head>
-<body>
-<header class=header>
-<a class=logo href=/> imlk's Blog </a>
-<nav>
-<ul class=menu>
-<li><a href=/>Home</a></li>
-<li><a href=/about/>About</a></li>
-<li><a href=/archives/>Archives</a></li>
-<li><a href=/friends/>Friends</a></li>
-<li><a href=/index.xml>Subscribe</a></li>
-</ul>
-</nav>
-</header>
-<hr>
-<div class=article-meta>
-<h1><span class=title>Codeforces Contest 1005 E2. Median on Segments (General Case Edition)</span></h1>
-<span>
-<span class=date>2018-07-11</span>
+<!doctype html><html lang=zh-cn><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><title>Codeforces Contest 1005 E2. Median on Segments (General Case Edition) | imlk's blog</title><link rel=stylesheet href=/css/style.css><link rel=stylesheet href=/css/fonts.css><link rel=preconnect href=https://fonts.googleapis.com><link rel=preconnect href=https://fonts.gstatic.com crossorigin><link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&display=swap" rel=stylesheet></head><body><header class=header><a class=logo href=/>imlk's Blog</a><nav><ul class=menu><li><a href=/>Home</a></li><li><a href=/about/>About</a></li><li><a href=/archives/>Archives</a></li><li><a href=/friends/>Friends</a></li><li><a href=/index.xml>Subscribe</a></li></ul></nav></header><hr><div class=article-meta><h1><span class=title>Codeforces Contest 1005 E2. Median on Segments (General Case Edition)</span></h1><span><span class=date>2018-07-11</span>
 |
-<span class=cats>
-<a href=https://blog.imlk.top/categories/algorithm/>Algorithm</a>
-</span>
+<span class=cats><a href=https://blog.imlk.top/categories/algorithm/>Algorithm</a></span>
 |
-<span class=tags>
-<a href=https://blog.imlk.top/tags/codeforces/>#Codeforces</a>
-</span>
-</span>
-<br>
-</div>
-<main>
-<h3 id=链接>链接</h3>
-<p><a href=http://codeforces.com/contest/1005/problem/E2>Codeforces Round #496 (Div. 3) - E2. Median on Segments (General Case Edition)</a></p>
-<h3 id=0x00问题转化>0x00问题转化</h3>
-<p>为求得中位数为m的所有区间组合，可以将问题转化为两个更容易的问题</p>
-<blockquote>
-<p>“求&lt;中位数为大于等于m的数>的所有组合数量 - &lt;中位数为大于等于m+1的数>的所有组合数量”</p>
-</blockquote>
-<h3 id=0x00求解问题>0x00求解问题</h3>
-<p>求&lt;中位数为大于等于m的数>的所有组合数量</p>
-<p>从左到右遍历输入数据，若遇到大于等于m的则+1，否则-1
-<strong>若某个区间[a,b]中+1 -1的和最终大于0(即大于等于m的数多于小于等于m的数)，则[a,b]区间的中位数大于等于m</strong></p>
-<p>统计这些区间的数目，就是答案
+<span class=tags><a href=https://blog.imlk.top/tags/codeforces/>#Codeforces</a></span></span><br></div><main><h3 id=链接>链接</h3><p><a href=http://codeforces.com/contest/1005/problem/E2>Codeforces Round #496 (Div. 3) - E2. Median on Segments (General Case Edition)</a></p><h3 id=0x00问题转化>0x00问题转化</h3><p>为求得中位数为m的所有区间组合，可以将问题转化为两个更容易的问题</p><blockquote><p>“求&lt;中位数为大于等于m的数>的所有组合数量 - &lt;中位数为大于等于m+1的数>的所有组合数量”</p></blockquote><h3 id=0x00求解问题>0x00求解问题</h3><p>求&lt;中位数为大于等于m的数>的所有组合数量</p><p>从左到右遍历输入数据，若遇到大于等于m的则+1，否则-1
+<strong>若某个区间[a,b]中+1 -1的和最终大于0(即大于等于m的数多于小于等于m的数)，则[a,b]区间的中位数大于等于m</strong></p><p>统计这些区间的数目，就是答案
 但是遍历区间复杂度是n^2，要计算每一个子区间的和值，可以采用类似于前缀数组的思想，
-但是这样整体的复杂度至少是n^2，数据量n最多是20w，可能会出现TL，</p>
-<h3 id=参考>参考</h3>
-<p><a href=http://www.cnblogs.com/widsom/p/9290269.html>http://www.cnblogs.com/widsom/p/9290269.html</a></p>
-<p>优化：
+但是这样整体的复杂度至少是n^2，数据量n最多是20w，可能会出现TL，</p><h3 id=参考>参考</h3><p><a href=http://www.cnblogs.com/widsom/p/9290269.html>http://www.cnblogs.com/widsom/p/9290269.html</a></p><p>优化：
 要统计[a,b]大于0出现的次数，也就是统计“[0,b]的值 > [0,a-1]的值”这种情况出现的次数，
-可以采用一次遍历输入数据，假设访问到第c个数，<a href="k=0,1,2...c">0,k</a>可采用类似于前缀数组的方式迭代计算，</p>
-<p>同时用数组或map来保存先前[0,k] (k=0,1,2&mldr;c-1)的值出现的次数，
+可以采用一次遍历输入数据，假设访问到第c个数，<a href="k=0,1,2...c">0,k</a>可采用类似于前缀数组的方式迭代计算，</p><p>同时用数组或map来保存先前[0,k] (k=0,1,2&mldr;c-1)的值出现的次数，
 将小于[0,c]的值出现的次数相加，所有的c都这样操作，加起来的就是答案
-为将小于[0,c]的值出现的次数相加，可以采用类似于莫队算法的办法，边界一次移动一格</p>
-<p><img src=/images/blog/44_0.png alt=举例某一时刻的状态></p>
-<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-cpp data-lang=cpp><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;iostream&gt;</span><span style=color:#75715e>
-</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;algorithm&gt;</span><span style=color:#75715e>
-</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;cstring&gt;</span><span style=color:#75715e>
-</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;string&gt;</span><span style=color:#75715e>
-</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;cstdio&gt;</span><span style=color:#75715e>
-</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;cmath&gt;</span><span style=color:#75715e>
-</span><span style=color:#75715e></span>
-<span style=color:#66d9ef>using</span> <span style=color:#66d9ef>namespace</span> std;
-<span style=color:#75715e>#define MAXN 200005
-</span><span style=color:#75715e></span>
-<span style=color:#66d9ef>int</span> an[MAXN];
-<span style=color:#66d9ef>int</span> appear[MAXN <span style=color:#f92672>*</span> <span style=color:#ae81ff>2</span>];<span style=color:#75715e>//数组开两倍，从中间开始用以满足加减
-</span><span style=color:#75715e></span><span style=color:#66d9ef>int</span> n;
-
-<span style=color:#66d9ef>long</span> <span style=color:#66d9ef>long</span> <span style=color:#a6e22e>solve</span>(<span style=color:#66d9ef>int</span> m) {
-	<span style=color:#66d9ef>int</span> count <span style=color:#f92672>=</span> n;<span style=color:#75715e>// 使用数组从中间开始
-</span><span style=color:#75715e></span>	appear[count]<span style=color:#f92672>++</span>;
-	<span style=color:#66d9ef>long</span> <span style=color:#66d9ef>long</span> mo <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>;
-	<span style=color:#66d9ef>long</span> <span style=color:#66d9ef>long</span> ans <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>;
-	<span style=color:#66d9ef>for</span> (<span style=color:#66d9ef>int</span> i <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>; i <span style=color:#f92672>&lt;</span> n; <span style=color:#f92672>++</span>i) {
-		<span style=color:#66d9ef>if</span> (an[i] <span style=color:#f92672>&gt;=</span> m) {<span style=color:#75715e>// +1
-</span><span style=color:#75715e></span>			mo <span style=color:#f92672>+=</span> appear[count];
-			count<span style=color:#f92672>++</span>;
-			appear[count]<span style=color:#f92672>++</span>;
-		} <span style=color:#66d9ef>else</span> {<span style=color:#75715e>// -1
-</span><span style=color:#75715e></span>			count<span style=color:#f92672>--</span>;
-			mo <span style=color:#f92672>-=</span> appear[count];
-			appear[count]<span style=color:#f92672>++</span>;
-		}
-		ans <span style=color:#f92672>+=</span> mo;
-	}
-
-	<span style=color:#66d9ef>return</span> ans;
-}
-
-<span style=color:#66d9ef>int</span> <span style=color:#a6e22e>main</span>(<span style=color:#66d9ef>int</span> argc, <span style=color:#66d9ef>char</span> <span style=color:#66d9ef>const</span> <span style=color:#f92672>*</span>argv[]) {
-
-	<span style=color:#66d9ef>int</span> m;
-
-	scanf(<span style=color:#e6db74>&#34;%d%d&#34;</span>, <span style=color:#f92672>&amp;</span>n, <span style=color:#f92672>&amp;</span>m);
-
-	<span style=color:#66d9ef>for</span> (<span style=color:#66d9ef>int</span> i <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>; i <span style=color:#f92672>&lt;</span> n; <span style=color:#f92672>++</span>i) {
-		scanf(<span style=color:#e6db74>&#34;%d&#34;</span>, an <span style=color:#f92672>+</span> i);
-	}
-
-	<span style=color:#66d9ef>long</span> <span style=color:#66d9ef>long</span> ans <span style=color:#f92672>=</span> solve(m);
-	memset(appear, <span style=color:#ae81ff>0</span>, <span style=color:#66d9ef>sizeof</span>(appear));
-	ans <span style=color:#f92672>-=</span> solve(m <span style=color:#f92672>+</span> <span style=color:#ae81ff>1</span>);
-
-	printf(<span style=color:#e6db74>&#34;%lld</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>, ans);
-
-
-
-	<span style=color:#66d9ef>return</span> <span style=color:#ae81ff>0</span>;
-}
-</code></pre></div>
-</main>
-<div id=comments>
-<hr>
-<script src=https://utteranc.es/client.js repo=KB5201314/KB5201314.github.io issue-term=pathname label="💬 comments 💬" theme=github-light crossorigin=anonymous async></script>
-</div>
-<footer>
-<hr>
-© imlk 2017 &ndash; 2021 | <a href=https://blog.imlk.top>imlk's blog</a> | <a href=https://github.com/KB5201314/>Github</a> | <a href=mailto:me@imlk.top>Email</a> | <a href=https://beian.miit.gov.cn/>京ICP备 - 2020042968号</a>
-</footer>
-</body>
-</html>
+为将小于[0,c]的值出现的次数相加，可以采用类似于莫队算法的办法，边界一次移动一格</p><p><img src=/images/blog/44_0.png alt=举例某一时刻的状态></p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-cpp data-lang=cpp><span style=display:flex><span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;iostream&gt;</span><span style=color:#75715e>
+</span></span></span><span style=display:flex><span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;algorithm&gt;</span><span style=color:#75715e>
+</span></span></span><span style=display:flex><span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;cstring&gt;</span><span style=color:#75715e>
+</span></span></span><span style=display:flex><span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;string&gt;</span><span style=color:#75715e>
+</span></span></span><span style=display:flex><span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;cstdio&gt;</span><span style=color:#75715e>
+</span></span></span><span style=display:flex><span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;cmath&gt;</span><span style=color:#75715e>
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>using</span> <span style=color:#66d9ef>namespace</span> std;
+</span></span><span style=display:flex><span><span style=color:#75715e>#define MAXN 200005
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>int</span> an[MAXN];
+</span></span><span style=display:flex><span><span style=color:#66d9ef>int</span> appear[MAXN <span style=color:#f92672>*</span> <span style=color:#ae81ff>2</span>];<span style=color:#75715e>//数组开两倍，从中间开始用以满足加减
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>int</span> n;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>long</span> <span style=color:#66d9ef>long</span> <span style=color:#a6e22e>solve</span>(<span style=color:#66d9ef>int</span> m) {
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>int</span> count <span style=color:#f92672>=</span> n;<span style=color:#75715e>// 使用数组从中间开始
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>	appear[count]<span style=color:#f92672>++</span>;
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>long</span> <span style=color:#66d9ef>long</span> mo <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>;
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>long</span> <span style=color:#66d9ef>long</span> ans <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>;
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>for</span> (<span style=color:#66d9ef>int</span> i <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>; i <span style=color:#f92672>&lt;</span> n; <span style=color:#f92672>++</span>i) {
+</span></span><span style=display:flex><span>		<span style=color:#66d9ef>if</span> (an[i] <span style=color:#f92672>&gt;=</span> m) {<span style=color:#75715e>// +1
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>			mo <span style=color:#f92672>+=</span> appear[count];
+</span></span><span style=display:flex><span>			count<span style=color:#f92672>++</span>;
+</span></span><span style=display:flex><span>			appear[count]<span style=color:#f92672>++</span>;
+</span></span><span style=display:flex><span>		} <span style=color:#66d9ef>else</span> {<span style=color:#75715e>// -1
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>			count<span style=color:#f92672>--</span>;
+</span></span><span style=display:flex><span>			mo <span style=color:#f92672>-=</span> appear[count];
+</span></span><span style=display:flex><span>			appear[count]<span style=color:#f92672>++</span>;
+</span></span><span style=display:flex><span>		}
+</span></span><span style=display:flex><span>		ans <span style=color:#f92672>+=</span> mo;
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>return</span> ans;
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>int</span> <span style=color:#a6e22e>main</span>(<span style=color:#66d9ef>int</span> argc, <span style=color:#66d9ef>char</span> <span style=color:#66d9ef>const</span> <span style=color:#f92672>*</span>argv[]) {
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>int</span> m;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>	scanf(<span style=color:#e6db74>&#34;%d%d&#34;</span>, <span style=color:#f92672>&amp;</span>n, <span style=color:#f92672>&amp;</span>m);
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>for</span> (<span style=color:#66d9ef>int</span> i <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>; i <span style=color:#f92672>&lt;</span> n; <span style=color:#f92672>++</span>i) {
+</span></span><span style=display:flex><span>		scanf(<span style=color:#e6db74>&#34;%d&#34;</span>, an <span style=color:#f92672>+</span> i);
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>long</span> <span style=color:#66d9ef>long</span> ans <span style=color:#f92672>=</span> solve(m);
+</span></span><span style=display:flex><span>	memset(appear, <span style=color:#ae81ff>0</span>, <span style=color:#66d9ef>sizeof</span>(appear));
+</span></span><span style=display:flex><span>	ans <span style=color:#f92672>-=</span> solve(m <span style=color:#f92672>+</span> <span style=color:#ae81ff>1</span>);
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>	printf(<span style=color:#e6db74>&#34;%lld</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>, ans);
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>return</span> <span style=color:#ae81ff>0</span>;
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div></main><div id=comments><hr><script src=https://utteranc.es/client.js repo=KB5201314/KB5201314.github.io issue-term=pathname label='💬 comments 💬' theme=github-light crossorigin=anonymous async></script></div><footer><hr>© imlk 2017 &ndash; 2021 | <a href=https://blog.imlk.top>imlk's blog</a> | <a href=https://github.com/KB5201314/>Github</a> | <a href=mailto:me@imlk.top>Email</a> | <a href=https://beian.miit.gov.cn/>京ICP备 - 2020042968号</a></footer></body></html>

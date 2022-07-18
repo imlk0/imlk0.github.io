@@ -1,55 +1,13 @@
-<!doctype html><html lang=zh-cn>
-<head>
-<meta charset=utf-8>
-<meta name=viewport content="width=device-width,initial-scale=1">
-<title>HDU 1325 1272 并查集判断有向图和无向图是否构成一棵树型 | imlk's blog</title>
-<link rel=stylesheet href=/css/style.css>
-<link rel=stylesheet href=/css/fonts.css>
-<link rel=preconnect href=https://fonts.googleapis.com>
-<link rel=preconnect href=https://fonts.gstatic.com crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&display=swap" rel=stylesheet>
-</head>
-<body>
-<header class=header>
-<a class=logo href=/> imlk's Blog </a>
-<nav>
-<ul class=menu>
-<li><a href=/>Home</a></li>
-<li><a href=/about/>About</a></li>
-<li><a href=/archives/>Archives</a></li>
-<li><a href=/friends/>Friends</a></li>
-<li><a href=/index.xml>Subscribe</a></li>
-</ul>
-</nav>
-</header>
-<hr>
-<div class=article-meta>
-<h1><span class=title>HDU 1325 1272 并查集判断有向图和无向图是否构成一棵树型</span></h1>
-<span>
-<span class=date>2018-02-09</span>
+<!doctype html><html lang=zh-cn><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><title>HDU 1325 1272 并查集判断有向图和无向图是否构成一棵树型 | imlk's blog</title><link rel=stylesheet href=/css/style.css><link rel=stylesheet href=/css/fonts.css><link rel=preconnect href=https://fonts.googleapis.com><link rel=preconnect href=https://fonts.gstatic.com crossorigin><link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&display=swap" rel=stylesheet></head><body><header class=header><a class=logo href=/>imlk's Blog</a><nav><ul class=menu><li><a href=/>Home</a></li><li><a href=/about/>About</a></li><li><a href=/archives/>Archives</a></li><li><a href=/friends/>Friends</a></li><li><a href=/index.xml>Subscribe</a></li></ul></nav></header><hr><div class=article-meta><h1><span class=title>HDU 1325 1272 并查集判断有向图和无向图是否构成一棵树型</span></h1><span><span class=date>2018-02-09</span>
 |
-<span class=cats>
-<a href=https://blog.imlk.top/categories/algorithm/>Algorithm</a>
-</span>
+<span class=cats><a href=https://blog.imlk.top/categories/algorithm/>Algorithm</a></span>
 |
-<span class=tags>
-<a href=https://blog.imlk.top/tags/hdu/>#HDU</a>
-<a href=https://blog.imlk.top/tags/%E5%9B%BE/>#图</a>
-</span>
-</span>
-<br>
-</div>
-<main>
-<p><a href="http://acm.hdu.edu.cn/showproblem.php?pid=1325">HDU 1325</a>
-<a href="http://acm.hdu.edu.cn/showproblem.php?pid=1272">HDU 1272</a></p>
-<p>HDU 1325是有向图，给定某个节点是另一个元素的父节点
-HDU 1272是无向图，将两个节点连接起来</p>
-<p>共同点：判断是否成环，判断是树木还是森林</p>
-<p>区别：有向图可能出现多个箭头指向同一个节点的情况（即一个节点多个父节点）
+<span class=tags><a href=https://blog.imlk.top/tags/hdu/>#HDU</a>
+<a href=https://blog.imlk.top/tags/%E5%9B%BE/>#图</a></span></span><br></div><main><p><a href="http://acm.hdu.edu.cn/showproblem.php?pid=1325">HDU 1325</a>
+<a href="http://acm.hdu.edu.cn/showproblem.php?pid=1272">HDU 1272</a></p><p>HDU 1325是有向图，给定某个节点是另一个元素的父节点
+HDU 1272是无向图，将两个节点连接起来</p><p>共同点：判断是否成环，判断是树木还是森林</p><p>区别：有向图可能出现多个箭头指向同一个节点的情况（即一个节点多个父节点）
 例如
-<img src=http://acm.hdu.edu.cn/data/images/1325-3.gif alt=多节点指向同一节点></p>
-<p>另外，关于HDU 1272</p>
-<p>评论区看到一种利用离散数学结论的解法
+<img src=http://acm.hdu.edu.cn/data/images/1325-3.gif alt=多节点指向同一节点></p><p>另外，关于HDU 1272</p><p>评论区看到一种利用离散数学结论的解法
 （对于无向图）
 如果m个节点被连成环，那么边的条数就是 m
 如果m个节点形成了n个树，那么边的条数就是 m - n
@@ -58,10 +16,8 @@ HDU 1272是无向图，将两个节点连接起来</p>
 那么按照题目要求：Yes的条件就是
 1.边的条数 = 所有节点数 - 1
 或
-2.节点数为0</p>
-<p>上代码：
-HDU 1325</p>
-<pre tabindex=0><code>#include &lt;iostream&gt;
+2.节点数为0</p><p>上代码：
+HDU 1325</p><pre tabindex=0><code>#include &lt;iostream&gt;
 #include &lt;cstdio&gt;
 #include &lt;cstring&gt;
 #include &lt;cmath&gt;
@@ -109,7 +65,7 @@ int main(int argc, char const *argv[]) {
 
 		// memset(fa, 0, sizeof(fa));//每次都全部写0，耗时长，改为用栈记录修改过的位置
 
-		while (scanf(&quot;%d%d&quot;, &amp;a, &amp;b) &amp;&amp; a &gt; 0 &amp;&amp; b &gt; 0) {
+		while (scanf(&#34;%d%d&#34;, &amp;a, &amp;b) &amp;&amp; a &gt; 0 &amp;&amp; b &gt; 0) {
 
 			// a --&gt; b
 			// a是b的父节点
@@ -121,7 +77,7 @@ int main(int argc, char const *argv[]) {
 
 					top++;
 					stack[top] = a;
-					// printf(&quot;add\n&quot;);
+					// printf(&#34;add\n&#34;);
 				}
 				if (!fa[b]) {
 					fa[b] = b;
@@ -132,19 +88,19 @@ int main(int argc, char const *argv[]) {
 				} else {
 					if (fa[b] == b) {
 						count--;
-						// printf(&quot;sub\n&quot;);
+						// printf(&#34;sub\n&#34;);
 					}
 				}
 
 				if (fa[b] != b &amp;&amp; fa[b] != a) {//若出现多指一,则不ok
 					ok = 0;
-					// printf(&quot;die 1\n&quot;);
+					// printf(&#34;die 1\n&#34;);
 					continue;
 				} else {
 					a = find(a);//把a换为a的根节点
 					if (b == a) {//环
 						ok = 0;
-						// printf(&quot;die 2\n&quot;);
+						// printf(&#34;die 2\n&#34;);
 						continue;
 					} else {
 						fa[b] = a;//直接挂在根节点
@@ -159,11 +115,11 @@ int main(int argc, char const *argv[]) {
 		if (ok) {
 			if (count != 1) {
 				ok = 0;
-				// printf(&quot;die 3\n&quot;);
+				// printf(&#34;die 3\n&#34;);
 			}
 		}
 
-		printf(&quot;Case %d is %sa tree.\n&quot;, t, ok ? &quot;&quot; : &quot;not &quot;);
+		printf(&#34;Case %d is %sa tree.\n&#34;, t, ok ? &#34;&#34; : &#34;not &#34;);
 
 		while (top != -1) {
 			fa[stack[top]] = 0;
@@ -175,8 +131,7 @@ int main(int argc, char const *argv[]) {
 
 	return 0;
 }
-</code></pre><p>HDU 1272</p>
-<pre tabindex=0><code>#include &lt;iostream&gt;
+</code></pre><p>HDU 1272</p><pre tabindex=0><code>#include &lt;iostream&gt;
 #include &lt;cstdio&gt;
 #include &lt;cstring&gt;
 #include &lt;cmath&gt;
@@ -225,7 +180,7 @@ int main(int argc, char const *argv[]) {
 
 		// memset(fa, 0, sizeof(fa));//每次都全部写0，耗时长，改为用栈记录修改过的位置
 
-		while (scanf(&quot;%d%d&quot;, &amp;a, &amp;b) &amp;&amp; a &gt; 0 &amp;&amp; b &gt; 0) {
+		while (scanf(&#34;%d%d&#34;, &amp;a, &amp;b) &amp;&amp; a &gt; 0 &amp;&amp; b &gt; 0) {
 
 			if (ok) {
 
@@ -286,7 +241,7 @@ int main(int argc, char const *argv[]) {
 			}
 		}
 
-		printf(&quot;%s\n&quot;, ok ? &quot;Yes&quot; : &quot;No&quot;);
+		printf(&#34;%s\n&#34;, ok ? &#34;Yes&#34; : &#34;No&#34;);
 
 		while (top != -1) {
 			fa[stack[top]] = 0;
@@ -296,15 +251,4 @@ int main(int argc, char const *argv[]) {
 
 	return 0;
 }
-</code></pre>
-</main>
-<div id=comments>
-<hr>
-<script src=https://utteranc.es/client.js repo=KB5201314/KB5201314.github.io issue-term=pathname label="💬 comments 💬" theme=github-light crossorigin=anonymous async></script>
-</div>
-<footer>
-<hr>
-© imlk 2017 &ndash; 2021 | <a href=https://blog.imlk.top>imlk's blog</a> | <a href=https://github.com/KB5201314/>Github</a> | <a href=mailto:me@imlk.top>Email</a> | <a href=https://beian.miit.gov.cn/>京ICP备 - 2020042968号</a>
-</footer>
-</body>
-</html>
+</code></pre></main><div id=comments><hr><script src=https://utteranc.es/client.js repo=KB5201314/KB5201314.github.io issue-term=pathname label='💬 comments 💬' theme=github-light crossorigin=anonymous async></script></div><footer><hr>© imlk 2017 &ndash; 2021 | <a href=https://blog.imlk.top>imlk's blog</a> | <a href=https://github.com/KB5201314/>Github</a> | <a href=mailto:me@imlk.top>Email</a> | <a href=https://beian.miit.gov.cn/>京ICP备 - 2020042968号</a></footer></body></html>

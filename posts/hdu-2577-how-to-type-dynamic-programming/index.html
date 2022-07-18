@@ -1,129 +1,48 @@
-<!doctype html><html lang=zh-cn>
-<head>
-<meta charset=utf-8>
-<meta name=viewport content="width=device-width,initial-scale=1">
-<title>HDU 2577 How To Type 动态规划 | imlk's blog</title>
-<link rel=stylesheet href=/css/style.css>
-<link rel=stylesheet href=/css/fonts.css>
-<link rel=preconnect href=https://fonts.googleapis.com>
-<link rel=preconnect href=https://fonts.gstatic.com crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&display=swap" rel=stylesheet>
-</head>
-<body>
-<header class=header>
-<a class=logo href=/> imlk's Blog </a>
-<nav>
-<ul class=menu>
-<li><a href=/>Home</a></li>
-<li><a href=/about/>About</a></li>
-<li><a href=/archives/>Archives</a></li>
-<li><a href=/friends/>Friends</a></li>
-<li><a href=/index.xml>Subscribe</a></li>
-</ul>
-</nav>
-</header>
-<hr>
-<div class=article-meta>
-<h1><span class=title>HDU 2577 How To Type 动态规划</span></h1>
-<span>
-<span class=date>2018-02-01</span>
+<!doctype html><html lang=zh-cn><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><title>HDU 2577 How To Type 动态规划 | imlk's blog</title><link rel=stylesheet href=/css/style.css><link rel=stylesheet href=/css/fonts.css><link rel=preconnect href=https://fonts.googleapis.com><link rel=preconnect href=https://fonts.gstatic.com crossorigin><link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&display=swap" rel=stylesheet></head><body><header class=header><a class=logo href=/>imlk's Blog</a><nav><ul class=menu><li><a href=/>Home</a></li><li><a href=/about/>About</a></li><li><a href=/archives/>Archives</a></li><li><a href=/friends/>Friends</a></li><li><a href=/index.xml>Subscribe</a></li></ul></nav></header><hr><div class=article-meta><h1><span class=title>HDU 2577 How To Type 动态规划</span></h1><span><span class=date>2018-02-01</span>
 |
-<span class=cats>
-<a href=https://blog.imlk.top/categories/algorithm/>Algorithm</a>
-</span>
+<span class=cats><a href=https://blog.imlk.top/categories/algorithm/>Algorithm</a></span>
 |
-<span class=tags>
-<a href=https://blog.imlk.top/tags/hdu/>#HDU</a>
-</span>
-</span>
-<br>
-</div>
-<main>
-<blockquote>
-<p>How to Type</p>
-<p>Time Limit: 2000/1000 MS (Java/Others) Memory Limit: 32768/32768 K (Java/Others)</p>
-<p>Total Submission(s): 7448 Accepted Submission(s): 3374</p>
-<p>Problem Description</p>
-<p>Pirates have finished developing the typing software. He called Cathy to test his typing software. She is good at thinking. After testing for several days, she finds that if she types a string by some ways, she will type the key at least. But she has a bad habit that if the caps lock is on, she must turn off it, after she finishes typing. Now she wants to know the smallest times of typing the key to finish typing a string.</p>
-<p>Input</p>
-<p>The first line is an integer t (t&lt;=100), which is the number of test case in the input file. For each test case, there is only one string which consists of lowercase letter and upper case letter. The length of the string is at most 100.</p>
-<p>Output</p>
-<p>For each test case, you must output the smallest times of typing the key to finish typing this string.</p>
-<p>Sample Input</p>
-<p>3</p>
-<p>Pirates</p>
-<p>HDUacm</p>
-<p>HDUACM</p>
-<p>Sample Output</p>
-<p>8</p>
-<p>8</p>
-<p>8</p>
-<p>Hint</p>
-<p>The string “Pirates”, can type this way, Shift, p, i, r, a, t, e, s, the answer is 8.</p>
-<p>The string “HDUacm”, can type this way, Caps lock, h, d, u, Caps lock, a, c, m, the answer is 8</p>
-<p>The string &ldquo;HDUACM&rdquo;, can type this way Caps lock h, d, u, a, c, m, Caps lock, the answer is 8</p>
-<p>Author</p>
-<p>Dellenge</p>
-<p>Source</p>
-<p>HDU 2009-5 Programming Contest</p>
-<p>Recommend</p>
-<p>lcy</p>
-</blockquote>
-<p><strong>输入每个字符前的状态是：</strong>
-<strong>大小写锁开启on或者关闭off</strong></p>
-<p><strong><em>注意开启锁时按shift可以输入小写</em></strong></p>
-<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-cpp data-lang=cpp><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;iostream&gt;</span><span style=color:#75715e>
-</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;cstdio&gt;</span><span style=color:#75715e>
-</span><span style=color:#75715e></span>
-<span style=color:#66d9ef>int</span> <span style=color:#a6e22e>isup</span>(<span style=color:#66d9ef>char</span> a) {
-    <span style=color:#66d9ef>return</span> (a <span style=color:#f92672>&amp;</span>gt;<span style=color:#f92672>=</span> <span style=color:#e6db74>&#39;A&#39;</span> <span style=color:#f92672>&amp;</span>amp;<span style=color:#f92672>&amp;</span>amp; a <span style=color:#f92672>&amp;</span>lt;<span style=color:#f92672>=</span> <span style=color:#e6db74>&#39;Z&#39;</span>);
-}
-<span style=color:#66d9ef>int</span> <span style=color:#a6e22e>main</span>(<span style=color:#66d9ef>int</span> argc, <span style=color:#66d9ef>char</span> <span style=color:#66d9ef>const</span> <span style=color:#f92672>*</span>argv[])
-{
-    <span style=color:#66d9ef>int</span> t;
-    <span style=color:#66d9ef>char</span> data[<span style=color:#ae81ff>105</span>];
-    <span style=color:#66d9ef>int</span> off[<span style=color:#ae81ff>105</span>];
-    <span style=color:#66d9ef>int</span> on[<span style=color:#ae81ff>105</span>];
-    scanf(<span style=color:#e6db74>&#34;%d&#34;</span>, <span style=color:#f92672>&amp;</span>amp;t);
-
-    <span style=color:#66d9ef>while</span> (t<span style=color:#f92672>--</span>) {
-        <span style=color:#66d9ef>int</span> capsLock <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>;
-        <span style=color:#66d9ef>int</span> ans <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>;
-        scanf(<span style=color:#e6db74>&#34;%s&#34;</span>, data);
-        <span style=color:#66d9ef>int</span> i;
-        <span style=color:#75715e>// 每次输入之前锁有两种状态
-</span><span style=color:#75715e></span>        off[<span style=color:#ae81ff>0</span>] <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>;<span style=color:#75715e>//表示输入第i个字符前状态为off/on的按键最少次数
-</span><span style=color:#75715e></span>        on[<span style=color:#ae81ff>0</span>] <span style=color:#f92672>=</span> <span style=color:#ae81ff>1</span>;
-        <span style=color:#66d9ef>for</span> (i <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>; data[i] <span style=color:#f92672>!=</span> <span style=color:#e6db74>&#39;\0&#39;</span>; i<span style=color:#f92672>++</span>) {
-            <span style=color:#66d9ef>if</span> (isup(data[i])) {
-                <span style=color:#75715e>// 输入大写字母以后锁：on
-</span><span style=color:#75715e></span>                <span style=color:#75715e>// 直接输入，按下caps再输入（原先锁off）
-</span><span style=color:#75715e></span>                on[i <span style=color:#f92672>+</span> <span style=color:#ae81ff>1</span>] <span style=color:#f92672>=</span> min(on[i] <span style=color:#f92672>+</span> <span style=color:#ae81ff>1</span>, off[i] <span style=color:#f92672>+</span> <span style=color:#ae81ff>2</span>);
-                <span style=color:#75715e>// 输入大写字母以后锁：off
-</span><span style=color:#75715e></span>                <span style=color:#75715e>// 按下caps再输入（原先锁on）,按shift输入
-</span><span style=color:#75715e></span>                off[i <span style=color:#f92672>+</span> <span style=color:#ae81ff>1</span>] <span style=color:#f92672>=</span> min(on[i] <span style=color:#f92672>+</span> <span style=color:#ae81ff>2</span>, off[i] <span style=color:#f92672>+</span> <span style=color:#ae81ff>2</span>);
-            } <span style=color:#66d9ef>else</span> {
-
-                on[i <span style=color:#f92672>+</span> <span style=color:#ae81ff>1</span>] <span style=color:#f92672>=</span> min(on[i] <span style=color:#f92672>+</span> <span style=color:#ae81ff>2</span>, off[i] <span style=color:#f92672>+</span> <span style=color:#ae81ff>2</span>);
-                off[i <span style=color:#f92672>+</span> <span style=color:#ae81ff>1</span>] <span style=color:#f92672>=</span> min(on[i] <span style=color:#f92672>+</span> <span style=color:#ae81ff>2</span>, off[i] <span style=color:#f92672>+</span> <span style=color:#ae81ff>1</span>);
-
-            }
-        }
-
-        printf(<span style=color:#e6db74>&#34;%d</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>, min(on[i] <span style=color:#f92672>+</span> <span style=color:#ae81ff>1</span>, off[i]));
-    }
-    <span style=color:#66d9ef>return</span> <span style=color:#ae81ff>0</span>;
-}
-
-</code></pre></div>
-</main>
-<div id=comments>
-<hr>
-<script src=https://utteranc.es/client.js repo=KB5201314/KB5201314.github.io issue-term=pathname label="💬 comments 💬" theme=github-light crossorigin=anonymous async></script>
-</div>
-<footer>
-<hr>
-© imlk 2017 &ndash; 2021 | <a href=https://blog.imlk.top>imlk's blog</a> | <a href=https://github.com/KB5201314/>Github</a> | <a href=mailto:me@imlk.top>Email</a> | <a href=https://beian.miit.gov.cn/>京ICP备 - 2020042968号</a>
-</footer>
-</body>
-</html>
+<span class=tags><a href=https://blog.imlk.top/tags/hdu/>#HDU</a></span></span><br></div><main><blockquote><p>How to Type</p><p>Time Limit: 2000/1000 MS (Java/Others) Memory Limit: 32768/32768 K (Java/Others)</p><p>Total Submission(s): 7448 Accepted Submission(s): 3374</p><p>Problem Description</p><p>Pirates have finished developing the typing software. He called Cathy to test his typing software. She is good at thinking. After testing for several days, she finds that if she types a string by some ways, she will type the key at least. But she has a bad habit that if the caps lock is on, she must turn off it, after she finishes typing. Now she wants to know the smallest times of typing the key to finish typing a string.</p><p>Input</p><p>The first line is an integer t (t&lt;=100), which is the number of test case in the input file. For each test case, there is only one string which consists of lowercase letter and upper case letter. The length of the string is at most 100.</p><p>Output</p><p>For each test case, you must output the smallest times of typing the key to finish typing this string.</p><p>Sample Input</p><p>3</p><p>Pirates</p><p>HDUacm</p><p>HDUACM</p><p>Sample Output</p><p>8</p><p>8</p><p>8</p><p>Hint</p><p>The string “Pirates”, can type this way, Shift, p, i, r, a, t, e, s, the answer is 8.</p><p>The string “HDUacm”, can type this way, Caps lock, h, d, u, Caps lock, a, c, m, the answer is 8</p><p>The string &ldquo;HDUACM&rdquo;, can type this way Caps lock h, d, u, a, c, m, Caps lock, the answer is 8</p><p>Author</p><p>Dellenge</p><p>Source</p><p>HDU 2009-5 Programming Contest</p><p>Recommend</p><p>lcy</p></blockquote><p><strong>输入每个字符前的状态是：</strong>
+<strong>大小写锁开启on或者关闭off</strong></p><p><strong><em>注意开启锁时按shift可以输入小写</em></strong></p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-cpp data-lang=cpp><span style=display:flex><span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;iostream&gt;</span><span style=color:#75715e>
+</span></span></span><span style=display:flex><span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;cstdio&gt;</span><span style=color:#75715e>
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>int</span> <span style=color:#a6e22e>isup</span>(<span style=color:#66d9ef>char</span> a) {
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>return</span> (a <span style=color:#f92672>&amp;</span>gt;<span style=color:#f92672>=</span> <span style=color:#e6db74>&#39;A&#39;</span> <span style=color:#f92672>&amp;</span>amp;<span style=color:#f92672>&amp;</span>amp; a <span style=color:#f92672>&amp;</span>lt;<span style=color:#f92672>=</span> <span style=color:#e6db74>&#39;Z&#39;</span>);
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span><span style=color:#66d9ef>int</span> <span style=color:#a6e22e>main</span>(<span style=color:#66d9ef>int</span> argc, <span style=color:#66d9ef>char</span> <span style=color:#66d9ef>const</span> <span style=color:#f92672>*</span>argv[])
+</span></span><span style=display:flex><span>{
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>int</span> t;
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>char</span> data[<span style=color:#ae81ff>105</span>];
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>int</span> off[<span style=color:#ae81ff>105</span>];
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>int</span> on[<span style=color:#ae81ff>105</span>];
+</span></span><span style=display:flex><span>    scanf(<span style=color:#e6db74>&#34;%d&#34;</span>, <span style=color:#f92672>&amp;</span>amp;t);
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>while</span> (t<span style=color:#f92672>--</span>) {
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>int</span> capsLock <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>;
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>int</span> ans <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>;
+</span></span><span style=display:flex><span>        scanf(<span style=color:#e6db74>&#34;%s&#34;</span>, data);
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>int</span> i;
+</span></span><span style=display:flex><span>        <span style=color:#75715e>// 每次输入之前锁有两种状态
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>        off[<span style=color:#ae81ff>0</span>] <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>;<span style=color:#75715e>//表示输入第i个字符前状态为off/on的按键最少次数
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>        on[<span style=color:#ae81ff>0</span>] <span style=color:#f92672>=</span> <span style=color:#ae81ff>1</span>;
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>for</span> (i <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>; data[i] <span style=color:#f92672>!=</span> <span style=color:#e6db74>&#39;\0&#39;</span>; i<span style=color:#f92672>++</span>) {
+</span></span><span style=display:flex><span>            <span style=color:#66d9ef>if</span> (isup(data[i])) {
+</span></span><span style=display:flex><span>                <span style=color:#75715e>// 输入大写字母以后锁：on
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>                <span style=color:#75715e>// 直接输入，按下caps再输入（原先锁off）
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>                on[i <span style=color:#f92672>+</span> <span style=color:#ae81ff>1</span>] <span style=color:#f92672>=</span> min(on[i] <span style=color:#f92672>+</span> <span style=color:#ae81ff>1</span>, off[i] <span style=color:#f92672>+</span> <span style=color:#ae81ff>2</span>);
+</span></span><span style=display:flex><span>                <span style=color:#75715e>// 输入大写字母以后锁：off
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>                <span style=color:#75715e>// 按下caps再输入（原先锁on）,按shift输入
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>                off[i <span style=color:#f92672>+</span> <span style=color:#ae81ff>1</span>] <span style=color:#f92672>=</span> min(on[i] <span style=color:#f92672>+</span> <span style=color:#ae81ff>2</span>, off[i] <span style=color:#f92672>+</span> <span style=color:#ae81ff>2</span>);
+</span></span><span style=display:flex><span>            } <span style=color:#66d9ef>else</span> {
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>                on[i <span style=color:#f92672>+</span> <span style=color:#ae81ff>1</span>] <span style=color:#f92672>=</span> min(on[i] <span style=color:#f92672>+</span> <span style=color:#ae81ff>2</span>, off[i] <span style=color:#f92672>+</span> <span style=color:#ae81ff>2</span>);
+</span></span><span style=display:flex><span>                off[i <span style=color:#f92672>+</span> <span style=color:#ae81ff>1</span>] <span style=color:#f92672>=</span> min(on[i] <span style=color:#f92672>+</span> <span style=color:#ae81ff>2</span>, off[i] <span style=color:#f92672>+</span> <span style=color:#ae81ff>1</span>);
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>            }
+</span></span><span style=display:flex><span>        }
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>        printf(<span style=color:#e6db74>&#34;%d</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>, min(on[i] <span style=color:#f92672>+</span> <span style=color:#ae81ff>1</span>, off[i]));
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>return</span> <span style=color:#ae81ff>0</span>;
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div></main><div id=comments><hr><script src=https://utteranc.es/client.js repo=KB5201314/KB5201314.github.io issue-term=pathname label='💬 comments 💬' theme=github-light crossorigin=anonymous async></script></div><footer><hr>© imlk 2017 &ndash; 2021 | <a href=https://blog.imlk.top>imlk's blog</a> | <a href=https://github.com/KB5201314/>Github</a> | <a href=mailto:me@imlk.top>Email</a> | <a href=https://beian.miit.gov.cn/>京ICP备 - 2020042968号</a></footer></body></html>

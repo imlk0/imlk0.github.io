@@ -1,92 +1,22 @@
-<!doctype html><html lang=zh-cn>
-<head>
-<meta charset=utf-8>
-<meta name=viewport content="width=device-width,initial-scale=1">
-<title>自制x86玩具操作系统 week3 | imlk's blog</title>
-<link rel=stylesheet href=/css/style.css>
-<link rel=stylesheet href=/css/fonts.css>
-<link rel=preconnect href=https://fonts.googleapis.com>
-<link rel=preconnect href=https://fonts.gstatic.com crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&display=swap" rel=stylesheet>
-</head>
-<body>
-<header class=header>
-<a class=logo href=/> imlk's Blog </a>
-<nav>
-<ul class=menu>
-<li><a href=/>Home</a></li>
-<li><a href=/about/>About</a></li>
-<li><a href=/archives/>Archives</a></li>
-<li><a href=/friends/>Friends</a></li>
-<li><a href=/index.xml>Subscribe</a></li>
-</ul>
-</nav>
-</header>
-<hr>
-<div class=article-meta>
-<h1><span class=title>自制x86玩具操作系统 week3</span></h1>
-<span>
-<span class=date>2019-05-01</span>
+<!doctype html><html lang=zh-cn><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><title>自制x86玩具操作系统 week3 | imlk's blog</title><link rel=stylesheet href=/css/style.css><link rel=stylesheet href=/css/fonts.css><link rel=preconnect href=https://fonts.googleapis.com><link rel=preconnect href=https://fonts.gstatic.com crossorigin><link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&display=swap" rel=stylesheet></head><body><header class=header><a class=logo href=/>imlk's Blog</a><nav><ul class=menu><li><a href=/>Home</a></li><li><a href=/about/>About</a></li><li><a href=/archives/>Archives</a></li><li><a href=/friends/>Friends</a></li><li><a href=/index.xml>Subscribe</a></li></ul></nav></header><hr><div class=article-meta><h1><span class=title>自制x86玩具操作系统 week3</span></h1><span><span class=date>2019-05-01</span>
 |
-<span class=cats>
-<a href=https://blog.imlk.top/categories/osdev/>OSDev</a>
-</span>
+<span class=cats><a href=https://blog.imlk.top/categories/osdev/>OSDev</a></span>
 |
-<span class=tags>
-<a href=https://blog.imlk.top/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/>#操作系统</a>
-<a href=https://blog.imlk.top/tags/diy/>#DIY</a>
-</span>
-</span>
-<br>
-</div>
-<main>
-<h2 id=day-0x06>DAY 0x06</h2>
-<h4 id=makefile>Makefile</h4>
-<ul>
-<li>make中可以使用一般规则（通配规则,依赖中:<code>%.cpp</code>,执行语句中:<code>$*.cpp</code>），但是普通规则比一般规则的优先级更高</li>
-</ul>
-<h4 id=汇编>汇编</h4>
-<ul>
-<li>GDTR寄存器有48位</li>
-<li><code>PUSHAD</code>将通用寄存器(EAX,ECX,EDX,EBX,ESP,EBP,ESI,EDI)按顺序双字压栈，对应的恢复指令为<code>POPAD</code>，该指令的单字版本为<code>POPA</code></li>
-<li>普通C程序返回时需要调用<code>RET</code>，但是中断返回时需要调用<code>IRETD</code></li>
-<li>C语言认为DS和ES和SS所指向的段都是一样的，因此在中断调用c程序前必须备份ES和DS的值并拷贝SS的值给DS、ES</li>
-</ul>
-<h4 id=关于调试>关于调试</h4>
-<p>可以在汇编中混入<code>INT 3</code>指令来断点调试,但是在中断向量表未准备好时,不能使用该方式
-但是在使用bochsdbg时,可以在汇编中参入<code>MAGIC BREAKPOINT</code>,具体步骤是在bochs配置文件中加入<code>magic_break: enabled=1</code>,然后在汇编中加入<code>xchg bx,bx</code>,然后就能在该处断点</p>
-<h4 id=load_gdtr>load_gdtr</h4>
-<p><code>_load_gdtr</code>函数先取出第1个参数<code>limit</code>，地址为<code>ESP+4</code>,</p>
-<pre tabindex=0><code class=language-assembly data-lang=assembly>		MOV		AX,[ESP+4]		; limit
-</code></pre><p>这是一个2字节指令,而因为之前分析过这个机器是小端模式,因此对于<code>0x0000ffff</code>,<code>WORD [ESP+4]</code>就是<code>0xffff</code>,把它放到了AX寄存器,然后</p>
-<pre tabindex=0><code class=language-assembly data-lang=assembly>		MOV		[ESP+6],AX
-</code></pre><p>将<code>0xffff</code>放到了更高的两个byte上面,而<code>ESP+8</code>则是第二个参数<code>addr</code>的地址,这样一来,<code>limit</code>的低2字节和<code>addr</code>就连起来了,之后</p>
-<pre tabindex=0><code class=language-assembly data-lang=assembly>		LGDT	[ESP+6]
+<span class=tags><a href=https://blog.imlk.top/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/>#操作系统</a>
+<a href=https://blog.imlk.top/tags/diy/>#DIY</a></span></span><br></div><main><h2 id=day-0x06>DAY 0x06</h2><h4 id=makefile>Makefile</h4><ul><li>make中可以使用一般规则（通配规则,依赖中:<code>%.cpp</code>,执行语句中:<code>$*.cpp</code>），但是普通规则比一般规则的优先级更高</li></ul><h4 id=汇编>汇编</h4><ul><li>GDTR寄存器有48位</li><li><code>PUSHAD</code>将通用寄存器(EAX,ECX,EDX,EBX,ESP,EBP,ESI,EDI)按顺序双字压栈，对应的恢复指令为<code>POPAD</code>，该指令的单字版本为<code>POPA</code></li><li>普通C程序返回时需要调用<code>RET</code>，但是中断返回时需要调用<code>IRETD</code></li><li>C语言认为DS和ES和SS所指向的段都是一样的，因此在中断调用c程序前必须备份ES和DS的值并拷贝SS的值给DS、ES</li></ul><h4 id=关于调试>关于调试</h4><p>可以在汇编中混入<code>INT 3</code>指令来断点调试,但是在中断向量表未准备好时,不能使用该方式
+但是在使用bochsdbg时,可以在汇编中参入<code>MAGIC BREAKPOINT</code>,具体步骤是在bochs配置文件中加入<code>magic_break: enabled=1</code>,然后在汇编中加入<code>xchg bx,bx</code>,然后就能在该处断点</p><h4 id=load_gdtr>load_gdtr</h4><p><code>_load_gdtr</code>函数先取出第1个参数<code>limit</code>，地址为<code>ESP+4</code>,</p><pre tabindex=0><code class=language-assembly data-lang=assembly>		MOV		AX,[ESP+4]		; limit
+</code></pre><p>这是一个2字节指令,而因为之前分析过这个机器是小端模式,因此对于<code>0x0000ffff</code>,<code>WORD [ESP+4]</code>就是<code>0xffff</code>,把它放到了AX寄存器,然后</p><pre tabindex=0><code class=language-assembly data-lang=assembly>		MOV		[ESP+6],AX
+</code></pre><p>将<code>0xffff</code>放到了更高的两个byte上面,而<code>ESP+8</code>则是第二个参数<code>addr</code>的地址,这样一来,<code>limit</code>的低2字节和<code>addr</code>就连起来了,之后</p><pre tabindex=0><code class=language-assembly data-lang=assembly>		LGDT	[ESP+6]
 </code></pre><p>直接取了<code>ESP+6</code>为低位的6个byte的数据,放到<code>GDTR</code>寄存器,
-这就是书上说的<code>GDTR</code>的6个字节的来源,<strong>低2个字节是limit,高4字节是addr</strong></p>
-<h4 id=gdt的访问权属性>GDT的访问权属性</h4>
-<p>段号记录表中的项中的段属性中有一个<code>Gbit</code>位，
-当该位为1时，记录的<code>limit</code>的单位不是byte而是页的大小，<strong>一页是指4KB</strong></p>
-<p>段的访问权属性<code>ar(access_right)</code>,由8位+4位扩展组成，高4位扩展为<code>GD00</code>,其含义为：</p>
-<ul>
-<li>G:Gbit，段长度单位是byte还是页数</li>
-<li>D:32位模式(1),16位程序模式(不可用于调用BIOS)(0)</li>
-</ul>
-<p>低八位的部分组合的含义</p>
-<pre tabindex=0><code>00000000（0x00）：未使用的记录表（descriptor table）。
+这就是书上说的<code>GDTR</code>的6个字节的来源,<strong>低2个字节是limit,高4字节是addr</strong></p><h4 id=gdt的访问权属性>GDT的访问权属性</h4><p>段号记录表中的项中的段属性中有一个<code>Gbit</code>位，
+当该位为1时，记录的<code>limit</code>的单位不是byte而是页的大小，<strong>一页是指4KB</strong></p><p>段的访问权属性<code>ar(access_right)</code>,由8位+4位扩展组成，高4位扩展为<code>GD00</code>,其含义为：</p><ul><li>G:Gbit，段长度单位是byte还是页数</li><li>D:32位模式(1),16位程序模式(不可用于调用BIOS)(0)</li></ul><p>低八位的部分组合的含义</p><pre tabindex=0><code>00000000（0x00）：未使用的记录表（descriptor table）。
 10010010（0x92）：系统专用，可读写的段。不可执行。
 10011010（0x9a）：系统专用，可执行的段。可读不可写。
 11110010（0xf2）：应用程序用，可读写的段。不可执行。
 11111010（0xfa）：应用程序用，可执行的段。可读不可写。
 </code></pre><p>x86的处理器通过ring0到ring4四个级别来进行访问控制
-<em>系统模式(ring0)和应用模式(ring3)取决于运行中的程序代码所在的段的访问权限属性低8位是0x9a还是0xfa</em></p>
-<h4 id=picprogrammable-interrupt-controller可编程中断控制器>PIC(Programmable interrupt controller)可编程中断控制器</h4>
-<p><strong>用于将8个中断信号集合成一个中断信号</strong>
-每个PIC上面可以接收8个中断信号，主板上一共有两个PIC，一共有15个可用的中断信号，IRQ2被用于连接从PIC</p>
-<blockquote>
-<p>中断号码表</p>
-</blockquote>
-<pre tabindex=0><code>IRQ0 	计时器
+<em>系统模式(ring0)和应用模式(ring3)取决于运行中的程序代码所在的段的访问权限属性低8位是0x9a还是0xfa</em></p><h4 id=picprogrammable-interrupt-controller可编程中断控制器>PIC(Programmable interrupt controller)可编程中断控制器</h4><p><strong>用于将8个中断信号集合成一个中断信号</strong>
+每个PIC上面可以接收8个中断信号，主板上一共有两个PIC，一共有15个可用的中断信号，IRQ2被用于连接从PIC</p><blockquote><p>中断号码表</p></blockquote><pre tabindex=0><code>IRQ0 	计时器
 IRQ1 	键盘
 IRQ2 	用于与从站级联
 IRQ3 	串口（COM2）
@@ -101,225 +31,30 @@ IRQ12 	鼠标
 IRQ13 	FPU（？）
 IRQ14 	ATA-0
 IRQ15 	ATA-1
-</code></pre><p>PIC内部有多个寄存器:</p>
-<ul>
-<li>IMR(interrupt mask register 中断屏蔽寄存器)，PIC的IMR寄存器每一位表示是否允许中断请求(1表示禁止)</li>
-<li>ICW(initial control word 初始化控制数据)共有四个，ICW1-ICW4，与PIC主板配线方式、中断信号的电气特性也有关系
+</code></pre><p>PIC内部有多个寄存器:</p><ul><li>IMR(interrupt mask register 中断屏蔽寄存器)，PIC的IMR寄存器每一位表示是否允许中断请求(1表示禁止)</li><li>ICW(initial control word 初始化控制数据)共有四个，ICW1-ICW4，与PIC主板配线方式、中断信号的电气特性也有关系
 ICW3的值用于设定主从PIC。对于主PIC,第几号的IRQ与从PIC相连，就将那位置为1;而对于从PIC,接在主PIC的第几号(0 based)位置上,这个寄存器的值就设置为多少。
-ICW2的值用于设定中断号</li>
-<li>OCW(操作命令字)</li>
-</ul>
-<blockquote>
-<p>CPU有一根中断型号，由IF中断许可标志位标志标识是否接受外部中断（1表示接受，STL指令置1，CTL指令置0），而PIC可以对它导出的一共8个RIQ端口分别控制是否接受中断</p>
-</blockquote>
-<h2 id=day-0x07>DAY 0x07</h2>
-<h4 id=中断处理>中断处理</h4>
-<ul>
-<li>中断触发后，需要通知PIC已经处理完中断，这样PIC才会继续接受中断。</li>
-</ul>
-<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-cpp data-lang=cpp>io_out8(PIC0_OCW2, <span style=color:#ae81ff>0x61</span>);<span style=color:#75715e>// 0x61=0x60+0x01，表示已经处理IRQ1上的中断
-</span></code></pre></div><blockquote>
-<p>键盘触发的中断会在键盘按下和松开的时候都触发一次</p>
-</blockquote>
-<ul>
-<li>似乎<code>io_stihlt()</code>由于CPU规范的原因能保持原子性</li>
-</ul>
-<blockquote>
-<p>根据CPU的规范，机器语言的STI指令之后，如果紧跟着HLT指令，那么就暂不受理这两条指令之间的中断，而要等到HLT指令之后才受理</p>
-</blockquote>
-<ul>
-<li>无缓冲的消息机制的键盘按键中断处理在中断密集时，会出现后续的中断来不及被处理（来不及关闭中断开关）的问题，解决办法是使用缓冲区
-但是我实际操作调试中断时并没有看到传说中的被吞掉的E0数，只看到按下时的<code>0x1D</code>和松开时的<code>0x9D</code></li>
-<li>KBC(keyboard controller)键盘控制器，控制键盘和鼠标</li>
-</ul>
-<h4 id=关于c>关于C++</h4>
-<ul>
-<li>为了方便显示，我在Cursor类里面加了个单例模式的static函数，但是C++实现函数内的static变量（局部静态变量）时，为了确保在多线程状态下只初始化一次，在编译时增加了同步锁，但是由于同步锁的实现函数在libstdc++内，而我们是没有链接这个库的，因此使用编译时的<code>-fno-threadsafe-statics</code>选项，禁用该功能。</li>
-</ul>
-<blockquote>
-<p>C++静态局部变量对于基本类型的常量初始化时，采取直接定义一个隐藏的全局变量的方法，例如对于函数：</p>
-</blockquote>
-<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-cpp data-lang=cpp><span style=color:#66d9ef>int</span> <span style=color:#a6e22e>ofEndLine</span>(){
-	<span style=color:#66d9ef>static</span> <span style=color:#66d9ef>int</span> i <span style=color:#f92672>=</span> <span style=color:#ae81ff>1</span>;
-	i<span style=color:#f92672>++</span>;
-	<span style=color:#66d9ef>return</span> i;
-}
-</code></pre></div><p>其汇编为
+ICW2的值用于设定中断号</li><li>OCW(操作命令字)</li></ul><blockquote><p>CPU有一根中断型号，由IF中断许可标志位标志标识是否接受外部中断（1表示接受，STL指令置1，CTL指令置0），而PIC可以对它导出的一共8个RIQ端口分别控制是否接受中断</p></blockquote><h2 id=day-0x07>DAY 0x07</h2><h4 id=中断处理>中断处理</h4><ul><li>中断触发后，需要通知PIC已经处理完中断，这样PIC才会继续接受中断。</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-cpp data-lang=cpp><span style=display:flex><span>io_out8(PIC0_OCW2, <span style=color:#ae81ff>0x61</span>);<span style=color:#75715e>// 0x61=0x60+0x01，表示已经处理IRQ1上的中断
+</span></span></span></code></pre></div><blockquote><p>键盘触发的中断会在键盘按下和松开的时候都触发一次</p></blockquote><ul><li>似乎<code>io_stihlt()</code>由于CPU规范的原因能保持原子性</li></ul><blockquote><p>根据CPU的规范，机器语言的STI指令之后，如果紧跟着HLT指令，那么就暂不受理这两条指令之间的中断，而要等到HLT指令之后才受理</p></blockquote><ul><li>无缓冲的消息机制的键盘按键中断处理在中断密集时，会出现后续的中断来不及被处理（来不及关闭中断开关）的问题，解决办法是使用缓冲区
+但是我实际操作调试中断时并没有看到传说中的被吞掉的E0数，只看到按下时的<code>0x1D</code>和松开时的<code>0x9D</code></li><li>KBC(keyboard controller)键盘控制器，控制键盘和鼠标</li></ul><h4 id=关于c>关于C++</h4><ul><li>为了方便显示，我在Cursor类里面加了个单例模式的static函数，但是C++实现函数内的static变量（局部静态变量）时，为了确保在多线程状态下只初始化一次，在编译时增加了同步锁，但是由于同步锁的实现函数在libstdc++内，而我们是没有链接这个库的，因此使用编译时的<code>-fno-threadsafe-statics</code>选项，禁用该功能。</li></ul><blockquote><p>C++静态局部变量对于基本类型的常量初始化时，采取直接定义一个隐藏的全局变量的方法，例如对于函数：</p></blockquote><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-cpp data-lang=cpp><span style=display:flex><span><span style=color:#66d9ef>int</span> <span style=color:#a6e22e>ofEndLine</span>(){
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>static</span> <span style=color:#66d9ef>int</span> i <span style=color:#f92672>=</span> <span style=color:#ae81ff>1</span>;
+</span></span><span style=display:flex><span>	i<span style=color:#f92672>++</span>;
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>return</span> i;
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><p>其汇编为
 <img src=/images/blog/os/1.png alt=用常量初始化静态局部变量>
-而对于需要调用函数来进行初始化的静态局部变量，</p>
-<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-cpp data-lang=cpp><span style=color:#66d9ef>int</span> <span style=color:#a6e22e>ofEndLine</span>() {
-	<span style=color:#66d9ef>static</span> <span style=color:#66d9ef>int</span> i <span style=color:#f92672>=</span> getValue();
-	i<span style=color:#f92672>++</span>;
-	<span style=color:#66d9ef>return</span> i;
-}
-</code></pre></div><p>则是
+而对于需要调用函数来进行初始化的静态局部变量，</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-cpp data-lang=cpp><span style=display:flex><span><span style=color:#66d9ef>int</span> <span style=color:#a6e22e>ofEndLine</span>() {
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>static</span> <span style=color:#66d9ef>int</span> i <span style=color:#f92672>=</span> getValue();
+</span></span><span style=display:flex><span>	i<span style=color:#f92672>++</span>;
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>return</span> i;
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><p>则是
 <img src=/images/blog/os/0.png alt=用函数初始化静态局部变量>
-这其中就用到了<code>___cxa_guard_acquire</code>和<code>___cxa_guard_release</code>。</p>
-<h2 id=day-0x08>DAY 0x08</h2>
-<ul>
-<li>鼠标的数据除第一次发送的是0xfa(表示启动鼠标后的ACK)以外，其它数据按照3个字节一组发送。</li>
-</ul>
-<blockquote>
-<p>每组中,第一个字节的高4位是对移动有反应的部分(在[0,3]的范围内),低4位是对点击有反应的部分(在[8,f]的范围内)</p>
-<table>
-<thead>
-<tr>
-<th></th>
-<th>7</th>
-<th>6</th>
-<th>5</th>
-<th>4</th>
-<th>3</th>
-<th>2</th>
-<th>1</th>
-<th>0</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-<td>上移</td>
-<td>右移</td>
-<td>1</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>1</td>
-<td>0</td>
-<td>0</td>
-<td>下移</td>
-<td>左移</td>
-<td>1</td>
-<td>右键</td>
-<td>中键(按下)</td>
-<td>左键</td>
-</tr>
-<tr>
-<td>第二个字节和左右移动有关</td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>第三个字节和上下移动有关</td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>鼠标与屏幕的y方向正好相反,因此y使用前应该加负号</td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-</tbody>
-</table>
-</blockquote>
-<ul>
-<li>状态和控制寄存器
-<code>EFLAGS</code>、<code>EIP</code>、<code>CR0</code>、<code>CR1</code>、<code>CR2</code>、<code>CR3</code>
-<table>
-<thead>
-<tr>
-<th>寄存器</th>
-<th>作用</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>EFLAGS</td>
-<td>状态寄存器组</td>
-</tr>
-<tr>
-<td>EIP</td>
-<td>存储下一条指令的地址</td>
-</tr>
-<tr>
-<td>CR0</td>
-<td>启用保护模式PE（分段机制）（Protection Enable）标志、分页PG（Paging）标志、等</td>
-</tr>
-<tr>
-<td>CR1</td>
-<td>未定义</td>
-</tr>
-<tr>
-<td>CR2</td>
-<td>页故障线性地址寄存器，保存最后一次出现页故障的全32位线性地址</td>
-</tr>
-<tr>
-<td>CR3</td>
-<td>页目录基地址寄存器PDBR（Page-Directory Base address Register），保存页目录表的物理地址，页目录表总是放在以4K字节为单位的存储器边界上</td>
-</tr>
-</tbody>
-</table>
-</li>
-<li>保护模式状态切换之后，需要立即使用JMP指令刷新处理器执行管道</li>
-<li>在保护模式下，采用段表的方式，段寄存器中存放段表中目标项的偏移量（单位为Byte）
-例如：
-<pre tabindex=0><code class=language-assembly data-lang=assembly>	MOV		AX,1*8			; 段寄存器DS为1*8，表示段表中的从0开始数起的第1个项
+这其中就用到了<code>___cxa_guard_acquire</code>和<code>___cxa_guard_release</code>。</p><h2 id=day-0x08>DAY 0x08</h2><ul><li>鼠标的数据除第一次发送的是0xfa(表示启动鼠标后的ACK)以外，其它数据按照3个字节一组发送。</li></ul><blockquote><p>每组中,第一个字节的高4位是对移动有反应的部分(在[0,3]的范围内),低4位是对点击有反应的部分(在[8,f]的范围内)</p><table><thead><tr><th></th><th>7</th><th>6</th><th>5</th><th>4</th><th>3</th><th>2</th><th>1</th><th>0</th></tr></thead><tbody><tr><td>0</td><td>0</td><td>0</td><td>上移</td><td>右移</td><td>1</td><td></td><td></td><td></td></tr><tr><td>1</td><td>0</td><td>0</td><td>下移</td><td>左移</td><td>1</td><td>右键</td><td>中键(按下)</td><td>左键</td></tr><tr><td>第二个字节和左右移动有关</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td>第三个字节和上下移动有关</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr><tr><td>鼠标与屏幕的y方向正好相反,因此y使用前应该加负号</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr></tbody></table></blockquote><ul><li>状态和控制寄存器
+<code>EFLAGS</code>、<code>EIP</code>、<code>CR0</code>、<code>CR1</code>、<code>CR2</code>、<code>CR3</code><table><thead><tr><th>寄存器</th><th>作用</th></tr></thead><tbody><tr><td>EFLAGS</td><td>状态寄存器组</td></tr><tr><td>EIP</td><td>存储下一条指令的地址</td></tr><tr><td>CR0</td><td>启用保护模式PE（分段机制）（Protection Enable）标志、分页PG（Paging）标志、等</td></tr><tr><td>CR1</td><td>未定义</td></tr><tr><td>CR2</td><td>页故障线性地址寄存器，保存最后一次出现页故障的全32位线性地址</td></tr><tr><td>CR3</td><td>页目录基地址寄存器PDBR（Page-Directory Base address Register），保存页目录表的物理地址，页目录表总是放在以4K字节为单位的存储器边界上</td></tr></tbody></table></li><li>保护模式状态切换之后，需要立即使用JMP指令刷新处理器执行管道</li><li>在保护模式下，采用段表的方式，段寄存器中存放段表中目标项的偏移量（单位为Byte）
+例如：<pre tabindex=0><code class=language-assembly data-lang=assembly>	MOV		AX,1*8			; 段寄存器DS为1*8，表示段表中的从0开始数起的第1个项
 	MOV		DS,AX
-</code></pre><pre tabindex=0><code>
-</code></pre></li>
-</ul>
-<h4 id=asmheadnas-之后所做的事情>asmhead.nas 之后所做的事情</h4>
-<ul>
-<li>PIC关闭一切中断</li>
-<li>设定A20GATE，使CPU能够访问1MB以上的存储器</li>
-<li>指定临时段表</li>
-<li>切换到保护模式PE，开启分页PG</li>
-<li>刷新流水线</li>
-<li>初始化除CS外的段寄存器</li>
-<li>拷贝<code>bootpack.hrm</code>到<code>0x00280000</code> <code>(512KB)</code></li>
-<li>拷贝<code>ipl</code>启动扇区到<code>0x00100000</code> <code>(512B)</code></li>
-<li>拷贝磁盘上之前加载到内存区的除了启动区的部分到<code>0x00100200</code></li>
-<li>(可能进行)拷贝<code>bootpack.hrm</code>的某块区域到<code>bootpack.hrm</code>指定的栈地址中</li>
-<li>初始化栈地址为<code>bootpack.hrm</code>指定的栈地址</li>
-<li>设置<code>CS</code>寄存器的值的同时<code>JMP</code>到<code>HariMain</code>函数执行</li>
-</ul>
-<h4 id=汇编-1>汇编</h4>
-<ul>
-<li><code>IMUL</code>，有符号整数乘法</li>
-<li><code>SHL</code>，逻辑左移，<code>SHR</code>，逻辑右移</li>
-<li><code>ALIGNB</code>表示填充0直到地址能被操作数整除</li>
-</ul>
-<h4 id=引用>引用</h4>
-<ul>
-<li>PIC 8259A
-<a href="https://webcache.googleusercontent.com/search?q=cache:http://oswiki.osask.jp/?(PIC)8259A">http://webcache.googleusercontent.com/search?q=cache:http://oswiki.osask.jp/?(PIC)8259A</a></li>
-<li>兼容PS/2键盘控制器
-<a href="https://webcache.googleusercontent.com/search?q=cache:http://oswiki.osask.jp/?(AT)keyboard">http://webcache.googleusercontent.com/search?q=cache:http://oswiki.osask.jp/?(AT)keyboard</a></li>
-<li>局部静态变量是如何做到只初始化一次的?
-<a href=www.voidcn.com/article/p-wdezklav-bms.html>www.voidcn.com/article/p-wdezklav-bms.html</a></li>
-<li>x86的控制寄存器CR0,CR1,CR2,CR3
-<a href=https://www.cnblogs.com/liubiyonge/p/9350494.html>https://www.cnblogs.com/liubiyonge/p/9350494.html</a></li>
-</ul>
-</main>
-<div id=comments>
-<hr>
-<script src=https://utteranc.es/client.js repo=KB5201314/KB5201314.github.io issue-term=pathname label="💬 comments 💬" theme=github-light crossorigin=anonymous async></script>
-</div>
-<footer>
-<hr>
-© imlk 2017 &ndash; 2021 | <a href=https://blog.imlk.top>imlk's blog</a> | <a href=https://github.com/KB5201314/>Github</a> | <a href=mailto:me@imlk.top>Email</a> | <a href=https://beian.miit.gov.cn/>京ICP备 - 2020042968号</a>
-</footer>
-</body>
-</html>
+</code></pre><pre tabindex=0><code></code></pre></li></ul><h4 id=asmheadnas-之后所做的事情>asmhead.nas 之后所做的事情</h4><ul><li>PIC关闭一切中断</li><li>设定A20GATE，使CPU能够访问1MB以上的存储器</li><li>指定临时段表</li><li>切换到保护模式PE，开启分页PG</li><li>刷新流水线</li><li>初始化除CS外的段寄存器</li><li>拷贝<code>bootpack.hrm</code>到<code>0x00280000</code> <code>(512KB)</code></li><li>拷贝<code>ipl</code>启动扇区到<code>0x00100000</code> <code>(512B)</code></li><li>拷贝磁盘上之前加载到内存区的除了启动区的部分到<code>0x00100200</code></li><li>(可能进行)拷贝<code>bootpack.hrm</code>的某块区域到<code>bootpack.hrm</code>指定的栈地址中</li><li>初始化栈地址为<code>bootpack.hrm</code>指定的栈地址</li><li>设置<code>CS</code>寄存器的值的同时<code>JMP</code>到<code>HariMain</code>函数执行</li></ul><h4 id=汇编-1>汇编</h4><ul><li><code>IMUL</code>，有符号整数乘法</li><li><code>SHL</code>，逻辑左移，<code>SHR</code>，逻辑右移</li><li><code>ALIGNB</code>表示填充0直到地址能被操作数整除</li></ul><h4 id=引用>引用</h4><ul><li>PIC 8259A
+<a href="https://webcache.googleusercontent.com/search?q=cache:http://oswiki.osask.jp/?(PIC)8259A">http://webcache.googleusercontent.com/search?q=cache:http://oswiki.osask.jp/?(PIC)8259A</a></li><li>兼容PS/2键盘控制器
+<a href="https://webcache.googleusercontent.com/search?q=cache:http://oswiki.osask.jp/?(AT)keyboard">http://webcache.googleusercontent.com/search?q=cache:http://oswiki.osask.jp/?(AT)keyboard</a></li><li>局部静态变量是如何做到只初始化一次的?
+<a href=www.voidcn.com/article/p-wdezklav-bms.html>www.voidcn.com/article/p-wdezklav-bms.html</a></li><li>x86的控制寄存器CR0,CR1,CR2,CR3
+<a href=https://www.cnblogs.com/liubiyonge/p/9350494.html>https://www.cnblogs.com/liubiyonge/p/9350494.html</a></li></ul></main><div id=comments><hr><script src=https://utteranc.es/client.js repo=KB5201314/KB5201314.github.io issue-term=pathname label='💬 comments 💬' theme=github-light crossorigin=anonymous async></script></div><footer><hr>© imlk 2017 &ndash; 2021 | <a href=https://blog.imlk.top>imlk's blog</a> | <a href=https://github.com/KB5201314/>Github</a> | <a href=mailto:me@imlk.top>Email</a> | <a href=https://beian.miit.gov.cn/>京ICP备 - 2020042968号</a></footer></body></html>

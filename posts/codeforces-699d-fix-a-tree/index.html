@@ -1,47 +1,9 @@
-<!doctype html><html lang=zh-cn>
-<head>
-<meta charset=utf-8>
-<meta name=viewport content="width=device-width,initial-scale=1">
-<title>CodeForces 699D Fix a Tree | imlk's blog</title>
-<link rel=stylesheet href=/css/style.css>
-<link rel=stylesheet href=/css/fonts.css>
-<link rel=preconnect href=https://fonts.googleapis.com>
-<link rel=preconnect href=https://fonts.gstatic.com crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&display=swap" rel=stylesheet>
-</head>
-<body>
-<header class=header>
-<a class=logo href=/> imlk's Blog </a>
-<nav>
-<ul class=menu>
-<li><a href=/>Home</a></li>
-<li><a href=/about/>About</a></li>
-<li><a href=/archives/>Archives</a></li>
-<li><a href=/friends/>Friends</a></li>
-<li><a href=/index.xml>Subscribe</a></li>
-</ul>
-</nav>
-</header>
-<hr>
-<div class=article-meta>
-<h1><span class=title>CodeForces 699D Fix a Tree</span></h1>
-<span>
-<span class=date>2018-02-08</span>
+<!doctype html><html lang=zh-cn><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><title>CodeForces 699D Fix a Tree | imlk's blog</title><link rel=stylesheet href=/css/style.css><link rel=stylesheet href=/css/fonts.css><link rel=preconnect href=https://fonts.googleapis.com><link rel=preconnect href=https://fonts.gstatic.com crossorigin><link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&display=swap" rel=stylesheet></head><body><header class=header><a class=logo href=/>imlk's Blog</a><nav><ul class=menu><li><a href=/>Home</a></li><li><a href=/about/>About</a></li><li><a href=/archives/>Archives</a></li><li><a href=/friends/>Friends</a></li><li><a href=/index.xml>Subscribe</a></li></ul></nav></header><hr><div class=article-meta><h1><span class=title>CodeForces 699D Fix a Tree</span></h1><span><span class=date>2018-02-08</span>
 |
-<span class=cats>
-<a href=https://blog.imlk.top/categories/algorithm/>Algorithm</a>
-</span>
+<span class=cats><a href=https://blog.imlk.top/categories/algorithm/>Algorithm</a></span>
 |
-<span class=tags>
-<a href=https://blog.imlk.top/tags/codeforces/>#Codeforces</a>
-<a href=https://blog.imlk.top/tags/tree/>#Tree</a>
-</span>
-</span>
-<br>
-</div>
-<main>
-<p>并查集优化 给出所有节点的父节点（有向图），用最少的修改生成一颗合法的树（环的判断，去环）</p>
-<pre tabindex=0><code>D. Fix a Tree
+<span class=tags><a href=https://blog.imlk.top/tags/codeforces/>#Codeforces</a>
+<a href=https://blog.imlk.top/tags/tree/>#Tree</a></span></span><br></div><main><p>并查集优化 给出所有节点的父节点（有向图），用最少的修改生成一颗合法的树（环的判断，去环）</p><pre tabindex=0><code>D. Fix a Tree
 time limit per test
 2 seconds
 memory limit per test
@@ -53,7 +15,7 @@ standard output
 
 A tree is an undirected connected graph without cycles.
 
-Let's consider a rooted undirected tree with n vertices, numbered 1 through n. There are many ways to represent such a tree. One way is to create an array with n integers p1, p2, ..., pn, where pi denotes a parent of vertex i (here, for convenience a root is considered its own parent).
+Let&#39;s consider a rooted undirected tree with n vertices, numbered 1 through n. There are many ways to represent such a tree. One way is to create an array with n integers p1, p2, ..., pn, where pi denotes a parent of vertex i (here, for convenience a root is considered its own parent).
 For this rooted tree the array p is [2, 3, 3, 2].
 
 Given a sequence p1, p2, ..., pn, one is able to restore a tree:
@@ -104,10 +66,8 @@ Output
 
 2
 2 3 7 8 1 6 6 7
-</code></pre><p>##<strong>0x00</strong></p>
-<p><strong>这题我的第一种解法就是先将多个树合并到一起，然后遍历每一个节点，暴力搜寻环，类似dfs，不断向父元素递进，用一个set储存途经的所有元素，对于查找到节点i时，判断它的父元素在set中是否出现了，如果出现了就说明成了环，然后设置节点i的父节点为一个统一的根节点
-为了优化速度，引入一个visited数组记录某个节点是否已经访问过，如果访问过那么下一次遇到的时候就直接结束向父元素的递进</strong></p>
-<pre tabindex=0><code>#include &lt;iostream&gt;
+</code></pre><p>##<strong>0x00</strong></p><p><strong>这题我的第一种解法就是先将多个树合并到一起，然后遍历每一个节点，暴力搜寻环，类似dfs，不断向父元素递进，用一个set储存途经的所有元素，对于查找到节点i时，判断它的父元素在set中是否出现了，如果出现了就说明成了环，然后设置节点i的父节点为一个统一的根节点
+为了优化速度，引入一个visited数组记录某个节点是否已经访问过，如果访问过那么下一次遇到的时候就直接结束向父元素的递进</strong></p><pre tabindex=0><code>#include &lt;iostream&gt;
 #include &lt;cstdio&gt;
 #include &lt;cstring&gt;
 #include &lt;cmath&gt;
@@ -160,10 +120,10 @@ void check(int i) {//检查是否有环出现
 
 int main(int argc, char const *argv[])
 {
-	scanf(&quot;%d&quot;, &amp;n);
+	scanf(&#34;%d&#34;, &amp;n);
 
 	for (int i = 1; i &lt;= n; ++i) {
-		scanf(&quot;%d&quot;, fa + i);
+		scanf(&#34;%d&#34;, fa + i);
 		if (fa[i] == i) {
 			if (root) { //若此前已经有根节点
 				fa[i] = root;
@@ -180,26 +140,22 @@ int main(int argc, char const *argv[])
 		}
 	}
 
-	printf(&quot;%d\n&quot;, changes);
+	printf(&#34;%d\n&#34;, changes);
 
-	printf(&quot;%d&quot;, fa[1]);
+	printf(&#34;%d&#34;, fa[1]);
 
 	for (int i = 2; i &lt;= n; ++i) {
-		printf(&quot; %d&quot;, fa[i]);
+		printf(&#34; %d&#34;, fa[i]);
 	}
 
-	printf(&quot;\n&quot;);
+	printf(&#34;\n&#34;);
 	return 0;
 }
 </code></pre><p>##<strong>0x01</strong>
-<strong>我的第二种解法是结合并查集</strong></p>
-<p><strong>思考
-如果将一个树中的某个节点i的父节点设置为某个节点j，导致出现了环，那么显然从j沿着父节点的方向去递推（用并查集的find函数），最终一定会到达i节点（先把所有没有指定父节点的节点指向自己，即初始化fa[x] = x，这样find（j）就会在i节点处结束）</strong></p>
-<p><strong>也就是说当i = find(j)的时候,如果把i的父节点设置为j，就会造成环的出现
-抓住这一点，在环即将出现时，我们就可以把i的父节点改成指向统一的根节点，这样就用一个操作就把环消除了</strong></p>
-<p><strong>优化：
-由于最终我们要输出一个最少修改数量的数组，但是find函数的优化是建立在把大量节点直接挂到根节点下的这种操作上的，所以我建立了另一个数组icopy来让find函数得以优化</strong></p>
-<pre tabindex=0><code>#include &lt;iostream&gt;
+<strong>我的第二种解法是结合并查集</strong></p><p><strong>思考
+如果将一个树中的某个节点i的父节点设置为某个节点j，导致出现了环，那么显然从j沿着父节点的方向去递推（用并查集的find函数），最终一定会到达i节点（先把所有没有指定父节点的节点指向自己，即初始化fa[x] = x，这样find（j）就会在i节点处结束）</strong></p><p><strong>也就是说当i = find(j)的时候,如果把i的父节点设置为j，就会造成环的出现
+抓住这一点，在环即将出现时，我们就可以把i的父节点改成指向统一的根节点，这样就用一个操作就把环消除了</strong></p><p><strong>优化：
+由于最终我们要输出一个最少修改数量的数组，但是find函数的优化是建立在把大量节点直接挂到根节点下的这种操作上的，所以我建立了另一个数组icopy来让find函数得以优化</strong></p><pre tabindex=0><code>#include &lt;iostream&gt;
 #include &lt;cstdio&gt;
 #include &lt;cstring&gt;
 #include &lt;cmath&gt;
@@ -250,12 +206,12 @@ int find(int i) {//非递归实现
 
 int main(int argc, char const *argv[])
 {
-	scanf(&quot;%d&quot;, &amp;n);
+	scanf(&#34;%d&#34;, &amp;n);
 
 	init();
 
 	for (int i = 1; i &lt;= n; ++i) {
-		scanf(&quot;%d&quot;, fa + i);
+		scanf(&#34;%d&#34;, fa + i);
 
 		if (fa[i] == i) {
 			if (root) {
@@ -288,27 +244,15 @@ int main(int argc, char const *argv[])
 		}
 	}
 
-	printf(&quot;%d\n&quot;, changes);
+	printf(&#34;%d\n&#34;, changes);
 
-	printf(&quot;%d&quot;, fa[1]);
+	printf(&#34;%d&#34;, fa[1]);
 
 	for (int i = 2; i &lt;= n; ++i) {
-		printf(&quot; %d&quot;, fa[i]);
+		printf(&#34; %d&#34;, fa[i]);
 	}
 
-	printf(&quot;\n&quot;);
+	printf(&#34;\n&#34;);
 	return 0;
 }
-
-</code></pre>
-</main>
-<div id=comments>
-<hr>
-<script src=https://utteranc.es/client.js repo=KB5201314/KB5201314.github.io issue-term=pathname label="💬 comments 💬" theme=github-light crossorigin=anonymous async></script>
-</div>
-<footer>
-<hr>
-© imlk 2017 &ndash; 2021 | <a href=https://blog.imlk.top>imlk's blog</a> | <a href=https://github.com/KB5201314/>Github</a> | <a href=mailto:me@imlk.top>Email</a> | <a href=https://beian.miit.gov.cn/>京ICP备 - 2020042968号</a>
-</footer>
-</body>
-</html>
+</code></pre></main><div id=comments><hr><script src=https://utteranc.es/client.js repo=KB5201314/KB5201314.github.io issue-term=pathname label='💬 comments 💬' theme=github-light crossorigin=anonymous async></script></div><footer><hr>© imlk 2017 &ndash; 2021 | <a href=https://blog.imlk.top>imlk's blog</a> | <a href=https://github.com/KB5201314/>Github</a> | <a href=mailto:me@imlk.top>Email</a> | <a href=https://beian.miit.gov.cn/>京ICP备 - 2020042968号</a></footer></body></html>

@@ -1,49 +1,10 @@
-<!doctype html><html lang=zh-cn>
-<head>
-<meta charset=utf-8>
-<meta name=viewport content="width=device-width,initial-scale=1">
-<title>Codeforces 429B B.Working out | imlk's blog</title>
-<link rel=stylesheet href=/css/style.css>
-<link rel=stylesheet href=/css/fonts.css>
-<link rel=preconnect href=https://fonts.googleapis.com>
-<link rel=preconnect href=https://fonts.gstatic.com crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&display=swap" rel=stylesheet>
-</head>
-<body>
-<header class=header>
-<a class=logo href=/> imlk's Blog </a>
-<nav>
-<ul class=menu>
-<li><a href=/>Home</a></li>
-<li><a href=/about/>About</a></li>
-<li><a href=/archives/>Archives</a></li>
-<li><a href=/friends/>Friends</a></li>
-<li><a href=/index.xml>Subscribe</a></li>
-</ul>
-</nav>
-</header>
-<hr>
-<div class=article-meta>
-<h1><span class=title>Codeforces 429B B.Working out</span></h1>
-<span>
-<span class=date>2018-01-09</span>
+<!doctype html><html lang=zh-cn><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><title>Codeforces 429B B.Working out | imlk's blog</title><link rel=stylesheet href=/css/style.css><link rel=stylesheet href=/css/fonts.css><link rel=preconnect href=https://fonts.googleapis.com><link rel=preconnect href=https://fonts.gstatic.com crossorigin><link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&display=swap" rel=stylesheet></head><body><header class=header><a class=logo href=/>imlk's Blog</a><nav><ul class=menu><li><a href=/>Home</a></li><li><a href=/about/>About</a></li><li><a href=/archives/>Archives</a></li><li><a href=/friends/>Friends</a></li><li><a href=/index.xml>Subscribe</a></li></ul></nav></header><hr><div class=article-meta><h1><span class=title>Codeforces 429B B.Working out</span></h1><span><span class=date>2018-01-09</span>
 |
-<span class=cats>
-<a href=https://blog.imlk.top/categories/algorithm/>Algorithm</a>
-</span>
+<span class=cats><a href=https://blog.imlk.top/categories/algorithm/>Algorithm</a></span>
 |
-<span class=tags>
-<a href=https://blog.imlk.top/tags/codeforces/>#Codeforces</a>
-<a href=https://blog.imlk.top/tags/dp/>#dp</a>
-</span>
-</span>
-<br>
-</div>
-<main>
-<p><a href=http://codeforces.com/problemset/problem/429/B>http://codeforces.com/problemset/problem/429/B</a>
-对于题中刁钻的要求，仔细分析所给条件的等价条件，有时候，所给条件符合的情形只有很少的几种。</p>
-<p><a href=http://blog.csdn.net/cc_again/article/details/25691925>http://blog.csdn.net/cc_again/article/details/25691925</a></p>
-<pre tabindex=0><code>题目意思：
+<span class=tags><a href=https://blog.imlk.top/tags/codeforces/>#Codeforces</a>
+<a href=https://blog.imlk.top/tags/dp/>#dp</a></span></span><br></div><main><p><a href=http://codeforces.com/problemset/problem/429/B>http://codeforces.com/problemset/problem/429/B</a>
+对于题中刁钻的要求，仔细分析所给条件的等价条件，有时候，所给条件符合的情形只有很少的几种。</p><p><a href=http://blog.csdn.net/cc_again/article/details/25691925>http://blog.csdn.net/cc_again/article/details/25691925</a></p><pre tabindex=0><code>题目意思：
 给n*m的矩阵，每个格子有个数，A从(1,1)出发只能向下或右走，终点为(n,m)，B从(n,1)出发只能向上或右走，终点为(1,m)。两个人的速度不一样，走到的格子可以获的该格子的数，两人相遇的格子上的数两个人都不能拿。求A和B能拿到的数的总和的最大值。
 n,m&lt;=1000
 解题思路：
@@ -67,13 +28,13 @@ int main() {
 
 	int n, m;
 
-	scanf(&quot;%d%d&quot;, &amp;n, &amp;m);
+	scanf(&#34;%d%d&#34;, &amp;n, &amp;m);
 
 	for (int x = 1; x &lt;= n; x++) {
 
 		for (int y = 1; y &lt;= m; y++) {
 
-			scanf(&quot;%ld&quot;, data[x] + y);
+			scanf(&#34;%ld&#34;, data[x] + y);
 		}
 	}
 
@@ -114,19 +75,8 @@ int main() {
 		}
 	}
 
-	printf(&quot;%ld\n&quot;, largest);
+	printf(&#34;%ld\n&#34;, largest);
 
 	return 0;
 }
-</code></pre>
-</main>
-<div id=comments>
-<hr>
-<script src=https://utteranc.es/client.js repo=KB5201314/KB5201314.github.io issue-term=pathname label="💬 comments 💬" theme=github-light crossorigin=anonymous async></script>
-</div>
-<footer>
-<hr>
-© imlk 2017 &ndash; 2021 | <a href=https://blog.imlk.top>imlk's blog</a> | <a href=https://github.com/KB5201314/>Github</a> | <a href=mailto:me@imlk.top>Email</a> | <a href=https://beian.miit.gov.cn/>京ICP备 - 2020042968号</a>
-</footer>
-</body>
-</html>
+</code></pre></main><div id=comments><hr><script src=https://utteranc.es/client.js repo=KB5201314/KB5201314.github.io issue-term=pathname label='💬 comments 💬' theme=github-light crossorigin=anonymous async></script></div><footer><hr>© imlk 2017 &ndash; 2021 | <a href=https://blog.imlk.top>imlk's blog</a> | <a href=https://github.com/KB5201314/>Github</a> | <a href=mailto:me@imlk.top>Email</a> | <a href=https://beian.miit.gov.cn/>京ICP备 - 2020042968号</a></footer></body></html>

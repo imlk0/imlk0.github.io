@@ -1,47 +1,9 @@
-<!doctype html><html lang=zh-cn>
-<head>
-<meta charset=utf-8>
-<meta name=viewport content="width=device-width,initial-scale=1">
-<title>HDU 1080 POJ 1080 Human Gene Functions——动态规划 | imlk's blog</title>
-<link rel=stylesheet href=/css/style.css>
-<link rel=stylesheet href=/css/fonts.css>
-<link rel=preconnect href=https://fonts.googleapis.com>
-<link rel=preconnect href=https://fonts.gstatic.com crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&display=swap" rel=stylesheet>
-</head>
-<body>
-<header class=header>
-<a class=logo href=/> imlk's Blog </a>
-<nav>
-<ul class=menu>
-<li><a href=/>Home</a></li>
-<li><a href=/about/>About</a></li>
-<li><a href=/archives/>Archives</a></li>
-<li><a href=/friends/>Friends</a></li>
-<li><a href=/index.xml>Subscribe</a></li>
-</ul>
-</nav>
-</header>
-<hr>
-<div class=article-meta>
-<h1><span class=title>HDU 1080 POJ 1080 Human Gene Functions——动态规划</span></h1>
-<span>
-<span class=date>2018-02-26</span>
+<!doctype html><html lang=zh-cn><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><title>HDU 1080 POJ 1080 Human Gene Functions——动态规划 | imlk's blog</title><link rel=stylesheet href=/css/style.css><link rel=stylesheet href=/css/fonts.css><link rel=preconnect href=https://fonts.googleapis.com><link rel=preconnect href=https://fonts.gstatic.com crossorigin><link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&display=swap" rel=stylesheet></head><body><header class=header><a class=logo href=/>imlk's Blog</a><nav><ul class=menu><li><a href=/>Home</a></li><li><a href=/about/>About</a></li><li><a href=/archives/>Archives</a></li><li><a href=/friends/>Friends</a></li><li><a href=/index.xml>Subscribe</a></li></ul></nav></header><hr><div class=article-meta><h1><span class=title>HDU 1080 POJ 1080 Human Gene Functions——动态规划</span></h1><span><span class=date>2018-02-26</span>
 |
-<span class=cats>
-<a href=https://blog.imlk.top/categories/algorithm/>Algorithm</a>
-</span>
+<span class=cats><a href=https://blog.imlk.top/categories/algorithm/>Algorithm</a></span>
 |
-<span class=tags>
-<a href=https://blog.imlk.top/tags/poj/>#POJ</a>
-</span>
-</span>
-<br>
-</div>
-<main>
-<p><a href="http://poj.org/problem?id=1080">http://poj.org/problem?id=1080</a>
-<a href="http://acm.hdu.edu.cn/showproblem.php?pid=1080">http://acm.hdu.edu.cn/showproblem.php?pid=1080</a></p>
-<pre tabindex=0><code>#include &lt;iostream&gt;
+<span class=tags><a href=https://blog.imlk.top/tags/poj/>#POJ</a></span></span><br></div><main><p><a href="http://poj.org/problem?id=1080">http://poj.org/problem?id=1080</a>
+<a href="http://acm.hdu.edu.cn/showproblem.php?pid=1080">http://acm.hdu.edu.cn/showproblem.php?pid=1080</a></p><pre tabindex=0><code>#include &lt;iostream&gt;
 #include &lt;cstdio&gt;
 #include &lt;map&gt;
 #include &lt;cstring&gt;
@@ -68,31 +30,31 @@ int dp[105][105];//dp[x][y]表示str1中1...x-1个字符和str2中第1...y-1之�
 int main(int argc, char const *argv[])
 {
 	int T, len1, len2;
-	scanf(&quot;%d&quot;, &amp;T);
+	scanf(&#34;%d&#34;, &amp;T);
 
-	m['\0'] = 0;
-	m['A'] = 1;
-	m['C'] = 2;
-	m['G'] = 3;
-	m['T'] = 4;
-	m['-'] = 5;
+	m[&#39;\0&#39;] = 0;
+	m[&#39;A&#39;] = 1;
+	m[&#39;C&#39;] = 2;
+	m[&#39;G&#39;] = 3;
+	m[&#39;T&#39;] = 4;
+	m[&#39;-&#39;] = 5;
 
 	while (T--) {
 		memset(dp, 0, sizeof(dp));
-		scanf(&quot;%d%s&quot;, &amp;len1, str1 + 1);
-		scanf(&quot;%d%s&quot;, &amp;len2, str2 + 1);
+		scanf(&#34;%d%s&#34;, &amp;len1, str1 + 1);
+		scanf(&#34;%d%s&#34;, &amp;len2, str2 + 1);
 
-		// printf(&quot;\t\t&quot;);
+		// printf(&#34;\t\t&#34;);
 		// for (int y = 0; y &lt; len2; y++) {
-		// 	printf(&quot;%c\t&quot;, s2[y]);
+		// 	printf(&#34;%c\t&#34;, s2[y]);
 		// }
-		// printf(&quot;\n\t&quot;);
+		// printf(&#34;\n\t&#34;);
 
 		// for (int y = 0; y &lt;= len2; y++) {
-		// 	printf(&quot;%d\t&quot;, dp[0][y]);
+		// 	printf(&#34;%d\t&#34;, dp[0][y]);
 
 		// }
-		// printf(&quot;\n&quot;);
+		// printf(&#34;\n&#34;);
 
 		for (int x = 1; x &lt;= len1 + 1; x++) {
 			dp[x][0] = -1e9;
@@ -107,28 +69,28 @@ int main(int argc, char const *argv[])
 			for (int y = 1; y &lt;= len2 + 1; y++) {
 				dp[x][y] = MAX(
 				               dp[x - 1][y - 1] + list[m[str1[x - 1]]][m[str2[y - 1]]],
-				               dp[x - 1][y] + list[m[str1[x - 1]]][m['-']],
-				               dp[x][y - 1] + list[m['-']][m[str2[y - 1]]]
+				               dp[x - 1][y] + list[m[str1[x - 1]]][m[&#39;-&#39;]],
+				               dp[x][y - 1] + list[m[&#39;-&#39;]][m[str2[y - 1]]]
 				           );
 
 //取消注釋打印流程
 
 /*				if (dp[x - 1][y - 1] + list[m[str1[x - 1]]][m[str2[y - 1]]]
-				        &gt;= dp[x - 1][y] + list[m[str1[x - 1]]][m['-']]) {
+				        &gt;= dp[x - 1][y] + list[m[str1[x - 1]]][m[&#39;-&#39;]]) {
 					if (dp[x - 1][y - 1] + list[m[str1[x - 1]]][m[str2[y - 1]]]
 					        &gt;=
-					        dp[x][y - 1] + list[m['-']][m[str2[y - 1]]]) {
-						printf(&quot;↖%d\t&quot;, dp[x][y]);
+					        dp[x][y - 1] + list[m[&#39;-&#39;]][m[str2[y - 1]]]) {
+						printf(&#34;↖%d\t&#34;, dp[x][y]);
 					} else {
-						printf(&quot;←%d\t&quot;, dp[x][y]);
+						printf(&#34;←%d\t&#34;, dp[x][y]);
 					}
 				} else {
-					if (dp[x - 1][y] + list[m[str1[x - 1]]][m['-']]
+					if (dp[x - 1][y] + list[m[str1[x - 1]]][m[&#39;-&#39;]]
 					        &gt;=
-					        dp[x][y - 1] + list[m['-']][m[str2[y - 1]]]) {
-						printf(&quot;↑%d\t&quot;, dp[x][y]);
+					        dp[x][y - 1] + list[m[&#39;-&#39;]][m[str2[y - 1]]]) {
+						printf(&#34;↑%d\t&#34;, dp[x][y]);
 					} else {
-						printf(&quot;←%d\t&quot;, dp[x][y]);
+						printf(&#34;←%d\t&#34;, dp[x][y]);
 
 					}
 				}
@@ -137,11 +99,11 @@ int main(int argc, char const *argv[])
 			}
 
 /*
-			printf(&quot;\n&quot;);
+			printf(&#34;\n&#34;);
 */
 
 		}
-		printf(&quot;%d\n&quot;, dp[len1 + 1][len2 + 1]);
+		printf(&#34;%d\n&#34;, dp[len1 + 1][len2 + 1]);
 
 		/**
 		*
@@ -185,14 +147,11 @@ int main(int argc, char const *argv[])
 	}
 	return 0;
 }
-
 </code></pre><p>后来发现是自己想得太多了，这个题的“状态”不一定非要理解成原先那样，
 其实完全可以也像最大公共子列那样的，
 dp[x][y]表示str1的前x个字符和str2的前y个字符之间的匹配结果的最优解
-这样也便于理解，便于思考</p>
-<p>这样的话dp[x][y]就是最终答案，不过要注意边界的预处理
-代码如下</p>
-<pre tabindex=0><code>#include &lt;iostream&gt;
+这样也便于理解，便于思考</p><p>这样的话dp[x][y]就是最终答案，不过要注意边界的预处理
+代码如下</p><pre tabindex=0><code>#include &lt;iostream&gt;
 #include &lt;cstdio&gt;
 #include &lt;map&gt;
 #include &lt;cstring&gt;
@@ -219,71 +178,71 @@ int dp[105][105];//dp[x][y]表示str1中1...x个字符和str2中第1...y这两�
 int main(int argc, char const *argv[])
 {
 	int T, len1, len2;
-	scanf(&quot;%d&quot;, &amp;T);
+	scanf(&#34;%d&#34;, &amp;T);
 
-	m['A'] = 0;
-	m['C'] = 1;
-	m['G'] = 2;
-	m['T'] = 3;
-	m['-'] = 4;
+	m[&#39;A&#39;] = 0;
+	m[&#39;C&#39;] = 1;
+	m[&#39;G&#39;] = 2;
+	m[&#39;T&#39;] = 3;
+	m[&#39;-&#39;] = 4;
 
 	while (T--) {
 		memset(dp, 0, sizeof(dp));
-		scanf(&quot;%d%s&quot;, &amp;len1, str1 + 1);
-		scanf(&quot;%d%s&quot;, &amp;len2, str2 + 1);
+		scanf(&#34;%d%s&#34;, &amp;len1, str1 + 1);
+		scanf(&#34;%d%s&#34;, &amp;len2, str2 + 1);
 
-		// printf(&quot;\t\t&quot;);
+		// printf(&#34;\t\t&#34;);
 		// for (int y = 0; y &lt; len2; y++) {
-		// 	printf(&quot;%c\t&quot;, s2[y]);
+		// 	printf(&#34;%c\t&#34;, s2[y]);
 		// }
-		// printf(&quot;\n\t&quot;);
+		// printf(&#34;\n\t&#34;);
 
 		// for (int y = 0; y &lt;= len2; y++) {
-		// 	printf(&quot;%d\t&quot;, dp[0][y]);
+		// 	printf(&#34;%d\t&#34;, dp[0][y]);
 
 		// }
-		// printf(&quot;\n&quot;);
+		// printf(&#34;\n&#34;);
 
 		for (int x = 1; x &lt;= len1; x++) {
-			dp[x][0] = dp[x - 1][0] + list[m[str1[x]]][m['-']];
+			dp[x][0] = dp[x - 1][0] + list[m[str1[x]]][m[&#39;-&#39;]];
 		}
 
-		// printf(&quot;↖0\t&quot;);
+		// printf(&#34;↖0\t&#34;);
 		for (int y = 1; y &lt;= len2; y++) {
-			dp[0][y] = dp[0][y - 1] + list[m[str2[y]]][m['-']];
-			// printf(&quot;←%d\t&quot;, dp[0][y]);
+			dp[0][y] = dp[0][y - 1] + list[m[str2[y]]][m[&#39;-&#39;]];
+			// printf(&#34;←%d\t&#34;, dp[0][y]);
 		}
-		// printf(&quot;\n&quot;);
+		// printf(&#34;\n&#34;);
 
 		for (int x = 1; x &lt;= len1; x++) {
 
-			// printf(&quot;↑%d\t&quot;, dp[x][0]);
+			// printf(&#34;↑%d\t&#34;, dp[x][0]);
 
 			for (int y = 1; y &lt;= len2; y++) {
 				dp[x][y] = MAX(
 				               dp[x - 1][y - 1] + list[m[str1[x]]][m[str2[y]]],
-				               dp[x - 1][y] + list[m[str1[x]]][m['-']],
-				               dp[x][y - 1] + list[m['-']][m[str2[y]]]
+				               dp[x - 1][y] + list[m[str1[x]]][m[&#39;-&#39;]],
+				               dp[x][y - 1] + list[m[&#39;-&#39;]][m[str2[y]]]
 				           );
 
 //取消所有额外注释可打印流程
 				/*
 								if (dp[x - 1][y - 1] + list[m[str1[x]]][m[str2[y]]]
-								        &gt;= dp[x - 1][y] + list[m[str1[x]]][m['-']]) {
+								        &gt;= dp[x - 1][y] + list[m[str1[x]]][m[&#39;-&#39;]]) {
 									if (dp[x - 1][y - 1] + list[m[str1[x]]][m[str2[y]]]
 									        &gt;=
-									        dp[x][y - 1] + list[m['-']][m[str2[y]]]) {
-										printf(&quot;↖%d\t&quot;, dp[x][y]);
+									        dp[x][y - 1] + list[m[&#39;-&#39;]][m[str2[y]]]) {
+										printf(&#34;↖%d\t&#34;, dp[x][y]);
 									} else {
-										printf(&quot;←%d\t&quot;, dp[x][y]);
+										printf(&#34;←%d\t&#34;, dp[x][y]);
 									}
 								} else {
-									if (dp[x - 1][y] + list[m[str1[x]]][m['-']]
+									if (dp[x - 1][y] + list[m[str1[x]]][m[&#39;-&#39;]]
 									        &gt;=
-									        dp[x][y - 1] + list[m['-']][m[str2[y]]]) {
-										printf(&quot;↑%d\t&quot;, dp[x][y]);
+									        dp[x][y - 1] + list[m[&#39;-&#39;]][m[str2[y]]]) {
+										printf(&#34;↑%d\t&#34;, dp[x][y]);
 									} else {
-										printf(&quot;←%d\t&quot;, dp[x][y]);
+										printf(&#34;←%d\t&#34;, dp[x][y]);
 
 									}
 								}
@@ -292,11 +251,11 @@ int main(int argc, char const *argv[])
 			}
 
 			/*
-						printf(&quot;\n&quot;);
+						printf(&#34;\n&#34;);
 			*/
 
 		}
-		printf(&quot;%d\n&quot;, dp[len1][len2]);
+		printf(&#34;%d\n&#34;, dp[len1][len2]);
 
 		/**
 		*
@@ -340,16 +299,4 @@ int main(int argc, char const *argv[])
 	}
 	return 0;
 }
-
-</code></pre>
-</main>
-<div id=comments>
-<hr>
-<script src=https://utteranc.es/client.js repo=KB5201314/KB5201314.github.io issue-term=pathname label="💬 comments 💬" theme=github-light crossorigin=anonymous async></script>
-</div>
-<footer>
-<hr>
-© imlk 2017 &ndash; 2021 | <a href=https://blog.imlk.top>imlk's blog</a> | <a href=https://github.com/KB5201314/>Github</a> | <a href=mailto:me@imlk.top>Email</a> | <a href=https://beian.miit.gov.cn/>京ICP备 - 2020042968号</a>
-</footer>
-</body>
-</html>
+</code></pre></main><div id=comments><hr><script src=https://utteranc.es/client.js repo=KB5201314/KB5201314.github.io issue-term=pathname label='💬 comments 💬' theme=github-light crossorigin=anonymous async></script></div><footer><hr>© imlk 2017 &ndash; 2021 | <a href=https://blog.imlk.top>imlk's blog</a> | <a href=https://github.com/KB5201314/>Github</a> | <a href=mailto:me@imlk.top>Email</a> | <a href=https://beian.miit.gov.cn/>京ICP备 - 2020042968号</a></footer></body></html>

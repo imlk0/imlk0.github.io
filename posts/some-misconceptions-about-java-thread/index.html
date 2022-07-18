@@ -1,100 +1,26 @@
-<!doctype html><html lang=zh-cn>
-<head>
-<meta charset=utf-8>
-<meta name=viewport content="width=device-width,initial-scale=1">
-<title>关于Java中Thread类的一些误区 | imlk's blog</title>
-<link rel=stylesheet href=/css/style.css>
-<link rel=stylesheet href=/css/fonts.css>
-<link rel=preconnect href=https://fonts.googleapis.com>
-<link rel=preconnect href=https://fonts.gstatic.com crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&display=swap" rel=stylesheet>
-</head>
-<body>
-<header class=header>
-<a class=logo href=/> imlk's Blog </a>
-<nav>
-<ul class=menu>
-<li><a href=/>Home</a></li>
-<li><a href=/about/>About</a></li>
-<li><a href=/archives/>Archives</a></li>
-<li><a href=/friends/>Friends</a></li>
-<li><a href=/index.xml>Subscribe</a></li>
-</ul>
-</nav>
-</header>
-<hr>
-<div class=article-meta>
-<h1><span class=title>关于Java中Thread类的一些误区</span></h1>
-<span>
-<span class=date>2017-12-09</span>
+<!doctype html><html lang=zh-cn><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><title>关于Java中Thread类的一些误区 | imlk's blog</title><link rel=stylesheet href=/css/style.css><link rel=stylesheet href=/css/fonts.css><link rel=preconnect href=https://fonts.googleapis.com><link rel=preconnect href=https://fonts.gstatic.com crossorigin><link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&display=swap" rel=stylesheet></head><body><header class=header><a class=logo href=/>imlk's Blog</a><nav><ul class=menu><li><a href=/>Home</a></li><li><a href=/about/>About</a></li><li><a href=/archives/>Archives</a></li><li><a href=/friends/>Friends</a></li><li><a href=/index.xml>Subscribe</a></li></ul></nav></header><hr><div class=article-meta><h1><span class=title>关于Java中Thread类的一些误区</span></h1><span><span class=date>2017-12-09</span>
 |
-<span class=cats>
-<a href=https://blog.imlk.top/categories/java/>Java</a>
-</span>
+<span class=cats><a href=https://blog.imlk.top/categories/java/>Java</a></span>
 |
-<span class=tags>
-<a href=https://blog.imlk.top/tags/java/>#Java</a>
-<a href=https://blog.imlk.top/tags/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/>#编程语言</a>
-</span>
-</span>
-<br>
-</div>
-<main>
-<h2 id=thread>Thread</h2>
-<h3 id=interrupt>interrupt()</h3>
-<blockquote>
-<p>1.这个方法只会给线程设置一个为true的中断标志。
-2.该方法可在需要中断的线程内自己调用，也可在其他线程中调用需要中断的线程对象的这个方法。</p>
-</blockquote>
-<blockquote>
-<p>Java doc:</p>
-<p>public void interrupt()Interrupts this thread.
-Unless the current thread is interrupting itself, which is always permitted, the checkAccess method of this thread is invoked, which may cause a SecurityException to be thrown.</p>
-<p>If this thread is blocked in an invocation of the wait(), wait(long), or wait(long, int) methods of the Object class, or of the join(), join(long), join(long, int), sleep(long), or sleep(long, int), methods of this class, then its interrupt status will be cleared and it will receive an InterruptedException.</p>
-<p>If this thread is blocked in an I/O operation upon an InterruptibleChannel then the channel will be closed, the thread&rsquo;s interrupt status will be set, and the thread will receive a ClosedByInterruptException.</p>
-<p>If this thread is blocked in a Selector then the thread&rsquo;s interrupt status will be set and it will return immediately from the selection operation, possibly with a non-zero value, just as if the selector&rsquo;s wakeup method were invoked.</p>
-<p>If none of the previous conditions hold then this thread&rsquo;s interrupt status will be set.</p>
-<p>Interrupting a thread that is not alive need not have any effect.</p>
-<p>Throws:
-SecurityException - if the current thread cannot modify this thread</p>
-</blockquote>
-<h3 id=join>join()</h3>
-<blockquote>
-<p>调用“目标Thread对象”的join方法，把当前线程加入到该对象对应的线程中，等该对象对应的线程执行完毕再执行后加入的线程。</p>
-</blockquote>
-<pre tabindex=0><code>public final void join()
+<span class=tags><a href=https://blog.imlk.top/tags/java/>#Java</a>
+<a href=https://blog.imlk.top/tags/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/>#编程语言</a></span></span><br></div><main><h2 id=thread>Thread</h2><h3 id=interrupt>interrupt()</h3><blockquote><p>1.这个方法只会给线程设置一个为true的中断标志。
+2.该方法可在需要中断的线程内自己调用，也可在其他线程中调用需要中断的线程对象的这个方法。</p></blockquote><blockquote><p>Java doc:</p><p>public void interrupt()Interrupts this thread.
+Unless the current thread is interrupting itself, which is always permitted, the checkAccess method of this thread is invoked, which may cause a SecurityException to be thrown.</p><p>If this thread is blocked in an invocation of the wait(), wait(long), or wait(long, int) methods of the Object class, or of the join(), join(long), join(long, int), sleep(long), or sleep(long, int), methods of this class, then its interrupt status will be cleared and it will receive an InterruptedException.</p><p>If this thread is blocked in an I/O operation upon an InterruptibleChannel then the channel will be closed, the thread&rsquo;s interrupt status will be set, and the thread will receive a ClosedByInterruptException.</p><p>If this thread is blocked in a Selector then the thread&rsquo;s interrupt status will be set and it will return immediately from the selection operation, possibly with a non-zero value, just as if the selector&rsquo;s wakeup method were invoked.</p><p>If none of the previous conditions hold then this thread&rsquo;s interrupt status will be set.</p><p>Interrupting a thread that is not alive need not have any effect.</p><p>Throws:
+SecurityException - if the current thread cannot modify this thread</p></blockquote><h3 id=join>join()</h3><blockquote><p>调用“目标Thread对象”的join方法，把当前线程加入到该对象对应的线程中，等该对象对应的线程执行完毕再执行后加入的线程。</p></blockquote><pre tabindex=0><code>public final void join()
                 throws InterruptedExceptionWaits for this thread to die. 
 An invocation of this method behaves in exactly the same way as the invocation 
 
 join(0) 
 Throws: 
 InterruptedException - if any thread has interrupted the current thread. The interrupted status of the current thread is cleared when this exception is thrown. 
-</code></pre><h3 id=static-sleep>static sleep()</h3>
-<blockquote>
-<p>此方法的“调用者”所在线程进入休眠，谁调用谁睡觉。</p>
-</blockquote>
-<blockquote>
-<p>与wait()的区别：
+</code></pre><h3 id=static-sleep>static sleep()</h3><blockquote><p>此方法的“调用者”所在线程进入休眠，谁调用谁睡觉。</p></blockquote><blockquote><p>与wait()的区别：
 1.sleep来自Thread类，和wait来自Object类。
 2.sleep方法没有释放锁，而wait方法释放了锁，使得其他线程可以使用同步控制块或者方法。
-3.wait，notify和notifyAll只能在同步控制方法或者同步控制块里面使用，而sleep可以在任何地方使用。</p>
-</blockquote>
-<pre tabindex=0><code>public static void sleep(long millis)
+3.wait，notify和notifyAll只能在同步控制方法或者同步控制块里面使用，而sleep可以在任何地方使用。</p></blockquote><pre tabindex=0><code>public static void sleep(long millis)
                   throws InterruptedExceptionCauses the currently executing thread to sleep (temporarily cease execution) for the specified number of milliseconds, subject to the precision and accuracy of system timers and schedulers. The thread does not lose ownership of any monitors.
 Parameters: 
 millis - the length of time to sleep in milliseconds 
 Throws: 
 IllegalArgumentException - if the value of millis is negative 
 InterruptedException - if any thread has interrupted the current thread. The interrupted status of the current thread is cleared when this exception is thrown. 
-</code></pre>
-</main>
-<div id=comments>
-<hr>
-<script src=https://utteranc.es/client.js repo=KB5201314/KB5201314.github.io issue-term=pathname label="💬 comments 💬" theme=github-light crossorigin=anonymous async></script>
-</div>
-<footer>
-<hr>
-© imlk 2017 &ndash; 2021 | <a href=https://blog.imlk.top>imlk's blog</a> | <a href=https://github.com/KB5201314/>Github</a> | <a href=mailto:me@imlk.top>Email</a> | <a href=https://beian.miit.gov.cn/>京ICP备 - 2020042968号</a>
-</footer>
-</body>
-</html>
+</code></pre></main><div id=comments><hr><script src=https://utteranc.es/client.js repo=KB5201314/KB5201314.github.io issue-term=pathname label='💬 comments 💬' theme=github-light crossorigin=anonymous async></script></div><footer><hr>© imlk 2017 &ndash; 2021 | <a href=https://blog.imlk.top>imlk's blog</a> | <a href=https://github.com/KB5201314/>Github</a> | <a href=mailto:me@imlk.top>Email</a> | <a href=https://beian.miit.gov.cn/>京ICP备 - 2020042968号</a></footer></body></html>

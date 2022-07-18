@@ -1,86 +1,14 @@
-<!doctype html><html lang=zh-cn>
-<head>
-<meta charset=utf-8>
-<meta name=viewport content="width=device-width,initial-scale=1">
-<title>自制x86玩具操作系统 week4 | imlk's blog</title>
-<link rel=stylesheet href=/css/style.css>
-<link rel=stylesheet href=/css/fonts.css>
-<link rel=preconnect href=https://fonts.googleapis.com>
-<link rel=preconnect href=https://fonts.gstatic.com crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&display=swap" rel=stylesheet>
-</head>
-<body>
-<header class=header>
-<a class=logo href=/> imlk's Blog </a>
-<nav>
-<ul class=menu>
-<li><a href=/>Home</a></li>
-<li><a href=/about/>About</a></li>
-<li><a href=/archives/>Archives</a></li>
-<li><a href=/friends/>Friends</a></li>
-<li><a href=/index.xml>Subscribe</a></li>
-</ul>
-</nav>
-</header>
-<hr>
-<div class=article-meta>
-<h1><span class=title>自制x86玩具操作系统 week4</span></h1>
-<span>
-<span class=date>2019-05-01</span>
+<!doctype html><html lang=zh-cn><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><title>自制x86玩具操作系统 week4 | imlk's blog</title><link rel=stylesheet href=/css/style.css><link rel=stylesheet href=/css/fonts.css><link rel=preconnect href=https://fonts.googleapis.com><link rel=preconnect href=https://fonts.gstatic.com crossorigin><link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&display=swap" rel=stylesheet></head><body><header class=header><a class=logo href=/>imlk's Blog</a><nav><ul class=menu><li><a href=/>Home</a></li><li><a href=/about/>About</a></li><li><a href=/archives/>Archives</a></li><li><a href=/friends/>Friends</a></li><li><a href=/index.xml>Subscribe</a></li></ul></nav></header><hr><div class=article-meta><h1><span class=title>自制x86玩具操作系统 week4</span></h1><span><span class=date>2019-05-01</span>
 |
-<span class=cats>
-<a href=https://blog.imlk.top/categories/osdev/>OSDev</a>
-</span>
+<span class=cats><a href=https://blog.imlk.top/categories/osdev/>OSDev</a></span>
 |
-<span class=tags>
-<a href=https://blog.imlk.top/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/>#操作系统</a>
-<a href=https://blog.imlk.top/tags/diy/>#DIY</a>
-</span>
-</span>
-<br>
-</div>
-<main>
-<h2 id=day-0x09>DAY 0x09</h2>
-<h4 id=内存检查>内存检查</h4>
-<ul>
-<li>内存检查前需要先禁用缓存，通过修改CR0寄存器实现这一点</li>
-<li>内存检查是通过对内存单元进行<code>写、反转、判断、反转、判断</code>，来确定一个内存单元的可用性的</li>
-</ul>
-<h4 id=内存管理>内存管理</h4>
-<ul>
-<li>内存的使用情况的表示方法多样，可以用一个bit标记一页的状态，也可以用内存区域的起始地址和长度来表示一个空的区域。</li>
-<li>memman_free时，由于按地址有序，于是改用二分查找的方式寻找插入位置，以提高效率</li>
-</ul>
-<h4 id=日志>日志</h4>
-<p>为了方便调试，手撸了一个<code>log.cpp</code>，输出时只需构建字符串然后调用<code>log::info()</code>，能够在屏幕上滚动输出，就像终端一样，还支持不同日志等级，不同颜色显示
-<img src=/images/blog/os/2.png alt=日志></p>
-<h2 id=day-0x0a>DAY 0x0A</h2>
-<p>这一天的几乎全是软件层面的事情了。
-实验中跟随作者实现了图层，但是我把SHEET重新命名为了Canvas，并且将结构体改成了类，把那些操作函数改成了成员函数，因为我实在是受不了作者的代码结构了，把一堆函数分散开而且每一次调用都要在参数里加上ctl这种做法实在是啰嗦，而且一改动的话几乎全部都要改，按照类来设计的话，可以把代码很好的组织起来，这种逻辑最适合设计成面向对象的程序。</p>
-<p>​ 而最让我头疼的是屏幕刷新的问题，因为作者只用了两个图层，而我还加了一个滚动的日志层，一共三个层，这样导致每次鼠标来一下中断都要滚动输出一下，屏幕闪烁得不行，不知道后面到定时器的时候有没有其它的办法
-<img src=/images/blog/os/3.gif alt=卡顿的屏幕></p>
-<p>​ 在将直接写入改成写入到图层的过程中，经常遇到一些问题，但是在机器码层面不方便调试，因此，将之前我找到的<code>bochsdbg</code>支持的断点魔法<code>xchg bx,bx</code>，封装成<code>void bochsdbg()</code>函数加到naskfunc里头，然后在不同的地方调用该函数，这样就能找出代码是在那个地方跑飞的了。</p>
-<p>​ 作者对屏幕的刷新策略是，从底部到顶部逐层刷新，我尝试过另外一种方法，外层循环是整个屏幕的所有位置，对于每一个位置，按高度从顶部向下遍历，直至找到非透明像素，但是这种方法效率不高，可能是因为有些时候虽然图层很多但是顶部的图层面积较小，导致要么不再图层边界内，要么遇到透明像素的情况。</p>
-<h2 id=day-0x0b>DAY 0x0B</h2>
-<p>​ 由于自己写的东西魔改的太多，作者是在每次界面改动之后就立刻调用<code>fresh_map</code>和<code>fresh_sub</code>刷新，但是这样会导致一轮循环中重复刷新某一区域（过度绘制）的问题，在大面积更新时势必遇到卡顿。而我由于多了一层log图层，该图层背景透明且每次输出都会整个刷新，因此我考虑采用另外的方式，为了解决这一问题，我决定在主while循环中进行真正的刷新操作，其他时候调用<code>notifyRefresh()</code>进行标志位的设置。
+<span class=tags><a href=https://blog.imlk.top/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/>#操作系统</a>
+<a href=https://blog.imlk.top/tags/diy/>#DIY</a></span></span><br></div><main><h2 id=day-0x09>DAY 0x09</h2><h4 id=内存检查>内存检查</h4><ul><li>内存检查前需要先禁用缓存，通过修改CR0寄存器实现这一点</li><li>内存检查是通过对内存单元进行<code>写、反转、判断、反转、判断</code>，来确定一个内存单元的可用性的</li></ul><h4 id=内存管理>内存管理</h4><ul><li>内存的使用情况的表示方法多样，可以用一个bit标记一页的状态，也可以用内存区域的起始地址和长度来表示一个空的区域。</li><li>memman_free时，由于按地址有序，于是改用二分查找的方式寻找插入位置，以提高效率</li></ul><h4 id=日志>日志</h4><p>为了方便调试，手撸了一个<code>log.cpp</code>，输出时只需构建字符串然后调用<code>log::info()</code>，能够在屏幕上滚动输出，就像终端一样，还支持不同日志等级，不同颜色显示
+<img src=/images/blog/os/2.png alt=日志></p><h2 id=day-0x0a>DAY 0x0A</h2><p>这一天的几乎全是软件层面的事情了。
+实验中跟随作者实现了图层，但是我把SHEET重新命名为了Canvas，并且将结构体改成了类，把那些操作函数改成了成员函数，因为我实在是受不了作者的代码结构了，把一堆函数分散开而且每一次调用都要在参数里加上ctl这种做法实在是啰嗦，而且一改动的话几乎全部都要改，按照类来设计的话，可以把代码很好的组织起来，这种逻辑最适合设计成面向对象的程序。</p><p>​ 而最让我头疼的是屏幕刷新的问题，因为作者只用了两个图层，而我还加了一个滚动的日志层，一共三个层，这样导致每次鼠标来一下中断都要滚动输出一下，屏幕闪烁得不行，不知道后面到定时器的时候有没有其它的办法
+<img src=/images/blog/os/3.gif alt=卡顿的屏幕></p><p>​ 在将直接写入改成写入到图层的过程中，经常遇到一些问题，但是在机器码层面不方便调试，因此，将之前我找到的<code>bochsdbg</code>支持的断点魔法<code>xchg bx,bx</code>，封装成<code>void bochsdbg()</code>函数加到naskfunc里头，然后在不同的地方调用该函数，这样就能找出代码是在那个地方跑飞的了。</p><p>​ 作者对屏幕的刷新策略是，从底部到顶部逐层刷新，我尝试过另外一种方法，外层循环是整个屏幕的所有位置，对于每一个位置，按高度从顶部向下遍历，直至找到非透明像素，但是这种方法效率不高，可能是因为有些时候虽然图层很多但是顶部的图层面积较小，导致要么不再图层边界内，要么遇到透明像素的情况。</p><h2 id=day-0x0b>DAY 0x0B</h2><p>​ 由于自己写的东西魔改的太多，作者是在每次界面改动之后就立刻调用<code>fresh_map</code>和<code>fresh_sub</code>刷新，但是这样会导致一轮循环中重复刷新某一区域（过度绘制）的问题，在大面积更新时势必遇到卡顿。而我由于多了一层log图层，该图层背景透明且每次输出都会整个刷新，因此我考虑采用另外的方式，为了解决这一问题，我决定在主while循环中进行真正的刷新操作，其他时候调用<code>notifyRefresh()</code>进行标志位的设置。
 ​ 另外，将刷新map的操作也进行优化，窗口位置移动时，如果对新旧窗口分别刷新，实际上在移动区域不大的情况下，是有一部分区域重叠了的，对于这一情况，将图像分割成多个不重叠的区域，分别进行刷新，可以节省大量刷新操作。
 ​ 作者的函数需要传入图层高度，作者提到，它不能适应把窗口变成透明或者把不透明变成透明的情况，为了避免这种状况，我每次map刷新都从最底部的图层开始，这在一定程度上影响了效率。
-​ 为了避免多处代码对同一区域进行刷新map的操作，我借鉴了网上一道求解<code>n个矩形重叠覆盖的面积</code>的算法题的思想，先将所有待刷新的区域矩形记录下来，先不刷新map，而在刷新屏幕之前，对这些区域进行划分，分块进行map的刷新操作，</p>
-<p>左边作者的，右边我的，可以看到，我的速度慢了十倍多，但是并不卡顿
-<img src=/images/blog/os/4.gif alt></p>
-<h4 id=引用>引用</h4>
-<ul>
-<li>UVA 11345 Rectangles(n个矩形重叠覆盖的面积)
-<a href=https://blog.csdn.net/u013480600/article/details/39481243>https://blog.csdn.net/u013480600/article/details/39481243</a></li>
-</ul>
-</main>
-<div id=comments>
-<hr>
-<script src=https://utteranc.es/client.js repo=KB5201314/KB5201314.github.io issue-term=pathname label="💬 comments 💬" theme=github-light crossorigin=anonymous async></script>
-</div>
-<footer>
-<hr>
-© imlk 2017 &ndash; 2021 | <a href=https://blog.imlk.top>imlk's blog</a> | <a href=https://github.com/KB5201314/>Github</a> | <a href=mailto:me@imlk.top>Email</a> | <a href=https://beian.miit.gov.cn/>京ICP备 - 2020042968号</a>
-</footer>
-</body>
-</html>
+​ 为了避免多处代码对同一区域进行刷新map的操作，我借鉴了网上一道求解<code>n个矩形重叠覆盖的面积</code>的算法题的思想，先将所有待刷新的区域矩形记录下来，先不刷新map，而在刷新屏幕之前，对这些区域进行划分，分块进行map的刷新操作，</p><p>左边作者的，右边我的，可以看到，我的速度慢了十倍多，但是并不卡顿
+<img src=/images/blog/os/4.gif alt></p><h4 id=引用>引用</h4><ul><li>UVA 11345 Rectangles(n个矩形重叠覆盖的面积)
+<a href=https://blog.csdn.net/u013480600/article/details/39481243>https://blog.csdn.net/u013480600/article/details/39481243</a></li></ul></main><div id=comments><hr><script src=https://utteranc.es/client.js repo=KB5201314/KB5201314.github.io issue-term=pathname label='💬 comments 💬' theme=github-light crossorigin=anonymous async></script></div><footer><hr>© imlk 2017 &ndash; 2021 | <a href=https://blog.imlk.top>imlk's blog</a> | <a href=https://github.com/KB5201314/>Github</a> | <a href=mailto:me@imlk.top>Email</a> | <a href=https://beian.miit.gov.cn/>京ICP备 - 2020042968号</a></footer></body></html>

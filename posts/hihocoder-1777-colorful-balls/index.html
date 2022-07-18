@@ -1,121 +1,64 @@
-<!doctype html><html lang=zh-cn>
-<head>
-<meta charset=utf-8>
-<meta name=viewport content="width=device-width,initial-scale=1">
-<title>[hihoCoder]1777 彩球 | imlk's blog</title>
-<link rel=stylesheet href=/css/style.css>
-<link rel=stylesheet href=/css/fonts.css>
-<link rel=preconnect href=https://fonts.googleapis.com>
-<link rel=preconnect href=https://fonts.gstatic.com crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&display=swap" rel=stylesheet>
-</head>
-<body>
-<header class=header>
-<a class=logo href=/> imlk's Blog </a>
-<nav>
-<ul class=menu>
-<li><a href=/>Home</a></li>
-<li><a href=/about/>About</a></li>
-<li><a href=/archives/>Archives</a></li>
-<li><a href=/friends/>Friends</a></li>
-<li><a href=/index.xml>Subscribe</a></li>
-</ul>
-</nav>
-</header>
-<hr>
-<div class=article-meta>
-<h1><span class=title>[hihoCoder]1777 彩球</span></h1>
-<span>
-<span class=date>2018-07-13</span>
+<!doctype html><html lang=zh-cn><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><title>[hihoCoder]1777 彩球 | imlk's blog</title><link rel=stylesheet href=/css/style.css><link rel=stylesheet href=/css/fonts.css><link rel=preconnect href=https://fonts.googleapis.com><link rel=preconnect href=https://fonts.gstatic.com crossorigin><link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&display=swap" rel=stylesheet></head><body><header class=header><a class=logo href=/>imlk's Blog</a><nav><ul class=menu><li><a href=/>Home</a></li><li><a href=/about/>About</a></li><li><a href=/archives/>Archives</a></li><li><a href=/friends/>Friends</a></li><li><a href=/index.xml>Subscribe</a></li></ul></nav></header><hr><div class=article-meta><h1><span class=title>[hihoCoder]1777 彩球</span></h1><span><span class=date>2018-07-13</span>
 |
-<span class=cats>
-<a href=https://blog.imlk.top/categories/algorithm/>Algorithm</a>
-</span>
+<span class=cats><a href=https://blog.imlk.top/categories/algorithm/>Algorithm</a></span>
 |
-<span class=tags>
-<a href=https://blog.imlk.top/tags/hihocoder/>#hihoCoder</a>
+<span class=tags><a href=https://blog.imlk.top/tags/hihocoder/>#hihoCoder</a>
 <a href=https://blog.imlk.top/tags/%E5%BF%AB%E9%80%9F%E5%B9%82/>#快速幂</a>
 <a href=https://blog.imlk.top/tags/%E5%BF%AB%E9%80%9F%E4%B9%98/>#快速乘</a>
-<a href=https://blog.imlk.top/tags/%E5%A4%A7%E6%95%B0%E5%A4%84%E7%90%86/>#大数处理</a>
-</span>
-</span>
-<br>
-</div>
-<main>
-<h3 id=原题>原题</h3>
-<p><a href=https://hihocoder.com/problemset/problem/1777>https://hihocoder.com/problemset/problem/1777</a></p>
-<h3 id=输入>输入</h3>
-<blockquote>
-<p>第一行三个正整数 n, k, P
+<a href=https://blog.imlk.top/tags/%E5%A4%A7%E6%95%B0%E5%A4%84%E7%90%86/>#大数处理</a></span></span><br></div><main><h3 id=原题>原题</h3><p><a href=https://hihocoder.com/problemset/problem/1777>https://hihocoder.com/problemset/problem/1777</a></p><h3 id=输入>输入</h3><blockquote><p>第一行三个正整数 n, k, P
 对于50%的数据，有1 ≤ n, k, P ≤ 10^9
-对于100%的数据，有1 ≤ n, k, P ≤ 10^18</p>
-</blockquote>
-<h3 id=解法>解法</h3>
-<p>考察大数的幂次取模
-乘法溢出</p>
-<p>用快速幂和快速乘解题</p>
-<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-cpp data-lang=cpp><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;iostream&gt;</span><span style=color:#75715e>
-</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;algorithm&gt;</span><span style=color:#75715e>
-</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;cstring&gt;</span><span style=color:#75715e>
-</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;string&gt;</span><span style=color:#75715e>
-</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;cstdio&gt;</span><span style=color:#75715e>
-</span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;cmath&gt;</span><span style=color:#75715e>
-</span><span style=color:#75715e></span>
-<span style=color:#66d9ef>using</span> <span style=color:#66d9ef>namespace</span> std;
-
-<span style=color:#75715e>// 快速乘
-</span><span style=color:#75715e></span>
-<span style=color:#66d9ef>long</span> <span style=color:#66d9ef>long</span> <span style=color:#a6e22e>fastMultiply</span>(<span style=color:#66d9ef>long</span> <span style=color:#66d9ef>long</span> a, <span style=color:#66d9ef>long</span> <span style=color:#66d9ef>long</span> b, <span style=color:#66d9ef>long</span> <span style=color:#66d9ef>long</span> p) {
-
-	<span style=color:#66d9ef>long</span> <span style=color:#66d9ef>long</span> ans <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>;
-	<span style=color:#66d9ef>long</span> <span style=color:#66d9ef>long</span> t <span style=color:#f92672>=</span> a;
-
-	<span style=color:#66d9ef>while</span> (b) {
-		<span style=color:#66d9ef>if</span> (b <span style=color:#f92672>&amp;</span> <span style=color:#ae81ff>1</span>) {
-			ans <span style=color:#f92672>=</span> (ans <span style=color:#f92672>+</span> t) <span style=color:#f92672>%</span> p;
-		}
-		t <span style=color:#f92672>=</span> (t <span style=color:#f92672>+</span> t) <span style=color:#f92672>%</span> p;
-		b <span style=color:#f92672>=</span> b <span style=color:#f92672>&gt;&gt;</span> <span style=color:#ae81ff>1</span>;
-	}
-
-	<span style=color:#66d9ef>return</span> ans;
-}
-
-
-<span style=color:#75715e>// 快速幂
-</span><span style=color:#75715e></span><span style=color:#66d9ef>long</span> <span style=color:#66d9ef>long</span> <span style=color:#a6e22e>fastPow</span>(<span style=color:#66d9ef>long</span> <span style=color:#66d9ef>long</span> n, <span style=color:#66d9ef>long</span> <span style=color:#66d9ef>long</span> k, <span style=color:#66d9ef>long</span> <span style=color:#66d9ef>long</span> p) {
-	<span style=color:#66d9ef>long</span> <span style=color:#66d9ef>long</span> ans <span style=color:#f92672>=</span> <span style=color:#ae81ff>1</span>;
-	<span style=color:#66d9ef>long</span> <span style=color:#66d9ef>long</span> t <span style=color:#f92672>=</span> n;
-	<span style=color:#66d9ef>while</span> (k) {
-		<span style=color:#66d9ef>if</span> (k <span style=color:#f92672>&amp;</span> <span style=color:#ae81ff>1</span>) {
-			ans <span style=color:#f92672>=</span> fastMultiply(ans, t, p);
-		}
-		t <span style=color:#f92672>=</span> fastMultiply(t, t, p);
-		k <span style=color:#f92672>=</span> k <span style=color:#f92672>&gt;&gt;</span> <span style=color:#ae81ff>1</span>;
-	}
-	<span style=color:#66d9ef>return</span> ans;
-}
-
-
-
-<span style=color:#66d9ef>int</span> <span style=color:#a6e22e>main</span>(<span style=color:#66d9ef>int</span> argc, <span style=color:#66d9ef>char</span> <span style=color:#66d9ef>const</span> <span style=color:#f92672>*</span>argv[]) {
-
-	<span style=color:#66d9ef>long</span> <span style=color:#66d9ef>long</span> n, k, p;
-	scanf(<span style=color:#e6db74>&#34;%lld%lld%lld&#34;</span>, <span style=color:#f92672>&amp;</span>n, <span style=color:#f92672>&amp;</span>k, <span style=color:#f92672>&amp;</span>p);
-
-	printf(<span style=color:#e6db74>&#34;%lld</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>, fastPow(k, n, p));
-
-	<span style=color:#66d9ef>return</span> <span style=color:#ae81ff>0</span>;
-}
-</code></pre></div>
-</main>
-<div id=comments>
-<hr>
-<script src=https://utteranc.es/client.js repo=KB5201314/KB5201314.github.io issue-term=pathname label="💬 comments 💬" theme=github-light crossorigin=anonymous async></script>
-</div>
-<footer>
-<hr>
-© imlk 2017 &ndash; 2021 | <a href=https://blog.imlk.top>imlk's blog</a> | <a href=https://github.com/KB5201314/>Github</a> | <a href=mailto:me@imlk.top>Email</a> | <a href=https://beian.miit.gov.cn/>京ICP备 - 2020042968号</a>
-</footer>
-</body>
-</html>
+对于100%的数据，有1 ≤ n, k, P ≤ 10^18</p></blockquote><h3 id=解法>解法</h3><p>考察大数的幂次取模
+乘法溢出</p><p>用快速幂和快速乘解题</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-cpp data-lang=cpp><span style=display:flex><span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;iostream&gt;</span><span style=color:#75715e>
+</span></span></span><span style=display:flex><span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;algorithm&gt;</span><span style=color:#75715e>
+</span></span></span><span style=display:flex><span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;cstring&gt;</span><span style=color:#75715e>
+</span></span></span><span style=display:flex><span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;string&gt;</span><span style=color:#75715e>
+</span></span></span><span style=display:flex><span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;cstdio&gt;</span><span style=color:#75715e>
+</span></span></span><span style=display:flex><span><span style=color:#75715e>#include</span> <span style=color:#75715e>&lt;cmath&gt;</span><span style=color:#75715e>
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>using</span> <span style=color:#66d9ef>namespace</span> std;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e>// 快速乘
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>long</span> <span style=color:#66d9ef>long</span> <span style=color:#a6e22e>fastMultiply</span>(<span style=color:#66d9ef>long</span> <span style=color:#66d9ef>long</span> a, <span style=color:#66d9ef>long</span> <span style=color:#66d9ef>long</span> b, <span style=color:#66d9ef>long</span> <span style=color:#66d9ef>long</span> p) {
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>long</span> <span style=color:#66d9ef>long</span> ans <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span>;
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>long</span> <span style=color:#66d9ef>long</span> t <span style=color:#f92672>=</span> a;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>while</span> (b) {
+</span></span><span style=display:flex><span>		<span style=color:#66d9ef>if</span> (b <span style=color:#f92672>&amp;</span> <span style=color:#ae81ff>1</span>) {
+</span></span><span style=display:flex><span>			ans <span style=color:#f92672>=</span> (ans <span style=color:#f92672>+</span> t) <span style=color:#f92672>%</span> p;
+</span></span><span style=display:flex><span>		}
+</span></span><span style=display:flex><span>		t <span style=color:#f92672>=</span> (t <span style=color:#f92672>+</span> t) <span style=color:#f92672>%</span> p;
+</span></span><span style=display:flex><span>		b <span style=color:#f92672>=</span> b <span style=color:#f92672>&gt;&gt;</span> <span style=color:#ae81ff>1</span>;
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>return</span> ans;
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e>// 快速幂
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>long</span> <span style=color:#66d9ef>long</span> <span style=color:#a6e22e>fastPow</span>(<span style=color:#66d9ef>long</span> <span style=color:#66d9ef>long</span> n, <span style=color:#66d9ef>long</span> <span style=color:#66d9ef>long</span> k, <span style=color:#66d9ef>long</span> <span style=color:#66d9ef>long</span> p) {
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>long</span> <span style=color:#66d9ef>long</span> ans <span style=color:#f92672>=</span> <span style=color:#ae81ff>1</span>;
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>long</span> <span style=color:#66d9ef>long</span> t <span style=color:#f92672>=</span> n;
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>while</span> (k) {
+</span></span><span style=display:flex><span>		<span style=color:#66d9ef>if</span> (k <span style=color:#f92672>&amp;</span> <span style=color:#ae81ff>1</span>) {
+</span></span><span style=display:flex><span>			ans <span style=color:#f92672>=</span> fastMultiply(ans, t, p);
+</span></span><span style=display:flex><span>		}
+</span></span><span style=display:flex><span>		t <span style=color:#f92672>=</span> fastMultiply(t, t, p);
+</span></span><span style=display:flex><span>		k <span style=color:#f92672>=</span> k <span style=color:#f92672>&gt;&gt;</span> <span style=color:#ae81ff>1</span>;
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>return</span> ans;
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>int</span> <span style=color:#a6e22e>main</span>(<span style=color:#66d9ef>int</span> argc, <span style=color:#66d9ef>char</span> <span style=color:#66d9ef>const</span> <span style=color:#f92672>*</span>argv[]) {
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>long</span> <span style=color:#66d9ef>long</span> n, k, p;
+</span></span><span style=display:flex><span>	scanf(<span style=color:#e6db74>&#34;%lld%lld%lld&#34;</span>, <span style=color:#f92672>&amp;</span>n, <span style=color:#f92672>&amp;</span>k, <span style=color:#f92672>&amp;</span>p);
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>	printf(<span style=color:#e6db74>&#34;%lld</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>, fastPow(k, n, p));
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>return</span> <span style=color:#ae81ff>0</span>;
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div></main><div id=comments><hr><script src=https://utteranc.es/client.js repo=KB5201314/KB5201314.github.io issue-term=pathname label='💬 comments 💬' theme=github-light crossorigin=anonymous async></script></div><footer><hr>© imlk 2017 &ndash; 2021 | <a href=https://blog.imlk.top>imlk's blog</a> | <a href=https://github.com/KB5201314/>Github</a> | <a href=mailto:me@imlk.top>Email</a> | <a href=https://beian.miit.gov.cn/>京ICP备 - 2020042968号</a></footer></body></html>

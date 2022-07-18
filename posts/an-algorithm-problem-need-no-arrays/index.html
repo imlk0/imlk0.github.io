@@ -1,50 +1,14 @@
-<!doctype html><html lang=zh-cn>
-<head>
-<meta charset=utf-8>
-<meta name=viewport content="width=device-width,initial-scale=1">
-<title>用位运算来模拟数组实现一道算法题 | imlk's blog</title>
-<link rel=stylesheet href=/css/style.css>
-<link rel=stylesheet href=/css/fonts.css>
-<link rel=preconnect href=https://fonts.googleapis.com>
-<link rel=preconnect href=https://fonts.gstatic.com crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&display=swap" rel=stylesheet>
-</head>
-<body>
-<header class=header>
-<a class=logo href=/> imlk's Blog </a>
-<nav>
-<ul class=menu>
-<li><a href=/>Home</a></li>
-<li><a href=/about/>About</a></li>
-<li><a href=/archives/>Archives</a></li>
-<li><a href=/friends/>Friends</a></li>
-<li><a href=/index.xml>Subscribe</a></li>
-</ul>
-</nav>
-</header>
-<hr>
-<div class=article-meta>
-<h1><span class=title>用位运算来模拟数组实现一道算法题</span></h1>
-<span>
-<span class=date>2017-12-09</span>
+<!doctype html><html lang=zh-cn><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><title>用位运算来模拟数组实现一道算法题 | imlk's blog</title><link rel=stylesheet href=/css/style.css><link rel=stylesheet href=/css/fonts.css><link rel=preconnect href=https://fonts.googleapis.com><link rel=preconnect href=https://fonts.gstatic.com crossorigin><link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&display=swap" rel=stylesheet></head><body><header class=header><a class=logo href=/>imlk's Blog</a><nav><ul class=menu><li><a href=/>Home</a></li><li><a href=/about/>About</a></li><li><a href=/archives/>Archives</a></li><li><a href=/friends/>Friends</a></li><li><a href=/index.xml>Subscribe</a></li></ul></nav></header><hr><div class=article-meta><h1><span class=title>用位运算来模拟数组实现一道算法题</span></h1><span><span class=date>2017-12-09</span>
 |
-<span class=cats>
-<a href=https://blog.imlk.top/categories/algorithm/>Algorithm</a>
-</span>
-</span>
-<br>
-</div>
-<main>
-<p>输入一串字符串'\n&rsquo;结尾，X代表小偷，#代表普通人，数字代表警察，其数字是警察能巡视到的范围。
-输出小偷个数，换行。</p>
-<pre tabindex=0><code>#include &lt;stdio.h&gt;
+<span class=cats><a href=https://blog.imlk.top/categories/algorithm/>Algorithm</a></span></span><br></div><main><p>输入一串字符串&rsquo;\n&rsquo;结尾，X代表小偷，#代表普通人，数字代表警察，其数字是警察能巡视到的范围。
+输出小偷个数，换行。</p><pre tabindex=0><code>#include &lt;stdio.h&gt;
 
 int printBin(unsigned long num){
 	while(num != 0){
-		printf(&quot;%d &quot;, num % 2);
+		printf(&#34;%d &#34;, num % 2);
 		num = num &gt;&gt; 1; 
 	}
-	printf(&quot;\n&quot;);
+	printf(&#34;\n&#34;);
 }
 
 int main(){
@@ -52,16 +16,16 @@ int main(){
 	int index = 0,range,count = 0;
 	char tmp;
 
-	scanf(&quot;%c&quot;,&amp;tmp);
-	while(tmp != '\n'){
+	scanf(&#34;%c&#34;,&amp;tmp);
+	while(tmp != &#39;\n&#39;){
 
 		if(index &lt; 20){
-			if(tmp == 'X'){
+			if(tmp == &#39;X&#39;){
 				line = line | (1 &lt;&lt; index);
-			}else if(tmp == '#'){		
+			}else if(tmp == &#39;#&#39;){		
 
 			}else{
-				range = tmp - '0';
+				range = tmp - &#39;0&#39;;
 
 				for(int i = 0; i &lt;= range; i++){
 
@@ -74,7 +38,7 @@ int main(){
 			// printBin(rangeLine);
 
 			index++;
-			scanf(&quot;%c&quot;,&amp;tmp);
+			scanf(&#34;%c&#34;,&amp;tmp);
 
 		}else{
 			while(index &gt;= 10){
@@ -96,7 +60,7 @@ int main(){
 
 	while(index &gt;= 0){
 
-//		printf(&quot;%d %d\n&quot;,line &amp; 1,rangeLine &amp; 1);
+//		printf(&#34;%d %d\n&#34;,line &amp; 1,rangeLine &amp; 1);
 		if(rangeLine &amp; 1){
 			if(line &amp; 1){
 				count++;
@@ -108,18 +72,7 @@ int main(){
 
 	}
 
-	printf(&quot;%d&quot;,count);
+	printf(&#34;%d&#34;,count);
 	return 0;
 }
-</code></pre>
-</main>
-<div id=comments>
-<hr>
-<script src=https://utteranc.es/client.js repo=KB5201314/KB5201314.github.io issue-term=pathname label="💬 comments 💬" theme=github-light crossorigin=anonymous async></script>
-</div>
-<footer>
-<hr>
-© imlk 2017 &ndash; 2021 | <a href=https://blog.imlk.top>imlk's blog</a> | <a href=https://github.com/KB5201314/>Github</a> | <a href=mailto:me@imlk.top>Email</a> | <a href=https://beian.miit.gov.cn/>京ICP备 - 2020042968号</a>
-</footer>
-</body>
-</html>
+</code></pre></main><div id=comments><hr><script src=https://utteranc.es/client.js repo=KB5201314/KB5201314.github.io issue-term=pathname label='💬 comments 💬' theme=github-light crossorigin=anonymous async></script></div><footer><hr>© imlk 2017 &ndash; 2021 | <a href=https://blog.imlk.top>imlk's blog</a> | <a href=https://github.com/KB5201314/>Github</a> | <a href=mailto:me@imlk.top>Email</a> | <a href=https://beian.miit.gov.cn/>京ICP备 - 2020042968号</a></footer></body></html>

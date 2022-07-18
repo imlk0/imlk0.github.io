@@ -1,47 +1,9 @@
-<!doctype html><html lang=zh-cn>
-<head>
-<meta charset=utf-8>
-<meta name=viewport content="width=device-width,initial-scale=1">
-<title>CodeForces 697D 树+概率 | imlk's blog</title>
-<link rel=stylesheet href=/css/style.css>
-<link rel=stylesheet href=/css/fonts.css>
-<link rel=preconnect href=https://fonts.googleapis.com>
-<link rel=preconnect href=https://fonts.gstatic.com crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&display=swap" rel=stylesheet>
-</head>
-<body>
-<header class=header>
-<a class=logo href=/> imlk's Blog </a>
-<nav>
-<ul class=menu>
-<li><a href=/>Home</a></li>
-<li><a href=/about/>About</a></li>
-<li><a href=/archives/>Archives</a></li>
-<li><a href=/friends/>Friends</a></li>
-<li><a href=/index.xml>Subscribe</a></li>
-</ul>
-</nav>
-</header>
-<hr>
-<div class=article-meta>
-<h1><span class=title>CodeForces 697D 树+概率</span></h1>
-<span>
-<span class=date>2018-02-01</span>
+<!doctype html><html lang=zh-cn><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><title>CodeForces 697D 树+概率 | imlk's blog</title><link rel=stylesheet href=/css/style.css><link rel=stylesheet href=/css/fonts.css><link rel=preconnect href=https://fonts.googleapis.com><link rel=preconnect href=https://fonts.gstatic.com crossorigin><link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&display=swap" rel=stylesheet></head><body><header class=header><a class=logo href=/>imlk's Blog</a><nav><ul class=menu><li><a href=/>Home</a></li><li><a href=/about/>About</a></li><li><a href=/archives/>Archives</a></li><li><a href=/friends/>Friends</a></li><li><a href=/index.xml>Subscribe</a></li></ul></nav></header><hr><div class=article-meta><h1><span class=title>CodeForces 697D 树+概率</span></h1><span><span class=date>2018-02-01</span>
 |
-<span class=cats>
-<a href=https://blog.imlk.top/categories/algorithm/>Algorithm</a>
-</span>
+<span class=cats><a href=https://blog.imlk.top/categories/algorithm/>Algorithm</a></span>
 |
-<span class=tags>
-<a href=https://blog.imlk.top/tags/codeforces/>#Codeforces</a>
-<a href=https://blog.imlk.top/tags/tree/>#Tree</a>
-</span>
-</span>
-<br>
-</div>
-<main>
-<p><a href=http://codeforces.com/problemset/problem/697/D>原题链接</a></p>
-<pre tabindex=0><code>D. Puzzles
+<span class=tags><a href=https://blog.imlk.top/tags/codeforces/>#Codeforces</a>
+<a href=https://blog.imlk.top/tags/tree/>#Tree</a></span></span><br></div><main><p><a href=http://codeforces.com/problemset/problem/697/D>原题链接</a></p><pre tabindex=0><code>D. Puzzles
 time limit per test
 1 second
 memory limit per test
@@ -51,9 +13,9 @@ standard input
 output
 standard output
 
-Barney lives in country USC (United States of Charzeh). USC has n cities numbered from 1 through n and n - 1 roads between them. Cities and roads of USC form a rooted tree (Barney's not sure why it is rooted). Root of the tree is the city number 1\. Thus if one will start his journey from city 1, he can visit any city he wants by following roads.
+Barney lives in country USC (United States of Charzeh). USC has n cities numbered from 1 through n and n - 1 roads between them. Cities and roads of USC form a rooted tree (Barney&#39;s not sure why it is rooted). Root of the tree is the city number 1\. Thus if one will start his journey from city 1, he can visit any city he wants by following roads.
 
-Some girl has stolen Barney's heart, and Barney wants to find her. He starts looking for in the root of the tree and (since he is Barney Stinson not a random guy), he uses a random DFS to search in the cities. A pseudo code of this algorithm is as follows:
+Some girl has stolen Barney&#39;s heart, and Barney wants to find her. He starts looking for in the root of the tree and (since he is Barney Stinson not a random guy), he uses a random DFS to search in the cities. A pseudo code of this algorithm is as follows:
 
 let starting_time be an array of length n
 current_time = 0
@@ -67,7 +29,7 @@ dfs(v):
 
 As told before, Barney will start his journey in the root of the tree (equivalent to call dfs(1)).
 
-Now Barney needs to pack a backpack and so he wants to know more about his upcoming journey: for every city i, Barney wants to know the expected value of starting_time[i]. He's a friend of Jon Snow and knows nothing, that's why he asked for your help.
+Now Barney needs to pack a backpack and so he wants to know more about his upcoming journey: for every city i, Barney wants to know the expected value of starting_time[i]. He&#39;s a friend of Jon Snow and knows nothing, that&#39;s why he asked for your help.
 Input
 
 The first line of input contains a single integer n (1 ≤ n ≤ 105) — the number of cities in USC.
@@ -123,10 +85,10 @@ int main(int argc, char const *argv[])
 {
 
 	int n, temp;
-	scanf(&quot;%d&quot;, &amp;n);
+	scanf(&#34;%d&#34;, &amp;n);
 	data[1][0] = 1;
 	for (int i = 2; i &lt;= n; i++) {
-		scanf(&quot;%d&quot;, &amp;temp);
+		scanf(&#34;%d&#34;, &amp;temp);
 		data[i][0] = 1;
 		data[i][1] = temp;
 		Node n(temp, i);
@@ -140,7 +102,7 @@ int main(int argc, char const *argv[])
 	}
 
 	ans[1] = 1.0;
-	printf(&quot;1.0&quot;);
+	printf(&#34;1.0&#34;);
 	for (int i = 2; i &lt;= n; i++) {
 		/**
 		* 第i个节点的期望 == 它的父节点的期望 + 在它自身的耗时(1) + 第i个节点的兄弟节点及它拓展的子节点耗时的期望(即兄弟节点及它拓展的子节点数 * 0.5)
@@ -148,21 +110,9 @@ int main(int argc, char const *argv[])
 		* 这些节点每一个要么在i之前被遍历，要么在i之后，于是期望值乘以0.5
 		*/
 		ans[i] = ans[data[i][1]] + 1 + (data[data[i][1]][0] - 1 - data[i][0]) * 0.5;
-		printf(&quot; %.1f&quot;, ans[i]);
+		printf(&#34; %.1f&#34;, ans[i]);
 	}
 
 	return 0;
 }
-
-</code></pre>
-</main>
-<div id=comments>
-<hr>
-<script src=https://utteranc.es/client.js repo=KB5201314/KB5201314.github.io issue-term=pathname label="💬 comments 💬" theme=github-light crossorigin=anonymous async></script>
-</div>
-<footer>
-<hr>
-© imlk 2017 &ndash; 2021 | <a href=https://blog.imlk.top>imlk's blog</a> | <a href=https://github.com/KB5201314/>Github</a> | <a href=mailto:me@imlk.top>Email</a> | <a href=https://beian.miit.gov.cn/>京ICP备 - 2020042968号</a>
-</footer>
-</body>
-</html>
+</code></pre></main><div id=comments><hr><script src=https://utteranc.es/client.js repo=KB5201314/KB5201314.github.io issue-term=pathname label='💬 comments 💬' theme=github-light crossorigin=anonymous async></script></div><footer><hr>© imlk 2017 &ndash; 2021 | <a href=https://blog.imlk.top>imlk's blog</a> | <a href=https://github.com/KB5201314/>Github</a> | <a href=mailto:me@imlk.top>Email</a> | <a href=https://beian.miit.gov.cn/>京ICP备 - 2020042968号</a></footer></body></html>

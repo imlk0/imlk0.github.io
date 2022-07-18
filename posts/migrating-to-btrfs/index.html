@@ -1,149 +1,28 @@
-<!doctype html><html lang=zh-cn>
-<head>
-<meta charset=utf-8>
-<meta name=viewport content="width=device-width,initial-scale=1">
-<title>从ext4迁移到btrfs | imlk's blog</title>
-<link rel=stylesheet href=/css/style.css>
-<link rel=stylesheet href=/css/fonts.css>
-<link rel=preconnect href=https://fonts.googleapis.com>
-<link rel=preconnect href=https://fonts.gstatic.com crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&display=swap" rel=stylesheet>
-</head>
-<body>
-<header class=header>
-<a class=logo href=/> imlk's Blog </a>
-<nav>
-<ul class=menu>
-<li><a href=/>Home</a></li>
-<li><a href=/about/>About</a></li>
-<li><a href=/archives/>Archives</a></li>
-<li><a href=/friends/>Friends</a></li>
-<li><a href=/index.xml>Subscribe</a></li>
-</ul>
-</nav>
-</header>
-<hr>
-<div class=article-meta>
-<h1><span class=title>从ext4迁移到btrfs</span></h1>
-<span>
-<span class=date>2022-01-12</span>
+<!doctype html><html lang=zh-cn><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><title>从ext4迁移到btrfs | imlk's blog</title><link rel=stylesheet href=/css/style.css><link rel=stylesheet href=/css/fonts.css><link rel=preconnect href=https://fonts.googleapis.com><link rel=preconnect href=https://fonts.gstatic.com crossorigin><link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&display=swap" rel=stylesheet></head><body><header class=header><a class=logo href=/>imlk's Blog</a><nav><ul class=menu><li><a href=/>Home</a></li><li><a href=/about/>About</a></li><li><a href=/archives/>Archives</a></li><li><a href=/friends/>Friends</a></li><li><a href=/index.xml>Subscribe</a></li></ul></nav></header><hr><div class=article-meta><h1><span class=title>从ext4迁移到btrfs</span></h1><span><span class=date>2022-01-12</span>
 |
-<span class=cats>
-<a href=https://blog.imlk.top/categories/linux/>Linux</a>
-</span>
+<span class=cats><a href=https://blog.imlk.top/categories/linux/>Linux</a></span>
 |
-<span class=tags>
-<a href=https://blog.imlk.top/tags/btrfs/>#btrfs</a>
-<a href=https://blog.imlk.top/tags/grub/>#grub</a>
-</span>
-</span>
-<br>
-</div>
-<main>
-<p>今天尝试了将根文件系统迁移到btrfs，主要是看中了它的Copy-on-Write以及透明压缩和快照等特性。鉴于没有找到现成的完整教程，加上子卷的划分其实看个人偏好，故做此文，顺便把在这期间遇到的问题记录一下。</p>
-<p>整个迁移过程是在LiveCD中操作的。</p>
-<h2 id=创建btrfs>创建btrfs</h2>
-<p>将原先的rootfs备份后，格式化为btrfs，工具任意，这里我用的gnome自带的磁盘管理程序，GPartd应该也可以。</p>
-<p><img src=/images/blog/btrfs_1.png alt></p>
-<ul>
-<li>
-<p>挂载btrfs分区到临时目录<code>/mnt/btrfs</code></p>
-<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>sudo mount -t btrfs -o compress<span style=color:#f92672>=</span>zstd /dev/sdb4 /mnt/btrfs
-</code></pre></div><p>注意默认不会开启压缩功能，因此这里最好就加上<code>-o compress=zstd</code>，因为我们一会还得将之前备份的文件拷贝回来。</p>
-<p>如果想要了解压缩算法的选择，可以参考<a href=https://btrfs.wiki.kernel.org/index.php/Compression>https://btrfs.wiki.kernel.org/index.php/Compression</a></p>
-</li>
-</ul>
-<h2 id=创建子卷>创建子卷</h2>
-<h3 id=btrfs子卷布局>btrfs子卷布局</h3>
-<p>推荐阅读<a href=https://btrfs.wiki.kernel.org/index.php/SysadminGuide#Layout>https://btrfs.wiki.kernel.org/index.php/SysadminGuide#Layout</a></p>
-<p>如果关心快照，还可以阅读：<a href=https://btrfs.wiki.kernel.org/index.php/SysadminGuide#Snapshots>https://btrfs.wiki.kernel.org/index.php/SysadminGuide#Snapshots</a></p>
-<p>btrfs的子卷布局很随意，一般有三种范式：Flat、Nested、Mixed，上面Flat和Nested区别在于：后者的subvolume底下还有subvolume（注意快照时不会递归对里面的subvolume做快照），而Flat则倾向于将所有的subvolume平铺。</p>
-<p>在考虑便捷性和快照后，我参考Flat布局制定了下面这样的布局</p>
-<pre tabindex=0><code>/               &lt;root卷，不挂载&gt;
+<span class=tags><a href=https://blog.imlk.top/tags/btrfs/>#btrfs</a>
+<a href=https://blog.imlk.top/tags/grub/>#grub</a></span></span><br></div><main><p>今天尝试了将根文件系统迁移到btrfs，主要是看中了它的Copy-on-Write以及透明压缩和快照等特性。鉴于没有找到现成的完整教程，加上子卷的划分其实看个人偏好，故做此文，顺便把在这期间遇到的问题记录一下。</p><p>整个迁移过程是在LiveCD中操作的。</p><h2 id=创建btrfs>创建btrfs</h2><p>将原先的rootfs备份后，格式化为btrfs，工具任意，这里我用的gnome自带的磁盘管理程序，GPartd应该也可以。</p><p><img src=/images/blog/btrfs_1.png alt></p><ul><li><p>挂载btrfs分区到临时目录<code>/mnt/btrfs</code></p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>sudo mount -t btrfs -o compress<span style=color:#f92672>=</span>zstd /dev/sdb4 /mnt/btrfs
+</span></span></code></pre></div><p>注意默认不会开启压缩功能，因此这里最好就加上<code>-o compress=zstd</code>，因为我们一会还得将之前备份的文件拷贝回来。</p><p>如果想要了解压缩算法的选择，可以参考<a href=https://btrfs.wiki.kernel.org/index.php/Compression>https://btrfs.wiki.kernel.org/index.php/Compression</a></p></li></ul><h2 id=创建子卷>创建子卷</h2><h3 id=btrfs子卷布局>btrfs子卷布局</h3><p>推荐阅读<a href=https://btrfs.wiki.kernel.org/index.php/SysadminGuide#Layout>https://btrfs.wiki.kernel.org/index.php/SysadminGuide#Layout</a></p><p>如果关心快照，还可以阅读：<a href=https://btrfs.wiki.kernel.org/index.php/SysadminGuide#Snapshots>https://btrfs.wiki.kernel.org/index.php/SysadminGuide#Snapshots</a></p><p>btrfs的子卷布局很随意，一般有三种范式：Flat、Nested、Mixed，上面Flat和Nested区别在于：后者的subvolume底下还有subvolume（注意快照时不会递归对里面的subvolume做快照），而Flat则倾向于将所有的subvolume平铺。</p><p>在考虑便捷性和快照后，我参考Flat布局制定了下面这样的布局</p><pre tabindex=0><code>/               &lt;root卷，不挂载&gt;
 ├── snapshots   &lt;目录，用于之后存放快照卷&gt;
 └── subvolumes  &lt;目录，新增的子卷也都放在这下面&gt;
-    ├── home    &lt;子卷，挂载为/&gt;
-    └── root    &lt;子卷，挂载为/home&gt;
-</code></pre><h3 id=创建子卷-1>创建子卷</h3>
-<ul>
-<li>
-<p>创建两个目录存放常规的subvolumes和快照用的snapshots</p>
-<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>sudo mkdir /mnt/btrfs/subvolumes
-sudo mkdir /mnt/btrfs/snapshots
-</code></pre></div></li>
-<li>
-<p>创建两个subvolume</p>
-<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>sudo btrfs subvolume create /mnt/btrfs/subvolumes/root
-sudo btrfs subvolume create /mnt/btrfs/subvolumes/home
-</code></pre></div></li>
-</ul>
-<p>可以使用<code>sudo btrfs subvolume list -p /mnt/btrfs</code>查看这两个subvolume的id</p>
-<p>现在，可以直接访问<code>/mnt/btrfs/subvolumes/root</code>和<code>/mnt/btrfs/subvolumes/home</code>，并将之前备份的文件拷贝回来。</p>
-<h2 id=更新grub>更新grub</h2>
-<p>这一步需要chroot到原来的rootfs里面，我们创建一个临时目录<code>/mnt/btrfs-root</code>来准备rootfs。</p>
-<p>挂载两个subvolume：</p>
-<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>sudo mount -t btrfs -o compress<span style=color:#f92672>=</span>zstd,subvol<span style=color:#f92672>=</span>/subvolumes/root /dev/sdb4 /mnt/btrfs-root
-sudo mount -t btrfs -o compress<span style=color:#f92672>=</span>zstd,subvol<span style=color:#f92672>=</span>/subvolumes/home /dev/sdb4 /mnt/btrfs-root/home
-</code></pre></div><p>mount bind必要的文件系统，然后chroot。（如果你的<code>/boot</code>目录在别的分区的，那么还需要额外挂载<code>/boot</code>）</p>
-<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>cd /mnt/btrfs-root
-sudo mount -o bind /dev  dev
-sudo mount -o bind /sys sys
-sudo mount -o bind /proc proc
-sudo chroot .
-</code></pre></div><p>更新grub配置</p>
-<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>grub-mkconfig -o /boot/grub/grub.cfg
-</code></pre></div><h2 id=更新etcfstab>更新/etc/fstab</h2>
-<p>注意指定参数中的<code>compress</code>和<code>subvol</code>选项</p>
-<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>UUID<span style=color:#f92672>=</span>7f208f70-fee3-4bbe-8f3f-c1e95dd25afe  /  btrfs  defaults,noatime,compress<span style=color:#f92672>=</span>zstd,subvol<span style=color:#f92672>=</span>/subvolumes/root <span style=color:#ae81ff>0</span> <span style=color:#ae81ff>1</span>
-UUID<span style=color:#f92672>=</span>7f208f70-fee3-4bbe-8f3f-c1e95dd25afe  /home  btrfs  defaults,noatime,compress<span style=color:#f92672>=</span>zstd,subvol<span style=color:#f92672>=</span>/subvolumes/home <span style=color:#ae81ff>0</span> <span style=color:#ae81ff>0</span>
-</code></pre></div><h2 id=关于压缩>关于压缩</h2>
-<p>如果你像我一样在恢复文件之前忘了加压缩选项，可以使用下面的命令分别压缩每个子卷里的现存文件</p>
-<div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>sudo btrfs filesystem defragment -r -v -czstd /mnt/btrfs/subvolumes/root
-sudo btrfs filesystem defragment -r -v -czstd /mnt/btrfs/subvolumes/home
-</code></pre></div><p>可以使用<a href=https://github.com/kilobyte/compsize>compsize</a>这个工具计算压缩率。我这里顺便测试了一下压缩效果，与<a href=https://wiki.gnome.org/Apps/Disks>gnome-disks</a>的结果进行比较。其中gnome-disks显示的是文件系统已用空间，compsize的统计方式似乎不太一样：</p>
-<table>
-<thead>
-<tr>
-<th>压缩范围\统计方法</th>
-<th>gnome-disks</th>
-<th>compsize</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>压缩前</td>
-<td>140G</td>
-<td>128G（100%）</td>
-</tr>
-<tr>
-<td>压缩/subvolumes/root子卷</td>
-<td>100G</td>
-<td>89G（69%）</td>
-</tr>
-<tr>
-<td>压缩/subvolumes/root和/subvolumes/home子卷</td>
-<td>66G</td>
-<td>56G（44%）</td>
-</tr>
-</tbody>
-</table>
-<p><img src=/images/blog/btrfs_2.png alt=同时压缩/和/home子卷的结果></p>
-<h2 id=关于坑>关于坑</h2>
-<p>整体来看其实是没有什么坑的（其实遇到的坑也是自己挖的</p>
-<p>就写一下迁移过程中遇到的一些问题8：</p>
-<ol>
-<li>备份：因为是在LiveCD里操作的，本来备份文件的时候打算使用TimeShift的rsync模式，但是TimeShift无法在LiveCD里面使用，不知道开发者是怎么考虑的。最后换用了LuckyBackup（虽然都是rsync但是就是懒得自己写命令hhh）</li>
-<li>btrfs-convert：这工具可以原地把ext4转换为btrfs，但是似乎受到空闲块数量的限制，我测试了几次发现在不同的地方报failed，即使整个ext4文件系统只使用大概50%的空间。最后索性直接格式化成btrfs再拷贝回去了。</li>
-<li>grub unknown filesystem：改完之后grub直接进到resuce救援模式，发现无法识别btrfs分区。这个其实是我之前乱改了EFI分区里的内容导致的，其中的grub efi文件是很旧的版本，不认识btrfs，也就没法加载<code>/boot/grub/x86_64-efi/</code>里的grub模块文件，导致救援模式里基本上啥也不能干。最后是把EFI分区也挂载上，在chroot里使用<code>grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=GRUB</code>之类的命令重新生成了一下EFI分区中的<code>grubx64.efi</code></li>
-</ol>
-</main>
-<div id=comments>
-<hr>
-<script src=https://utteranc.es/client.js repo=KB5201314/KB5201314.github.io issue-term=pathname label="💬 comments 💬" theme=github-light crossorigin=anonymous async></script>
-</div>
-<footer>
-<hr>
-© imlk 2017 &ndash; 2021 | <a href=https://blog.imlk.top>imlk's blog</a> | <a href=https://github.com/KB5201314/>Github</a> | <a href=mailto:me@imlk.top>Email</a> | <a href=https://beian.miit.gov.cn/>京ICP备 - 2020042968号</a>
-</footer>
-</body>
-</html>
+    ├── home    &lt;子卷，挂载为/home&gt;
+    └── root    &lt;子卷，挂载为/&gt;
+</code></pre><h3 id=创建子卷-1>创建子卷</h3><ul><li><p>创建两个目录存放常规的subvolumes和快照用的snapshots</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>sudo mkdir /mnt/btrfs/subvolumes
+</span></span><span style=display:flex><span>sudo mkdir /mnt/btrfs/snapshots
+</span></span></code></pre></div></li><li><p>创建两个subvolume</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>sudo btrfs subvolume create /mnt/btrfs/subvolumes/root
+</span></span><span style=display:flex><span>sudo btrfs subvolume create /mnt/btrfs/subvolumes/home
+</span></span></code></pre></div></li></ul><p>可以使用<code>sudo btrfs subvolume list -p /mnt/btrfs</code>查看这两个subvolume的id</p><p>现在，可以直接访问<code>/mnt/btrfs/subvolumes/root</code>和<code>/mnt/btrfs/subvolumes/home</code>，并将之前备份的文件拷贝回来。</p><h2 id=更新grub>更新grub</h2><p>这一步需要chroot到原来的rootfs里面，我们创建一个临时目录<code>/mnt/btrfs-root</code>来准备rootfs。</p><p>挂载两个subvolume：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>sudo mount -t btrfs -o noatime,compress<span style=color:#f92672>=</span>zstd,subvol<span style=color:#f92672>=</span>/subvolumes/root /dev/sdb4 /mnt/btrfs-root
+</span></span><span style=display:flex><span>sudo mount -t btrfs -o noatime,compress<span style=color:#f92672>=</span>zstd,subvol<span style=color:#f92672>=</span>/subvolumes/home /dev/sdb4 /mnt/btrfs-root/home
+</span></span></code></pre></div><p>mount bind必要的文件系统，然后chroot。（如果你的<code>/boot</code>目录在别的分区的，那么还需要额外挂载<code>/boot</code>）</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>cd /mnt/btrfs-root
+</span></span><span style=display:flex><span>sudo mount -o bind /dev  dev
+</span></span><span style=display:flex><span>sudo mount -o bind /sys sys
+</span></span><span style=display:flex><span>sudo mount -o bind /proc proc
+</span></span><span style=display:flex><span>sudo chroot .
+</span></span></code></pre></div><p>更新grub配置</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>grub-mkconfig -o /boot/grub/grub.cfg
+</span></span></code></pre></div><h2 id=更新etcfstab>更新/etc/fstab</h2><p>注意指定参数中的<code>compress</code>和<code>subvol</code>选项</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>UUID<span style=color:#f92672>=</span>7f208f70-fee3-4bbe-8f3f-c1e95dd25afe  /  btrfs  defaults,noatime,compress<span style=color:#f92672>=</span>zstd,subvol<span style=color:#f92672>=</span>/subvolumes/root <span style=color:#ae81ff>0</span> <span style=color:#ae81ff>1</span>
+</span></span><span style=display:flex><span>UUID<span style=color:#f92672>=</span>7f208f70-fee3-4bbe-8f3f-c1e95dd25afe  /home  btrfs  defaults,noatime,compress<span style=color:#f92672>=</span>zstd,subvol<span style=color:#f92672>=</span>/subvolumes/home <span style=color:#ae81ff>0</span> <span style=color:#ae81ff>0</span>
+</span></span></code></pre></div><h2 id=关于压缩>关于压缩</h2><p>如果你像我一样在恢复文件之前忘了加压缩选项，可以使用下面的命令分别压缩每个子卷里的现存文件</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>sudo btrfs filesystem defragment -r -v -czstd /mnt/btrfs/subvolumes/root
+</span></span><span style=display:flex><span>sudo btrfs filesystem defragment -r -v -czstd /mnt/btrfs/subvolumes/home
+</span></span></code></pre></div><p>可以使用<a href=https://github.com/kilobyte/compsize>compsize</a>这个工具计算压缩率。我这里顺便测试了一下压缩效果，与<a href=https://wiki.gnome.org/Apps/Disks>gnome-disks</a>的结果进行比较。其中gnome-disks显示的是文件系统已用空间，compsize的统计方式似乎不太一样：</p><table><thead><tr><th>压缩范围\统计方法</th><th>gnome-disks</th><th>compsize</th></tr></thead><tbody><tr><td>压缩前</td><td>140G</td><td>128G（100%）</td></tr><tr><td>压缩/subvolumes/root子卷</td><td>100G</td><td>89G（69%）</td></tr><tr><td>压缩/subvolumes/root和/subvolumes/home子卷</td><td>66G</td><td>56G（44%）</td></tr></tbody></table><p><img src=/images/blog/btrfs_2.png alt=同时压缩/和/home子卷的结果></p><h2 id=关于坑>关于坑</h2><p>整体来看其实是没有什么坑的（其实遇到的坑也是自己挖的</p><p>就写一下迁移过程中遇到的一些问题8：</p><ol><li>备份：因为是在LiveCD里操作的，本来备份文件的时候打算使用TimeShift的rsync模式，但是TimeShift无法在LiveCD里面使用，不知道开发者是怎么考虑的。最后换用了LuckyBackup（虽然都是rsync但是就是懒得自己写命令hhh）</li><li>btrfs-convert：这工具可以原地把ext4转换为btrfs，但是似乎受到空闲块数量的限制，我测试了几次发现在不同的地方报failed，即使整个ext4文件系统只使用大概50%的空间。最后索性直接格式化成btrfs再拷贝回去了。</li><li>grub unknown filesystem：改完之后grub直接进到resuce救援模式，发现无法识别btrfs分区。这个其实是我之前乱改了EFI分区里的内容导致的，其中的grub efi文件是很旧的版本，不认识btrfs，也就没法加载<code>/boot/grub/x86_64-efi/</code>里的grub模块文件，导致救援模式里基本上啥也不能干。最后是把EFI分区也挂载上，在chroot里使用<code>grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=GRUB</code>之类的命令重新生成了一下EFI分区中的<code>grubx64.efi</code></li></ol></main><div id=comments><hr><script src=https://utteranc.es/client.js repo=KB5201314/KB5201314.github.io issue-term=pathname label='💬 comments 💬' theme=github-light crossorigin=anonymous async></script></div><footer><hr>© imlk 2017 &ndash; 2021 | <a href=https://blog.imlk.top>imlk's blog</a> | <a href=https://github.com/KB5201314/>Github</a> | <a href=mailto:me@imlk.top>Email</a> | <a href=https://beian.miit.gov.cn/>京ICP备 - 2020042968号</a></footer></body></html>
