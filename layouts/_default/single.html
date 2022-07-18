@@ -5,8 +5,11 @@
     <h1><span class="title">{{ .Title | markdownify }}</span></h1>
     {{ if (gt .Params.date 0) }}
     <span>
-        <span class="date">{{ .Date.Format "2006-01-02" }}</span>
-        |
+        <span class="date"> {{ .Date.Format "2006-01-02" }}</span>
+        {{ if (ne .Date .Lastmod) }}
+        <span class="date"> (更新于{{ .Lastmod.Format "2006-01-02" }})</span>
+        {{ end }}
+        /
         <!-- <span>{{.WordCount}} words</span> | -->
         <span class="cats">
             {{ range $index, $cat := .GetTerms "categories" }}
@@ -15,7 +18,7 @@
             {{ end }}
         </span>
         {{ if len (.GetTerms "tags") }}
-        |
+        /
         <span class="tags">
             {{ range $index, $cat := .GetTerms "tags" }}
             <a href='{{ .Permalink }}'>#{{ .LinkTitle }}</a>

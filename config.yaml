@@ -20,6 +20,8 @@ taxonomies:
 disableKinds:
   - taxonomyTerm
 
+enableGitInfo: true
+
 menu:
   main:
     - name: Home
