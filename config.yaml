@@ -24,21 +24,24 @@ enableGitInfo: true
 
 menu:
   main:
-    - name: Home
+    - name: 🏠Home
       url: ""
       weight: 1
-    - name: About
+    - name: 👋About
       url: "about/"
       weight: 2
-    - name: Archives
+    - name: 📜Archives
       url: "archives/"
       weight: 3
-    - name: Friends
+    - name: 🔗Friends
       url: "friends/"
       weight: 5
-    - name: Subscribe
-      url: "index.xml"
+    - name: 🕸️DN42
+      url: "dn42/"
       weight: 6
+    - name: 📢Subscribe
+      url: "index.xml"
+      weight: 7
     # TODO: consider add a page to show my toy boxes here??
     # TODO: add a page for guests to leave some message. may be encrypted message can be supported
 

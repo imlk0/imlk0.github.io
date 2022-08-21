@@ -14,8 +14,9 @@ BUPT~~本科生~~毕业了、酷安应用开发者（~~做Android的~~，曾经�
 ---
 
 👨‍💻 Github：[@KB5201314](https://github.com/KB5201314/)\
-🕸️ 博客：[https://blog.imlk.top](https://blog.imlk.top) （就是本站啦）\
+✒️ 博客：[https://blog.imlk.top](https://blog.imlk.top) （就是本站啦）\
 📫 Email：[me@imlk.top](mailto:me@imlk.top)\
 💬 Telegram：[@imlk_me](https://t.me/imlk_me)\
+🕸️ DN42：[`AS4242421742`](/dn42)\
 🔑 PGP指纹: [`8CD1 2F55 ED0A D23B 3BDA A2A3 1091 3B0E A1D2 6DA8`](https://keyserver.ubuntu.com/pks/lookup?op=get&search=0x8cd12f55ed0ad23b3bdaa2a310913b0ea1d26da8)
 
