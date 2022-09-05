@@ -2,9 +2,11 @@
 title: "Proxmox服务器的Grafana看板简易配置"
 date: 2022-09-04T14:36:09+08:00
 categories:
-  - 未分类
+  - Misc
 tags:
-  - 默认TAG
+  - Proxmox
+  - Grafana
+  - InfluxDB
 draft: false
 ---
 
