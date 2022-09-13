@@ -55,4 +55,8 @@ aliases: /links/
 - 天真的小窝  
     [http://bin.zmide.com](http://bin.zmide.com)
 
+- pxxiiiiii  
+    睡一张床的好姐妹 / 病友  
+    [http://weibo.com/pcccc1126](http://weibo.com/pcccc1126)
+
 
