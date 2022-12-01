@@ -1,9 +1,11 @@
-<!doctype html><html lang=zh-cn><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><title>自制x86玩具操作系统 week8 | imlk's blog</title><link rel=stylesheet href=/css/style.css><link rel=stylesheet href=/css/fonts.css><link rel=preconnect href=https://fonts.googleapis.com><link rel=preconnect href=https://fonts.gstatic.com crossorigin><link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&display=swap" rel=stylesheet></head><body><header class=header><a class=logo href=/>imlk's Blog</a><nav><ul class=menu><li><a href=/>🏠Home</a></li><li><a href=/about/>👋About</a></li><li><a href=/archives/>📜Archives</a></li><li><a href=/friends/>🔗Friends</a></li><li><a href=/dn42/>🕸️DN42</a></li><li><a href=/index.xml>📢Subscribe</a></li></ul></nav></header><hr><div class=article-meta><h1><span class=title>自制x86玩具操作系统 week8</span></h1><span><span class=date>2019-05-01</span>
+<!doctype html><html lang=zh-cn><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><title>自制x86玩具操作系统 week8 | imlk's blog</title><link rel=stylesheet href=/css/style.css><link rel=stylesheet href=/css/fonts.css><link rel=preconnect href=https://fonts.googleapis.com><link rel=preconnect href=https://fonts.gstatic.com crossorigin><link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&display=swap" rel=stylesheet></head><body><header class=header><a class=logo href=/>imlk's Blog</a><nav><ul class=menu><li><a href=/>🏠Home</a></li><li><a href=/about/>👋About</a></li><li><a href=/archives/>📜Archives</a></li><li><a href=/friends/>🔗Friends</a></li><li><a href=/dn42/>🕸️DN42</a></li><li><a href=/index.xml>📢Subscribe</a></li></ul></nav></header><hr><div class=article-meta><h1><span class=title>自制x86玩具操作系统 week8</span></h1><span><span class=date>📅 2019-05-01</span>
 <span class=date>(更新于2021-10-10)</span>
 /
-<span class=cats><a href=https://blog.imlk.top/categories/osdev/>OSDev</a></span>
+<span class=cats>📚
+<a href=https://blog.imlk.top/categories/osdev/>OSDev</a></span>
 /
-<span class=tags><a href=https://blog.imlk.top/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/>#操作系统</a>
+<span class=tags>🏷️
+<a href=https://blog.imlk.top/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/>#操作系统</a>
 <a href=https://blog.imlk.top/tags/diy/>#DIY</a></span></span><br></div><main><h2 id=day-0x17>DAY 0x17</h2><h4 id=关于链接器obj2bim>关于链接器obj2bim</h4><p>翻看源码发现，obj2bim其实就是个链接器，依据一个.rul规则文件来生成链接后的二进制文件。</p><h5 id=输入文件>输入文件</h5><p>它接受的输入文件有obj和lib这两种文件，其中lib文件也有两种，一种是标准的pe文件，有一种是作者自定义的格式，在链接前会decode成标准的lib文件，然后从lib文件解压出obj文件来进行处理，所以这个链接器主要进行的是对obj文件的处理。
 例如haribote / golibc.lib就是作者自定义的一种格式的文件，它原本是一个标准的win下的lib文件，编写工具将其转换出来后发现里头并没有什么有意思的东西，只是几个字符串相关的处理函数的实现。</p><h5 id=处理obj>处理obj</h5><p>处理过程在<code>loadobj</code>函数中，主要是用一个全局的数组存储所有的obj文件对象。</p><ul><li>数据拷贝
 对于每个obj，将各个段依次解析，拷贝其中的数据到一片开辟的空间中。</li><li>重定位表处理

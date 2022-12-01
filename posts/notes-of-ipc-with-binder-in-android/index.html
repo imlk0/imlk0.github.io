@@ -1,9 +1,11 @@
-<!doctype html><html lang=zh-cn><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><title>理解Android中Service的Binder跨进程通信机制 | imlk's blog</title><link rel=stylesheet href=/css/style.css><link rel=stylesheet href=/css/fonts.css><link rel=preconnect href=https://fonts.googleapis.com><link rel=preconnect href=https://fonts.gstatic.com crossorigin><link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&display=swap" rel=stylesheet></head><body><header class=header><a class=logo href=/>imlk's Blog</a><nav><ul class=menu><li><a href=/>🏠Home</a></li><li><a href=/about/>👋About</a></li><li><a href=/archives/>📜Archives</a></li><li><a href=/friends/>🔗Friends</a></li><li><a href=/dn42/>🕸️DN42</a></li><li><a href=/index.xml>📢Subscribe</a></li></ul></nav></header><hr><div class=article-meta><h1><span class=title>理解Android中Service的Binder跨进程通信机制</span></h1><span><span class=date>2018-04-11</span>
+<!doctype html><html lang=zh-cn><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><title>理解Android中Service的Binder跨进程通信机制 | imlk's blog</title><link rel=stylesheet href=/css/style.css><link rel=stylesheet href=/css/fonts.css><link rel=preconnect href=https://fonts.googleapis.com><link rel=preconnect href=https://fonts.gstatic.com crossorigin><link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&display=swap" rel=stylesheet></head><body><header class=header><a class=logo href=/>imlk's Blog</a><nav><ul class=menu><li><a href=/>🏠Home</a></li><li><a href=/about/>👋About</a></li><li><a href=/archives/>📜Archives</a></li><li><a href=/friends/>🔗Friends</a></li><li><a href=/dn42/>🕸️DN42</a></li><li><a href=/index.xml>📢Subscribe</a></li></ul></nav></header><hr><div class=article-meta><h1><span class=title>理解Android中Service的Binder跨进程通信机制</span></h1><span><span class=date>📅 2018-04-11</span>
 <span class=date>(更新于2021-10-10)</span>
 /
-<span class=cats><a href=https://blog.imlk.top/categories/android/>Android</a></span>
+<span class=cats>📚
+<a href=https://blog.imlk.top/categories/android/>Android</a></span>
 /
-<span class=tags><a href=https://blog.imlk.top/tags/android/>#Android</a>
+<span class=tags>🏷️
+<a href=https://blog.imlk.top/tags/android/>#Android</a>
 <a href=https://blog.imlk.top/tags/binder/>#Binder</a>
 <a href=https://blog.imlk.top/tags/ipc/>#IPC</a>
 <a href=https://blog.imlk.top/tags/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/>#读书笔记</a></span></span><br></div><main><p>今天拜读了姜维大神的<code>Android系统篇之----Binder机制和远程服务调用机制分析</code></p><p><a href=https://blog.csdn.net/jiangwei0910410003/article/details/52467919>Android系统篇之&mdash;-Binder机制和远程服务调用机制分析</a></p><p>读完有一个疑惑，就是

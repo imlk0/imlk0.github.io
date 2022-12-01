@@ -1,9 +1,11 @@
-<!doctype html><html lang=zh-cn><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><title>HDU 1325 1272 并查集判断有向图和无向图是否构成一棵树型 | imlk's blog</title><link rel=stylesheet href=/css/style.css><link rel=stylesheet href=/css/fonts.css><link rel=preconnect href=https://fonts.googleapis.com><link rel=preconnect href=https://fonts.gstatic.com crossorigin><link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&display=swap" rel=stylesheet></head><body><header class=header><a class=logo href=/>imlk's Blog</a><nav><ul class=menu><li><a href=/>🏠Home</a></li><li><a href=/about/>👋About</a></li><li><a href=/archives/>📜Archives</a></li><li><a href=/friends/>🔗Friends</a></li><li><a href=/dn42/>🕸️DN42</a></li><li><a href=/index.xml>📢Subscribe</a></li></ul></nav></header><hr><div class=article-meta><h1><span class=title>HDU 1325 1272 并查集判断有向图和无向图是否构成一棵树型</span></h1><span><span class=date>2018-02-09</span>
+<!doctype html><html lang=zh-cn><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><title>HDU 1325 1272 并查集判断有向图和无向图是否构成一棵树型 | imlk's blog</title><link rel=stylesheet href=/css/style.css><link rel=stylesheet href=/css/fonts.css><link rel=preconnect href=https://fonts.googleapis.com><link rel=preconnect href=https://fonts.gstatic.com crossorigin><link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&display=swap" rel=stylesheet></head><body><header class=header><a class=logo href=/>imlk's Blog</a><nav><ul class=menu><li><a href=/>🏠Home</a></li><li><a href=/about/>👋About</a></li><li><a href=/archives/>📜Archives</a></li><li><a href=/friends/>🔗Friends</a></li><li><a href=/dn42/>🕸️DN42</a></li><li><a href=/index.xml>📢Subscribe</a></li></ul></nav></header><hr><div class=article-meta><h1><span class=title>HDU 1325 1272 并查集判断有向图和无向图是否构成一棵树型</span></h1><span><span class=date>📅 2018-02-09</span>
 <span class=date>(更新于2021-10-10)</span>
 /
-<span class=cats><a href=https://blog.imlk.top/categories/algorithm/>Algorithm</a></span>
+<span class=cats>📚
+<a href=https://blog.imlk.top/categories/algorithm/>Algorithm</a></span>
 /
-<span class=tags><a href=https://blog.imlk.top/tags/hdu/>#HDU</a>
+<span class=tags>🏷️
+<a href=https://blog.imlk.top/tags/hdu/>#HDU</a>
 <a href=https://blog.imlk.top/tags/%E5%9B%BE/>#图</a></span></span><br></div><main><p><a href="http://acm.hdu.edu.cn/showproblem.php?pid=1325">HDU 1325</a>
 <a href="http://acm.hdu.edu.cn/showproblem.php?pid=1272">HDU 1272</a></p><p>HDU 1325是有向图，给定某个节点是另一个元素的父节点
 HDU 1272是无向图，将两个节点连接起来</p><p>共同点：判断是否成环，判断是树木还是森林</p><p>区别：有向图可能出现多个箭头指向同一个节点的情况（即一个节点多个父节点）

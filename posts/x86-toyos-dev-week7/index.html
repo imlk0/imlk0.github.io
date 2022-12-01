@@ -1,9 +1,11 @@
-<!doctype html><html lang=zh-cn><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><title>自制x86玩具操作系统 week7 | imlk's blog</title><link rel=stylesheet href=/css/style.css><link rel=stylesheet href=/css/fonts.css><link rel=preconnect href=https://fonts.googleapis.com><link rel=preconnect href=https://fonts.gstatic.com crossorigin><link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&display=swap" rel=stylesheet></head><body><header class=header><a class=logo href=/>imlk's Blog</a><nav><ul class=menu><li><a href=/>🏠Home</a></li><li><a href=/about/>👋About</a></li><li><a href=/archives/>📜Archives</a></li><li><a href=/friends/>🔗Friends</a></li><li><a href=/dn42/>🕸️DN42</a></li><li><a href=/index.xml>📢Subscribe</a></li></ul></nav></header><hr><div class=article-meta><h1><span class=title>自制x86玩具操作系统 week7</span></h1><span><span class=date>2019-05-01</span>
+<!doctype html><html lang=zh-cn><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><title>自制x86玩具操作系统 week7 | imlk's blog</title><link rel=stylesheet href=/css/style.css><link rel=stylesheet href=/css/fonts.css><link rel=preconnect href=https://fonts.googleapis.com><link rel=preconnect href=https://fonts.gstatic.com crossorigin><link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&display=swap" rel=stylesheet></head><body><header class=header><a class=logo href=/>imlk's Blog</a><nav><ul class=menu><li><a href=/>🏠Home</a></li><li><a href=/about/>👋About</a></li><li><a href=/archives/>📜Archives</a></li><li><a href=/friends/>🔗Friends</a></li><li><a href=/dn42/>🕸️DN42</a></li><li><a href=/index.xml>📢Subscribe</a></li></ul></nav></header><hr><div class=article-meta><h1><span class=title>自制x86玩具操作系统 week7</span></h1><span><span class=date>📅 2019-05-01</span>
 <span class=date>(更新于2021-10-10)</span>
 /
-<span class=cats><a href=https://blog.imlk.top/categories/osdev/>OSDev</a></span>
+<span class=cats>📚
+<a href=https://blog.imlk.top/categories/osdev/>OSDev</a></span>
 /
-<span class=tags><a href=https://blog.imlk.top/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/>#操作系统</a>
+<span class=tags>🏷️
+<a href=https://blog.imlk.top/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/>#操作系统</a>
 <a href=https://blog.imlk.top/tags/diy/>#DIY</a></span></span><br></div><main><h2 id=day-0x12>DAY 0x12</h2><h4 id=让新进程执行对象的成员函数>让新进程执行对象的成员函数</h4><p>今天回看之前的内容，发现命令行窗口那一块比较乱，于是乎建了一个<code>Console</code>类，把和控制台有关的比如图层、<code>Fifo</code>队列等打包起来，然后把进程的执行函数<code>console_task</code>改成无参的成员函数，但是要知道它其实是隐式传入了一个<code>this</code>指针，所以在设置<code>eip</code>的时候可不是仅仅传入成员函数指针那么容易。</p><p>c++的编译器在调用函数时传入this指针时的方法称为<code>__thiscall</code>调用约定，有两种实现，一种是通过<code>ecx</code>寄存器传参，另一种是压栈为第一个参数传参。
 要确定当前编译器使用的是哪种<code>__thiscall</code>调用约定，直接拿个例子编译一下看看就好了。</p><p>先拿了一个直接用对象去调用成员函数的例子来观察，
 <img src=/images/blog/os/9.png alt=9.png>

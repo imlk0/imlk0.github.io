@@ -1,9 +1,11 @@
-<!doctype html><html lang=zh-cn><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><title>遇到scanf的一个小误区 | imlk's blog</title><link rel=stylesheet href=/css/style.css><link rel=stylesheet href=/css/fonts.css><link rel=preconnect href=https://fonts.googleapis.com><link rel=preconnect href=https://fonts.gstatic.com crossorigin><link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&display=swap" rel=stylesheet></head><body><header class=header><a class=logo href=/>imlk's Blog</a><nav><ul class=menu><li><a href=/>🏠Home</a></li><li><a href=/about/>👋About</a></li><li><a href=/archives/>📜Archives</a></li><li><a href=/friends/>🔗Friends</a></li><li><a href=/dn42/>🕸️DN42</a></li><li><a href=/index.xml>📢Subscribe</a></li></ul></nav></header><hr><div class=article-meta><h1><span class=title>遇到scanf的一个小误区</span></h1><span><span class=date>2017-12-06</span>
+<!doctype html><html lang=zh-cn><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><title>遇到scanf的一个小误区 | imlk's blog</title><link rel=stylesheet href=/css/style.css><link rel=stylesheet href=/css/fonts.css><link rel=preconnect href=https://fonts.googleapis.com><link rel=preconnect href=https://fonts.gstatic.com crossorigin><link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&display=swap" rel=stylesheet></head><body><header class=header><a class=logo href=/>imlk's Blog</a><nav><ul class=menu><li><a href=/>🏠Home</a></li><li><a href=/about/>👋About</a></li><li><a href=/archives/>📜Archives</a></li><li><a href=/friends/>🔗Friends</a></li><li><a href=/dn42/>🕸️DN42</a></li><li><a href=/index.xml>📢Subscribe</a></li></ul></nav></header><hr><div class=article-meta><h1><span class=title>遇到scanf的一个小误区</span></h1><span><span class=date>📅 2017-12-06</span>
 <span class=date>(更新于2021-10-10)</span>
 /
-<span class=cats><a href=https://blog.imlk.top/categories/c/c++/>C/C++</a></span>
+<span class=cats>📚
+<a href=https://blog.imlk.top/categories/c/c++/>C/C++</a></span>
 /
-<span class=tags><a href=https://blog.imlk.top/tags/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/>#编程语言</a>
+<span class=tags>🏷️
+<a href=https://blog.imlk.top/tags/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/>#编程语言</a>
 <a href=https://blog.imlk.top/tags/c/c++/>#C/C++</a></span></span><br></div><main><pre tabindex=0><code>#include &lt;stdio.h&gt;
 
 int main(){
