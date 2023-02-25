@@ -10,7 +10,7 @@
 <a href=https://blog.imlk.top/tags/%E6%A0%91%E4%B8%8A%E6%9C%80%E7%9F%AD%E8%B7%9D%E7%A6%BB/>#树上最短距离</a>
 <a href=https://blog.imlk.top/tags/lca/>#LCA</a>
 <a href=https://blog.imlk.top/tags/%E6%A0%91/>#树</a>
-<a href=https://blog.imlk.top/tags/%E7%BA%BF%E6%AE%B5%E6%A0%91/>#线段树</a></span></span><br></div><main><p>HDU 2586 How far away ？——树上节点最短距离，LCA， 双亲表示法+暴力从下至上追溯，孩子链表示法+（Tarjan 或 欧拉环游RMQ+（ST 或 SegmentTree））</p><p><a href="http://acm.hdu.edu.cn/showproblem.php?pid=2586">http://acm.hdu.edu.cn/showproblem.php?pid=2586</a></p><h2 id=四种解法>四种解法：</h2><p>- 双亲表示法+暴力从下至上追溯
+<a href=https://blog.imlk.top/tags/%E7%BA%BF%E6%AE%B5%E6%A0%91/>#线段树</a></span></span><br></div><main class=post-content><p>HDU 2586 How far away ？——树上节点最短距离，LCA， 双亲表示法+暴力从下至上追溯，孩子链表示法+（Tarjan 或 欧拉环游RMQ+（ST 或 SegmentTree））</p><p><a href="http://acm.hdu.edu.cn/showproblem.php?pid=2586">http://acm.hdu.edu.cn/showproblem.php?pid=2586</a></p><h2 id=四种解法>四种解法：</h2><p>- 双亲表示法+暴力从下至上追溯
 - 孩子链表示法+Tarjan
 - 孩子链表示法+欧拉环游RMQ+ST
 - 孩子链表示法+欧拉环游RMQ+SegmentTree</p><h2 id=对于建树的问题要解决父节点和子节点的问题>对于建树的问题，要解决父节点和子节点的问题：</h2><p>- 第一种解法中，双亲表示法，用一个一维数组houses来储存所有节点，houses[x].fa表示该节点的父节点，当两个子树被合并造成冲突时，将其中一棵树倒置</p><p>如：</p><blockquote><p>1 2
@@ -702,4 +702,4 @@ int main(int argc, char const *argv[])
 
 	return 0;
 }
-</code></pre></main><div id=comments><hr><script src=https://utteranc.es/client.js repo=KB5201314/KB5201314.github.io issue-term=pathname label='💬 comments 💬' theme=github-light crossorigin=anonymous async></script></div><footer><hr>© imlk 2017 &ndash; 2023 | <a href=https://blog.imlk.top>imlk's blog</a> | <a href=https://github.com/KB5201314/>Github</a> | <a href=mailto:me@imlk.top>Email</a> | <a href=https://beian.miit.gov.cn/>京ICP备 - 2020042968号</a></footer></body></html>
+</code></pre></main><div id=comments><hr><script src=https://utteranc.es/client.js repo=KB5201314/KB5201314.github.io issue-term=pathname label='💬 comments 💬' theme=github-light crossorigin=anonymous async></script></div><footer class=footer><hr>© imlk 2017 &ndash; 2023 | <a href=https://blog.imlk.top>imlk's blog</a> | <a href=https://github.com/KB5201314/>Github</a> | <a href=mailto:me@imlk.top>Email</a> | <a href=https://beian.miit.gov.cn/>京ICP备 - 2020042968号</a></footer></body></html>

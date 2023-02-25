@@ -6,7 +6,7 @@
 /
 <span class=tags>🏷️
 <a href=https://blog.imlk.top/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/>#操作系统</a>
-<a href=https://blog.imlk.top/tags/diy/>#DIY</a></span></span><br></div><main><h2 id=day-0x17>DAY 0x17</h2><h4 id=关于链接器obj2bim>关于链接器obj2bim</h4><p>翻看源码发现，obj2bim其实就是个链接器，依据一个.rul规则文件来生成链接后的二进制文件。</p><h5 id=输入文件>输入文件</h5><p>它接受的输入文件有obj和lib这两种文件，其中lib文件也有两种，一种是标准的pe文件，有一种是作者自定义的格式，在链接前会decode成标准的lib文件，然后从lib文件解压出obj文件来进行处理，所以这个链接器主要进行的是对obj文件的处理。
+<a href=https://blog.imlk.top/tags/diy/>#DIY</a></span></span><br></div><main class=post-content><h2 id=day-0x17>DAY 0x17</h2><h4 id=关于链接器obj2bim>关于链接器obj2bim</h4><p>翻看源码发现，obj2bim其实就是个链接器，依据一个.rul规则文件来生成链接后的二进制文件。</p><h5 id=输入文件>输入文件</h5><p>它接受的输入文件有obj和lib这两种文件，其中lib文件也有两种，一种是标准的pe文件，有一种是作者自定义的格式，在链接前会decode成标准的lib文件，然后从lib文件解压出obj文件来进行处理，所以这个链接器主要进行的是对obj文件的处理。
 例如haribote / golibc.lib就是作者自定义的一种格式的文件，它原本是一个标准的win下的lib文件，编写工具将其转换出来后发现里头并没有什么有意思的东西，只是几个字符串相关的处理函数的实现。</p><h5 id=处理obj>处理obj</h5><p>处理过程在<code>loadobj</code>函数中，主要是用一个全局的数组存储所有的obj文件对象。</p><ul><li>数据拷贝
 对于每个obj，将各个段依次解析，拷贝其中的数据到一片开辟的空间中。</li><li>重定位表处理
 对于每个段，都开辟了一块空间存储重定位表的表项数组，然后解析每个段指向的<code>relocation table</code>重定位表，obj文件中重定位表的结构如下：</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-cpp data-lang=cpp><span style=display:flex><span><span style=color:#66d9ef>typedef</span> <span style=color:#66d9ef>struct</span> <span style=color:#a6e22e>_IMAGE_RELOCATION</span> {
@@ -79,4 +79,4 @@ obj文件中符号表项的结构如下：</li></ul><div class=highlight><pre ta
 0x00 除零异常（当试图除以0时产生）
 0x0c 栈异常
 0x0d 非法内存访问
-0x06 非法指令异常（当试图执行CPU无法理解的机器语言指令， 例如当试图执行一段数据时，有可能会产生）</p></main><div id=comments><hr><script src=https://utteranc.es/client.js repo=KB5201314/KB5201314.github.io issue-term=pathname label='💬 comments 💬' theme=github-light crossorigin=anonymous async></script></div><footer><hr>© imlk 2017 &ndash; 2023 | <a href=https://blog.imlk.top>imlk's blog</a> | <a href=https://github.com/KB5201314/>Github</a> | <a href=mailto:me@imlk.top>Email</a> | <a href=https://beian.miit.gov.cn/>京ICP备 - 2020042968号</a></footer></body></html>
+0x06 非法指令异常（当试图执行CPU无法理解的机器语言指令， 例如当试图执行一段数据时，有可能会产生）</p></main><div id=comments><hr><script src=https://utteranc.es/client.js repo=KB5201314/KB5201314.github.io issue-term=pathname label='💬 comments 💬' theme=github-light crossorigin=anonymous async></script></div><footer class=footer><hr>© imlk 2017 &ndash; 2023 | <a href=https://blog.imlk.top>imlk's blog</a> | <a href=https://github.com/KB5201314/>Github</a> | <a href=mailto:me@imlk.top>Email</a> | <a href=https://beian.miit.gov.cn/>京ICP备 - 2020042968号</a></footer></body></html>

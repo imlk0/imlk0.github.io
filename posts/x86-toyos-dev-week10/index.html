@@ -6,7 +6,7 @@
 /
 <span class=tags>🏷️
 <a href=https://blog.imlk.top/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/>#操作系统</a>
-<a href=https://blog.imlk.top/tags/diy/>#DIY</a></span></span><br></div><main><h2 id=day-0x1b>DAY 0x1B</h2><p>回顾<code>TSS</code>结构体，其中有一<code>CR3</code>字段，该字段在task切换的时候会自动赋值给<code>CR3</code>寄存器，我们可以在这里给用户程序设置额外的页目录地址（物理地址），</p><p>首先需要分配一张页表</p><p>按照内存中的结构来构造页目录结构体和页表结构体</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-cpp data-lang=cpp><span style=display:flex><span><span style=color:#66d9ef>struct</span> <span style=color:#a6e22e>PAGE_DE</span> {
+<a href=https://blog.imlk.top/tags/diy/>#DIY</a></span></span><br></div><main class=post-content><h2 id=day-0x1b>DAY 0x1B</h2><p>回顾<code>TSS</code>结构体，其中有一<code>CR3</code>字段，该字段在task切换的时候会自动赋值给<code>CR3</code>寄存器，我们可以在这里给用户程序设置额外的页目录地址（物理地址），</p><p>首先需要分配一张页表</p><p>按照内存中的结构来构造页目录结构体和页表结构体</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-cpp data-lang=cpp><span style=display:flex><span><span style=color:#66d9ef>struct</span> <span style=color:#a6e22e>PAGE_DE</span> {
 </span></span><span style=display:flex><span>	<span style=color:#66d9ef>unsigned</span> <span style=color:#66d9ef>int</span> entrys[PAGE_DE_ENTRY_NUM];
 </span></span><span style=display:flex><span>};
 </span></span><span style=display:flex><span>
@@ -70,4 +70,4 @@
 </span></span><span style=display:flex><span>}
 </span></span></code></pre></div><p><img src=/images/blog/os/22.png alt>
 bochs检测到了页错误PE
-<img src=/images/blog/os/23.png alt></p><p>至此，不考虑虚拟内存的用户态分页实现完成</p></main><div id=comments><hr><script src=https://utteranc.es/client.js repo=KB5201314/KB5201314.github.io issue-term=pathname label='💬 comments 💬' theme=github-light crossorigin=anonymous async></script></div><footer><hr>© imlk 2017 &ndash; 2023 | <a href=https://blog.imlk.top>imlk's blog</a> | <a href=https://github.com/KB5201314/>Github</a> | <a href=mailto:me@imlk.top>Email</a> | <a href=https://beian.miit.gov.cn/>京ICP备 - 2020042968号</a></footer></body></html>
+<img src=/images/blog/os/23.png alt></p><p>至此，不考虑虚拟内存的用户态分页实现完成</p></main><div id=comments><hr><script src=https://utteranc.es/client.js repo=KB5201314/KB5201314.github.io issue-term=pathname label='💬 comments 💬' theme=github-light crossorigin=anonymous async></script></div><footer class=footer><hr>© imlk 2017 &ndash; 2023 | <a href=https://blog.imlk.top>imlk's blog</a> | <a href=https://github.com/KB5201314/>Github</a> | <a href=mailto:me@imlk.top>Email</a> | <a href=https://beian.miit.gov.cn/>京ICP备 - 2020042968号</a></footer></body></html>
