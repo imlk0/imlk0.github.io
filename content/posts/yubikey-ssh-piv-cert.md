@@ -9,6 +9,8 @@ tags:
 draft: false
 ---
 
+> 更新于[Github 更换了它RSA ssh host key](https://github.blog/2023-03-23-we-updated-our-rsa-ssh-host-key/)之时，对ssh攻击的假设部分的讨论做了修改。
+
 前段时间抽空给自己的“Homelab”服务器加了内存，能开更多的VM & Conteiner了。虽然用Tailscale和自建Headscale/Derper服务的方式组了内网，访问服务器上的服务的时候也都是走的内网，一定程度上通信链路上是安全了。但是目前还是一个ssh key到处用，如果笔记本失窃/密钥被读走了，还是很危险的，(说起来之前用Termius就是自动把`~/.ssh/`里的所有key都上云了)。所以这次借着升级配置的这个机会，把手里的Yubikey的PIV功能给用上，让ssh server能够用Yubikey里存的私钥来验证ssh client。
 
 # 证书生成与导出
@@ -101,6 +103,8 @@ Host *
 
 # 闲聊
 
+## ssh server的TOFU
+
 其实不管是普通的ssh密钥文件还是这篇文章中提到的PIV，都是对ssh client侧的验证。那么对ssh server侧的验证又如何呢？
 
 在ssh client第一次连接到一个新的ssh server时，会显示server侧公钥的`fingerprint`，并且问你：
@@ -111,9 +115,77 @@ Are you sure you want to continue connecting (yes/no/[fingerprint])?
 
 所以（在最常见的配置情况下）对ssh server的验证关键在第一次连接时。ssh client把责任交给了用户，它假设你能够根据额外的可信信息源来确认这个fingerprint（因为第一次连接的时候没有信任锚，之后的信任锚在`~/.ssh/known_hosts`里）。
 
-但是在大多数情况下，我们忽略了这一步，直接yes掉。假设一个足够强大的攻击者（比如所在单位的网络管理员、运营商级、~~甚至country级~~的劫持），能够在你第一次连接这个服务器时就篡改你的数据包做MITM攻击，并且对于之后的连接都能够劫持并篡改（防止因为fingerprint变动而被受害者察觉到MITM的存在），那如果你没有手动和server上的fingerprint比对，至始至终你的ssh会话都是透明的。
+但是在大多数情况下，我们忽略了这一步，直接yes掉。
 
-到这里，是不是感觉ssh其实也没有那么的安全，毕竟你大概率也没有真正比对过你~~海外的某台VPS~~服务器上的fingerprint对吧（笑）。如果你想现在做一下验证，[这篇文章](https://www.phcomp.co.uk/Tutorials/Unix-And-Linux/ssh-check-server-fingerprint.html)里提到了在server端计算fingerprint的几个命令，你可以用它来和ssh连接时的指纹进行比对。最好经过可信的方式登陆到服务器并运行这些命令，如经过云服务商的VNC控制台/更为可信的网络环境/隧道/`ssh -J`等，以防御对终端输出内容进行匹配替换的攻击者（不过真的有人会这么做吗）。
+## 不检查fingerprint，有什么问题
+
+假设一个足够强大的攻击者（比如所在单位的网络管理员、运营商级、~~甚至country级~~的劫持），能够在你第一次连接这个服务器时就劫持你的数据包，并且对于之后的连接都能够劫持（防止因为fingerprint变动而被受害者察觉到攻击的存在），那攻击者完全可以用一个假的ssh server（比如蜜罐）来响应。如果你没有手动和server上的fingerprint比对，你可能不知道自己其实是在ssh蜜罐里。
+
+当然这只是攻击者伪装成ssh server对client进行欺骗的情况。那如果你不巧使用的是基于密码的ssh验证方式，那就更危险了。根据[rfc4252](https://www.rfc-editor.org/rfc/rfc4252#section-8) SSH protocol中对Password Authentication的要求：
+
+```
+8.  Password Authentication Method: "password"
+
+   Password authentication uses the following packets.  Note that a
+   server MAY request that a user change the password.  All
+   implementations SHOULD support password authentication.
+
+      byte      SSH_MSG_USERAUTH_REQUEST
+      string    user name
+      string    service name
+      string    "password"
+      boolean   FALSE
+      string    plaintext password in ISO-10646 UTF-8 encoding [RFC3629]
+
+   Note that the 'plaintext password' value is encoded in ISO-10646
+   UTF-8.  It is up to the server how to interpret the password and
+   validate it against the password database.  However, if the client
+   reads the password in some other encoding (e.g., ISO 8859-1 - ISO
+   Latin1), it MUST convert the password to ISO-10646 UTF-8 before
+   transmitting, and the server MUST convert the password to the
+   encoding used on that system for passwords.
+```
+
+密码以明文形式发送到ssh server，然后具体如何验证这个密码是由server来实现的（我猜测设计成这样是和ssh需要和PAM对接有关）。这意味着如果你既没比对fingerprint，你还是用密码登陆的，那攻击者完全可以实施MITM攻击，同时欺骗client和server，你和server之间的通信在攻击者面前一览无余。
+
+这也是不推荐使用密码做ssh验证，而是推荐使用密钥做ssh验证的一个原因。
+
+说到这里，其实密码登陆，或者说是「基于口令的身份鉴别」，是能够在不传输密码明文（或者其等价物如hash值等），甚至不向窃听者泄漏和密码有关的任何信息的情况下完成的，比如EKE、DH-EKE、SRP（The Secure Remote Password Protocol）等协议。但是至少ssh的密码登录是用明文传输密码的方式做的。
+
+## 个人如何防范
+
+到这里，是不是感觉ssh其实也没有那么的安全，毕竟你大概率也没有真正比对过你~~海外的某台VPS~~服务器上的fingerprint对吧（可能活在蜜罐里也说不定呢，笑）。如果你想现在做一下验证，[这篇文章](https://www.phcomp.co.uk/Tutorials/Unix-And-Linux/ssh-check-server-fingerprint.html)里提到了在server端计算fingerprint的几个命令，你可以用它来和ssh连接时的指纹进行比对。
+
+生成服务器上的ssh公钥指纹：
+
+```sh
+cd /etc/ssh
+for file in *.pub; do
+  ssh-keygen -lf $file
+done
+```
+
+或者，你可以直接查看ssh公钥，并与`~/.ssh/known_hosts`中的公钥进行比对：
+```
+cat /etc/ssh/*.pub
+```
+
+最好经过可信的方式登陆到服务器并运行这些命令，如经过云服务商的VNC控制台/更为可信的网络环境/隧道/`ssh -J`等，以防御对终端输出内容进行匹配替换的攻击者（不过真的有人会这么做吗）。
+
+如果你想在运行ssh命令时，查看当前连接的ssh server的fingerprint，可以使用：
+
+```sh
+ssh -o VisualHostKey=yes -o FingerprintHash=sha256 <user-name>@<target-server>
+```
+
+如果你目前正在登陆一个新的server，但是你没有可信的来源来获取fingerprint，一个最简单的方法你可以使用多条链路来验证，比如另外使用`ssh -J`开一个隧道经过你的另一个服务器去连这个新的server：
+
+```sh
+ssh -J <a-known-server> <new-server>
+```
+
+你可以比对这俩连接时显示的指纹是否一样来排除本地网络环境中的攻击者。
+
 
 突然想到，整个世界好像就是在“各式各样的草台班子”和“自欺欺人般的信任”中运转的。
 
