@@ -47,7 +47,7 @@ menu:
 
 
 params:
-  footer: "&copy; imlk 2017 -- 2023 | [imlk\\'s blog](https://blog.imlk.top) | [Github](https://github.com/KB5201314/) | [Email](mailto:me@imlk.top) | [京ICP备 - 2020042968号](https://beian.miit.gov.cn/)"
+  footer: "&copy; imlk 2017 -- 2023 | [imlk\\'s blog](https://blog.imlk.top) | [Github](https://github.com/KB5201314/) | [Email](mailto:me@imlk.top) | [京ICP备2020042968号-1](https://beian.miit.gov.cn/)"
   utteranc:
     enable: true
     repo: "KB5201314/KB5201314.github.io"
