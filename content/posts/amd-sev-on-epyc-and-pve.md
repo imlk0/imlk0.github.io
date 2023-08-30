@@ -2,11 +2,12 @@
 title: "探究AMD SEV/SEV-ES远程证明过程——在EPYC 7302洋垃圾服务器上"
 date: 2023-04-14T13:00:31+08:00
 categories:
-  - Security
+  - TEE
 tags:
   - SEV
   - KVM
   - Homelab
+  - Security
 draft: false
 ---
 
