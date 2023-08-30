@@ -1,0 +1,76 @@
+<!doctype html><html lang=zh-cn><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><title>Samsung Electronic 泄漏源码内容分析 | imlk's blog</title><link rel=stylesheet href=/css/style.css><link rel=stylesheet href=/css/fonts.css><link rel=preconnect href=https://fonts.googleapis.com><link rel=preconnect href=https://fonts.gstatic.com crossorigin><link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&display=swap" rel=stylesheet></head><body><header class=header><a class=logo href=/>imlk's Blog</a><nav><ul class=menu><li><a href=/>🏠Home</a></li><li><a href=/about/>👋About</a></li><li><a href=/archives/>📜Archives</a></li><li><a href=/friends/>🔗Friends</a></li><li><a href=/dn42/>🕸️DN42</a></li><li><a href=/index.xml>📢Subscribe</a></li></ul></nav></header><hr><div class=article-meta><h1><span class=title>Samsung Electronic 泄漏源码内容分析</span></h1><span><span class=date>📅 2022-03-12</span>
+<span class=date>(更新于2023-08-30)</span>
+/
+<span class=cats>📚
+<a href=https://blog.imlk.top/categories/tee/>TEE</a></span>
+/
+<span class=tags>🏷️
+<a href=https://blog.imlk.top/tags/trustzone/>#TrustZone</a>
+<a href=https://blog.imlk.top/tags/security/>#Security</a>
+<a href=https://blog.imlk.top/tags/leak/>#Leak</a></span></span><br></div><main class=post-content><h1 id=samsung-electronic---part-1>Samsung Electronic - part 1</h1><h2 id=bootloader>BootLoader</h2><p>三星系列手机的bootloader，带源码</p><p><img src=/images/Samsung%20Electronic%20-%20%E5%86%85%E5%AE%B9%E5%88%86%E6%9E%90%20f8087a6afc024bd99475b1908c9f07a3/Untitled.png alt=Untitled></p><h2 id=trustedapps>TrustedAPPs</h2><ul><li><p>带源码</p><ul><li><p>一套源码适配三种TA系统</p><ul><li>QSEE - 高通</li><li>Kinibi - Trustonic （也称T-Base或Mobicore，主要用于Mediatek和ExynosSoC）</li><li>teegris - 三星</li></ul><p><img src=/images/Samsung%20Electronic%20-%20%E5%86%85%E5%AE%B9%E5%88%86%E6%9E%90%20f8087a6afc024bd99475b1908c9f07a3/Untitled%201.png alt=Untitled></p></li></ul></li><li><p>包含的TA和国产厂商如一加内置的TA种类很不一样，仅个别重复出现</p><ul><li><p>泄露的TA应用列表</p><p>Activation
+Arcounter
+Attestation
+AUTHHAT
+BioAuthDriver
+bksecapp
+BLGRD
+DDAR
+DeviceRootKey
+DSMS
+engmode
+esecomm
+FIVE
+GATEKEEPER
+HDCP
+HDM
+ICCC
+ifbio
+KG
+KnoxAIFac
+mPOS
+MST
+MZ
+PROCA
+QUESTAPP
+SecFace
+SecFinger
+SEM
+skeymaster_swd
+SKPM
+smartfitting
+softsim
+spi_csmc_handler
+SSU
+Tadownloader
+tigerfp
+tima_csmc_handler
+TimaDriver
+TimaKeystore
+TUI
+VaultKeeper
+Widevine
+WSM</p></li><li><p>一加6内置TA</p><p>adsp
+alipay
+cdsp
+cmnlib64
+cmnlib
+cpe_9340
+cppf
+dhsecapp
+dxhdcp2
+esesvc
+faceapp
+fpc1228
+gfp5288
+gfp9508
+gpqese
+gptest
+haventkn
+modem
+securemm
+sl7000
+slpi
+soter64
+venus
+voicepri
+widevine</p></li></ul></li></ul><h2 id=其他有价值的东西>其他有价值的东西</h2><ul><li>Samsung Electronic - part 1/PR/1716/CONFIDENTIAL/TRUSTEDAPPS/TOOLS/<ul><li><p>这里面有若干个签名工具（多是.jar文件）</p><p><img src=/images/Samsung%20Electronic%20-%20%E5%86%85%E5%AE%B9%E5%88%86%E6%9E%90%20f8087a6afc024bd99475b1908c9f07a3/Untitled%202.png alt=Untitled></p><p><img src=/images/Samsung%20Electronic%20-%20%E5%86%85%E5%AE%B9%E5%88%86%E6%9E%90%20f8087a6afc024bd99475b1908c9f07a3/Untitled%203.png alt=Untitled></p></li><li><p>以及众多makefile文件</p><p><img src=/images/Samsung%20Electronic%20-%20%E5%86%85%E5%AE%B9%E5%88%86%E6%9E%90%20f8087a6afc024bd99475b1908c9f07a3/Untitled%204.png alt=Untitled></p></li><li><p>若干个私钥</p><ul><li><p>Samsung Electronic - part 1/PR/1716/CONFIDENTIAL/TRUSTEDAPPS/TOOLS/multibuild/tools/sign-apk/</p><p><img src=/images/Samsung%20Electronic%20-%20%E5%86%85%E5%AE%B9%E5%88%86%E6%9E%90%20f8087a6afc024bd99475b1908c9f07a3/Untitled%205.png alt=Untitled></p></li><li><p><a href=https://sizeof.cat/post/samsung-electronics-leak/>https://sizeof.cat/post/samsung-electronics-leak/</a></p></li></ul></li><li><p>为不同的TEEOS实现了global platform 定义的标准API兼容层</p><ul><li><p>Samsung Electronic - part 1/PR/1716/CONFIDENTIAL/TRUSTEDAPPS/TOOLS/multibuild/source/gp-api/tee/qsee</p><p><img src=/images/Samsung%20Electronic%20-%20%E5%86%85%E5%AE%B9%E5%88%86%E6%9E%90%20f8087a6afc024bd99475b1908c9f07a3/Untitled%206.png alt=Untitled></p></li></ul></li></ul></li></ul><h1 id=samsung-electronic---part-2>Samsung Electronic - part 2</h1><p>未看</p><blockquote><p>Part 2 contains a dump of source code and related data about device security and encryption related stuffs.</p></blockquote><h1 id=samsung-electronic---part-3>Samsung Electronic - part 3</h1><blockquote><p>Part 3 contains various repositorys from Samsung Github. Including Mobile defense engineering, Samsung account backend, Samsung pass backend/frontend, and SES (Bixby, Smartthings, store, etc)</p></blockquote><p>来自私有github仓库的内容</p><ul><li><p>PartEmu源码</p><p><img src=/images/Samsung%20Electronic%20-%20%E5%86%85%E5%AE%B9%E5%88%86%E6%9E%90%20f8087a6afc024bd99475b1908c9f07a3/Untitled%207.png alt=Untitled></p><p><img src=/images/Samsung%20Electronic%20-%20%E5%86%85%E5%AE%B9%E5%88%86%E6%9E%90%20f8087a6afc024bd99475b1908c9f07a3/Untitled%208.png alt=Untitled></p></li></ul><h2 id=syzkaller>syzkaller</h2><p>两个目录下存在syzkaller</p><ul><li>Github/srpol-sruk-sec/syzkaller/（较新，Mon Jun 28 18:20:38 2021）</li><li>Github/co7-srpol-mobile-security/syzkaller/</li></ul><p>与原版存在的主要区别是:</p><ul><li>sys/models/<ul><li>此目录下放置了对多台samsung设备fuzz的配置json文件以及syzkaller描述文件，但疑似为批量生成。</li><li>其中对于qseecom的fuzz描述文件和我之前第一次产生的类似，均没有描述到TA加载过程（很难fuzz到TA加载相关的内容）</li></ul></li><li>README.md<ul><li>此文件列出了受支持的设备列表</li></ul></li></ul></main><div id=comments><hr><script src=https://utteranc.es/client.js repo=KB5201314/KB5201314.github.io issue-term=pathname label='💬 comments 💬' theme=github-light crossorigin=anonymous async></script></div><footer class=footer><hr>© imlk 2017 &ndash; 2023 | <a href=https://blog.imlk.top>imlk's blog</a> | <a href=https://github.com/KB5201314/>Github</a> | <a href=mailto:me@imlk.top>Email</a> | <a href=https://beian.miit.gov.cn/>京ICP备2020042968号-1</a></footer></body></html>

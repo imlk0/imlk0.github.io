@@ -1,0 +1,156 @@
+<!doctype html><html lang=zh-cn><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><title>以逆向的方式分析QSEE TA中的组件 | imlk's blog</title><link rel=stylesheet href=/css/style.css><link rel=stylesheet href=/css/fonts.css><link rel=preconnect href=https://fonts.googleapis.com><link rel=preconnect href=https://fonts.gstatic.com crossorigin><link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&display=swap" rel=stylesheet></head><body><header class=header><a class=logo href=/>imlk's Blog</a><nav><ul class=menu><li><a href=/>🏠Home</a></li><li><a href=/about/>👋About</a></li><li><a href=/archives/>📜Archives</a></li><li><a href=/friends/>🔗Friends</a></li><li><a href=/dn42/>🕸️DN42</a></li><li><a href=/index.xml>📢Subscribe</a></li></ul></nav></header><hr><div class=article-meta><h1><span class=title>以逆向的方式分析QSEE TA中的组件</span></h1><span><span class=date>📅 2021-11-26</span>
+<span class=date>(更新于2023-08-30)</span>
+/
+<span class=cats>📚
+<a href=https://blog.imlk.top/categories/tee/>TEE</a></span>
+/
+<span class=tags>🏷️
+<a href=https://blog.imlk.top/tags/trustzone/>#TrustZone</a>
+<a href=https://blog.imlk.top/tags/security/>#Security</a>
+<a href=https://blog.imlk.top/tags/qsee/>#QSEE</a></span></span><br></div><main class=post-content><h1 id=ta链接的组件>TA链接的组件</h1><p>位于<code>trustzone_images/core/bsp/trustzone/qsapps/applib64/</code> （64bit）</p><p><img src=/images/QSEE%EF%BC%9ATA%20e9418bc03ef745e0ab9a5990d86c812b/Untitled.png alt=Untitled></p><p>其中两个<code>.o</code>文件被静态链接到每个TA里面，而<code>.lib</code>编译到cmnlib/cmnlib64里</p><p><img src=/images/QSEE%EF%BC%9ATA%20e9418bc03ef745e0ab9a5990d86c812b/Untitled%201.png alt=Untitled></p><h2 id=tzapp_entryso>tzapp_entry.so</h2><p>被静态链接到每个TA里面</p><p><img src=/images/QSEE%EF%BC%9ATA%20e9418bc03ef745e0ab9a5990d86c812b/Untitled%202.png alt=Untitled></p><p><img src=/images/QSEE%EF%BC%9ATA%20e9418bc03ef745e0ab9a5990d86c812b/Untitled%203.png alt=Untitled></p><p>其中<code>TZAPPENTRYCODE</code>是一个特殊的section，其中包含入口点一个定义的符号<code>TZAPPENTRY</code>。</p><p>根据编译选项<code>-e TZAPPENTRY</code>，<code>TZAPPENTRY</code>是程序入口点。</p><h3 id=tzappentry>TZAPPENTRY</h3><p>是一个薄层：</p><p><img src=/images/QSEE%EF%BC%9ATA%20e9418bc03ef745e0ab9a5990d86c812b/Untitled%204.png alt=Untitled></p><p>调用<code>get_app_md(): applib64.lib/common_applib.o</code>: 指定了<code>CElfFile_invoke</code>作为<code>entry_addr</code></p><p><img src=/images/QSEE%EF%BC%9ATA%20e9418bc03ef745e0ab9a5990d86c812b/Untitled%205.png alt=Untitled></p><p><code>app_export_init_info_to_qsee(): applib64.lib/tzapp_syscall.o</code>: 将app metadata通过系统调用传给qsee</p><p><img src=/images/QSEE%EF%BC%9ATA%20e9418bc03ef745e0ab9a5990d86c812b/Untitled%206.png alt=Untitled></p><h3 id=get_cmnlib_ctx_ptr>get_cmnlib_ctx_ptr</h3><p><code>get_cmnlib_ctx_ptr()</code>: 从系统寄存器<code>[TPIDRRO_EL0](https://developer.arm.com/documentation/ddi0595/2021-03/AArch64-Registers/TPIDRRO-EL0--EL0-Read-Only-Software-Thread-ID-Register)</code>中读得cmnlib_ctx的地址</p><p><img src=/images/QSEE%EF%BC%9ATA%20e9418bc03ef745e0ab9a5990d86c812b/Untitled%207.png alt=Untitled></p><h2 id=tzapp_lib_maino><strong>tzapp_lib_main.o</strong></h2><p><img src=/images/QSEE%EF%BC%9ATA%20e9418bc03ef745e0ab9a5990d86c812b/Untitled%208.png alt=Untitled></p><h2 id=applib32lib--applib64lib>applib32.lib / applib64.lib</h2><p>是静态库文件，包含121个<code>.o</code>文件，</p><ul><li><p>已知.o文件列表</p><p>abort.o
+bn_add.o
+bn_asm.o
+bn_ctx2.o
+bn_div.o
+bn_exp.o
+bn_gcd.o
+bn_kron.o
+bn_lib.o
+bn_malloc2.o
+bn_mod2.o
+bn_mont.o
+bn_mul.o
+bn_prime.o
+bn_prime_tbl.o
+bn_print.o
+bn_rand.o
+bn_recp.o
+bn_shift.o
+bn_sqr.o
+bn_sqrt.o
+bn_word.o
+clock.o
+common_applib.o
+gpFileService.o
+gpList.o
+gpPersistentObjects.o
+gpPersistObjCommon.o
+gpPersistObjCrypto.o
+gpPersistObjData.o
+gpPersistObjFileIO.o
+gpPersistObjHandler.o
+gpPersistObjIndex.o
+gpPersistObjVersion.o
+isaac_rand.o
+kthread_shared.o
+libstd_std_scanul.o
+memchr.o
+memcmp.o
+memcpy.o
+memmove.o
+memrchr.o
+memscpy.o
+memset.o
+memsmove.o
+mink_shared_code.o
+printf.o
+prxy_ecc.o
+prxy_qsee_shim.o
+prxy_secmath.o
+prxy_secrsa.o
+prxy_services.o
+prxy_ufaes.o
+prxy_ufdes.o
+prxy_ufsha.o
+qbn_xbgcd.o
+qsee_appmessage.o
+qsee_boot_shim.o
+qsee_bulletin_board_shim.o
+qsee_cfg_prop_shim.o
+qsee_cipher.o
+qsee_cmac.o
+qsee_comstr.o
+qsee_core_shim.o
+qsee_counter_shim.o
+qsee_crypto_shim.o
+qsee_dcache.o
+qsee_deviceid.o
+qsee_env.o
+qsee_ese_service.o
+qsee_hash.o
+qsee_hmac.o
+qsee_hw_fuse.o
+qsee_i2c.o
+qsee_intmask.o
+qsee_int_shim.o
+qsee_keyprov.o
+qsee_km_shim.o
+qsee_nsmem.o
+qsee_oem_buffer.o
+qsee_prng.o
+qsee_sec_camera.o
+qsee_secdisp.o
+qsee_secure_channel.o
+qsee_shared_buffer.o
+qsee_spcom.o
+qsee_spi.o
+qsee_sync.o
+qsee_timer_shim.o
+qsee_tlmm.o
+qsee_trans_ns_addr.o
+qsort.o
+rand_lib2.o
+secure_memset_dword.o
+secure_memset.o
+sfs_api.o
+stor_gpt.o
+stor.o
+stor_rpmbw.o
+strcasecmp.o
+strchrnul.o
+strchr.o
+strcmp.o
+strlcat.o
+strlcpy.o
+strlen.o
+strncasecmp.o
+strncmp.o
+strnlen.o
+strrchr.o
+strstr.o
+timesafe_memcmp.o
+timesafe_strncmp.o
+tzapp_syscall.o
+wcslcat.o
+wcslcpy.o
+wstrcmp.o
+wstrlcat.o
+wstrlcpy.o
+wstrlen.o
+wstrncmp.o</p></li></ul><p>重要的部分：</p><ul><li>common_applib.o</li><li>tzapp_syscall.o</li></ul><h2 id=metadatac>metadata.c</h2><p>在编译前生成metadata.c，包含TA的元数据，参与链接。</p><p>脚本位置：trustzone_images/core/bsp/build/scripts/secure_apps.py</p><p>metadata.c大致内容</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=display:flex><span><span style=color:#66d9ef>const</span> <span style=color:#66d9ef>char</span> <span style=color:#a6e22e>__attribute__</span>((<span style=color:#a6e22e>section</span>(<span style=color:#e6db74>&#34;.rodata.sentinel&#34;</span>))) TA_METADATA[] <span style=color:#f92672>=</span> <span style=color:#f92672>%</span>s;
+</span></span><span style=display:flex><span><span style=color:#66d9ef>const</span> <span style=color:#66d9ef>char</span><span style=color:#f92672>*</span> TA_APP_NAME <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;%s&#34;</span>;
+</span></span><span style=display:flex><span><span style=color:#66d9ef>const</span> <span style=color:#66d9ef>unsigned</span> <span style=color:#66d9ef>char</span> TA_UUID[] <span style=color:#f92672>=</span> { <span style=color:#ae81ff>0</span>x<span style=color:#f92672>%</span>s, <span style=color:#ae81ff>0</span>x<span style=color:#f92672>%</span>s, <span style=color:#ae81ff>0</span>x<span style=color:#f92672>%</span>s, <span style=color:#ae81ff>0</span>x<span style=color:#f92672>%</span>s,
+</span></span><span style=display:flex><span>                                  <span style=color:#ae81ff>0</span>x<span style=color:#f92672>%</span>s, <span style=color:#ae81ff>0</span>x<span style=color:#f92672>%</span>s, <span style=color:#ae81ff>0</span>x<span style=color:#f92672>%</span>s, <span style=color:#ae81ff>0</span>x<span style=color:#f92672>%</span>s,
+</span></span><span style=display:flex><span>                                  <span style=color:#ae81ff>0</span>x<span style=color:#f92672>%</span>s, <span style=color:#ae81ff>0</span>x<span style=color:#f92672>%</span>s, <span style=color:#ae81ff>0</span>x<span style=color:#f92672>%</span>s, <span style=color:#ae81ff>0</span>x<span style=color:#f92672>%</span>s,
+</span></span><span style=display:flex><span>                                  <span style=color:#ae81ff>0</span>x<span style=color:#f92672>%</span>s, <span style=color:#ae81ff>0</span>x<span style=color:#f92672>%</span>s, <span style=color:#ae81ff>0</span>x<span style=color:#f92672>%</span>s, <span style=color:#ae81ff>0</span>x<span style=color:#f92672>%</span>s };
+</span></span><span style=display:flex><span><span style=color:#66d9ef>const</span> <span style=color:#66d9ef>unsigned</span> <span style=color:#66d9ef>int</span> TA_ACCEPT_BUF_SIZE <span style=color:#f92672>=</span> <span style=color:#f92672>%</span>s;
+</span></span><span style=display:flex><span><span style=color:#66d9ef>char</span> ta_acceptBuf[<span style=color:#f92672>%</span>s] <span style=color:#f92672>=</span> {<span style=color:#ae81ff>0</span>};
+</span></span><span style=display:flex><span><span style=color:#66d9ef>const</span> <span style=color:#66d9ef>bool</span> ta_multiSession <span style=color:#f92672>=</span> <span style=color:#f92672>%</span>s;
+</span></span><span style=display:flex><span><span style=color:#66d9ef>const</span> <span style=color:#66d9ef>char</span> <span style=color:#f92672>*</span> ta_version <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;%s&#34;</span>;
+</span></span><span style=display:flex><span><span style=color:#66d9ef>const</span> <span style=color:#66d9ef>char</span> <span style=color:#f92672>*</span> ta_description <span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;%s&#34;</span>;
+</span></span><span style=display:flex><span><span style=color:#66d9ef>const</span> <span style=color:#66d9ef>struct</span> TACustomProperty {
+</span></span><span style=display:flex><span>   <span style=color:#66d9ef>char</span> <span style=color:#66d9ef>const</span> <span style=color:#f92672>*</span> name;
+</span></span><span style=display:flex><span>   <span style=color:#66d9ef>char</span> <span style=color:#66d9ef>const</span> <span style=color:#f92672>*</span> value;
+</span></span><span style=display:flex><span>} ta_customProperties[] <span style=color:#f92672>=</span> {}
+</span></span><span style=display:flex><span><span style=color:#66d9ef>const</span> <span style=color:#66d9ef>unsigned</span> <span style=color:#66d9ef>int</span> TA_CUSTOM_PROPERTIES_NUM <span style=color:#f92672>=</span> <span style=color:#f92672>%</span>s;
+</span></span></code></pre></div><h1 id=tzapp生命周期>TZAPP生命周期</h1><ul><li><p>void tz_app_init(void)</p><p>调用链：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=display:flex><span><span style=color:#66d9ef>int32_t</span> <span style=color:#66d9ef>__fastcall</span> <span style=color:#a6e22e>CElfFile_invoke</span>(ObjectCxt h, ObjectOp op, ObjectArg_0 <span style=color:#f92672>*</span>a, ObjectCounts k); <span style=color:#75715e>// applib64.lib/common_applib.o
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>void</span> <span style=color:#66d9ef>__fastcall</span> <span style=color:#a6e22e>tzlib_app_entry</span>(<span style=color:#66d9ef>void</span> <span style=color:#f92672>*</span>ctz_lib_entry); <span style=color:#75715e>// applib64.lib/common_applib.o
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>int</span> <span style=color:#66d9ef>__cdecl</span> <span style=color:#a6e22e>secure_app_init</span>(); <span style=color:#75715e>// tzapp_lib_main.o
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>void</span> <span style=color:#a6e22e>tz_app_init</span>(<span style=color:#66d9ef>void</span>); <span style=color:#75715e>// TZAPP
+</span></span></span></code></pre></div><p><code>CElfFile_invoke()</code> 在<code>get_app_md()</code>中指定</p></li><li><p>void tz_app_shutdown(void)</p><p>调用链：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=display:flex><span><span style=color:#66d9ef>int32_t</span> <span style=color:#66d9ef>__fastcall</span> <span style=color:#a6e22e>AppModule_invoke</span>(ObjectCxt h, ObjectOp op, ObjectArg_0 <span style=color:#f92672>*</span>a, ObjectCounts k); <span style=color:#75715e>// applib64.lib/common_applib.o
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>int</span> <span style=color:#66d9ef>__cdecl</span> <span style=color:#a6e22e>secure_app_shutdown</span>(); <span style=color:#75715e>// tzapp_lib_main.o
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>void</span> <span style=color:#a6e22e>tz_app_shutdown</span>(<span style=color:#66d9ef>void</span>); <span style=color:#75715e>// TZAPP
+</span></span></span></code></pre></div><p><code>AppModule_invoke()</code>在<code>CElfFile_invoke()</code>中指定</p><p><img src=/images/QSEE%EF%BC%9ATA%20e9418bc03ef745e0ab9a5990d86c812b/Untitled%209.png alt=Untitled></p></li><li><p>void tz_app_cmd_handler(void* cmd, uint32 cmdlen, void* rsp, uint32 rsplen)</p><p>其中<code>cmd</code>和<code>rsp</code>指向的内容是TA自定义的，通常是结构体</p><p>调用链：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=display:flex><span><span style=color:#66d9ef>int32_t</span> <span style=color:#66d9ef>__fastcall</span> <span style=color:#a6e22e>CApp_invoke</span>(ObjectCxt h, ObjectOp op, ObjectArg_0 <span style=color:#f92672>*</span>a, ObjectCounts k); <span style=color:#75715e>// tzapp_lib_main.o
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>int32_t</span> <span style=color:#66d9ef>__fastcall</span> <span style=color:#a6e22e>CApp_handleRequest</span>(<span style=color:#66d9ef>void</span> <span style=color:#f92672>*</span>cxt, <span style=color:#66d9ef>int32_t</span> commandID, <span style=color:#66d9ef>uint64_t</span> reqAddr, <span style=color:#66d9ef>uint64_t</span> reqSize, <span style=color:#66d9ef>uint64_t</span> respAddr, <span style=color:#66d9ef>uint64_t</span> respSize); <span style=color:#75715e>// tzapp_lib_main.o
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>void</span> <span style=color:#a6e22e>tz_app_cmd_handler</span>(<span style=color:#66d9ef>void</span><span style=color:#f92672>*</span> cmd, uint32 cmdlen, <span style=color:#66d9ef>void</span><span style=color:#f92672>*</span> rsp, uint32 rsplen); <span style=color:#75715e>// TZAPP
+</span></span></span></code></pre></div><p><code>CApp_invoke()</code>在<code>AppModule_invoke()</code>中指定</p><p><img src=/images/QSEE%EF%BC%9ATA%20e9418bc03ef745e0ab9a5990d86c812b/Untitled%2010.png alt=Untitled></p></li></ul><h1 id=api>API</h1><p>大致有以下几类</p><ul><li>密码学：hmac, ecc, rsa, hash, prng</li><li>文件系统访问：open, read, write, mkdir&mldr; / 安全文件系统访问(加密): qsee_sfs_open()</li><li>内存管理: qsee_malloc, qsee_free</li><li>安全存储: fuse, qsee_stor</li><li>外设访问：i2c, spi, sec_camera</li><li>日志: qsee_log</li><li>通信：TA间、TA和Client间</li><li>其它：Secure UI &mldr;</li></ul><h1 id=soter64>soter64</h1><ul><li><p>cmd_id：将<code>void* cmd</code>的前4个字节解释成<code>int cmd_id</code>，共定义了15个cmd_id，32bit值，范围<code>0x0000011 - 0x000001f</code></p><p><img src=/images/QSEE%EF%BC%9ATA%20e9418bc03ef745e0ab9a5990d86c812b/Untitled%2011.png alt=Untitled></p></li></ul><blockquote><p><a href=https://github.com/Tencent/soter/wiki/%E5%8E%9F%E7%90%86>https://github.com/Tencent/soter/wiki/原理</a>: TENCENT SOTER中，一共有三个级别的密钥：ATTK，App Secure Key(ASK)以及AuthKey。这些密钥都是RSA-2048的非对称密钥。</p></blockquote><ul><li><p>每个cmd_id对应各自的handler</p><p><img src=/images/QSEE%EF%BC%9ATA%20e9418bc03ef745e0ab9a5990d86c812b/Untitled%2012.png alt=Untitled></p><p>例如第三个功能<code>SOTER_EXPORT_ATTK_PUBLIC</code>：</p><p><img src=/images/QSEE%EF%BC%9ATA%20e9418bc03ef745e0ab9a5990d86c812b/Untitled%2013.png alt=Untitled></p></li></ul><h1 id=一些额外的知识>一些额外的知识</h1><h2 id=arm64-sysregs>arm64 sysregs</h2><p>使用<code>msr</code>和<code>mrs</code>指令读写系统寄存器，具体寄存器的编号用<code>S&lt;op0>&lt;op1>_C&lt;CRn>_C&lt;CRm0>&lt;op2></code>格式表示。在ARM32中是使用协处理器和<code>mrc</code>和<code>mcr</code>来处理的。</p><ul><li><a href=https://developer.arm.com/documentation/den0024/a/ARMv8-Registers/System-registers>https://developer.arm.com/documentation/den0024/a/ARMv8-Registers/System-registers</a></li><li><a href=https://aijishu.com/a/1060000000119041>https://aijishu.com/a/1060000000119041</a></li></ul></main><div id=comments><hr><script src=https://utteranc.es/client.js repo=KB5201314/KB5201314.github.io issue-term=pathname label='💬 comments 💬' theme=github-light crossorigin=anonymous async></script></div><footer class=footer><hr>© imlk 2017 &ndash; 2023 | <a href=https://blog.imlk.top>imlk's blog</a> | <a href=https://github.com/KB5201314/>Github</a> | <a href=mailto:me@imlk.top>Email</a> | <a href=https://beian.miit.gov.cn/>京ICP备2020042968号-1</a></footer></body></html>
