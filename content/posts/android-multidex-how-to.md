@@ -92,7 +92,7 @@ tags:
 
 
 项目地址：
-[https://github.com/KB5201314/XposedModuleMultidex](https://github.com/KB5201314/XposedModuleMultidex)
+[https://github.com/imlk0/XposedModuleMultidex](https://github.com/imlk0/XposedModuleMultidex)
 
 
 添加依赖

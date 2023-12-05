@@ -205,7 +205,7 @@ Java层获取到的`mCookie`是一个`long`类型数组，里面都是地址，�
 ![调试器查看内容](/images/blog/40_0.png)
 
 解决方法：
-[https://github.com/KB5201314/ZjDroid/blob/master/app/src/main/java/com/android/reverse/collecter/DexFileInfoCollecter.java#L190](https://github.com/KB5201314/ZjDroid/blob/master/app/src/main/java/com/android/reverse/collecter/DexFileInfoCollecter.java#L190)
+[https://github.com/imlk0/ZjDroid/blob/master/app/src/main/java/com/android/reverse/collecter/DexFileInfoCollecter.java#L190](https://github.com/imlk0/ZjDroid/blob/master/app/src/main/java/com/android/reverse/collecter/DexFileInfoCollecter.java#L190)
 
 接下来
 
@@ -264,7 +264,7 @@ dexFile_ptr -> begin_;
 ### 挫折
 
 发现自己编译出的so文件中`std::string`类型的大小和art虚拟机中的不一致，
-[https://github.com/KB5201314/ZjDroid/blob/master/app/src/main/jni/dvmnative/dexfile_art.h#L454](https://github.com/KB5201314/ZjDroid/blob/master/app/src/main/jni/dvmnative/dexfile_art.h#L454)
+[https://github.com/imlk0/ZjDroid/blob/master/app/src/main/jni/dvmnative/dexfile_art.h#L454](https://github.com/imlk0/ZjDroid/blob/master/app/src/main/jni/dvmnative/dexfile_art.h#L454)
 
 通过dump出这一块内存经过分析可知
 
@@ -282,15 +282,15 @@ dexFile_ptr -> begin_;
 
 在一定范围内进行内存搜索：
 因为`begin_`和`head_ptr`的值是一样的，我在之后的一定的内存区域内搜索`begin_`的值就能找到`head_ptr`的位置了
-[https://github.com/KB5201314/ZjDroid/blob/master/app/src/main/jni/dvmnative/dvmnative.cpp#L583](https://github.com/KB5201314/ZjDroid/blob/master/app/src/main/jni/dvmnative/dvmnative.cpp#L583)
+[https://github.com/imlk0/ZjDroid/blob/master/app/src/main/jni/dvmnative/dvmnative.cpp#L583](https://github.com/imlk0/ZjDroid/blob/master/app/src/main/jni/dvmnative/dvmnative.cpp#L583)
 
 
 ### 出炉
 
 源码：
-[https://github.com/KB5201314/ZjDroid](https://github.com/KB5201314/ZjDroid)
+[https://github.com/imlk0/ZjDroid](https://github.com/imlk0/ZjDroid)
 apk下载：
-[https://github.com/KB5201314/ZjDroid/releases](https://github.com/KB5201314/ZjDroid/releases)
+[https://github.com/imlk0/ZjDroid/releases](https://github.com/imlk0/ZjDroid/releases)
 
 
 ### 遗留问题

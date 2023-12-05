@@ -385,8 +385,8 @@ dexElements = {DexPathList$Element[3]@831564034400}
 
 
 魔改版本
-KB5201314/ZjDroid：
-[https://github.com/KB5201314/ZjDroid](https://github.com/KB5201314/ZjDroid)
+imlk0/ZjDroid：
+[https://github.com/imlk0/ZjDroid](https://github.com/imlk0/ZjDroid)
 
 
 

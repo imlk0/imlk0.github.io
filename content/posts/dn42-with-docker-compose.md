@@ -29,7 +29,7 @@ tags:
 2. 有一些坑：当然我基本上都帮你填好了。
 
 
-那么话不多说，我将代码放入到了这个仓库里 👉 [dn42-stuffs](https://github.com/KB5201314/dn42-stuffs)
+那么话不多说，我将代码放入到了这个仓库里 👉 [dn42-stuffs](https://github.com/imlk0/dn42-stuffs)
 
 由于每个人的口味不同，建议您clone下来之后按照自己的意愿去修改
 
